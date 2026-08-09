@@ -1,0 +1,8 @@
+# Secrets — mai pujar a GitHub
+config.json
+
+# Residus tècnics
+__pycache__/
+*.pyc
+.DS_Store
+Thumbs.db
