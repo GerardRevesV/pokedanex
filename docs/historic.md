@@ -190,3 +190,44 @@ crea el primer pull request de prova, que inclou aquesta mateixa
 documentació i un últim poliment de la web (missatges d'error més precisos
 al botó d'actualitzar: ara distingeix si la culpa és de l'API o d'un
 problema local).
+
+## 18. Fase 2 construïda: col·lecció, àlbum 3×3 i estadístiques
+
+*2026-08-09*
+
+L'equip d'agents construeix el cor de la web en quatre blocs encadenats:
+l'estat de la col·lecció (comptadors per variant normal/reverse/holo desats
+al navegador, amb exportar/importar/buidar), el marcatge a la graella
+(botons +/− d'un sol clic, cartes apagades si no les tens, filtres "les
+tinc"/"em falten"), la vista d'àlbum de carpesà real (dues pàgines de 3×3
+butxaques amb navegació) i el panell d'estadístiques ("la teva col·lecció
+val X €" / "completar-la costaria Y €", amb objectiu de compleció triable).
+Els validadors troben 6 problemes (entre ells dos forats subtils de
+seguretat a la importació de JSON) i l'arreglador els tanca tots 6.
+
+## 19. Recerca: l'API de CardTrader
+
+*2026-08-09*
+
+En paral·lel a la construcció, un agent investiga l'API de CardTrader com a
+font de preus més fresca que els de Cardmarket incrustats a pokemontcg.io.
+Conclusió (docs/recerca-cardtrader.md): és viable i gratuïta (calen compte
+i token, que hauria de crear un adult), dona ofertes reals en euros carta a
+carta, i encaixa amb la cau versionada via l'script de dades — però
+s'adoptarà més endavant, quan toqui polir el bloc de preus; ara no aporta
+prou per justificar la complexitat.
+
+## 20. Doble revisió de la Fase 2 i pull request
+
+*2026-08-09*
+
+Es revisa tota la Fase 2 dues vegades: els validadors del workflow (6
+problemes, tots arreglats) i un revisor independent que confirma els 6
+arranjaments, refà els càlculs del panell pel seu compte (li quadren
+cèntim a cèntim), comprova les 46 claus de traducció als 3 idiomes sense
+cap forat, i verifica que la clau de l'API no apareix enlloc. La web es
+prova al navegador real: marcar cartes, filtres, àlbum amb navegació,
+objectiu de compleció canviant el cost a l'instant (12,88 € el set base;
+525,53 € el complet — les secretes són les cares) i zero errors de
+consola. La Fase 2 es tanca i s'obre el pull request perquè es revisi i
+es fusioni.

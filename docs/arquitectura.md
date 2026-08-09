@@ -27,6 +27,11 @@ Pokedanex/
 │   ├── js/
 │   │   ├── i18n.js      ← textos en català, castellà i anglès
 │   │   ├── data.js      ← càrrega i actualització de dades (versions)
+│   │   ├── storage.js   ← accés segur a localStorage (no peta si està bloquejat)
+│   │   ├── variants.js  ← quines variants té cada carta i el preu de cadascuna
+│   │   ├── collection.js← l'estat de la col·lecció (comptadors per variant)
+│   │   ├── album.js     ← la vista d'àlbum 3×3 de dues pàgines
+│   │   ├── stats.js     ← el panell de valor, cost i objectiu de compleció
 │   │   └── main.js      ← la interfície: pinta i lliga-ho tot
 │   └── data/
 │       ├── versions.json           ← índex de les versions de fitxer
@@ -80,14 +85,36 @@ Els noms de les cartes no es tradueixen mai: són les cartes reals, en anglès.
 - **Peu:** data de la versió de dades que s'està veient i el nombre de cartes.
 - Estètica heretada del projecte tcg: **tema fosc** amb accent verd-turquesa.
 
+## Les capes de la Fase 2
+
+- **Col·lecció (`collection.js` + `variants.js`):** cada carta té comptadors
+  independents per variant (normal / reverse holo / holo — les variants que
+  té cada carta es dedueixen dels preus de l'API amb reserva per raresa).
+  Es desa a l'instant al navegador; exportable/importable en JSON i amb
+  buidat amb confirmació. Patró estat/interfície separats heretat del tcg.
+- **Marcar (`main.js`):** botons + / − a cada carta de la graella (un clic),
+  cartes apagades/grisoses quan no en tens cap, filtres Totes / Les tinc /
+  Em falten combinables amb el cercador.
+- **Àlbum (`album.js`):** vista de carpesà real — dues pàgines obertes de
+  3×3 butxaques, navegació amb botons i fletxes de teclat, secretes
+  incloses; un clic a una carta salta a la graella.
+- **Estadístiques (`stats.js`):** panell plegable amb barres de progrés,
+  "la teva col·lecció val X €" (totes les còpies i variants) i "completar-la
+  costaria Y €" (suma simple del que falta), amb **objectiu de compleció
+  triable** (set base / complet, amb o sense reverses) i data dels preus.
+- **`storage.js`:** tots els accessos a `localStorage` passen per aquí,
+  perquè la web funcioni encara que el navegador el bloquegi.
+
 ## Claus de `localStorage` que fa servir la web
 
 | Clau | Contingut |
 |---|---|
 | `pokedanex.lang` | Idioma triat (ca / es / en) |
 | `pokedanex.dataVersions` | Versions de dades creades des del navegador |
-
-(A la Fase 2 s'hi afegirà la col·lecció de l'usuari.)
+| `pokedanex.collection` | La col·lecció: comptadors per carta i variant |
+| `pokedanex.view` | Vista activa (graella / àlbum) |
+| `pokedanex.statsOpen` | Si el panell d'estadístiques és obert o plegat |
+| `pokedanex.completionTarget` | L'objectiu de compleció triat |
 
 ## Per què així (resum de decisions)
 
