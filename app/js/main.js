@@ -178,21 +178,31 @@ async function ferActualitzacio() {
   const boto = element("boto-actualitza");
   boto.disabled = true;
   mostrarMissatge("actualitza.enCurs");
+
+  // Primer pas: baixar les dades de l'API (l'única part que pot fallar per culpa de l'API)
+  let resultat = null;
   try {
-    const resultat = await actualitzarDades();
-    versions = await carregarLlistaVersions();
-    omplirSelectorVersions(resultat.id);
-    const nova = versions.find((v) => v.id === resultat.id);
-    // Només anunciem l'èxit si la versió nova s'ha pogut carregar i pintar
-    const carregada = await triarVersio(nova);
-    if (carregada) {
-      mostrarMissatge(resultat.desada ? "actualitza.fet" : "actualitza.senseEspai");
-    }
+    resultat = await actualitzarDades();
   } catch {
     mostrarMissatge("actualitza.error", true);
-  } finally {
-    boto.disabled = false;
   }
+
+  // Segon pas: refrescar la llista i mostrar la versió nova (si falla, és un error local)
+  if (resultat) {
+    try {
+      versions = await carregarLlistaVersions();
+      omplirSelectorVersions(resultat.id);
+      const nova = versions.find((v) => v.id === resultat.id);
+      // Només anunciem l'èxit si la versió nova s'ha pogut carregar i pintar
+      const carregada = await triarVersio(nova);
+      if (carregada) {
+        mostrarMissatge(resultat.desada ? "actualitza.fet" : "actualitza.senseEspai");
+      }
+    } catch {
+      mostrarMissatge("graella.error", true);
+    }
+  }
+  boto.disabled = false;
 }
 
 // ---------- Arrencada ----------

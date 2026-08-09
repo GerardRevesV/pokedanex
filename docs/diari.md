@@ -50,3 +50,24 @@ estàndard), API gratuïta de pokemontcg.io, servidor local de proves
   per defecte de Python. Resolt enviant-ne un de propi ("Pokedanex/1.0").
 - L'API falla de tant en tant amb errors de servidor (5xx). Resolt amb
   reintents automàtics amb esperes creixents, tant a l'script com a la web.
+
+## 2026-08-09 — Doble revisió, verificació al navegador i flux de PR
+
+**Què s'ha fet:**
+- Doble revisió de l'esquelet: validadors del workflow (7 problemes trobats
+  i arreglats) + revisor independent (confirma els arranjaments, cap error
+  crític nou, clau de l'API neta a tot el repositori i historial).
+- Verificació de la web al navegador real: zero errors de consola, canvi
+  d'idioma en calent, cercador i cartes secretes correctes, botó
+  "Actualitza dades" funcionant de punta a punta.
+- Creat el document d'arquitectura (`docs/arquitectura.md`).
+- Tancada la Fase 1 i adoptat el flux de branques + pull requests (D-005),
+  amb un primer pull request de prova.
+
+**Eines usades:** Claude Code (orquestrador + subagents de validació i
+arreglat), navegador integrat, git i GitHub.
+
+**Costos:** 0 €.
+
+**Problemes:** cap de nou; queda apuntat que els preus de Cardmarket dins
+l'API poden anar endarrerits (s'estudiarà CardTrader a la Fase 2).

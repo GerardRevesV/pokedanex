@@ -30,7 +30,10 @@ document d'especificacions.
 
 **Lliurable:** `docs/especificacions.md`
 
-## Fase 1 — Fonaments tècnics 🔄
+## Fase 1 — Fonaments tècnics ✅
+
+> Tancada el 9 d'agost. L'únic punt que queda obert (estudiar CardTrader
+> com a font complementària de preus) passa a la Fase 2.
 
 **Objectiu:** triar les eines i deixar el projecte a punt per construir.
 

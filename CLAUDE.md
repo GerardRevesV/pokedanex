@@ -44,3 +44,7 @@ de la col·lecció i quant costaria completar-la.
 - No es comença una fase sense tancar l'anterior.
 - La Fase 0 (especificacions) genera `docs/especificacions.md` a partir
   d'una entrevista de preguntes i respostes.
+- **Branques i pull requests (a partir de la Fase 2):** els canvis nous es
+  fan en una branca pròpia i arriben a `main` mitjançant un pull request a
+  GitHub, on es revisen abans de fusionar. No es treballa directament sobre
+  `main` (excepte retocs de documentació menors).

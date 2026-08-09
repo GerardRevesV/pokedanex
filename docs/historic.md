@@ -177,3 +177,16 @@ permanents). La web es comprova al navegador real: zero errors de consola,
 canvi d'idioma instantani, cercador correcte, cartes secretes ben mostrades
 i el botó "Actualitza dades" funcionant de punta a punta. Es crea també el
 document d'arquitectura (docs/arquitectura.md).
+
+## 17. Fase 1 tancada i nou flux de treball amb pull requests
+
+*2026-08-09*
+
+Es tanca la Fase 1 (l'estudi de CardTrader passa a la Fase 2) i s'adopta el
+flux de treball professional amb branques i pull requests (decisió D-005):
+els canvis es preparen en una branca, es pugen a GitHub i es revisen en un
+pull request abans d'arribar a la branca principal. Per estrenar el flux es
+crea el primer pull request de prova, que inclou aquesta mateixa
+documentació i un últim poliment de la web (missatges d'error més precisos
+al botó d'actualitzar: ara distingeix si la culpa és de l'API o d'un
+problema local).
