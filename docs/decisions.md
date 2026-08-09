@@ -65,3 +65,18 @@ Fase 1-2 s'estudiarà si l'API gratuïta de CardTrader pot servir de
 complement més fresc.
 
 **Cost:** 0 €.
+
+## D-005 · Treballar amb branques i pull requests
+
+**Data:** 2026-08-09
+
+**Decisió:** a partir de la Fase 2, els canvis nous no es fan directament
+sobre la branca principal (`main`): es fan en una branca pròpia i s'obre un
+**pull request** a GitHub, que es revisa abans de fusionar.
+
+**Per què:** és com treballen els equips professionals — cada canvi queda
+agrupat, explicat i revisat abans d'entrar al projecte. A més, els pull
+requests queden guardats a GitHub per sempre i són una evidència
+excel·lent del procés per al treball de recerca.
+
+**Cost:** 0 €.
