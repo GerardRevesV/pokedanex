@@ -1,0 +1,239 @@
+/* Pokedanex — tema fosc amb accent verd-turquesa (estil heretat del projecte tcg) */
+
+:root {
+  --fons: #0e1116;          /* fons general de la pàgina */
+  --fons-suau: #151a22;     /* fons de controls (cercador, selectors) */
+  --fons-carta: #171d27;    /* fons de cada carta de la graella */
+  --vora: #242c39;
+  --text: #e8edf4;
+  --text-suau: #93a1b3;
+  --accent: #2fd6b5;        /* el verd-turquesa del projecte */
+  --accent-text: #06231d;   /* text fosc sobre el color d'accent */
+  --error: #ff7a6e;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--fons);
+  color: var(--text);
+  font-family: "Segoe UI", system-ui, sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ---------- Capçalera ---------- */
+
+.capcalera {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: rgba(14, 17, 22, 0.92);
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid var(--vora);
+  padding: 0.9rem 1.5rem;
+}
+
+.fila-marca {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.marca {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+}
+
+.marca h1 {
+  font-size: 1.6rem;
+  letter-spacing: 0.03em;
+}
+
+.marca h1::first-letter {
+  color: var(--accent);
+}
+
+.logo-set {
+  height: 2.4rem;
+  width: auto;
+}
+
+.fila-controls {
+  display: flex;
+  align-items: flex-end;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 0.8rem;
+}
+
+.control {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.control label {
+  font-size: 0.75rem;
+  color: var(--text-suau);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Cercador gran i immediat, com al projecte tcg */
+.cercador {
+  flex: 1;
+  min-width: 220px;
+  font-size: 1.05rem;
+  padding: 0.6rem 0.9rem;
+}
+
+.cercador,
+select {
+  background: var(--fons-suau);
+  color: var(--text);
+  border: 1px solid var(--vora);
+  border-radius: 8px;
+}
+
+select {
+  padding: 0.55rem 0.7rem;
+  font-size: 0.95rem;
+}
+
+.cercador:focus,
+select:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.boto-accent {
+  background: var(--accent);
+  color: var(--accent-text);
+  border: none;
+  border-radius: 8px;
+  padding: 0.6rem 1.1rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.boto-accent:hover:not(:disabled) {
+  filter: brightness(1.15);
+}
+
+.boto-accent:disabled {
+  opacity: 0.5;
+  cursor: wait;
+}
+
+/* ---------- Contingut ---------- */
+
+.contingut {
+  flex: 1;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 1.5rem;
+}
+
+.missatge {
+  padding: 0.8rem 1rem;
+  margin-bottom: 1rem;
+  border: 1px solid var(--vora);
+  border-left: 3px solid var(--accent);
+  border-radius: 8px;
+  background: var(--fons-suau);
+  color: var(--text-suau);
+}
+
+.missatge--error {
+  border-left-color: var(--error);
+  color: var(--error);
+}
+
+/* ---------- Graella de cartes ---------- */
+
+.graella {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  gap: 1.1rem;
+}
+
+.carta {
+  background: var(--fons-carta);
+  border: 1px solid var(--vora);
+  border-radius: 10px;
+  padding: 0.6rem;
+  transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.carta:hover {
+  transform: translateY(-3px);
+  border-color: var(--accent);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.45);
+}
+
+.carta-imatge {
+  display: block;
+  width: 100%;
+  aspect-ratio: 63 / 88;   /* proporció real d'una carta Pokémon */
+  object-fit: contain;
+  border-radius: 6px;
+}
+
+.carta-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding: 0.55rem 0.2rem 0.2rem;
+}
+
+.carta-numero {
+  font-size: 0.78rem;
+  color: var(--accent);
+  letter-spacing: 0.06em;
+}
+
+.carta-nom {
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.carta-raresa {
+  font-size: 0.8rem;
+  color: var(--text-suau);
+}
+
+.graella-buida {
+  grid-column: 1 / -1;
+  text-align: center;
+  color: var(--text-suau);
+  padding: 3rem 1rem;
+}
+
+/* ---------- Peu ---------- */
+
+.peu {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: 1.2rem;
+  border-top: 1px solid var(--vora);
+  color: var(--text-suau);
+  font-size: 0.85rem;
+}
+
+.simbol-set {
+  height: 1.1rem;
+  width: auto;
+}

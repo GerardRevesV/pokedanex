@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pokedanex</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <header class="capcalera">
+    <div class="fila-marca">
+      <div class="marca">
+        <h1>Pokedanex</h1>
+        <!-- El logotip del set l'omple el JavaScript amb la URL de les dades -->
+        <img id="logo-set" class="logo-set" src="" alt="" hidden>
+      </div>
+      <div class="control">
+        <label for="selector-idioma" data-i18n="idioma.etiqueta">Idioma</label>
+        <select id="selector-idioma">
+          <option value="ca">Català</option>
+          <option value="es">Castellano</option>
+          <option value="en">English</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="fila-controls">
+      <input id="cercador" class="cercador" type="search" autocomplete="off"
+             placeholder="" data-i18n-placeholder="cerca.placeholder">
+      <div class="control">
+        <label for="selector-versio" data-i18n="versio.etiqueta">Versió de les dades</label>
+        <select id="selector-versio"></select>
+      </div>
+      <button id="boto-actualitza" class="boto-accent" data-i18n="actualitza.boto">
+        Actualitza dades
+      </button>
+    </div>
+  </header>
+
+  <main class="contingut">
+    <p id="missatge" class="missatge" hidden></p>
+    <div id="graella" class="graella"></div>
+  </main>
+
+  <footer class="peu">
+    <!-- El símbol del set l'omple el JavaScript amb la URL de les dades -->
+    <img id="simbol-set" class="simbol-set" src="" alt="" hidden>
+    <span id="peu-dades"></span>
+  </footer>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>

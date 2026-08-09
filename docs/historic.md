@@ -133,3 +133,47 @@ data visible (D-004), i interfície en tres idiomes seleccionables (català,
 castellà, anglès) amb els noms de les cartes en anglès. Es guarda la clau
 de l'API en un fitxer exclòs de GitHub. S'aprova el sistema d'orquestració
 amb subagents (executors, validadors i arregladors).
+
+## 14. Script de descàrrega de dades i primera versió
+
+*2026-08-09*
+
+Es crea `tools/fetch_data.py`, un script en Python (només llibreria
+estàndard) que baixa de pokemontcg.io la informació del set Shrouded Fable
+i les seves 99 cartes, es queda només amb els camps que la web fa servir i
+ho guarda com una versió nova (amb data i hora, mai sobreescrivint res) a
+`app/data/versions/`, actualitzant l'índex `app/data/versions.json`. Amb
+l'script es genera la primera versió de dades (2026-08-09, 99 cartes).
+Durant les proves apareixen dos entrebancs de l'API: retorna 403 si no
+s'envia un User-Agent propi, i de tant en tant falla amb errors de servidor
+(5xx), cosa que es resol amb reintents amb esperes creixents.
+
+## 15. Esquelet de la web: graella, versions i tres idiomes
+
+*2026-08-09*
+
+Es crea la primera versió de la web dins `app/`: HTML, CSS i JavaScript
+vanilla amb mòduls ES, sense frameworks ni eines de compilació (decisió
+D-002). Mostra la graella de les 99 cartes ordenades pel número de
+col·lecció, amb cercador per nom o número, selector de versions de dades
+(les de fitxer i les creades des del navegador), botó "Actualitza dades"
+que crea una versió nova desada al `localStorage`, peu amb la data de les
+dades que s'estan veient i interfície en tres idiomes (català, castellà i
+anglès) amb els noms de les cartes en anglès.
+
+## 16. Doble revisió de l'esquelet i verificació al navegador
+
+*2026-08-09*
+
+Es revisa tota la feina de la Fase 1 dues vegades: primer amb els validadors
+del workflow (7 problemes trobats i arreglats: versions que es sobreescrivien
+el mateix dia, missatges sense traduir en canviar d'idioma, un fals missatge
+d'èxit, una cursa de peticions, dades corruptes que tombaven la web i
+reintents inútils), i després amb un revisor independent d'ulls frescos que
+confirma els 7 arranjaments, no troba cap error crític nou i verifica que la
+clau de l'API no apareix enlloc del repositori ni del seu historial. Es
+corregeix una última cosa menor (l'script Python també reintentava errors
+permanents). La web es comprova al navegador real: zero errors de consola,
+canvi d'idioma instantani, cercador correcte, cartes secretes ben mostrades
+i el botó "Actualitza dades" funcionant de punta a punta. Es crea també el
+document d'arquitectura (docs/arquitectura.md).

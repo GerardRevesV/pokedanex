@@ -23,3 +23,30 @@ treball escrit.
 d'IA es documentarà quan es concreti la subscripció usada).
 
 **Problemes:** cap.
+
+## 2026-08-09 — Fase 1: script de dades i esquelet de la web
+
+**Què s'ha fet:**
+- Tancada la Fase 0 (especificacions versió 2, amb calendari) i preses les
+  decisions de fonaments: web estàtica sense frameworks, dades de
+  pokemontcg.io amb memòria cau local versionada i preus de Cardmarket amb
+  data visible.
+- Creat l'script `tools/fetch_data.py`, que descarrega el set Shrouded
+  Fable i en guarda una versió nova datada a `app/data/versions/`. Generada
+  la primera versió de dades (2026-08-09, 99 cartes).
+- Creat l'esquelet de la web a `app/`: graella de cartes amb cercador,
+  selector de versions de dades, botó "Actualitza dades" (crea versions
+  noves desades al navegador, sense sobreescriure mai res) i interfície en
+  tres idiomes (català, castellà i anglès).
+
+**Eines usades:** Claude Code (assistent d'IA), Python (només llibreria
+estàndard), API gratuïta de pokemontcg.io, servidor local de proves
+(`python -m http.server`).
+
+**Costos:** 0 €.
+
+**Problemes:**
+- L'API de pokemontcg.io retornava un error 403: bloqueja el User-Agent
+  per defecte de Python. Resolt enviant-ne un de propi ("Pokedanex/1.0").
+- L'API falla de tant en tant amb errors de servidor (5xx). Resolt amb
+  reintents automàtics amb esperes creixents, tant a l'script com a la web.
