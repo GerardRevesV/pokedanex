@@ -332,3 +332,38 @@ havia quedat sense ús al codi HTML, els selectors que busquen una carta
 pel seu identificador es protegeixen amb `CSS.escape`, i l'ordre per
 número de col·lecció passa a una comparació de text amb sentit numèric
 que no es trencaria amb números com "TG01" d'altres sets.
+
+## 27. Dues IA treballant alhora: el primer conflicte de veritat
+
+*2026-08-11*
+
+Durant les fases 2.x i 3 hi havia dues sessions d'IA treballant en
+paral·lel en branques diferents, i va passar el que passa als equips de
+programadors de veritat: totes dues van escriure als mateixos documents
+(l'històric, el diari) i, en ajuntar les feines, git va avisar de
+**conflictes de fusió** — fins i tot hi va haver dues entrades numerades
+"21" alhora. Es van resoldre com ho fan els professionals: llegint les
+dues versions, conservant-ho tot i renumerant en ordre cronològic. És un
+episodi valuós per al treball: demostra que el flux de branques i pull
+requests (decisió D-005) no era teatre — va evitar que una feina trepitgés
+l'altra, i el conflicte es va detectar i resoldre de manera controlada.
+
+## 28. El mètode de treball amb IA, consolidat
+
+*2026-08-11*
+
+Després de tres fases, la manera de treballar ha quedat fixada en un patró
+que es repeteix a cada bloc de feina i que és, a la pràctica, la resposta
+del projecte a la pregunta del treball ("es pot fer una web sense saber
+programar?"): (1) un agent **planificador** escriu el pla concret de la
+tasca; (2) un agent **executor** el construeix; (3) dos agents **revisors**
+independents l'auditen alhora — un contra les especificacions i l'altre
+buscant errors al codi; (4) un agent **arreglador** diferent tapa el que
+troben; (5) un **revisor final d'ulls frescos** ho torna a mirar tot; i
+(6) la web es prova al **navegador de veritat** abans del pull request.
+Balanç fins avui: 5 pull requests fusionats, més de 40 subagents
+coordinats, prop de trenta problemes trobats i arreglats **abans**
+d'arribar a la branca principal (entre ells dos forats de seguretat i codi
+mort que semblava correcte), i 0 € gastats en serveis. La lliçó clau per
+al treball: la persona no escriu codi, però la **revisió per capes** és el
+que fa que el resultat sigui fiable.
