@@ -290,3 +290,45 @@ del compte: la proposta és crear una organització gratuïta de GitHub
 anomenada «pokedanex» (nom comprovat: és lliure) i traslladar-hi el
 repositori, cosa que donaria l'adreça https://pokedanex.github.io/. La
 decisió queda pendent.
+
+## 25. Fase 2.2: preu a cada fitxa i ordenació de la graella
+
+*2026-08-10*
+
+Dos poliments nous a la graella. Primer, cada fitxa mostra el **preu
+orientatiu de Cardmarket** (el de la variant normal o, si no en té, el de
+la primera variant amb preu conegut), formatat en euros segons l'idioma
+actiu; si no se'n coneix cap, un guió amb l'explicació en passar-hi el
+ratolí. Segon, un **selector d'ordenació**: número de col·lecció (el
+defecte), preu (més cara primer), il·lustrador (A-Z) i número de Pokédex —
+només afecta la graella, perquè l'àlbum és el carpesà físic i sempre va
+per número. Com que cap carta de les dades actuals (2026-08-09) porta el
+camp de l'il·lustrador, aquesta opció es mostra desactivada fins que una
+versió de dades el porti. De passada, dues micro-correccions: s'aclareixen
+els colors de les pastilles «darkness» i neutra per complir el contrast
+WCAG AA sobre el fons de la fitxa, i el zoom neteja el seu estat de
+càrrega en tancar-se.
+
+## 26. La fitxa-zoom marcable: col·leccionar des de l'àlbum
+
+*2026-08-10*
+
+A petició de l'Edanna, el zoom es converteix en la fitxa completa de la
+carta: en mode Consulta, clicar una butxaca de l'àlbum (o una carta de la
+graella) obre la imatge gran amb els comptadors − / + de totes les
+variants de la carta, actualitzats en viu, i un botó "Veure a la graella"
+que substitueix l'antic salt directe. Així es pot afegir qualsevol variant
+(normal, reverse o holo) sense sortir de l'àlbum ni canviar el menú de
+marcatge. Lliçó de revisió interessant per al treball: el pla original
+incloïa marcar amb clic esquerre/dret sobre la imatge gran, però els
+revisors van descobrir que era codi impossible d'activar (el zoom només
+s'obre en mode Consulta, on no hi ha variant activa) i es va retirar,
+deixant els botons com a única via — més simple i suficient.
+
+De la mateixa revisió en van sortir quatre retocs: la fitxa del zoom ara
+fa scroll intern quan no cap a la pantalla (en finestres baixes, el × de
+dalt i el botó de sota podien quedar retallats), es retira un `id` que
+havia quedat sense ús al codi HTML, els selectors que busquen una carta
+pel seu identificador es protegeixen amb `CSS.escape`, i l'ordre per
+número de col·lecció passa a una comparació de text amb sentit numèric
+que no es trencaria amb números com "TG01" d'altres sets.

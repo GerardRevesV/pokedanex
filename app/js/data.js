@@ -85,8 +85,11 @@ export async function carregarVersio(entrada) {
       throw new Error("No s'ha trobat la versió " + entrada.id + " al navegador");
     }
   }
-  // Cartes sempre ordenades pel número de col·lecció (l'ordre de l'àlbum)
-  dades.cards.sort((a, b) => Number(a.number) - Number(b.number));
+  // Cartes sempre ordenades pel número de col·lecció (l'ordre de l'àlbum);
+  // la comparació numèrica de textos tolera números com "TG01"
+  dades.cards.sort((a, b) =>
+    String(a.number).localeCompare(String(b.number), undefined, { numeric: true })
+  );
   return dades;
 }
 
@@ -151,7 +154,9 @@ async function baixarCartes(clauApi) {
     if (cartes.length >= resposta.totalCount || resposta.data.length === 0) break;
     pagina++;
   }
-  cartes.sort((a, b) => Number(a.number) - Number(b.number));
+  cartes.sort((a, b) =>
+    String(a.number).localeCompare(String(b.number), undefined, { numeric: true })
+  );
   return cartes;
 }
 
