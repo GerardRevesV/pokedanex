@@ -91,7 +91,11 @@ si aquella carta concreta existeix de debò en aquella variant. Si un fitxer
 editat a mà diu que tens una carta en una variant que no existeix (p. ex.
 "holo" d'una carta que només surt en normal i reverse), la dada es guarda
 però la graella no la mostra (només pinta les variants reals de cada carta)
-i el càlcul de valor tampoc no la compta.
+i el càlcul de valor tampoc no la compta. En canvi, al panell
+d'estadístiques la carta sí que compta com a tinguda: el progrés i el cost
+de completar només miren si tens alguna còpia de la carta (en qualsevol
+variant, encara que sigui una variant "fantasma"), així que una entrada
+d'aquestes fa pujar el progrés i abaixar el cost de completar.
 
 **Per què:** el flux normal (exportar des de la web i tornar a importar) mai
 no pot produir aquest cas; només passa amb fitxers manipulats a mà. Per

@@ -37,6 +37,17 @@
         </div>
       </div>
       <div class="control">
+        <span class="control-etiqueta" data-i18n="marcar.etiqueta">Marcar</span>
+        <!-- Mode de marcatge: en mode variant, clic esquerre sobre una carta
+             suma una còpia d'aquesta variant i clic dret en resta una -->
+        <div id="mode-marcatge" class="segmentat">
+          <button type="button" class="actiu" data-mode="consulta" data-i18n="marcar.consulta">Consulta</button>
+          <button type="button" data-mode="normal" data-i18n="marcar.normal">Normal</button>
+          <button type="button" data-mode="reverse" data-i18n="marcar.reverse">Reverse</button>
+          <button type="button" data-mode="holo" data-i18n="marcar.holo">Holo</button>
+        </div>
+      </div>
+      <div class="control">
         <span class="control-etiqueta" data-i18n="filtre.etiqueta">Col·lecció</span>
         <!-- Filtre de col·lecció: es combina amb el cercador de text -->
         <div id="filtre-colleccio" class="segmentat">
@@ -44,6 +55,20 @@
           <button type="button" data-filtre="tinc" data-i18n="filtre.tinc">Les tinc</button>
           <button type="button" data-filtre="falten" data-i18n="filtre.falten">Em falten</button>
         </div>
+      </div>
+      <!-- Filtres desplegables: es combinen amb el cercador i el filtre de col·lecció.
+           Les opcions les omple el JavaScript a partir de les dades del set. -->
+      <div class="control">
+        <label for="filtre-raresa" data-i18n="filtre.raresa">Raresa</label>
+        <select id="filtre-raresa"></select>
+      </div>
+      <div class="control">
+        <label for="filtre-tipus" data-i18n="filtre.tipus">Tipus d'energia</label>
+        <select id="filtre-tipus"></select>
+      </div>
+      <div class="control">
+        <label for="filtre-categoria" data-i18n="filtre.categoria">Categoria</label>
+        <select id="filtre-categoria"></select>
       </div>
       <div class="control">
         <label for="selector-versio" data-i18n="versio.etiqueta">Versió de les dades</label>
@@ -95,6 +120,21 @@
       </div>
       <div id="album-llibre" class="album-llibre"></div>
     </section>
+
+    <!-- Zoom de carta: la imatge gran per sobre de tot (clic fora, × o Esc per tancar) -->
+    <div id="zoom" class="zoom" hidden>
+      <div class="zoom-fitxa" role="dialog" aria-modal="true" aria-labelledby="zoom-nom">
+        <!-- L'aria-label del botó el posa el JavaScript (canvia amb l'idioma) -->
+        <button type="button" id="zoom-tancar" class="zoom-tancar">×</button>
+        <img id="zoom-imatge" class="zoom-imatge" alt="">
+        <div class="zoom-info">
+          <span id="zoom-numero" class="zoom-numero"></span>
+          <span id="zoom-nom" class="zoom-nom"></span>
+          <span id="zoom-raresa" class="zoom-raresa"></span>
+        </div>
+        <p class="zoom-ajuda" data-i18n="zoom.ajuda">Clic fora o tecla Esc per tancar</p>
+      </div>
+    </div>
   </main>
 
   <footer class="peu">

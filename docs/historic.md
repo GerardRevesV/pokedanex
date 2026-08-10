@@ -231,3 +231,31 @@ objectiu de compleció canviant el cost a l'instant (12,88 € el set base;
 525,53 € el complet — les secretes són les cares) i zero errors de
 consola. La Fase 2 es tanca i s'obre el pull request perquè es revisi i
 es fusioni.
+
+## 21. Fase 2.1: zoom, filtres desplegables i pastilles de tipus
+
+*2026-08-10*
+
+Es tapen els tres forats detectats en repassar les especificacions després
+de la Fase 2, cadascun amb el seu planificador i executor propis: el zoom
+d'imatge gran en clicar una carta (amb accessibilitat: focus atrapat i
+tancament amb Escape), els filtres desplegables de raresa, tipus d'energia
+i categoria (construïts dinàmicament de les dades i combinables amb el
+cercador i els filtres de col·lecció) i les pastilles de color dels tipus
+(amb contrast WCAG AA verificat per càlcul). També s'unifica l'accés a
+localStorage via storage.js i s'amplia la decisió D-006 després de
+comprovar el comportament real del codi. Auditoria doble: 4 problemes
+trobats i arreglats, i un revisor independent que ho aprova tot.
+
+## 22. Marcatge ràpid amb clics i menú de variant activa
+
+*2026-08-10*
+
+A petició de l'Edanna: un menú nou (Consulta / Normal / Reverse / Holo) fa
+que el clic esquerre sobre una carta afegeixi una còpia de la variant
+activa i el clic dret en tregui una — tant a la graella com a l'àlbum, amb
+flaix de vora com a resposta visual, sacseig si la carta no té la variant
+triada, i un distintiu amb el comptador a cada butxaca de l'àlbum. En mode
+Consulta tot es comporta com abans (zoom i salt àlbum→graella). Revisat
+pels subagents: l'auditor UX no troba cap incompliment i el revisor de codi
+troba 2 detalls del flaix visual, arreglats per l'arreglador.

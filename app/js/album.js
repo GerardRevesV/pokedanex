@@ -1,9 +1,11 @@
 // album.js — vista d'àlbum realista: un carpesà obert amb dues pàgines
 // de 3×3 butxaques (18 cartes per doble pàgina), en ordre de col·lecció.
-// És una vista de CONSULTA: per marcar cartes es fa servir la graella.
+// En mode consulta un clic porta a la graella; en mode de marcatge
+// (markmode.js) el clic esquerre suma i el clic dret resta una còpia.
 
 import { t } from "./i18n.js";
-import { enTeCap } from "./collection.js";
+import { enTeCap, comptadors } from "./collection.js";
+import { modeActiu, esModeVariant } from "./markmode.js";
 
 const CARTES_PER_PAGINA = 9;  // butxaques 3×3 (estàndard dels àlbums Pokémon)
 const CARTES_PER_DOBLE = 18;  // dues pàgines obertes costat a costat
@@ -13,7 +15,8 @@ let versio = null;       // dades de la versió que es mostra
 let doble = 0;           // índex de la doble pàgina oberta (0 = la primera)
 let visible = false;     // si l'àlbum s'està veient ara mateix
 let contenidor = null;   // el bloc #album de la pàgina
-let alTriarCarta = null; // callback amb l'id de la carta clicada
+let alTriarCarta = null; // callback amb l'id de la carta clicada (consulta)
+let alMarcar = null;     // callback per marcar una carta (mode variant)
 
 const element = (id) => document.getElementById(id);
 
@@ -49,9 +52,28 @@ function crearButxaca(carta) {
     imatge.loading = "lazy";
     funda.append(imatge);
     funda.title = carta.name;
+    funda.dataset.id = carta.id; // per retrobar la funda després de repintar
     numero.textContent = formatarNumero(carta);
-    // Un clic porta a la mateixa carta a la vista de graella
-    funda.addEventListener("click", () => alTriarCarta?.(carta.id));
+
+    // Distintiu amb el comptador de la variant activa: el CSS només
+    // el mostra en mode de marcatge (l'àlbum es repinta a cada canvi)
+    const distintiu = document.createElement("span");
+    distintiu.className = "butxaca-comptador";
+    if (esModeVariant()) distintiu.textContent = comptadors(carta.id)[modeActiu()];
+    funda.append(distintiu);
+
+    // Clic esquerre: en consulta porta a la graella; en mode variant suma
+    funda.addEventListener("click", () => {
+      if (esModeVariant()) alMarcar?.(carta, +1, funda);
+      else alTriarCarta?.(carta.id);
+    });
+    // Clic dret: només en mode variant resta una còpia (i s'evita el
+    // menú contextual); en consulta el menú del navegador queda intacte
+    funda.addEventListener("contextmenu", (esdeveniment) => {
+      if (!esModeVariant()) return;
+      esdeveniment.preventDefault();
+      alMarcar?.(carta, -1, funda);
+    });
   } else {
     funda.classList.add("butxaca-funda--buida");
   }
@@ -102,10 +124,12 @@ function passarPagina(delta) {
 // ---------- Funcions públiques (les crida main.js) ----------
 
 // Lliga els botons ‹ › i les fletxes del teclat.
-// "callbackCarta" es crida amb l'id de la carta que l'usuari clica.
-export function iniciarAlbum(callbackCarta) {
+// "callbackCarta" es crida amb l'id de la carta clicada en mode consulta;
+// "callbackMarcar" es crida amb (carta, delta, node) en mode de marcatge.
+export function iniciarAlbum(callbackCarta, callbackMarcar) {
   contenidor = element("album");
   alTriarCarta = callbackCarta;
+  alMarcar = callbackMarcar;
   element("album-anterior").addEventListener("click", () => passarPagina(-1));
   element("album-seguent").addEventListener("click", () => passarPagina(1));
   // Fletxes del teclat: només amb l'àlbum visible i si no s'està escrivint
