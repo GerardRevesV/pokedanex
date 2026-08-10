@@ -1,0 +1,44 @@
+# Publica la carpeta app/ a GitHub Pages cada cop que main canvia.
+# GitHub Pages no sap publicar una subcarpeta directament: aquest fitxer
+# és la "recepta" que li diu quina carpeta és la web.
+
+name: Publica la web a GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  # Permet llançar la publicació a mà des de la pestanya Actions, si mai cal.
+  workflow_dispatch:
+
+# Permisos mínims que necessita el desplegament a Pages.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Si arriben dos canvis seguits, es publica sempre l'últim.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  publica:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.desplegament.outputs.page_url }}
+    steps:
+      - name: Descarrega el codi
+        uses: actions/checkout@v4
+
+      - name: Prepara GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Empaqueta la carpeta app/
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: app
+
+      - name: Publica
+        id: desplegament
+        uses: actions/deploy-pages@v4
