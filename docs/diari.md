@@ -174,3 +174,55 @@ s'ha desactivat l'opció fins que una versió futura porti el camp. A més,
 la branca anava un commit per darrere de `main` i el diff semblava
 esborrar una entrada de l'històric: s'ha portat la versió de `main` del
 fitxer a la branca i el diff ha quedat net.
+
+## 2026-08-11 — Fase 2.2: mode Catàleg (visualització a tot color)
+
+**Què s'ha fet:**
+- Funcionalitat demanada per l'Edanna: commutador Col·lecció / Catàleg al
+  costat del de Vista. En mode Catàleg totes les cartes es veuen a tot
+  color (graella i àlbum) i les tingudes es distingeixen amb un marc
+  daurat fi; la tria es recorda al navegador
+  (`pokedanex.displayMode`).
+- Es van fer tres propostes de disseny del marc i un jutge-planificador
+  va triar la "Vora Daurada de Mestre" (or = llenguatge propi de
+  "tinguda"; el turquesa ja vol dir interacció) amb el hover pla d'una
+  altra proposta. Una de les propostes descartades tenia CSS invàlid.
+- Implementació mínima: atribut `data-visualitzacio` al body (mateix
+  patró que el mode de marcatge), CSS nou amb `:where()` per no barallar
+  especificitats amb el flaix de marcar i el ressaltat, tres claus i18n
+  noves i cap canvi a album.js, collection.js ni markmode.js.
+
+**Eines usades:** Claude Code (planificador + executor), servidor local
+de Python i navegador integrat per verificar, git.
+
+**Costos:** 0 €.
+
+**Problemes:** el pla proposava per a les fundes de l'àlbum una capa de
+fons translúcida sota el marc daurat, però amb transparència l'or es
+veuria per tota la funda; s'ha substituït per l'equivalent opac del
+mateix color.
+
+## 2026-08-11 — Fase 2.2: zoom universal amb Ctrl+clic
+
+**Què s'ha fet:**
+- Petició de l'Edanna: Ctrl+clic (Cmd al Mac) sobre una carta obre el
+  zoom en qualsevol mode de marcatge, a la graella i a l'àlbum, sense
+  marcar cap còpia. Arregla la limitació documentada que en mode variant
+  no es podia fer zoom. El mode Consulta no canvia gens.
+- Descobribilitat: en mode de marcatge, cada carta porta un rètol
+  emergent ("Ctrl+clic: veure la carta") amb clau i18n als tres idiomes;
+  el rètol es posa i es treu en canviar de mode sense repintar la graella.
+
+**Eines usades:** Claude Code (planificador + executor), servidor local
+de Python per verificar, git.
+
+**Costos:** 0 €.
+
+**Problemes:** dos de bons, caçats pels auditors i arreglats després:
+(1) Ctrl+clic sobre un botó +/− marcava en lloc d'obrir el zoom (els
+botons aturen la propagació del clic); s'ha resolt passant la carta
+sencera als botons, i ara Ctrl+clic hi obre el zoom com a la resta de
+la carta. (2) A macOS, Ctrl+clic no genera un clic sinó el
+esdeveniment de menú contextual: sense arreglar-ho, un usuari de Mac
+que seguís el rètol hauria RESTAT una còpia en lloc de fer zoom; els
+gestors de clic dret ara detecten el Ctrl i obren el zoom també al Mac.

@@ -62,6 +62,9 @@ const TEXTOS = {
     "vista.etiqueta": "Vista",
     "vista.graella": "Graella",
     "vista.album": "Àlbum",
+    "visual.etiqueta": "Visualització",
+    "visual.colleccio": "Col·lecció",
+    "visual.cataleg": "Catàleg",
     "album.indicador": "Pàgines {primera}-{segona} de {total}",
     "album.anterior": "Doble pàgina anterior",
     "album.seguent": "Doble pàgina següent",
@@ -87,6 +90,7 @@ const TEXTOS = {
     "marcar.reverse": "Reverse",
     "marcar.holo": "Holo",
     "marcar.senseVariant": "Aquesta carta no té variant {variant}",
+    "marcar.ajudaZoom": "Ctrl+clic: veure la carta",
   },
   es: {
     "idioma.etiqueta": "Idioma",
@@ -143,6 +147,9 @@ const TEXTOS = {
     "vista.etiqueta": "Vista",
     "vista.graella": "Cuadrícula",
     "vista.album": "Álbum",
+    "visual.etiqueta": "Visualización",
+    "visual.colleccio": "Colección",
+    "visual.cataleg": "Catálogo",
     "album.indicador": "Páginas {primera}-{segona} de {total}",
     "album.anterior": "Doble página anterior",
     "album.seguent": "Doble página siguiente",
@@ -168,6 +175,7 @@ const TEXTOS = {
     "marcar.reverse": "Reverse",
     "marcar.holo": "Holo",
     "marcar.senseVariant": "Esta carta no tiene variante {variant}",
+    "marcar.ajudaZoom": "Ctrl+clic: ver la carta",
   },
   en: {
     "idioma.etiqueta": "Language",
@@ -224,6 +232,9 @@ const TEXTOS = {
     "vista.etiqueta": "View",
     "vista.graella": "Grid",
     "vista.album": "Album",
+    "visual.etiqueta": "Display",
+    "visual.colleccio": "Collection",
+    "visual.cataleg": "Catalog",
     "album.indicador": "Pages {primera}-{segona} of {total}",
     "album.anterior": "Previous spread",
     "album.seguent": "Next spread",
@@ -249,6 +260,7 @@ const TEXTOS = {
     "marcar.reverse": "Reverse",
     "marcar.holo": "Holo",
     "marcar.senseVariant": "This card has no {variant} variant",
+    "marcar.ajudaZoom": "Ctrl+click: view the card",
   },
 };
 

@@ -2,6 +2,7 @@
 // de 3×3 butxaques (18 cartes per doble pàgina), en ordre de col·lecció.
 // En mode consulta un clic obre el zoom de la carta; en mode de marcatge
 // (markmode.js) el clic esquerre suma i el clic dret resta una còpia.
+// Ctrl+clic (Cmd al Mac) obre el zoom sigui quin sigui el mode.
 
 import { t } from "./i18n.js";
 import { enTeCap, comptadors } from "./collection.js";
@@ -51,7 +52,8 @@ function crearButxaca(carta) {
     imatge.alt = carta.name;
     imatge.loading = "lazy";
     funda.append(imatge);
-    funda.title = carta.name;
+    // En mode de marcatge, recordatori que amb Ctrl+clic es veu la carta
+    funda.title = esModeVariant() ? t("marcar.ajudaZoom") : carta.name;
     funda.dataset.id = carta.id; // per retrobar la funda després de repintar
     numero.textContent = formatarNumero(carta);
 
@@ -62,8 +64,13 @@ function crearButxaca(carta) {
     if (esModeVariant()) distintiu.textContent = comptadors(carta.id)[modeActiu()];
     funda.append(distintiu);
 
-    // Clic esquerre: en consulta obre el zoom; en mode variant suma
-    funda.addEventListener("click", () => {
+    // Clic esquerre: en consulta obre el zoom; en mode variant suma.
+    // Ctrl+clic (Cmd al Mac) obre el zoom en qualsevol mode.
+    funda.addEventListener("click", (esdeveniment) => {
+      if (esdeveniment.ctrlKey || esdeveniment.metaKey) {
+        alTriarCarta?.(carta);
+        return;
+      }
       if (esModeVariant()) alMarcar?.(carta, +1, funda);
       else alTriarCarta?.(carta);
     });
@@ -71,6 +78,13 @@ function crearButxaca(carta) {
     // menú contextual); en consulta el menú del navegador queda intacte
     funda.addEventListener("contextmenu", (esdeveniment) => {
       if (!esModeVariant()) return;
+      // A macOS, Ctrl+clic no arriba com a "click" sinó com a clic dret:
+      // ha d'obrir el zoom (com el guard de Ctrl del clic esquerre), no restar
+      if (esdeveniment.ctrlKey) {
+        esdeveniment.preventDefault();
+        alTriarCarta?.(carta);
+        return;
+      }
       esdeveniment.preventDefault();
       alMarcar?.(carta, -1, funda);
     });

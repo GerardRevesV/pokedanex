@@ -367,3 +367,34 @@ d'arribar a la branca principal (entre ells dos forats de seguretat i codi
 mort que semblava correcte), i 0 € gastats en serveis. La lliçó clau per
 al treball: la persona no escriu codi, però la **revisió per capes** és el
 que fa que el resultat sigui fiable.
+
+## 29. El mode Catàleg: totes les cartes a tot color
+
+*2026-08-11*
+
+A petició de l'Edanna, un commutador nou de visualització vora el de
+Vista: el mode **Col·lecció** (l'habitual, amb les cartes que no tens
+apagades i grisoses) i el mode **Catàleg**, que il·lumina totes les
+cartes a tot color, tant a la graella com a l'àlbum, per poder gaudir
+del set sencer com en un catàleg oficial. Perquè no es perdi la lectura
+ràpida de què tens, en mode Catàleg les cartes tingudes porten un **marc
+daurat fi** (un fil d'or amb degradat, triat entre tres propostes de
+disseny: l'or crea un llenguatge propi per a "tinguda" sense confondre's
+amb el turquesa, que ja vol dir interacció a tota la web). La preferència
+es recorda al navegador i el canvi és tot CSS condicionat per un atribut
+del body — el mateix patró senzill que ja usava el menú de marcatge —,
+sense tocar ni la col·lecció ni els filtres.
+
+## 30. Ctrl+clic: el zoom des de qualsevol mode
+
+*2026-08-11*
+
+Fins ara hi havia una limitació coneguda: amb un mode de marcatge actiu
+(Normal, Reverse o Holo) no es podia obrir el zoom d'una carta, perquè el
+clic ja volia dir "suma una còpia". A petició de l'Edanna s'ha afegit una
+drecera universal: **Ctrl+clic** (Cmd al Mac) sobre una carta obre el
+zoom sempre, a la graella i a l'àlbum, sigui quin sigui el mode — i sense
+marcar res. El mode Consulta queda exactament com era (clic normal =
+zoom). Perquè la drecera es descobreixi sola, en mode de marcatge les
+cartes mostren un rètol en passar-hi el ratolí per sobre ("Ctrl+clic:
+veure la carta"), traduït als tres idiomes.
