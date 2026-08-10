@@ -281,9 +281,11 @@ function netejarFiltresDesplegables() {
 
 // ---------- Ordenació de la graella ----------
 
-// Ordre per defecte: el número de col·lecció (el mateix criteri que data.js)
+// Ordre per defecte: el número de col·lecció (el mateix criteri que data.js).
+// Comparació de text amb sentit numèric: "2" abans que "10", i els números
+// amb lletres (com "TG01" d'altres sets) no trenquen l'ordre
 function perNumero(a, b) {
-  return Number(a.number) - Number(b.number);
+  return String(a.number).localeCompare(String(b.number), undefined, { numeric: true });
 }
 
 // Preu descendent (la més cara primer); les cartes sense preu, al final
@@ -563,10 +565,11 @@ function marcarCarta(carta, delta, node) {
   let objectiu = node;
   if (!node.isConnected) {
     // Busquem un node del mateix tipus (funda o fitxa): la graella
-    // amagada també té la carta i no és la que s'ha de fer brillar
+    // amagada també té la carta i no és la que s'ha de fer brillar.
+    // CSS.escape protegeix el selector si l'id portés caràcters especials
     const selector = node.classList.contains("butxaca-funda")
-      ? `.butxaca-funda[data-id="${carta.id}"]`
-      : `.carta[data-id="${carta.id}"]`;
+      ? `.butxaca-funda[data-id="${CSS.escape(carta.id)}"]`
+      : `.carta[data-id="${CSS.escape(carta.id)}"]`;
     objectiu = document.querySelector(selector);
     if (!objectiu) return; // la carta ha sortit de la vista (filtres)
   }
@@ -729,7 +732,7 @@ function anarACartaDeLaGraella(id) {
   netejarFiltresDesplegables();    // ni cap filtre desplegable
   canviarVista("graella");
   pintarGraella();
-  const fitxa = element("graella").querySelector(`.carta[data-id="${id}"]`);
+  const fitxa = element("graella").querySelector(`.carta[data-id="${CSS.escape(id)}"]`);
   if (!fitxa) return;
   fitxa.scrollIntoView({ behavior: "smooth", block: "center" });
   // La ressaltem un moment perquè l'ull la trobi de seguida

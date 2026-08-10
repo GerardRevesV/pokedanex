@@ -324,3 +324,11 @@ incloïa marcar amb clic esquerre/dret sobre la imatge gran, però els
 revisors van descobrir que era codi impossible d'activar (el zoom només
 s'obre en mode Consulta, on no hi ha variant activa) i es va retirar,
 deixant els botons com a única via — més simple i suficient.
+
+De la mateixa revisió en van sortir quatre retocs: la fitxa del zoom ara
+fa scroll intern quan no cap a la pantalla (en finestres baixes, el × de
+dalt i el botó de sota podien quedar retallats), es retira un `id` que
+havia quedat sense ús al codi HTML, els selectors que busquen una carta
+pel seu identificador es protegeixen amb `CSS.escape`, i l'ordre per
+número de col·lecció passa a una comparació de text amb sentit numèric
+que no es trencaria amb números com "TG01" d'altres sets.
