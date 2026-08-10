@@ -122,3 +122,25 @@ git i GitHub.
 **Problemes:** cap de greu. El panell del navegador integrat no permetia
 fer captures (pestanya no visible); la verificació es va fer igualment
 per DOM amb JavaScript.
+
+## 2026-08-10 — Inici de la Fase 3: publicació a GitHub Pages
+
+**Què s'ha fet:**
+- Fet públic el repositori de GitHub (decisió D-007), després de verificar
+  que a l'historial de git no hi ha cap secret (el `config.json` amb la
+  clau de l'API no s'ha comitejat mai).
+- Creat el flux de publicació automàtica amb GitHub Actions
+  (`.github/workflows/pages.yml`, pull request #3): publica la carpeta
+  `app/` a GitHub Pages a cada canvi de `main`.
+- Verificada la web publicada en viu a
+  https://gerardrevesv.github.io/pokedanex/: les 99 cartes carreguen amb
+  preus, marcar cartes funciona i actualitza les estadístiques, zero
+  errors de consola i cap desbordament horitzontal en pantalla de mòbil
+  (375 px).
+
+**Eines usades:** Claude Code (assistent d'IA), GitHub Actions i GitHub
+Pages (gratuïts), navegador integrat per a la verificació.
+
+**Costos:** 0 €. Sessió curta.
+
+**Problemes:** cap.

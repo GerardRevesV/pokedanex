@@ -259,3 +259,17 @@ triada, i un distintiu amb el comptador a cada butxaca de l'àlbum. En mode
 Consulta tot es comporta com abans (zoom i salt àlbum→graella). Revisat
 pels subagents: l'auditor UX no troba cap incompliment i el revisor de codi
 troba 2 detalls del flaix visual, arreglats per l'arreglador.
+
+## 23. La web ja és pública a internet (GitHub Pages)
+
+*2026-08-10*
+
+Comença la Fase 3: la web es pot visitar des de qualsevol lloc a
+https://gerardrevesv.github.io/pokedanex/. Es fa amb un flux automàtic de
+GitHub Actions (`.github/workflows/pages.yml`, pull request #3) que publica
+la carpeta `app/` cada vegada que hi ha un canvi a la branca principal
+(`main`): a partir d'ara, fusionar un canvi vol dir publicar-lo. La web
+publicada es verifica en viu: carrega les 99 cartes amb els seus preus,
+marcar cartes funciona i actualitza les estadístiques a l'instant, no hi ha
+cap error de consola i en pantalla de mòbil (375 px) no apareix cap
+desbordament horitzontal.
