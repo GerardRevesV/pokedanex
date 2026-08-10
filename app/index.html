@@ -70,6 +70,17 @@
         <label for="filtre-categoria" data-i18n="filtre.categoria">Categoria</label>
         <select id="filtre-categoria"></select>
       </div>
+      <!-- Ordenació de la graella: les opcions són fixes, així el canvi
+           d'idioma les retradueix sense haver de reconstruir-les -->
+      <div class="control">
+        <label for="ordre-graella" data-i18n="ordre.etiqueta">Ordena per</label>
+        <select id="ordre-graella">
+          <option value="numero" data-i18n="ordre.numero">Número de col·lecció</option>
+          <option value="preu" data-i18n="ordre.preu">Preu (més cara primer)</option>
+          <option value="artista" data-i18n="ordre.artista">Il·lustrador (A-Z)</option>
+          <option value="pokedex" data-i18n="ordre.pokedex">Número de Pokédex</option>
+        </select>
+      </div>
       <div class="control">
         <label for="selector-versio" data-i18n="versio.etiqueta">Versió de les dades</label>
         <select id="selector-versio"></select>
@@ -123,7 +134,7 @@
 
     <!-- Zoom de carta: la imatge gran per sobre de tot (clic fora, × o Esc per tancar) -->
     <div id="zoom" class="zoom" hidden>
-      <div class="zoom-fitxa" role="dialog" aria-modal="true" aria-labelledby="zoom-nom">
+      <div id="zoom-fitxa" class="zoom-fitxa" role="dialog" aria-modal="true" aria-labelledby="zoom-nom">
         <!-- L'aria-label del botó el posa el JavaScript (canvia amb l'idioma) -->
         <button type="button" id="zoom-tancar" class="zoom-tancar">×</button>
         <img id="zoom-imatge" class="zoom-imatge" alt="">
@@ -132,6 +143,11 @@
           <span id="zoom-nom" class="zoom-nom"></span>
           <span id="zoom-raresa" class="zoom-raresa"></span>
         </div>
+        <!-- Files de comptadors per variant: les omple el JavaScript en obrir el zoom -->
+        <div id="zoom-variants" class="zoom-variants"></div>
+        <button type="button" id="zoom-graella" class="zoom-graella" data-i18n="zoom.veureGraella">
+          Veure a la graella
+        </button>
         <p class="zoom-ajuda" data-i18n="zoom.ajuda">Clic fora o tecla Esc per tancar</p>
       </div>
     </div>

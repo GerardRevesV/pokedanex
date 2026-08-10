@@ -144,3 +144,33 @@ Pages (gratuïts), navegador integrat per a la verificació.
 **Costos:** 0 €. Sessió curta.
 
 **Problemes:** cap.
+
+## 2026-08-10 — Fase 2.2: preu a cada fitxa i ordenació de la graella
+
+**Què s'ha fet:**
+- Preu orientatiu de Cardmarket a cada fitxa de la graella (variant normal
+  o la primera amb preu conegut), amb format de moneda segons l'idioma i
+  guió explicatiu quan no hi ha preu.
+- Selector d'ordenació de la graella: número de col·lecció (defecte),
+  preu descendent, il·lustrador i número de Pokédex. L'àlbum no canvia
+  mai d'ordre: representa el carpesà físic.
+- Micro-correccions: contrast WCAG AA de les pastilles «darkness» i
+  neutra, i neteja de l'estat de càrrega del zoom en tancar-lo.
+- Ronda d'arreglador: desactivada l'opció d'il·lustrador quan les dades
+  no porten el camp, i escrita la documentació de la sessió.
+- La fitxa-zoom marcable (petició de l'Edanna): el zoom s'obre també des
+  de l'àlbum i porta els comptadors − / + de totes les variants a dins,
+  més el botó «Veure a la graella». Els revisors van caçar codi mort (el
+  marcatge amb clic sobre la imatge gran era inabastable) i es va retirar.
+
+**Eines usades:** Claude Code (agents constructors + arreglador
+independent), servidor local de Python per provar, git.
+
+**Costos:** 0 €.
+
+**Problemes:** cap carta de la versió de dades 2026-08-09 porta el camp
+`artist`, així que «Ordena per il·lustrador» no tenia cap efecte visible;
+s'ha desactivat l'opció fins que una versió futura porti el camp. A més,
+la branca anava un commit per darrere de `main` i el diff semblava
+esborrar una entrada de l'històric: s'ha portat la versió de `main` del
+fitxer a la branca i el diff ha quedat net.

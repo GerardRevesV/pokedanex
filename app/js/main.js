@@ -2,7 +2,7 @@
 
 import { t, idiomaActual, canviarIdioma, aplicarTextos } from "./i18n.js";
 import { carregarLlistaVersions, carregarVersio, actualitzarDades } from "./data.js";
-import { variantsDisponibles } from "./variants.js";
+import { variantsDisponibles, preuVariant } from "./variants.js";
 import {
   comptadors, ajustar, enTeCap, subscriure,
   exportarJson, importarJson, buidar,
@@ -24,6 +24,9 @@ let vistaActiva = "graella";   // vista oberta: "graella" | "album"
 let filtreRaresa = "";
 let filtreTipus = "";
 let filtreCategoria = "";
+
+// Criteri d'ordenació de la graella (no es desa: en recarregar torna al defecte)
+let ordreGraella = "numero";
 
 const CLAU_VISTA = "pokedanex.view"; // la vista triada es recorda al navegador
 
@@ -92,6 +95,7 @@ async function triarVersio(entrada) {
     amagarMissatge();
     pintarLogotips();
     construirFiltresDesplegables(); // les opcions surten de les dades noves
+    actualitzarOpcioArtista(); // pot canviar l'ordre actiu: abans de pintar
     pintarGraella();
     pintarPeu();
     pintarBarraColleccio();
@@ -127,6 +131,26 @@ function pintarLogotips() {
 function formatarNumero(carta) {
   const total = String(versioActiva.set.printedTotal).padStart(3, "0");
   return `${carta.number.padStart(3, "0")}/${total}`;
+}
+
+// Preu orientatiu d'una carta: el de la variant normal o, si no en té,
+// el de la primera variant amb preu conegut; null si cap en té
+function preuCarta(carta) {
+  const normal = preuVariant(carta, "normal");
+  if (normal !== null) return normal;
+  for (const variant of variantsDisponibles(carta)) {
+    const preu = preuVariant(carta, variant);
+    if (preu !== null) return preu;
+  }
+  return null;
+}
+
+// Escriu un preu en euros amb el format de l'idioma actiu (ex. "1,23 €")
+function formatarPreu(valor) {
+  return new Intl.NumberFormat(idiomaActual(), {
+    style: "currency",
+    currency: "EUR",
+  }).format(valor);
 }
 
 // Una carta coincideix si la cerca apareix al nom o al número
@@ -255,18 +279,79 @@ function netejarFiltresDesplegables() {
   }
 }
 
+// ---------- Ordenació de la graella ----------
+
+// Ordre per defecte: el número de col·lecció (el mateix criteri que data.js)
+function perNumero(a, b) {
+  return Number(a.number) - Number(b.number);
+}
+
+// Preu descendent (la més cara primer); les cartes sense preu, al final
+function perPreu(a, b) {
+  const preuA = preuCarta(a);
+  const preuB = preuCarta(b);
+  if (preuA === null && preuB === null) return perNumero(a, b);
+  if (preuA === null) return 1;
+  if (preuB === null) return -1;
+  return preuB - preuA || perNumero(a, b);
+}
+
+// Il·lustrador alfabètic (segons l'idioma actiu); sense il·lustrador, al final
+function perArtista(a, b) {
+  const nomA = a.artist || null;
+  const nomB = b.artist || null;
+  if (nomA === null && nomB === null) return perNumero(a, b);
+  if (nomA === null) return 1;
+  if (nomB === null) return -1;
+  return nomA.localeCompare(nomB, idiomaActual()) || perNumero(a, b);
+}
+
+// Número de Pokédex ascendent; sense número (Entrenadors, Energies), al final
+function perPokedex(a, b) {
+  const numA = a.nationalPokedexNumbers?.[0] ?? null;
+  const numB = b.nationalPokedexNumbers?.[0] ?? null;
+  if (numA === null && numB === null) return perNumero(a, b);
+  if (numA === null) return 1;
+  if (numB === null) return -1;
+  return numA - numB || perNumero(a, b);
+}
+
+const COMPARADORS = {
+  numero: perNumero,
+  preu: perPreu,
+  artista: perArtista,
+  pokedex: perPokedex,
+};
+
+// Ordenar per il·lustrador només té sentit si les dades porten el camp
+// artist; si cap carta de la versió activa el té, desactivem l'opció
+// perquè no sembli un control espatllat (es reactiva amb dades que el portin)
+function actualitzarOpcioArtista() {
+  const selector = element("ordre-graella");
+  const opcio = selector.querySelector('option[value="artista"]');
+  const hiHaIllustradors = versioActiva.cards.some((carta) => carta.artist);
+  opcio.disabled = !hiHaIllustradors;
+  // Si l'opció desactivada era la triada, tornem a l'ordre per defecte
+  if (!hiHaIllustradors && ordreGraella === "artista") {
+    ordreGraella = "numero";
+    selector.value = "numero";
+  }
+}
+
 function pintarGraella() {
   const graella = element("graella");
   graella.innerHTML = "";
   if (!versioActiva) return;
 
   const consulta = element("cercador").value.trim().toLowerCase();
+  // filter retorna un array nou, així el sort no toca l'ordre original de
+  // versioActiva.cards (l'àlbum i les estadístiques en depenen)
   const visibles = versioActiva.cards.filter(
     (carta) =>
       coincideix(carta, consulta) &&
       passaFiltreColleccio(carta) &&
       passaFiltresDesplegables(carta),
-  );
+  ).sort(COMPARADORS[ordreGraella]);
 
   if (visibles.length === 0) {
     const buida = document.createElement("p");
@@ -307,6 +392,19 @@ function pintarGraella() {
       linia.textContent = text;
       info.append(linia);
     }
+
+    // Preu orientatiu de Cardmarket; si no se'n coneix cap, un guió
+    // amb l'explicació en passar-hi el ratolí per sobre
+    const preu = preuCarta(carta);
+    const espaiPreu = document.createElement("span");
+    espaiPreu.className = "carta-preu";
+    if (preu !== null) {
+      espaiPreu.textContent = formatarPreu(preu);
+    } else {
+      espaiPreu.textContent = "—";
+      espaiPreu.title = t("carta.sensePreu");
+    }
+    info.append(espaiPreu);
 
     info.append(crearPastillesTipus(carta));
 
@@ -509,6 +607,13 @@ function refrescarColleccio() {
     // Amb un filtre actiu, el canvi pot fer entrar o sortir cartes
     pintarGraella();
   }
+  // Si el zoom és obert, els seus comptadors també s'actualitzen en viu
+  if (!element("zoom").hidden && cartaZoom) {
+    const valors = comptadors(cartaZoom.id);
+    for (const valor of element("zoom-variants").querySelectorAll(".comptador-valor")) {
+      pintarComptador(valor, valors[valor.dataset.variant]);
+    }
+  }
   pintarBarraColleccio();
   refrescarAlbum(); // les cartes de l'àlbum també s'encenen o s'apaguen
   refrescarEstadistiques(); // progrés, valor i cost canvien amb la col·lecció
@@ -527,17 +632,25 @@ function pintarPeu() {
 
 let elementAmbFocus = null; // element per retornar-hi el focus en tancar el zoom
 let peticioZoom = 0;        // comptador per descartar imatges grans que arriben tard
+let cartaZoom = null;       // carta oberta al zoom (per marcar-la des de la fitxa)
 
-// L'aria-label del botó × canvia amb l'idioma: es posa a l'arrencada i a cada canvi
+// Textos del zoom que canvien amb l'idioma: l'aria-label del × i, si el
+// zoom és obert, les files de variants (es refan amb els noms traduïts)
 function traduirZoom() {
   element("zoom-tancar").setAttribute("aria-label", t("zoom.tancar"));
+  if (!element("zoom").hidden && cartaZoom) {
+    element("zoom-variants").replaceChildren(crearControlsVariants(cartaZoom));
+  }
 }
 
-// Obre la finestra de zoom d'una carta amb la seva imatge gran
+// Obre la finestra de zoom d'una carta: imatge gran + fitxa marcable
 function obrirZoom(carta) {
+  cartaZoom = carta;
   element("zoom-numero").textContent = formatarNumero(carta);
   element("zoom-nom").textContent = carta.name;
   element("zoom-raresa").textContent = carta.rarity ?? "";
+  // Les mateixes files de comptadors − N + que té la carta a la graella
+  element("zoom-variants").replaceChildren(crearControlsVariants(carta));
 
   // Primer la miniatura ampliada (ja és a la memòria cau del navegador);
   // la imatge gran només es demana ara, en obrir el zoom
@@ -573,7 +686,10 @@ function obrirZoom(carta) {
 function tancarZoom() {
   const zoom = element("zoom");
   if (zoom.hidden) return;
+  cartaZoom = null;
   peticioZoom++; // descarta la imatge gran si encara estava carregant
+  // Si la imatge gran encara carregava, netegem l'estat de càrrega
+  element("zoom-imatge").classList.remove("zoom-imatge--carregant");
   zoom.hidden = true;
   if (elementAmbFocus?.isConnected) elementAmbFocus.focus();
   elementAmbFocus = null;
@@ -742,6 +858,12 @@ async function iniciar() {
     });
   }
 
+  // Selector d'ordenació: canvia el criteri i repinta la graella
+  element("ordre-graella").addEventListener("change", (esdeveniment) => {
+    ordreGraella = esdeveniment.target.value;
+    pintarGraella();
+  });
+
   // Zoom d'imatge gran: es tanca amb clic fora, botó × o tecla Escape
   traduirZoom();
   element("zoom").addEventListener("click", (esdeveniment) => {
@@ -751,11 +873,29 @@ async function iniciar() {
   document.addEventListener("keydown", (esdeveniment) => {
     if (esdeveniment.key === "Escape") tancarZoom(); // no fa res si ja és tancat
     // Amb el zoom obert, Tab no ha de sortir del diàleg (els controls de
-    // darrere l'overlay no s'han de poder tocar). L'únic focalitzable és el ×.
+    // darrere l'overlay no s'han de poder tocar): cicla entre els botons
+    // de la fitxa (×, − i + de cada variant, "Veure a la graella")
     if (esdeveniment.key === "Tab" && !element("zoom").hidden) {
       esdeveniment.preventDefault();
-      element("zoom-tancar").focus();
+      const botons = [...element("zoom").querySelectorAll("button")];
+      const actual = botons.indexOf(document.activeElement);
+      const pas = esdeveniment.shiftKey ? -1 : 1;
+      // Si el focus s'ha perdut (actual = −1), tornem al primer botó
+      const seguent = actual === -1 ? 0 : (actual + pas + botons.length) % botons.length;
+      botons[seguent]?.focus();
     }
+  });
+
+  // Dins del zoom, el marcatge es fa amb els botons − i + de cada variant:
+  // el zoom només s'obre en mode consulta, així que no hi calen clics
+  // directes sobre la imatge gran (serien inabastables per l'usuari)
+
+  // Botó "Veure a la graella": tanca el zoom i ensenya la carta ressaltada
+  element("zoom-graella").addEventListener("click", () => {
+    if (!cartaZoom) return;
+    const id = cartaZoom.id; // tancarZoom esborra cartaZoom: el desem abans
+    tancarZoom();
+    anarACartaDeLaGraella(id);
   });
 
   // Panell d'estadístiques: plegat i objectiu de compleció
@@ -768,8 +908,10 @@ async function iniciar() {
   });
   aplicarModeMarcatge(modeActiu());
 
-  // Commutador de vista: graella o àlbum (es recorda al navegador)
-  iniciarAlbum(anarACartaDeLaGraella, marcarCarta);
+  // Commutador de vista: graella o àlbum (es recorda al navegador).
+  // En mode consulta, clicar una butxaca obre el zoom de la carta
+  // (des del zoom, el botó "Veure a la graella" fa el salt d'abans).
+  iniciarAlbum(obrirZoom, marcarCarta);
   element("commutador-vista").addEventListener("click", (esdeveniment) => {
     const boto = esdeveniment.target.closest("button[data-vista]");
     if (boto) canviarVista(boto.dataset.vista);

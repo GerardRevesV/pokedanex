@@ -1,6 +1,6 @@
 // album.js — vista d'àlbum realista: un carpesà obert amb dues pàgines
 // de 3×3 butxaques (18 cartes per doble pàgina), en ordre de col·lecció.
-// En mode consulta un clic porta a la graella; en mode de marcatge
+// En mode consulta un clic obre el zoom de la carta; en mode de marcatge
 // (markmode.js) el clic esquerre suma i el clic dret resta una còpia.
 
 import { t } from "./i18n.js";
@@ -15,7 +15,7 @@ let versio = null;       // dades de la versió que es mostra
 let doble = 0;           // índex de la doble pàgina oberta (0 = la primera)
 let visible = false;     // si l'àlbum s'està veient ara mateix
 let contenidor = null;   // el bloc #album de la pàgina
-let alTriarCarta = null; // callback amb l'id de la carta clicada (consulta)
+let alTriarCarta = null; // callback amb la carta clicada (mode consulta)
 let alMarcar = null;     // callback per marcar una carta (mode variant)
 
 const element = (id) => document.getElementById(id);
@@ -62,10 +62,10 @@ function crearButxaca(carta) {
     if (esModeVariant()) distintiu.textContent = comptadors(carta.id)[modeActiu()];
     funda.append(distintiu);
 
-    // Clic esquerre: en consulta porta a la graella; en mode variant suma
+    // Clic esquerre: en consulta obre el zoom; en mode variant suma
     funda.addEventListener("click", () => {
       if (esModeVariant()) alMarcar?.(carta, +1, funda);
-      else alTriarCarta?.(carta.id);
+      else alTriarCarta?.(carta);
     });
     // Clic dret: només en mode variant resta una còpia (i s'evita el
     // menú contextual); en consulta el menú del navegador queda intacte
@@ -124,7 +124,7 @@ function passarPagina(delta) {
 // ---------- Funcions públiques (les crida main.js) ----------
 
 // Lliga els botons ‹ › i les fletxes del teclat.
-// "callbackCarta" es crida amb l'id de la carta clicada en mode consulta;
+// "callbackCarta" es crida amb la carta clicada en mode consulta;
 // "callbackMarcar" es crida amb (carta, delta, node) en mode de marcatge.
 export function iniciarAlbum(callbackCarta, callbackMarcar) {
   contenidor = element("album");
@@ -135,6 +135,8 @@ export function iniciarAlbum(callbackCarta, callbackMarcar) {
   // Fletxes del teclat: només amb l'àlbum visible i si no s'està escrivint
   document.addEventListener("keydown", (esdeveniment) => {
     if (!visible) return;
+    // Amb el zoom obert, les fletxes no han de passar pàgines per darrere
+    if (!element("zoom").hidden) return;
     const etiqueta = esdeveniment.target.tagName;
     if (etiqueta === "INPUT" || etiqueta === "SELECT" || etiqueta === "TEXTAREA") return;
     if (esdeveniment.key === "ArrowLeft") passarPagina(-1);
