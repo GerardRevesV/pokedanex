@@ -29,6 +29,7 @@ let filtreCategoria = "";
 let ordreGraella = "numero";
 
 const CLAU_VISTA = "pokedanex.view"; // la vista triada es recorda al navegador
+const CLAU_VISUAL = "pokedanex.displayMode"; // el mode de visualització també
 
 const element = (id) => document.getElementById(id);
 
@@ -370,6 +371,8 @@ function pintarGraella() {
     fitxa.dataset.id = carta.id; // identificador estable (ex. sv6pt5-33)
     // Sense cap còpia, la carta es veu apagada; s'encén quan en tens alguna
     fitxa.classList.toggle("carta--pendent", !enTeCap(carta.id));
+    // En mode de marcatge, recordatori que amb Ctrl+clic es veu la carta
+    if (esModeVariant()) fitxa.title = t("marcar.ajudaZoom");
 
     const imatge = document.createElement("img");
     imatge.className = "carta-imatge";
@@ -416,11 +419,24 @@ function pintarGraella() {
     // de la variant activa. Els botons +/− queden fora (van per si sols).
     fitxa.addEventListener("click", (esdeveniment) => {
       if (!esModeVariant()) return;
+      // Ctrl+clic (Cmd al Mac): obre el zoom en lloc de marcar.
+      // (Els botons +/− aturen la propagació, però fan el mateix guard.)
+      if (esdeveniment.ctrlKey || esdeveniment.metaKey) {
+        obrirZoom(carta);
+        return;
+      }
       if (esdeveniment.target.closest(".boto-comptador")) return;
       marcarCarta(carta, +1, fitxa);
     });
     fitxa.addEventListener("contextmenu", (esdeveniment) => {
       if (!esModeVariant()) return; // en consulta, menú del navegador intacte
+      // A macOS, Ctrl+clic no arriba com a "click" sinó com a clic dret:
+      // ha d'obrir el zoom (com el guard de Ctrl del clic esquerre), no restar
+      if (esdeveniment.ctrlKey) {
+        esdeveniment.preventDefault();
+        obrirZoom(carta);
+        return;
+      }
       if (esdeveniment.target.closest(".boto-comptador")) return;
       esdeveniment.preventDefault();
       marcarCarta(carta, -1, fitxa);
@@ -481,16 +497,22 @@ function pintarComptador(espai, valor) {
   espai.classList.toggle("comptador-valor--te", valor > 0);
 }
 
-// Botó − o + d'una variant: un sol clic ajusta el comptador
-function crearBotoComptador(id, variant, delta, simbol) {
+// Botó − o + d'una variant: un sol clic ajusta el comptador.
+// Ctrl+clic (Cmd al Mac) no marca mai: fora del zoom obre la carta;
+// dins del zoom (que ja és obert) no fa res.
+function crearBotoComptador(carta, variant, delta, simbol) {
   const boto = document.createElement("button");
   boto.type = "button";
   boto.className = "boto-comptador";
   boto.textContent = simbol;
   boto.addEventListener("click", (esdeveniment) => {
     esdeveniment.stopPropagation(); // que el clic no arribi a la carta
+    if (esdeveniment.ctrlKey || esdeveniment.metaKey) {
+      if (!boto.closest("#zoom")) obrirZoom(carta);
+      return;
+    }
     // false = el canvi és viu però no s'ha pogut desar al navegador
-    if (!ajustar(id, variant, delta)) {
+    if (!ajustar(carta.id, variant, delta)) {
       mostrarMissatge("colleccio.senseEspai", true);
     }
   });
@@ -517,9 +539,9 @@ function crearControlsVariants(carta) {
 
     fila.append(
       nom,
-      crearBotoComptador(carta.id, variant, -1, "−"),
+      crearBotoComptador(carta, variant, -1, "−"),
       valor,
-      crearBotoComptador(carta.id, variant, +1, "+"),
+      crearBotoComptador(carta, variant, +1, "+"),
     );
     bloc.append(fila);
   }
@@ -544,12 +566,19 @@ function marcarCarta(carta, delta, node) {
   // El títol explica el perquè si l'usuari hi passa el ratolí per sobre.
   if (!variantsDisponibles(carta).includes(variant)) {
     if (node.classList.contains("carta--sacseig")) return;
-    const titolAntic = node.title;
     node.title = t("marcar.senseVariant", { variant: t("variant." + variant) });
     node.classList.add("carta--sacseig");
     setTimeout(() => {
       node.classList.remove("carta--sacseig");
-      node.title = titolAntic;
+      // No restaurem el títol antic a cegues: el mode pot haver canviat
+      // durant el sacseig. El recalculem segons l'estat d'ara.
+      if (esModeVariant()) {
+        node.title = t("marcar.ajudaZoom");
+      } else if (node.classList.contains("butxaca-funda")) {
+        node.title = carta.name; // la funda sempre mostra el nom en consulta
+      } else {
+        node.removeAttribute("title"); // la fitxa no en porta en consulta
+      }
     }, DURADA_EFECTE);
     return;
   }
@@ -591,6 +620,13 @@ function aplicarModeMarcatge(mode) {
   document.body.dataset.marcatge = modeActiu();
   for (const boto of element("mode-marcatge").querySelectorAll("button")) {
     boto.classList.toggle("actiu", boto.dataset.mode === modeActiu());
+  }
+  // La graella no es repinta en canviar de mode: posem o traiem en lloc
+  // el recordatori del Ctrl+clic de cada fitxa (l'àlbum sí que es repinta)
+  const ajudaZoom = esModeVariant() ? t("marcar.ajudaZoom") : "";
+  for (const fitxa of element("graella").querySelectorAll(".carta")) {
+    if (ajudaZoom) fitxa.title = ajudaZoom;
+    else fitxa.removeAttribute("title");
   }
   refrescarAlbum(); // el distintiu de les butxaques depèn del mode actiu
 }
@@ -713,6 +749,27 @@ function canviarVista(vista, desar = true) {
       magatzem()?.setItem(CLAU_VISTA, vista);
     } catch {
       // Sense espai: la vista canvia igualment, només no es recordarà
+    }
+  }
+}
+
+// ---------- Mode de visualització (col·lecció / catàleg) ----------
+
+// Aplica un mode de visualització: "colleccio" (les cartes pendents es
+// veuen apagades) o "cataleg" (totes a color, amb marc daurat a les
+// tingudes). Tot el canvi visual és CSS condicionat per l'atribut del
+// body (mateix patró que el mode de marcatge); aquí només es posa
+// l'atribut, es marca el botó actiu i es recorda la tria al navegador.
+function aplicarModeVisual(mode, desar = true) {
+  document.body.dataset.visualitzacio = mode;
+  for (const boto of element("mode-visual").querySelectorAll("button")) {
+    boto.classList.toggle("actiu", boto.dataset.visual === mode);
+  }
+  if (desar) {
+    try {
+      magatzem()?.setItem(CLAU_VISUAL, mode);
+    } catch {
+      // Sense espai: el mode canvia igualment, només no es recordarà
     }
   }
 }
@@ -889,9 +946,9 @@ async function iniciar() {
     }
   });
 
-  // Dins del zoom, el marcatge es fa amb els botons − i + de cada variant:
-  // el zoom només s'obre en mode consulta, així que no hi calen clics
-  // directes sobre la imatge gran (serien inabastables per l'usuari)
+  // El zoom es pot obrir en qualsevol mode (en consulta amb un clic; en
+  // els modes de marcatge amb Ctrl+clic). Dins del zoom, el marcatge es
+  // fa sempre amb els botons − i + de cada variant, mai clicant la imatge
 
   // Botó "Veure a la graella": tanca el zoom i ensenya la carta ressaltada
   element("zoom-graella").addEventListener("click", () => {
@@ -910,6 +967,16 @@ async function iniciar() {
     if (boto) aplicarModeMarcatge(boto.dataset.mode);
   });
   aplicarModeMarcatge(modeActiu());
+
+  // Mode de visualització: col·lecció o catàleg (es recorda al navegador).
+  // Només s'accepta el valor exacte "cataleg"; qualsevol altre (o cap)
+  // cau al mode col·lecció per defecte.
+  element("mode-visual").addEventListener("click", (esdeveniment) => {
+    const boto = esdeveniment.target.closest("button[data-visual]");
+    if (boto) aplicarModeVisual(boto.dataset.visual);
+  });
+  const visualDesada = magatzem()?.getItem(CLAU_VISUAL);
+  aplicarModeVisual(visualDesada === "cataleg" ? "cataleg" : "colleccio", false);
 
   // Commutador de vista: graella o àlbum (es recorda al navegador).
   // En mode consulta, clicar una butxaca obre el zoom de la carta

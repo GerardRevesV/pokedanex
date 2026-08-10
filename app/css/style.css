@@ -10,6 +10,8 @@
   --accent: #2fd6b5;        /* el verd-turquesa del projecte */
   --accent-text: #06231d;   /* text fosc sobre el color d'accent */
   --error: #ff7a6e;
+  --or-clar: #e8c877;       /* marc daurat del mode catàleg (to clar) */
+  --or-fosc: #9a7a3a;       /* marc daurat del mode catàleg (to fosc) */
 
   /* Colors dels tipus d'energia (pastilles de la graella).
      Els tons foscos estan triats perquè la lletra blanca hi contrasti prou
@@ -583,6 +585,79 @@ body:not([data-marcatge="consulta"]) .butxaca-comptador {
   font-size: 0.72rem;
   color: var(--text-suau);
   letter-spacing: 0.06em;
+}
+
+/* ---------- Mode Catàleg (totes les cartes a tot color) ---------- */
+
+/* El mode de visualització el posa main.js a l'atribut data-visualitzacio
+   del body (mateix patró que el mode de marcatge). En mode catàleg cap
+   carta no es veu apagada, i les que SÍ tens porten un marc daurat fi.
+   Nota: :where(...) no suma especificitat; així les regles del flaix de
+   marcar i del ressaltat (més avall) poden guanyar sense complicacions. */
+
+/* Es neutralitza l'apagat de les cartes pendents, a graella i àlbum */
+body[data-visualitzacio="cataleg"] .carta--pendent .carta-imatge,
+body[data-visualitzacio="cataleg"] .butxaca-funda--pendent img {
+  filter: none;
+  opacity: 1;
+}
+
+/* Marc daurat de les fitxes tingudes: vora transparent i fons en dues
+   capes — el fons de la carta per dins (padding-box) i el degradat d'or
+   que només es veu sota la vora (border-box) — més un halo interior suau */
+body[data-visualitzacio="cataleg"] .carta:where(:not(.carta--pendent)) {
+  border: 1.5px solid transparent;
+  background:
+    linear-gradient(var(--fons-carta), var(--fons-carta)) padding-box,
+    linear-gradient(135deg, var(--or-clar), var(--or-fosc)) border-box;
+  box-shadow: inset 0 0 10px rgba(232, 200, 119, 0.07);
+}
+
+/* El mateix fil d'or, d'1 px, a les fundes de l'àlbum amb carta tinguda.
+   La capa de dins és el color del plàstic en versió opaca (#20252e ≈ el
+   blanc translúcid de la funda sobre la pàgina): amb una capa translúcida,
+   l'or de sota es veuria per tota la funda i no només a la vora. */
+body[data-visualitzacio="cataleg"]
+  .butxaca-funda:where(:not(.butxaca-funda--pendent):not(.butxaca-funda--buida)) {
+  border: 1px solid transparent;
+  background:
+    linear-gradient(#20252e, #20252e) padding-box,
+    linear-gradient(135deg, var(--or-clar), var(--or-fosc)) border-box;
+}
+
+/* En hover, fons pla, vora del color d'accent i la mateixa ombra
+   d'elevació de sempre (el marc daurat la tapava amb la seva ombra) */
+body[data-visualitzacio="cataleg"] .carta:where(:not(.carta--pendent)):hover {
+  background: var(--fons-carta);
+  border-color: var(--accent);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.45);
+}
+
+body[data-visualitzacio="cataleg"]
+  .butxaca-funda:where(:not(.butxaca-funda--pendent):not(.butxaca-funda--buida)):hover {
+  background: rgba(255, 255, 255, 0.02);
+  border-color: var(--accent);
+}
+
+/* El flaix de marcar (+ verd / − vermell) i el ressaltat d'anar a la
+   carta han de guanyar el marc daurat: fons pla i la vora del flaix */
+body[data-visualitzacio="cataleg"] .carta--marcada,
+body[data-visualitzacio="cataleg"] .carta--ressaltada {
+  background: var(--fons-carta);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--accent);
+}
+
+body[data-visualitzacio="cataleg"] .carta--restada {
+  background: var(--fons-carta);
+  border-color: var(--error);
+  box-shadow: 0 0 0 2px var(--error);
+}
+
+/* A l'àlbum el flaix cau sobre la funda: fons del plàstic, no de fitxa */
+body[data-visualitzacio="cataleg"] .butxaca-funda.carta--marcada,
+body[data-visualitzacio="cataleg"] .butxaca-funda.carta--restada {
+  background: rgba(255, 255, 255, 0.02);
 }
 
 /* ---------- Panell d'estadístiques (plegable) ---------- */
