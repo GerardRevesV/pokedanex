@@ -231,3 +231,17 @@ objectiu de compleció canviant el cost a l'instant (12,88 € el set base;
 525,53 € el complet — les secretes són les cares) i zero errors de
 consola. La Fase 2 es tanca i s'obre el pull request perquè es revisi i
 es fusioni.
+
+## 21. La web ja és pública a internet (GitHub Pages)
+
+*2026-08-10*
+
+Comença la Fase 3: la web es pot visitar des de qualsevol lloc a
+https://gerardrevesv.github.io/pokedanex/. Es fa amb un flux automàtic de
+GitHub Actions (`.github/workflows/pages.yml`, pull request #3) que publica
+la carpeta `app/` cada vegada que hi ha un canvi a la branca principal
+(`main`): a partir d'ara, fusionar un canvi vol dir publicar-lo. La web
+publicada es verifica en viu: carrega les 99 cartes amb els seus preus,
+marcar cartes funciona i actualitza les estadístiques a l'instant, no hi ha
+cap error de consola i en pantalla de mòbil (375 px) no apareix cap
+desbordament horitzontal.

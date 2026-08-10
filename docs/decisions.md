@@ -104,3 +104,25 @@ inexistents amb comptador > 0 perquè es poguessin corregir. Descartat per
 complexitat afegida per a un cas que no surt del flux normal.
 
 **Cost:** 0 €.
+
+## D-007 · Repositori públic i publicació amb GitHub Pages
+
+**Data:** 2026-08-10
+
+**Decisió:** fer públic el repositori de GitHub i publicar la web a
+internet amb **GitHub Pages**, el servei d'allotjament gratuït del mateix
+GitHub.
+
+**Per què:** GitHub Pages en la modalitat gratuïta només funciona amb
+repositoris públics. Abans de fer el pas es va verificar que a l'historial
+de git no hi ha cap secret: el fitxer amb la clau de l'API (`config.json`)
+no s'ha comitejat mai. Fer-ho tot dins de GitHub evita donar d'alta cap
+servei nou, i que el repositori sigui públic és fins i tot un avantatge per
+al treball: qualsevol membre del tribunal pot veure el codi i tot el procés.
+
+**Alternatives considerades:** Netlify i Cloudflare Pages, que sí que
+poden publicar des de repositoris privats. Descartades perquè caldria
+crear un compte en un servei extern i no aportaven res més per a aquest
+projecte.
+
+**Cost:** 0 €.
