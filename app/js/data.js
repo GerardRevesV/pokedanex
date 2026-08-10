@@ -5,6 +5,8 @@
 //  - de navegador: les creades amb el botó "Actualitza dades" (desades a localStorage)
 // Mai se sobreescriu res: cada actualització és una versió nova amb la seva data.
 
+import { magatzem } from "./storage.js";
+
 const CLAU_VERSIONS = "pokedanex.dataVersions";
 const API_BASE = "https://api.pokemontcg.io/v2";
 const SET_ID = "sv6pt5";
@@ -28,7 +30,8 @@ const versionsEnMemoria = [];
 // Llegeix les versions desades al navegador. Cada una: {id, fetchedAt, cardCount, dades}
 function llegirVersionsLocals() {
   try {
-    const desat = JSON.parse(localStorage.getItem(CLAU_VERSIONS));
+    // Sense magatzem (galetes bloquejades) no hi ha versions desades
+    const desat = JSON.parse(magatzem()?.getItem(CLAU_VERSIONS));
     const versions = Array.isArray(desat?.versions) ? desat.versions : [];
     // Descartem les entrades malformades (p. ex. per un canvi d'esquema
     // futur): així una entrada corrupta no tomba tota la càrrega de la web
@@ -170,8 +173,10 @@ function dataLocalISO(data) {
 function desarVersioLocal(entrada) {
   const versions = llegirVersionsLocals();
   versions.push(entrada);
+  const emmagatzematge = magatzem();
+  if (!emmagatzematge) return false; // sense magatzem no es pot desar
   try {
-    localStorage.setItem(CLAU_VERSIONS, JSON.stringify({ versions }));
+    emmagatzematge.setItem(CLAU_VERSIONS, JSON.stringify({ versions }));
     return true;
   } catch {
     return false;

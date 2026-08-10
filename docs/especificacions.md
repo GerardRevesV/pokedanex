@@ -42,6 +42,11 @@ seva col·lecció i quant li costaria completar-la.
   Model heretat dels comptadors normal/foil del projecte tcg, ampliat.
 - Es compten **quantitats** (còpies), no només tinc/no tinc, amb botons
   **+ / −** directament sobre cada carta.
+- **Marcatge ràpid amb clics** (afegit a la Fase 2.1): un menú de "variant
+  activa" (Consulta / Normal / Reverse / Holo) fa que, a la graella i a
+  l'àlbum, el **clic esquerre afegeixi** una còpia de la variant activa i el
+  **clic dret en tregui** una. En mode Consulta, el clic obre el zoom de la
+  carta (graella) o salta de l'àlbum a la graella.
 - La col·lecció es desa **a l'instant al navegador** (`localStorage`), sense
   comptes. El codi separa l'**estat** (mòdul de dades) de la **interfície**
   (patró del projecte tcg que funciona bé).

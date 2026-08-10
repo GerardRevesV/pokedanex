@@ -96,6 +96,33 @@ validadors van caçar dos forats de seguretat subtils (ids "__proto__" a la
 importació) que un sol revisor hauria pogut passar per alt — la revisió en
 capes funciona.
 
+## 2026-08-10 — Fase 2.1: polits i marcatge amb clics
+
+**Què s'ha fet:**
+- Tapats els tres forats de les especificacions: zoom d'imatge gran,
+  filtres desplegables (raresa/tipus/categoria) i pastilles de color dels
+  tipus d'energia. Cada tasca amb el seu pla propi i executor.
+- Coses menors: data.js unificat amb storage.js i decisió D-006 ampliada
+  dient el comportament real (comprovat al codi abans d'escriure-ho).
+- Funcionalitat nova demanada per l'Edanna: marcatge ràpid amb clic
+  esquerre (+1) i clic dret (−1) a graella i àlbum, amb menú de variant
+  activa (Consulta/Normal/Reverse/Holo).
+- Dues rondes de revisió amb subagents a cada bloc (auditoria
+  d'especificacions/UX + revisió de codi + arreglador independent), més
+  revisor final d'ulls frescos i verificació funcional al navegador.
+  Detalls de qualitat caçats pels revisors: contrast WCAG de les
+  pastilles, atrapament del focus del zoom, curses del flaix visual.
+
+**Eines usades:** Claude Code (orquestrador + 10 agents del workflow de
+polits + 5 del de marcatge + revisor independent), navegador integrat,
+git i GitHub.
+
+**Costos:** 0 €.
+
+**Problemes:** cap de greu. El panell del navegador integrat no permetia
+fer captures (pestanya no visible); la verificació es va fer igualment
+per DOM amb JavaScript.
+
 ## 2026-08-10 — Inici de la Fase 3: publicació a GitHub Pages
 
 **Què s'ha fet:**

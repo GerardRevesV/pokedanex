@@ -10,6 +10,21 @@
   --accent: #2fd6b5;        /* el verd-turquesa del projecte */
   --accent-text: #06231d;   /* text fosc sobre el color d'accent */
   --error: #ff7a6e;
+
+  /* Colors dels tipus d'energia (pastilles de la graella).
+     Els tons foscos estan triats perquè la lletra blanca hi contrasti prou
+     (WCAG AA, mínim 4.5:1); sobre els clars la lletra es posa fosca. */
+  --tipus-grass: #4caf50;
+  --tipus-fire: #d32f2f;
+  --tipus-water: #1565c0;
+  --tipus-lightning: #f4c430;
+  --tipus-psychic: #8e44ad;
+  --tipus-fighting: #a0552f;
+  --tipus-darkness: #2b2b33;
+  --tipus-metal: #9aa4ad;
+  --tipus-dragon: #c9a227;
+  --tipus-colorless: #d8cfc0;
+  --tipus-neutre: #3a4454;
 }
 
 * {
@@ -228,6 +243,7 @@ select:focus {
   object-fit: contain;
   border-radius: 6px;
   transition: filter 0.3s ease, opacity 0.3s ease;
+  /* El cursor depèn del mode de marcatge (vegeu més avall) */
 }
 
 /* Carta sense cap còpia: apagada i grisosa; s'encén quan en tens alguna */
@@ -258,6 +274,46 @@ select:focus {
   font-size: 0.8rem;
   color: var(--text-suau);
 }
+
+/* Pastilles de color amb els tipus d'energia de la carta */
+.carta-tipus {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  margin-top: 0.2rem;
+}
+
+/* El fons neutre és el valor per defecte: un tipus desconegut cau aquí */
+.pastilla-tipus {
+  font-size: 11px;
+  padding: 0.1rem 0.45rem;
+  border-radius: 999px;
+  font-weight: 600;
+  color: #fff;
+  background: var(--tipus-neutre);
+}
+
+/* Sobre fons clars, la lletra és fosca perquè es llegeixi bé */
+.pastilla-tipus--fosca-lletra {
+  color: #111;
+}
+
+/* Fons molt foscos o neutres: una vora fina perquè no es perdin */
+.pastilla-tipus--vora {
+  border: 1px solid var(--vora);
+}
+
+.pastilla-tipus--grass { background: var(--tipus-grass); }
+.pastilla-tipus--fire { background: var(--tipus-fire); }
+.pastilla-tipus--water { background: var(--tipus-water); }
+.pastilla-tipus--lightning { background: var(--tipus-lightning); }
+.pastilla-tipus--psychic { background: var(--tipus-psychic); }
+.pastilla-tipus--fighting { background: var(--tipus-fighting); }
+.pastilla-tipus--darkness { background: var(--tipus-darkness); }
+.pastilla-tipus--metal { background: var(--tipus-metal); }
+.pastilla-tipus--dragon { background: var(--tipus-dragon); }
+.pastilla-tipus--colorless { background: var(--tipus-colorless); }
+.pastilla-tipus--neutre { background: var(--tipus-neutre); }
 
 /* Comptadors per variant (normal / reverse / holo) dins de cada carta */
 .variants {
@@ -319,6 +375,43 @@ select:focus {
   text-align: center;
   color: var(--text-suau);
   padding: 3rem 1rem;
+}
+
+/* ---------- Mode de marcatge amb clics ---------- */
+
+/* Cursors segons el mode (l'atribut data-marcatge del body el posa main.js):
+   lupa per al zoom en consulta; "copy" (acció) sobre cartes i fundes
+   plenes en mode variant, on cada clic afegeix o treu una còpia */
+body[data-marcatge="consulta"] .carta-imatge {
+  cursor: zoom-in;
+}
+
+body:not([data-marcatge="consulta"]) .carta,
+body:not([data-marcatge="consulta"]) .butxaca-funda:not(.butxaca-funda--buida) {
+  cursor: copy;
+}
+
+/* Sacseig subtil: la carta no existeix en la variant activa */
+@keyframes sacseig {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-4px); }
+  40%, 80% { transform: translateX(4px); }
+}
+
+.carta--sacseig {
+  animation: sacseig 0.35s ease;
+}
+
+/* Flaix de vora en marcar amb clic: verd en sumar, vermell en restar
+   (les classes valen tant per a la fitxa com per a la funda de l'àlbum) */
+.carta--marcada {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--accent);
+}
+
+.carta--restada {
+  border-color: var(--error);
+  box-shadow: 0 0 0 2px var(--error);
 }
 
 /* ---------- Vista d'àlbum (carpesà obert amb butxaques 3×3) ---------- */
@@ -410,6 +503,8 @@ select:focus {
   border-radius: 5px;
   overflow: hidden;
   background: rgba(255, 255, 255, 0.02);
+  /* Mateix esvaïment del flaix de marcar que a les fitxes de la graella */
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
 /* Reflex del plàstic per sobre de tot (les cartes incloses) */
@@ -448,6 +543,28 @@ select:focus {
 /* Butxaca sense carta: només el plàstic buit */
 .butxaca-funda--buida {
   border-style: dashed;
+}
+
+/* Distintiu de la butxaca amb el comptador de la variant activa;
+   només es veu en mode de marcatge (data-marcatge diferent de consulta) */
+.butxaca-comptador {
+  position: absolute;
+  right: 0.25rem;
+  bottom: 0.25rem;
+  min-width: 1.3rem;
+  padding: 0.05rem 0.3rem;
+  text-align: center;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--accent);
+  background: rgba(14, 17, 22, 0.85);
+  border: 1px solid var(--vora);
+  border-radius: 999px;
+  display: none;
+}
+
+body:not([data-marcatge="consulta"]) .butxaca-comptador {
+  display: block;
 }
 
 .butxaca-numero {
@@ -656,4 +773,96 @@ select:focus {
 .simbol-set {
   height: 1.1rem;
   width: auto;
+}
+
+/* ---------- Zoom de carta ---------- */
+
+/* Fons fosc que cobreix tota la pantalla; clicar-lo tanca el zoom */
+.zoom {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  background: rgba(0, 0, 0, 0.75);
+}
+
+/* La fitxa central: imatge gran + número, nom i raresa */
+.zoom-fitxa {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.7rem;
+  max-width: 90vw;
+  padding: 1.2rem 1.2rem 0.9rem;
+  background: var(--fons-carta);
+  border: 1px solid var(--accent);
+  border-radius: 12px;
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.6);
+}
+
+.zoom-imatge {
+  display: block;
+  max-height: 70vh;
+  max-width: 100%;
+  border-radius: 10px;
+  transition: filter 0.25s ease, opacity 0.25s ease;
+}
+
+/* Mentre arriba la imatge gran, la miniatura ampliada es veu borrosa */
+.zoom-imatge--carregant {
+  filter: blur(2px);
+  opacity: 0.7;
+}
+
+.zoom-tancar {
+  position: absolute;
+  top: 0.6rem;
+  right: 0.6rem;
+  width: 2.1rem;
+  height: 2.1rem;
+  background: var(--fons-suau);
+  color: var(--text);
+  border: 1px solid var(--vora);
+  border-radius: 50%;
+  font-size: 1.2rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.zoom-tancar:hover,
+.zoom-tancar:focus {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.zoom-info {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+}
+
+.zoom-numero {
+  color: var(--accent);
+  font-size: 0.85rem;
+  letter-spacing: 0.06em;
+}
+
+.zoom-nom {
+  font-weight: 600;
+}
+
+.zoom-raresa {
+  color: var(--text-suau);
+  font-size: 0.85rem;
+}
+
+.zoom-ajuda {
+  font-size: 0.75rem;
+  color: var(--text-suau);
 }
