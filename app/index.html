@@ -29,6 +29,23 @@
       <input id="cercador" class="cercador" type="search" autocomplete="off"
              placeholder="" data-i18n-placeholder="cerca.placeholder">
       <div class="control">
+        <span class="control-etiqueta" data-i18n="vista.etiqueta">Vista</span>
+        <!-- Commutador de vista: graella clàssica o àlbum realista -->
+        <div id="commutador-vista" class="segmentat">
+          <button type="button" class="actiu" data-vista="graella" data-i18n="vista.graella">Graella</button>
+          <button type="button" data-vista="album" data-i18n="vista.album">Àlbum</button>
+        </div>
+      </div>
+      <div class="control">
+        <span class="control-etiqueta" data-i18n="filtre.etiqueta">Col·lecció</span>
+        <!-- Filtre de col·lecció: es combina amb el cercador de text -->
+        <div id="filtre-colleccio" class="segmentat">
+          <button type="button" class="actiu" data-filtre="totes" data-i18n="filtre.totes">Totes</button>
+          <button type="button" data-filtre="tinc" data-i18n="filtre.tinc">Les tinc</button>
+          <button type="button" data-filtre="falten" data-i18n="filtre.falten">Em falten</button>
+        </div>
+      </div>
+      <div class="control">
         <label for="selector-versio" data-i18n="versio.etiqueta">Versió de les dades</label>
         <select id="selector-versio"></select>
       </div>
@@ -39,14 +56,61 @@
   </header>
 
   <main class="contingut">
+    <!-- Panell d'estadístiques plegable: progrés, valor i cost de completar (stats.js) -->
+    <section id="panell-estad" class="estad" hidden>
+      <button type="button" id="estad-capcalera" class="estad-capcalera"
+              aria-expanded="true" aria-controls="estad-cos">
+        <span data-i18n="estad.titol">Estadístiques de la col·lecció</span>
+        <span class="estad-fletxa" aria-hidden="true">▾</span>
+      </button>
+      <div id="estad-cos" class="estad-cos">
+        <div class="estad-objectiu">
+          <div class="control">
+            <label for="estad-abast" data-i18n="estad.objectiu">Objectiu de compleció</label>
+            <!-- Els textos de les opcions els posa stats.js (porten el total de cartes) -->
+            <select id="estad-abast">
+              <option value="base">Set base</option>
+              <option value="complet">Set complet</option>
+            </select>
+          </div>
+          <label class="estad-reverses">
+            <input type="checkbox" id="estad-reverses">
+            <span data-i18n="estad.ambReverses">Comptar les reverse holo</span>
+          </label>
+        </div>
+        <div id="estad-barres" class="estad-barres"></div>
+        <div id="estad-xifres" class="estad-xifres"></div>
+      </div>
+    </section>
+
     <p id="missatge" class="missatge" hidden></p>
     <div id="graella" class="graella"></div>
+
+    <!-- Vista d'àlbum: dues pàgines obertes amb butxaques 3x3 (album.js) -->
+    <section id="album" class="album" hidden>
+      <div class="album-nav">
+        <button type="button" id="album-anterior" class="album-fletxa">‹</button>
+        <span id="album-indicador" class="album-indicador"></span>
+        <button type="button" id="album-seguent" class="album-fletxa">›</button>
+      </div>
+      <div id="album-llibre" class="album-llibre"></div>
+    </section>
   </main>
 
   <footer class="peu">
-    <!-- El símbol del set l'omple el JavaScript amb la URL de les dades -->
-    <img id="simbol-set" class="simbol-set" src="" alt="" hidden>
-    <span id="peu-dades"></span>
+    <!-- Barra d'eines de la col·lecció: progrés i còpia de seguretat -->
+    <div class="eines-colleccio">
+      <span id="colleccio-total" class="colleccio-total"></span>
+      <button type="button" id="boto-exportar" class="boto-suau" data-i18n="colleccio.exportar">Exportar</button>
+      <button type="button" id="boto-importar" class="boto-suau" data-i18n="colleccio.importar">Importar</button>
+      <button type="button" id="boto-buidar" class="boto-suau boto-suau--perill" data-i18n="colleccio.buidar">Buidar</button>
+      <input id="fitxer-importar" type="file" accept=".json,application/json" hidden>
+    </div>
+    <div class="peu-fila">
+      <!-- El símbol del set l'omple el JavaScript amb la URL de les dades -->
+      <img id="simbol-set" class="simbol-set" src="" alt="" hidden>
+      <span id="peu-dades"></span>
+    </div>
   </footer>
 
   <script type="module" src="js/main.js"></script>

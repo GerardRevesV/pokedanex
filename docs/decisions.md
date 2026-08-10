@@ -80,3 +80,27 @@ requests queden guardats a GitHub per sempre i són una evidència
 excel·lent del procés per al treball de recerca.
 
 **Cost:** 0 €.
+
+## D-006 · Importar còpies d'una variant que la carta no té: s'accepta i no es mostra
+
+**Data:** 2026-08-09
+
+**Decisió:** en importar una còpia de seguretat, es valida que cada variant
+sigui una de les tres conegudes (normal, reverse, holo), però NO es comprova
+si aquella carta concreta existeix de debò en aquella variant. Si un fitxer
+editat a mà diu que tens una carta en una variant que no existeix (p. ex.
+"holo" d'una carta que només surt en normal i reverse), la dada es guarda
+però la graella no la mostra (només pinta les variants reals de cada carta)
+i el càlcul de valor tampoc no la compta.
+
+**Per què:** el flux normal (exportar des de la web i tornar a importar) mai
+no pot produir aquest cas; només passa amb fitxers manipulats a mà. Per
+comprovar-ho caldria que el mòdul de la col·lecció conegués les dades de les
+cartes, i això trencaria la separació "estat / dades / interfície" que fa el
+codi fàcil d'explicar. S'accepta el cas límit i es deixa apuntat aquí.
+
+**Alternatives considerades:** pintar a la graella també les variants
+inexistents amb comptador > 0 perquè es poguessin corregir. Descartat per
+complexitat afegida per a un cas que no surt del flux normal.
+
+**Cost:** 0 €.

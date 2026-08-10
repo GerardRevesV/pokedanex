@@ -44,7 +44,11 @@ document d'especificacions.
 
 **Lliurable:** projecte que s'executa en local amb una pàgina inicial.
 
-## Fase 2 — Funcionalitats principals ⬜
+## Fase 2 — Funcionalitats principals ✅
+
+> Tancada el 9 d'agost. CardTrader estudiat i posposat (vegeu
+> docs/recerca-cardtrader.md); s'adoptarà si cal quan es poleixi el bloc
+> de preus.
 
 **Objectiu:** construir el cor de la web, per ordre de prioritat.
 

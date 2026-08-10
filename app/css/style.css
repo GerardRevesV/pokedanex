@@ -18,6 +18,11 @@
   padding: 0;
 }
 
+/* Un element amb l'atribut hidden mai no es veu, ni que tingui display propi */
+[hidden] {
+  display: none !important;
+}
+
 body {
   background: var(--fons);
   color: var(--text);
@@ -81,7 +86,8 @@ body {
   gap: 0.25rem;
 }
 
-.control label {
+.control label,
+.control .control-etiqueta {
   font-size: 0.75rem;
   color: var(--text-suau);
   text-transform: uppercase;
@@ -133,6 +139,39 @@ select:focus {
 .boto-accent:disabled {
   opacity: 0.5;
   cursor: wait;
+}
+
+/* Botons segmentats del filtre de col·lecció (Totes / Les tinc / Em falten) */
+.segmentat {
+  display: flex;
+}
+
+.segmentat button {
+  background: var(--fons-suau);
+  color: var(--text-suau);
+  border: 1px solid var(--vora);
+  padding: 0.5rem 0.9rem;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.segmentat button:first-child {
+  border-radius: 8px 0 0 8px;
+}
+
+.segmentat button:last-child {
+  border-radius: 0 8px 8px 0;
+}
+
+.segmentat button + button {
+  border-left: none;
+}
+
+.segmentat button.actiu {
+  background: var(--accent);
+  color: var(--accent-text);
+  border-color: var(--accent);
+  font-weight: 600;
 }
 
 /* ---------- Contingut ---------- */
@@ -188,6 +227,13 @@ select:focus {
   aspect-ratio: 63 / 88;   /* proporció real d'una carta Pokémon */
   object-fit: contain;
   border-radius: 6px;
+  transition: filter 0.3s ease, opacity 0.3s ease;
+}
+
+/* Carta sense cap còpia: apagada i grisosa; s'encén quan en tens alguna */
+.carta--pendent .carta-imatge {
+  filter: grayscale(1);
+  opacity: 0.45;
 }
 
 .carta-info {
@@ -213,6 +259,61 @@ select:focus {
   color: var(--text-suau);
 }
 
+/* Comptadors per variant (normal / reverse / holo) dins de cada carta */
+.variants {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: 0.1rem 0.2rem 0.2rem;
+}
+
+.variant-fila {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.variant-nom {
+  flex: 1;
+  font-size: 0.78rem;
+  color: var(--text-suau);
+}
+
+.boto-comptador {
+  width: 1.7rem;
+  height: 1.7rem;
+  background: var(--fons-suau);
+  color: var(--text);
+  border: 1px solid var(--vora);
+  border-radius: 6px;
+  font-size: 1rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.boto-comptador:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.comptador-valor {
+  min-width: 1.5rem;
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--text-suau);
+}
+
+.comptador-valor--te {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+/* Carta ressaltada un instant en arribar-hi des de l'àlbum */
+.carta--ressaltada {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--accent);
+}
+
 .graella-buida {
   grid-column: 1 / -1;
   text-align: center;
@@ -220,17 +321,336 @@ select:focus {
   padding: 3rem 1rem;
 }
 
+/* ---------- Vista d'àlbum (carpesà obert amb butxaques 3×3) ---------- */
+
+.album {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.album-nav {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.album-fletxa {
+  width: 2.4rem;
+  height: 2.4rem;
+  background: var(--fons-suau);
+  color: var(--text);
+  border: 1px solid var(--vora);
+  border-radius: 50%;
+  font-size: 1.4rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.album-fletxa:hover:not(:disabled) {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.album-fletxa:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.album-indicador {
+  min-width: 10rem;
+  text-align: center;
+  color: var(--text-suau);
+  font-size: 0.9rem;
+}
+
+/* El carpesà: coberta fosca amb les dues pàgines obertes a dins */
+.album-llibre {
+  display: flex;
+  gap: 0.4rem;
+  padding: 1.1rem;
+  background: linear-gradient(145deg, #232a36, #10151d);
+  border: 1px solid var(--vora);
+  border-radius: 14px;
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.5);
+}
+
+.album-pagina {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(90px, 130px));
+  gap: 0.55rem;
+  padding: 0.8rem;
+  background: #1a2029;
+  border: 1px solid var(--vora);
+}
+
+/* Ombra cap al llom central, com un llibre obert de veritat */
+.album-pagina:first-child {
+  border-radius: 8px 3px 3px 8px;
+  box-shadow: inset -14px 0 18px -14px rgba(0, 0, 0, 0.8);
+}
+
+.album-pagina:last-child {
+  border-radius: 3px 8px 8px 3px;
+  box-shadow: inset 14px 0 18px -14px rgba(0, 0, 0, 0.8);
+}
+
+.butxaca {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+/* La funda de plàstic de cada butxaca */
+.butxaca-funda {
+  position: relative;
+  aspect-ratio: 63 / 88;   /* proporció real d'una carta Pokémon */
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 5px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+/* Reflex del plàstic per sobre de tot (les cartes incloses) */
+.butxaca-funda::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  background: linear-gradient(120deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0) 45%);
+}
+
+.butxaca-funda img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: filter 0.3s ease, opacity 0.3s ease;
+}
+
+/* Amb carta a dins, la funda és clicable (porta a la graella) */
+.butxaca-funda:not(.butxaca-funda--buida) {
+  cursor: pointer;
+}
+
+.butxaca-funda:not(.butxaca-funda--buida):hover {
+  border-color: var(--accent);
+}
+
+/* Mateix llenguatge que la graella: carta que no tens, apagada i grisosa */
+.butxaca-funda--pendent img {
+  filter: grayscale(1);
+  opacity: 0.45;
+}
+
+/* Butxaca sense carta: només el plàstic buit */
+.butxaca-funda--buida {
+  border-style: dashed;
+}
+
+.butxaca-numero {
+  min-height: 0.9rem;
+  text-align: center;
+  font-size: 0.72rem;
+  color: var(--text-suau);
+  letter-spacing: 0.06em;
+}
+
+/* ---------- Panell d'estadístiques (plegable) ---------- */
+
+.estad {
+  margin-bottom: 1.5rem;
+  background: var(--fons-carta);
+  border: 1px solid var(--vora);
+  border-radius: 10px;
+}
+
+/* Tota la capçalera del panell és el botó de plegar/desplegar */
+.estad-capcalera {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+  background: none;
+  color: var(--text);
+  border: none;
+  padding: 0.85rem 1.1rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.estad-capcalera:hover {
+  color: var(--accent);
+}
+
+/* La fletxa gira quan el panell està plegat */
+.estad-fletxa {
+  color: var(--text-suau);
+  transition: transform 0.2s ease;
+}
+
+.estad--tancat .estad-fletxa {
+  transform: rotate(-90deg);
+}
+
+.estad-cos {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1.6rem;
+  padding: 0 1.1rem 1.1rem;
+}
+
+/* Controls de l'objectiu de compleció (abast + casella de reverses) */
+.estad-objectiu {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  min-width: 220px;
+}
+
+.estad-reverses {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.9rem;
+  color: var(--text-suau);
+  cursor: pointer;
+}
+
+.estad-reverses input {
+  accent-color: var(--accent);
+}
+
+/* Barres de progrés */
+.estad-barres {
+  flex: 1;
+  min-width: 260px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.estad-barra {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  font-size: 0.85rem;
+}
+
+.estad-barra-nom {
+  width: 7.5rem;
+  color: var(--text-suau);
+}
+
+.estad-pista {
+  flex: 1;
+  height: 0.55rem;
+  background: var(--fons-suau);
+  border: 1px solid var(--vora);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.estad-ple {
+  height: 100%;
+  background: var(--accent);
+  border-radius: inherit;
+  transition: width 0.3s ease;
+}
+
+.estad-barra-xifres {
+  min-width: 3.4rem;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Les dues xifres estrella: valor de la col·lecció i cost de completar */
+.estad-xifres {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.6rem;
+}
+
+.estad-xifra {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  min-width: 180px;
+}
+
+.estad-xifra-nom {
+  font-size: 0.78rem;
+  color: var(--text-suau);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.estad-xifra-valor {
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.estad-xifra-nota {
+  font-size: 0.78rem;
+  color: var(--text-suau);
+}
+
 /* ---------- Peu ---------- */
 
 .peu {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 0.6rem;
+  gap: 0.7rem;
   padding: 1.2rem;
   border-top: 1px solid var(--vora);
   color: var(--text-suau);
   font-size: 0.85rem;
+}
+
+.peu-fila {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+/* Barra d'eines de la col·lecció (progrés + exportar/importar/buidar) */
+.eines-colleccio {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.colleccio-total {
+  color: var(--text);
+  margin-right: 0.4rem;
+}
+
+.boto-suau {
+  background: var(--fons-suau);
+  color: var(--text);
+  border: 1px solid var(--vora);
+  border-radius: 8px;
+  padding: 0.4rem 0.9rem;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.boto-suau:hover {
+  border-color: var(--accent);
+}
+
+.boto-suau--perill:hover {
+  border-color: var(--error);
+  color: var(--error);
 }
 
 .simbol-set {

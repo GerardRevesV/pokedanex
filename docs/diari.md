@@ -71,3 +71,27 @@ arreglat), navegador integrat, git i GitHub.
 
 **Problemes:** cap de nou; queda apuntat que els preus de Cardmarket dins
 l'API poden anar endarrerits (s'estudiarà CardTrader a la Fase 2).
+
+## 2026-08-09 — Fase 2: col·lecció, àlbum i estadístiques
+
+**Què s'ha fet:**
+- Construït el cor de la web amb l'equip d'agents en 4 blocs: estat de la
+  col·lecció (comptadors per variant normal/reverse/holo, exportar/importar/
+  buidar), marcatge a la graella (+/− d'un clic, cartes apagades, filtres),
+  vista d'àlbum de carpesà (dues pàgines 3×3 amb navegació) i panell
+  d'estadístiques (valor, cost de completar i objectiu triable).
+- En paral·lel, recerca de l'API de CardTrader: viable i gratuïta però
+  posposada (docs/recerca-cardtrader.md).
+- Doble revisió: 6 problemes trobats i arreglats (2 de seguretat subtils a
+  la importació de JSON) + revisor independent amb veredicte net.
+- Verificació funcional al navegador i pull request de la Fase 2.
+
+**Eines usades:** Claude Code (orquestrador + 8 agents del workflow + 1
+revisor independent), navegador integrat, git i GitHub.
+
+**Costos:** 0 €.
+
+**Problemes:** cap de nou. Detall interessant per al treball: els
+validadors van caçar dos forats de seguretat subtils (ids "__proto__" a la
+importació) que un sol revisor hauria pogut passar per alt — la revisió en
+capes funciona.
