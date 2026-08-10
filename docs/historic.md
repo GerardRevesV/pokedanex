@@ -273,3 +273,20 @@ publicada es verifica en viu: carrega les 99 cartes amb els seus preus,
 marcar cartes funciona i actualitza les estadístiques a l'instant, no hi ha
 cap error de consola i en pantalla de mòbil (375 px) no apareix cap
 desbordament horitzontal.
+
+## 24. Repositori públic, republicació automàtica comprovada i adreça en estudi
+
+*2026-08-10*
+
+Tres passos que completen l'entrada anterior. Primer: per poder fer servir
+GitHub Pages gratuït calia que el repositori fos públic, i abans de fer el
+pas es va verificar que a tot l'historial de canvis no hi hagués cap secret
+(la clau de l'API mai no s'ha pujat); el detall és a la decisió D-007.
+Segon: es comprova que el flux automàtic funciona de debò — en fusionar la
+Fase 2.1, la web pública s'ha republicat sola i al cap d'un minut ja
+mostrava els filtres nous i el menú de marcatge, sense haver de tocar res.
+I tercer: s'estudia com fer que l'adreça de la web no porti el nom personal
+del compte: la proposta és crear una organització gratuïta de GitHub
+anomenada «pokedanex» (nom comprovat: és lliure) i traslladar-hi el
+repositori, cosa que donaria l'adreça https://pokedanex.github.io/. La
+decisió queda pendent.
