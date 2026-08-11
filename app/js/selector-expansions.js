@@ -29,9 +29,11 @@ function crearFila(conjunt, idActiu) {
   fila.setAttribute("aria-selected", activa ? "true" : "false");
   if (activa) fila.title = t("expansions.activa");
 
+  // El logotip del set (l'art reconeixible); el symbol.png oficial dels
+  // sets moderns és només un requadre amb el codi, massa pobre per al menú
   const simbol = document.createElement("img");
   simbol.className = "expansio-simbol";
-  simbol.src = conjunt.images?.symbol ?? "";
+  simbol.src = conjunt.images?.logo ?? conjunt.images?.symbol ?? "";
   simbol.alt = "";
   simbol.loading = "lazy";
 

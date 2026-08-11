@@ -990,8 +990,8 @@ body[data-visualitzacio="cataleg"] .butxaca-funda.carta--restada {
 
 .expansio-simbol {
   flex: none;
-  width: 24px;
-  height: 24px;
+  width: 76px;
+  height: 42px;
   object-fit: contain;
 }
 
