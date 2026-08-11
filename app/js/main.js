@@ -10,11 +10,14 @@ import {
   comptadors, ajustar, enTeCap, subscriure,
   exportarJson, importarJson, buidar,
 } from "./collection.js";
-import { iniciarAlbum, carregarAlbum, mostrarAlbum, refrescarAlbum } from "./album.js";
+import {
+  iniciarAlbum, carregarAlbum, mostrarAlbum, refrescarAlbum, actualitzarButxaques,
+} from "./album.js";
 import { iniciarSelectorExpansions } from "./selector-expansions.js";
 import { aplicarTema } from "./temes.js";
 import { iniciarEstadistiques, carregarEstadistiques, refrescarEstadistiques } from "./stats.js";
 import { modeActiu, canviarMode, esModeVariant } from "./markmode.js";
+import { afegirTocLlarg, clicDeTocLlarg } from "./tocllarg.js";
 import { magatzem } from "./storage.js";
 
 // Estat de la pàgina
@@ -37,18 +40,40 @@ let ordreGraella = "numero";
 const CLAU_VISTA = "pokedanex.view"; // la vista triada es recorda al navegador
 const CLAU_VISUAL = "pokedanex.displayMode"; // el mode de visualització també
 
+// Pantalla tàctil (dit en lloc de ratolí): alguns comportaments canvien
+// una mica, sempre de manera additiva (l'escriptori no perd res)
+const esTactil = window.matchMedia("(pointer: coarse)");
+
 const element = (id) => document.getElementById(id);
 
 // ---------- Missatges d'estat ----------
 
+// En tàctil el missatge flota fix a baix de la pantalla: els avisos
+// puntuals s'amaguen sols al cap d'un moment (a escriptori el missatge
+// és un bloc estàtic de dalt i no tapa res: es queda com sempre)
+const CLAUS_MISSATGE_PUNTUAL = new Set([
+  "actualitza.fet", "actualitza.senseEspai",
+  "colleccio.importada", "colleccio.importError", "colleccio.senseEspai",
+  "marcar.senseVariant", "marcar.ajudaTocLlarg",
+]);
+let temporitzadorMissatge = null;
+
 // Rep la clau de traducció (no el text) per poder retraduir el missatge
-// si l'usuari canvia d'idioma mentre encara és visible.
-function mostrarMissatge(clau, esError = false) {
-  missatgeActual = { clau, esError };
+// si l'usuari canvia d'idioma mentre encara és visible. "parametres" són
+// els valors que la traducció insereix (ex. {variant}), si en té.
+function mostrarMissatge(clau, esError = false, parametres = undefined) {
+  missatgeActual = { clau, esError, parametres };
   const missatge = element("missatge");
-  missatge.textContent = t(clau);
+  missatge.textContent = t(clau, parametres);
   missatge.classList.toggle("missatge--error", esError);
   missatge.hidden = false;
+  // El temporitzador anterior no ha d'amagar un missatge nou
+  clearTimeout(temporitzadorMissatge);
+  if (esTactil.matches && CLAUS_MISSATGE_PUNTUAL.has(clau)) {
+    temporitzadorMissatge = setTimeout(() => {
+      if (missatgeActual?.clau === clau) amagarMissatge();
+    }, 4000);
+  }
 }
 
 function amagarMissatge() {
@@ -152,12 +177,21 @@ function preuCarta(carta) {
   return null;
 }
 
-// Escriu un preu en euros amb el format de l'idioma actiu (ex. "1,23 €")
+// Escriu un preu en euros amb el format de l'idioma actiu (ex. "1,23 €").
+// El formatador es construeix UN cop i es reutilitza (crear-ne un per
+// carta a cada repintat costava desenes de ms en un mòbil modest);
+// només es refà si l'idioma canvia.
+let formatadorPreu = null;
+let idiomaFormatador = null;
 function formatarPreu(valor) {
-  return new Intl.NumberFormat(idiomaActual(), {
-    style: "currency",
-    currency: "EUR",
-  }).format(valor);
+  if (idiomaFormatador !== idiomaActual()) {
+    idiomaFormatador = idiomaActual();
+    formatadorPreu = new Intl.NumberFormat(idiomaFormatador, {
+      style: "currency",
+      currency: "EUR",
+    });
+  }
+  return formatadorPreu.format(valor);
 }
 
 // Una carta coincideix si la cerca apareix al nom o al número
@@ -378,13 +412,17 @@ function pintarGraella() {
     // Sense cap còpia, la carta es veu apagada; s'encén quan en tens alguna
     fitxa.classList.toggle("carta--pendent", !enTeCap(carta.id));
     // En mode de marcatge, recordatori que amb Ctrl+clic es veu la carta
-    if (esModeVariant()) fitxa.title = t("marcar.ajudaZoom");
+    // (en tàctil no: no hi ha Ctrl, i el title tampoc no es veuria)
+    if (esModeVariant() && !esTactil.matches) fitxa.title = t("marcar.ajudaZoom");
 
     const imatge = document.createElement("img");
     imatge.className = "carta-imatge";
+    // lazy i decoding ABANS de src: si s'assignen després, la petició ja
+    // ha sortit amb l'estat per defecte (eager) i el lazy no fa res
+    imatge.loading = "lazy";
+    imatge.decoding = "async";
     imatge.src = carta.images.small;
     imatge.alt = carta.name;
-    imatge.loading = "lazy";
     // Un clic a la imatge obre el zoom, però només en mode consulta:
     // en mode variant el clic el gestiona la fitxa sencera (més avall)
     imatge.addEventListener("click", () => {
@@ -431,11 +469,27 @@ function pintarGraella() {
         obrirZoom(carta);
         return;
       }
+      // En tàctil, un toc dins del bloc de variants que no encerta cap
+      // botó (el número, el nom, l'espai entre files) no fa res: si
+      // arribés a la fitxa sumaria una còpia de la variant del MODE
+      // actiu, que pot no ser la de la fila on s'apuntava
+      if (esTactil.matches && esdeveniment.target.closest(".variants")) return;
       if (esdeveniment.target.closest(".boto-comptador")) return;
+      // El clic que arriba en aixecar el dit d'un toc llarg no ha de sumar
+      if (clicDeTocLlarg(fitxa)) return;
       marcarCarta(carta, +1, fitxa);
     });
+    // En tàctil, el toc llarg (mig segon quiet) obre el zoom en mode de
+    // marcatge: l'equivalent del Ctrl+clic, que amb el dit no existeix
+    if (esTactil.matches) afegirTocLlarg(fitxa, () => obrirZoom(carta));
     fitxa.addEventListener("contextmenu", (esdeveniment) => {
       if (!esModeVariant()) return; // en consulta, menú del navegador intacte
+      // En tàctil, el toc llarg dispara aquest esdeveniment (Android): no
+      // ha de restar per accident — per restar hi ha els botons − de sota
+      if (esTactil.matches) {
+        esdeveniment.preventDefault();
+        return;
+      }
       // A macOS, Ctrl+clic no arriba com a "click" sinó com a clic dret:
       // ha d'obrir el zoom (com el guard de Ctrl del clic esquerre), no restar
       if (esdeveniment.ctrlKey) {
@@ -573,12 +627,17 @@ function marcarCarta(carta, delta, node) {
   if (!variantsDisponibles(carta).includes(variant)) {
     if (node.classList.contains("carta--sacseig")) return;
     node.title = t("marcar.senseVariant", { variant: t("variant." + variant) });
+    // En tàctil el title no es veu mai: el motiu es mostra també com a
+    // missatge d'estat (mostrarMissatge ja l'amaga sol al cap d'un moment)
+    if (esTactil.matches) {
+      mostrarMissatge("marcar.senseVariant", true, { variant: t("variant." + variant) });
+    }
     node.classList.add("carta--sacseig");
     setTimeout(() => {
       node.classList.remove("carta--sacseig");
       // No restaurem el títol antic a cegues: el mode pot haver canviat
       // durant el sacseig. El recalculem segons l'estat d'ara.
-      if (esModeVariant()) {
+      if (esModeVariant() && !esTactil.matches) {
         node.title = t("marcar.ajudaZoom");
       } else if (node.classList.contains("butxaca-funda")) {
         node.title = carta.name; // la funda sempre mostra el nom en consulta
@@ -628,11 +687,18 @@ function aplicarModeMarcatge(mode) {
     boto.classList.toggle("actiu", boto.dataset.mode === modeActiu());
   }
   // La graella no es repinta en canviar de mode: posem o traiem en lloc
-  // el recordatori del Ctrl+clic de cada fitxa (l'àlbum sí que es repinta)
-  const ajudaZoom = esModeVariant() ? t("marcar.ajudaZoom") : "";
+  // el recordatori del Ctrl+clic de cada fitxa (l'àlbum sí que es repinta).
+  // En tàctil el recordatori seria fals (no hi ha Ctrl): no es posa mai.
+  const ajudaZoom = esModeVariant() && !esTactil.matches ? t("marcar.ajudaZoom") : "";
   for (const fitxa of element("graella").querySelectorAll(".carta")) {
     if (ajudaZoom) fitxa.title = ajudaZoom;
     else fitxa.removeAttribute("title");
+  }
+  // En tàctil, el toc llarg (l'equivalent del Ctrl+clic) no es veu enlloc:
+  // en entrar en un mode de marcatge, una pista flotant l'anuncia
+  // (mostrarMissatge l'amaga sol al cap d'un moment)
+  if (esModeVariant() && esTactil.matches) {
+    mostrarMissatge("marcar.ajudaTocLlarg");
   }
   refrescarAlbum(); // el distintiu de les butxaques depèn del mode actiu
 }
@@ -660,7 +726,9 @@ function refrescarColleccio() {
     }
   }
   pintarBarraColleccio();
-  refrescarAlbum(); // les cartes de l'àlbum també s'encenen o s'apaguen
+  // Les butxaques de l'àlbum s'encenen o s'apaguen EN LLOC, sense
+  // reconstruir la pàgina sencera (repintar recreava 9-18 <img> per toc)
+  actualitzarButxaques();
   refrescarEstadistiques(); // progrés, valor i cost canvien amb la col·lecció
 }
 
@@ -924,6 +992,12 @@ async function iniciar() {
   // Tema de colors abans del primer pintat: amb l'id desat al navegador,
   // sense esperar sets.json (així no hi ha flaix turquesa → lila en obrir)
   aplicarTema(setActiuDesat());
+  // En tàctil, l'ajuda del zoom no pot prometre la tecla Esc (no n'hi ha):
+  // es canvia la clau de traducció abans del primer aplicarTextos, i els
+  // canvis d'idioma posteriors ja faran servir la versió tàctil
+  if (esTactil.matches) {
+    element("zoom-ajuda").dataset.i18n = "zoom.ajudaTactil";
+  }
   aplicarTextos();
   element("selector-idioma").value = idiomaActual();
 
@@ -939,11 +1013,40 @@ async function iniciar() {
     refrescarEstadistiques(); // i els textos i formats del panell d'estadístiques
     traduirZoom(); // l'aria-label del botó de tancar el zoom també es tradueix
     // Si hi ha un missatge d'estat visible, també el retraduïm
-    if (missatgeActual) mostrarMissatge(missatgeActual.clau, missatgeActual.esError);
+    if (missatgeActual) {
+      mostrarMissatge(missatgeActual.clau, missatgeActual.esError, missatgeActual.parametres);
+    }
   });
 
-  // El cercador filtra en escriure
-  element("cercador").addEventListener("input", pintarGraella);
+  // El cercador filtra en escriure. En tàctil, un petit retard (150 ms)
+  // agrupa les tecles seguides: reconstruir la graella sencera (fins a
+  // 180 fitxes) a cada tecla feia anar el teclat a batzegades.
+  // A escriptori no canvia res: el filtre continua sent immediat.
+  let temporitzadorCerca = null;
+  element("cercador").addEventListener("input", () => {
+    if (!esTactil.matches) {
+      pintarGraella();
+      return;
+    }
+    clearTimeout(temporitzadorCerca);
+    temporitzadorCerca = setTimeout(pintarGraella, 150);
+  });
+
+  // En tàctil, el missatge flotant es pot tancar amb un toc (els estats
+  // de càrrega no: desapareixen sols quan la feina acaba)
+  element("missatge").addEventListener("click", () => {
+    if (!esTactil.matches || !missatgeActual) return;
+    if (missatgeActual.clau === "actualitza.enCurs") return;
+    if (missatgeActual.clau === "graella.carregant") return;
+    amagarMissatge();
+  });
+
+  // Botó "Filtres i opcions" (només es veu en mòbil, el CSS l'amaga a
+  // escriptori): plega i desplega el gruix de controls de la capçalera
+  element("boto-filtres").addEventListener("click", () => {
+    const obert = element("bloc-filtres").classList.toggle("bloc-filtres--obert");
+    element("boto-filtres").setAttribute("aria-expanded", obert ? "true" : "false");
+  });
 
   // Filtre de col·lecció: Totes / Les tinc / Em falten
   element("filtre-colleccio").addEventListener("click", (esdeveniment) => {

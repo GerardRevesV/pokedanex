@@ -272,6 +272,26 @@ integrat, git.
 port alternatiu (8001) perquè el 8000 estava ocupat per una altra
 sessió.
 
+## 2026-08-11 — Campanya de visibilitat mòbil
+
+**Què s'ha fet:**
+- 3 cicles de 8 exploradors + arreglador + revisor (30 agents en total):
+  89 problemes de mòbil trobats amb càlculs demostrables i arreglats,
+  sempre dins de media queries per no tocar l'escriptori.
+- Millores estrella: àlbum d'una pàgina en mòbil, capçalera compacta,
+  botó × al Compendi, botonet de restar a l'àlbum, toc llarg per obrir
+  el zoom, objectius tàctils de 44px i respecte per reduced-motion.
+
+**Eines usades:** Claude Code (workflow de 30 agents), càlculs WCAG i
+d'amplades a mà, git (worktree separat per no interferir amb la sessió
+paral·lela d'expansions).
+
+**Costos:** 0 €.
+
+**Problemes:** la sessió paral·lela va canviar la branca del repositori a
+mig vol i l'arbre de treball barrejava les dues feines; s'ha resolt
+comitejant els fitxers mòbils des d'un worktree separat de git.
+
 ## 2026-08-11 — Dotze expansions noves: de Shrouded Fable fins avui
 
 **Què s'ha fet:**
