@@ -480,3 +480,17 @@ fent que `fetch_data.py` usi els **logotips de TCGdex**, una font
 alternativa oberta, mentre no arribi l'art oficial. La llista del
 Compendi ja feia scroll per dins del panell, així que el menú aguanta
 el creixement sense cap canvi.
+
+## 36. Nou document «Reptes»: les dificultats, explicades per al treball
+
+*2026-08-11*
+
+Es crea `docs/reptes.md`, el germà de l'històric però amb la funció
+inversa: si l'històric diu QUÈ hem fet, els Reptes diuen QUÈ HA COSTAT.
+Recull els processos que han estat difícils de fer o d'entendre per a
+una persona que no programa, explicats en un o dos paràgrafs de prosa
+acabada, a punt per copiar al treball escrit. S'estrena amb cinc reptes
+recuperats del passat del projecte — de l'API que fallava fins a les
+dues sessions d'IA que van barrejar les feines i el fitxer perdut que
+hauria trencat la web — i s'afegeix la norma 8 al CLAUDE.md perquè, a
+partir d'ara, cada dificultat nova hi quedi registrada al moment.
