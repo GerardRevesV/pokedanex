@@ -61,6 +61,8 @@ body {
   top: 0;
   z-index: 10;
   background: rgba(14, 17, 22, 0.92);
+  /* Safari (iOS/Mac) encara demana el prefix -webkit- per al desenfocament */
+  -webkit-backdrop-filter: blur(6px);
   backdrop-filter: blur(6px);
   border-bottom: 1px solid var(--vora);
   padding: 0.9rem 1.5rem;
@@ -129,6 +131,18 @@ body {
   gap: 1rem;
   flex-wrap: wrap;
   margin-top: 0.8rem;
+}
+
+/* Botó "Filtres i opcions": només existeix visualment en mòbil (el bloc
+   de ≤767px li dona forma); a escriptori mai no es veu */
+.boto-filtres {
+  display: none;
+}
+
+/* display: contents fa el bloc invisible per al layout: els controls de
+   dins participen de la fila flex com sempre (escriptori intacte) */
+.bloc-filtres {
+  display: contents;
 }
 
 .control {
@@ -266,11 +280,8 @@ select:focus {
   transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
-.carta:hover {
-  transform: translateY(-3px);
-  border-color: var(--accent);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.45);
-}
+/* El :hover de la fitxa és al bloc @media (hover: hover) del final:
+   en tàctil el primer toc el deixaria "enganxat" a la darrera carta */
 
 .carta-imatge {
   display: block;
@@ -375,6 +386,12 @@ select:focus {
   flex: 1;
   font-size: 0.78rem;
   color: var(--text-suau);
+  /* Si la fila no hi cap (columnes estretes, lletra engrandida), el nom
+     es trunca amb punts suspensius en lloc de fer sobresortir els botons */
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .boto-comptador {
@@ -389,10 +406,7 @@ select:focus {
   cursor: pointer;
 }
 
-.boto-comptador:hover {
-  border-color: var(--accent);
-  color: var(--accent);
-}
+/* El :hover del botó és al bloc @media (hover: hover) del final */
 
 .comptador-valor {
   min-width: 1.5rem;
@@ -572,9 +586,7 @@ body:not([data-marcatge="consulta"]) .butxaca-funda:not(.butxaca-funda--buida) {
   cursor: pointer;
 }
 
-.butxaca-funda:not(.butxaca-funda--buida):hover {
-  border-color: var(--accent);
-}
+/* El :hover de la funda és al bloc @media (hover: hover) del final */
 
 /* Mateix llenguatge que la graella: carta que no tens, apagada i grisosa */
 .butxaca-funda--pendent img {
@@ -655,19 +667,8 @@ body[data-visualitzacio="cataleg"]
     linear-gradient(135deg, var(--or-clar), var(--or-fosc)) border-box;
 }
 
-/* En hover, fons pla, vora del color d'accent i la mateixa ombra
-   d'elevació de sempre (el marc daurat la tapava amb la seva ombra) */
-body[data-visualitzacio="cataleg"] .carta:where(:not(.carta--pendent)):hover {
-  background: var(--fons-carta);
-  border-color: var(--accent);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.45);
-}
-
-body[data-visualitzacio="cataleg"]
-  .butxaca-funda:where(:not(.butxaca-funda--pendent):not(.butxaca-funda--buida)):hover {
-  background: rgba(255, 255, 255, 0.02);
-  border-color: var(--accent);
-}
+/* Els :hover del mode catàleg són al bloc @media (hover: hover) del final:
+   en tàctil apagaven el marc daurat de la carta que s'acabava de tocar */
 
 /* El flaix de marcar (+ verd / − vermell) i el ressaltat d'anar a la
    carta han de guanyar el marc daurat: fons pla i la vora del flaix */
@@ -896,6 +897,9 @@ body[data-visualitzacio="cataleg"] .butxaca-funda.carta--restada {
 .selector-expansions {
   width: min(34rem, 92vw);
   max-height: min(80vh, 42rem);
+  /* En mòbil, dvh és l'alçada real amb la barra del navegador visible;
+     els navegadors vells ignoren aquesta línia i es queden amb la de dalt */
+  max-height: min(80dvh, 42rem);
   padding: 1rem;
   background: var(--fons-suau);
   color: var(--text);
@@ -940,6 +944,28 @@ body[data-visualitzacio="cataleg"] .butxaca-funda.carta--restada {
 
 .expansions-ordre:hover,
 .expansions-ordre:focus-visible {
+  border-color: var(--accent);
+  color: var(--text);
+  outline: none;
+}
+
+/* Botó × per tancar el Compendi: amagat per defecte (a escriptori ja hi
+   ha la tecla Esc i el clic fora); el bloc tàctil del final el mostra */
+.expansions-tancar {
+  display: none;
+  flex: none;
+  width: 2.75rem;
+  background: var(--fons);
+  color: var(--text-suau);
+  border: 1px solid var(--vora);
+  border-radius: 8px;
+  font-size: 1.2rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.expansions-tancar:hover,
+.expansions-tancar:focus-visible {
   border-color: var(--accent);
   color: var(--text);
   outline: none;
@@ -1142,6 +1168,9 @@ body,
   /* En finestres baixes el contingut no hi cap: la fitxa fa scroll intern
      en lloc de deixar el × i el botó de sota fora de la pantalla */
   max-height: calc(100vh - 3rem);
+  /* En mòbil, dvh és l'alçada real amb la barra del navegador visible;
+     els navegadors vells ignoren aquesta línia i es queden amb la de dalt */
+  max-height: calc(100dvh - 3rem);
   overflow-y: auto;
   padding: 1.2rem 1.2rem 0.9rem;
   background: var(--fons-carta);
@@ -1242,4 +1271,574 @@ body,
 .zoom-graella:hover,
 .zoom-graella:focus {
   color: var(--text);
+}
+
+/* ==================== Adaptació a mòbil i tàctil ====================
+   Tot el d'aquí avall només s'aplica en pantalles petites o tàctils:
+   l'escriptori (pantalla gran amb ratolí) no canvia gens.
+   Llindars: 767px (mòbil general), 480px i 430px (afinats per a pantalles
+   estretes), pointer: coarse (dits), hover: hover (ratolí de veritat). */
+
+/* ---------- Efectes hover: només amb ratolí de veritat ----------
+   En tàctil, el primer toc deixa l'element en :hover fins que es toca
+   una altra cosa ("hover enganxós"): aquests efectes només tenen sentit
+   amb un punter que pot planar. A escriptori tot queda com sempre. */
+@media (hover: hover) {
+  .carta:hover {
+    transform: translateY(-3px);
+    border-color: var(--accent);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.45);
+  }
+
+  .boto-comptador:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .butxaca-funda:not(.butxaca-funda--buida):hover {
+    border-color: var(--accent);
+  }
+
+  /* En hover del mode catàleg: fons pla, vora d'accent i l'ombra
+     d'elevació de sempre (el marc daurat la tapava amb la seva ombra) */
+  body[data-visualitzacio="cataleg"] .carta:where(:not(.carta--pendent)):hover {
+    background: var(--fons-carta);
+    border-color: var(--accent);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.45);
+  }
+
+  body[data-visualitzacio="cataleg"]
+    .butxaca-funda:where(:not(.butxaca-funda--pendent):not(.butxaca-funda--buida)):hover {
+    background: rgba(255, 255, 255, 0.02);
+    border-color: var(--accent);
+  }
+}
+
+/* ---------- Capçalera: sense sticky en pantalles petites o baixes ----------
+   La capçalera sencera pot fer més alt que la pantalla d'un mòbil (o d'un
+   mòbil apaïsat): si es queda clavada a dalt, les files de sota no
+   s'arriben a veure mai. Deixant-la static, es desplaça amb la pàgina. */
+@media (max-width: 767px), (max-height: 480px) {
+  .capcalera {
+    position: static;
+    /* Marges segurs de l'osca (notch) en apaïsat; a la resta de mòbils
+       env() val 0 i el padding queda com estava */
+    padding-left: calc(1.5rem + env(safe-area-inset-left));
+    padding-right: calc(1.5rem + env(safe-area-inset-right));
+  }
+
+  .contingut {
+    padding-left: calc(1.5rem + env(safe-area-inset-left));
+    padding-right: calc(1.5rem + env(safe-area-inset-right));
+  }
+
+  /* L'àlbum d'una sola pàgina també en mòbil APAÏSAT (amplada > 767px
+     però pantalla baixa): la doble pàgina hi ocupava gairebé dues
+     pantalles d'alçada. album.js fa servir el mateix llindar combinat. */
+  .album {
+    width: 100%;
+  }
+
+  .album-llibre {
+    width: 100%;
+    /* Sense topall, entre 431 i 767px les cartes es feien gegants i
+       l'àlbum ocupava 2-3 pantalles; 28rem ≈ cartes com les de la graella */
+    max-width: 28rem;
+    padding: 0.6rem;
+  }
+
+  .album-pagina {
+    width: 100%;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  /* Amb una sola pàgina no hi ha llom central: cantonades iguals i
+     sense l'ombra interior de llibre obert */
+  .album-pagina:first-child,
+  .album-pagina:last-child {
+    border-radius: 8px;
+    box-shadow: none;
+  }
+}
+
+/* ---------- El botó "Filtres i opcions" (plegat de controls) ----------
+   Es veu en mòbil per amplada (≤767px) i TAMBÉ en mòbil apaïsat: allà
+   l'amplada supera els 767px, però la capçalera desplegada tornava a
+   menjar-se tres quartes parts de la pantalla. La segona condició demana
+   pantalla tàctil I baixa alhora: cap escriptori amb ratolí hi entra. */
+@media (max-width: 767px), (pointer: coarse) and (max-height: 480px) {
+  /* El botó que plega els filtres: aquí sí que es veu i ocupa la fila */
+  .boto-filtres {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    min-height: 44px;
+    padding: 0.5rem 0.9rem;
+    background: var(--fons-suau);
+    color: var(--text);
+    border: 1px solid var(--vora);
+    border-radius: 8px;
+    font-size: 0.95rem;
+    cursor: pointer;
+  }
+
+  .boto-filtres .caret {
+    color: var(--text-suau);
+    font-size: 0.8rem;
+    transition: transform 0.2s ease;
+  }
+
+  /* Amb el bloc obert, la fletxa mira cap amunt */
+  .boto-filtres[aria-expanded="true"] .caret {
+    transform: rotate(180deg);
+  }
+
+  /* Plegat per defecte: la primera pantalla mostra cercador, Vista i
+     cartes en lloc d'una pantalla i mitja de controls */
+  .bloc-filtres:not(.bloc-filtres--obert) {
+    display: none;
+  }
+}
+
+/* ---------- Mòbil general (fins a 767px) ---------- */
+@media (max-width: 767px) {
+  .capcalera {
+    padding: 0.75rem;
+    padding-left: calc(0.75rem + env(safe-area-inset-left));
+    padding-right: calc(0.75rem + env(safe-area-inset-right));
+  }
+
+  /* Menys aire entre controls: la capçalera sencera s'escurça ~80px */
+  .fila-controls {
+    gap: 0.5rem;
+  }
+
+  /* (Les regles del botó "Filtres i opcions" i del plegat són al bloc
+     combinat de més amunt: també valen per al mòbil apaïsat) */
+
+  /* Cada control ocupa tota l'amplada: res no pot desbordar de costat */
+  .fila-controls .control {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  /* Un <select> mai s'encongeix per sota del seu text més llarg: amb
+     amplada fixada, el navegador el retalla amb punts suspensius natius */
+  .fila-controls select {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .fila-controls .boto-accent {
+    width: 100%;
+  }
+
+  /* Els botons segmentats es reparteixen l'amplada disponible */
+  .segmentat button {
+    flex: 1;
+    padding: 0.5rem 0.3rem;
+  }
+
+  /* (La regla contra el zoom automàtic d'iOS als selects ara viu al bloc
+     pointer: coarse: en apaïsat l'amplada supera els 767px i aquí no
+     s'aplicava, però el problema hi era igualment) */
+
+  /* (Les regles de l'àlbum d'una sola pàgina són al bloc combinat de més
+     amunt: també valen per al mòbil apaïsat, amb el mateix llindar que
+     fa servir album.js) */
+
+  /* Pista de rendiment, no un canvi visual: el navegador s'estalvia el
+     layout i el pintat de les fitxes fora de pantalla (~174 de 180) i
+     n'estima l'alçada; amb "auto", un cop pintades en recorda la real */
+  .carta {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 460px;
+  }
+
+  /* La imatge del zoom, més baixa: així els comptadors −/+ es veuen
+     d'entrada, sense scroll intern (a 70vh quedaven sota el plec) */
+  .zoom-imatge {
+    max-height: 40vh;
+    max-height: 45dvh;
+  }
+}
+
+/* ---------- Pantalles estretes (fins a 480px) ---------- */
+@media (max-width: 480px) {
+  /* El logotip del set té l'alçada fixa i l'amplada segons la proporció
+     del PNG: amb un topall, cap logotip apaïsat fa desbordar la fila
+     de marca (h1 + botó-logotip). 34vw (i no 38): a 320px queden ~114px
+     lliures al costat del títol, i 0.34 × 320 = 108,8px hi cap segur */
+  .logo-set {
+    max-width: 34vw;
+    object-fit: contain;
+  }
+
+  /* El placeholder de la cerca del Compendi no hi cap sencer a 320px:
+     millor tallat amb punts suspensius que a mitja paraula */
+  .selector-expansions input[type="search"]::placeholder {
+    text-overflow: ellipsis;
+  }
+
+  /* La fitxa del zoom, més compacta: amb 3 variants (Normal/Reverse/Holo)
+     el botó "Veure a la graella" i l'ajuda quedaven sota el plec quan la
+     barra del navegador és visible; amb menys aire i la imatge una mica
+     més baixa, tot es veu d'entrada */
+  .zoom-fitxa {
+    gap: 0.45rem;
+    padding: 0.9rem 0.9rem 0.75rem;
+  }
+
+  .zoom-imatge {
+    max-height: 38vh;
+    max-height: 42dvh;
+  }
+
+  /* Files del Compendi: logotip i progrés més petits perquè el nom de
+     l'expansió recuperi l'espai (abans quedava esclafat en ~56px) */
+  .expansio-fila {
+    gap: 0.5rem;
+    padding: 0.5rem;
+  }
+
+  .expansio-simbol {
+    width: 76px;
+    height: 36px;
+  }
+
+  .expansio-progres {
+    width: 4rem;
+  }
+
+  /* Barres d'estadístiques: sense mínim fix (desbordava a 320px)
+     i amb el nom més curt perquè la pista de progrés respiri */
+  .estad-barres {
+    min-width: 0;
+    width: 100%;
+  }
+
+  .estad-barra-nom {
+    width: 5.5rem;
+    font-size: 0.8rem;
+  }
+
+}
+
+/* ---------- El × del zoom, clavat al cantó del teló ----------
+   Si la fitxa fa scroll intern, el botó de tancar no marxa de la
+   pantalla. També en pantalles BAIXES (mòbil apaïsat: ample >480px
+   però alt ≤480px), on la fitxa gairebé sempre fa scroll. */
+@media (max-width: 480px), (max-height: 480px) {
+  .zoom-tancar {
+    position: fixed;
+    top: 0.75rem;
+    right: calc(0.75rem + env(safe-area-inset-right));
+    z-index: 1;
+  }
+}
+
+/* ---------- Zoom en pantalles BAIXES (mòbil apaïsat) ----------
+   Amb més de 767px d'amplada, la imatge tornava als 70vh de base i els
+   comptadors quedaven una pantalla sencera sota el plec. Aquest bloc va
+   DESPRÉS del de ≤480px perquè, en apaïsat, guanyi l'alçada. */
+@media (max-height: 480px) {
+  .zoom-imatge {
+    max-height: 40vh;
+    max-height: 45dvh;
+  }
+}
+
+/* ---------- Graella en mòbil (fins a 430px): dues columnes ---------- */
+@media (max-width: 430px) {
+  .contingut {
+    padding: 0.75rem;
+  }
+
+  .graella {
+    /* 140px (i no 150): a 320px d'amplada, dues columnes demanen
+       2×140 + 9,6 de gap = 289,6px i caben dins dels 296px útils
+       (amb 150px calien 309,6px i la graella queia a UNA columna) */
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 0.6rem;
+  }
+}
+
+/* ---------- Pantalles molt estretes (fins a 380px) ---------- */
+@media (max-width: 380px) {
+  /* A les columnes d'aquesta amplada, el nom de variant quedava reduït
+     a «r…»: passa a la seva pròpia línia, sobre els botons − N + (les
+     files creixen una mica d'alçada, però «reverse» es llegeix sencer) */
+  .variant-fila {
+    flex-wrap: wrap;
+  }
+
+  .variant-nom {
+    flex: 1 1 100%;
+  }
+}
+
+/* ---------- Pantalles tàctils (pointer: coarse) ----------
+   Mides mínimes recomanades per a dits (44px, Apple/WCAG) i ajustos
+   que només tenen sentit quan es toca amb el dit. Cap ratolí les veu. */
+@media (pointer: coarse) {
+  /* El desenfocament de la capçalera fa anar l'scroll a batzegades en
+     mòbils modestos: fons una mica més opac i fora blur */
+  .capcalera {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    background: rgba(14, 17, 22, 0.98);
+  }
+
+  /* El doble toc ràpid ja no fa zoom de pàgina (el pinch es conserva):
+     marcar 2-3 còpies seguides de pressa torna a ser fiable */
+  button,
+  .carta,
+  .butxaca-funda {
+    touch-action: manipulation;
+  }
+
+  /* Amb lletra per sota de 16px, Safari d'iOS fa zoom automàtic de tota
+     la pàgina en tocar el control; 1rem = 16px just el desactiva.
+     Val en qualsevol orientació (per amplada, l'apaïsat s'escapava). */
+  select,
+  .selector-expansions input[type="search"] {
+    font-size: 1rem;
+  }
+
+  /* Objectius tàctils d'almenys 44px als controls que més es toquen
+     (els camps de cerca i el botonet d'ordre inclosos) */
+  .segmentat button,
+  select,
+  .boto-accent,
+  .cercador,
+  .selector-expansions input[type="search"],
+  .expansions-ordre,
+  .expansions-tancar {
+    min-height: 44px;
+  }
+
+  /* El botó-logotip del Compendi: amb logotip ja fa ~48px, però mentre
+     no n'hi ha (carregant, o un set sense logotip) quedava en ~23px i
+     és l'única porta d'entrada al selector d'expansions */
+  .boto-expansions {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  /* Lliscar el dit pel Compendi no ha de moure la pàgina de sota (el
+     <dialog> modal no ho bloqueja sol): mateix patró que el zoom — el
+     panell només deixa passar el pinch i la llista conserva el seu
+     scroll intern, sense encadenar-lo al document */
+  .selector-expansions {
+    touch-action: pinch-zoom;
+  }
+
+  .expansions-llista {
+    touch-action: pan-y pinch-zoom;
+    overscroll-behavior: contain;
+  }
+
+  /* El × del Compendi només es veu en tàctil: sense tecla Esc, el toc
+     al teló era l'única sortida i quedava en franges de ~15px */
+  .expansions-tancar {
+    display: block;
+  }
+
+  /* El botó "Veure a la graella" del zoom, de ~20px a mida de dit
+     (a escriptori conserva l'aspecte d'enllaç discret) */
+  .zoom-graella {
+    min-height: 44px;
+    padding: 0.6rem 1rem;
+  }
+
+  /* Lliscar el dit pel zoom no ha de moure la pàgina de sota: el teló
+     només deixa passar el pinch, la fitxa conserva el seu scroll
+     intern i l'overscroll no s'encadena al body */
+  .zoom {
+    touch-action: pinch-zoom;
+  }
+
+  .zoom-fitxa {
+    touch-action: pan-y pinch-zoom;
+    overscroll-behavior: contain;
+  }
+
+  /* El missatge d'estat, flotant a baix de tot: amb la capçalera no
+     sticky, el <p> de dalt de la pàgina queda fora de pantalla quan es
+     marca una carta a mitja graella (z-index 40: sota el zoom, que és 50) */
+  .missatge:not([hidden]) {
+    position: fixed;
+    /* Els marges laterals també respecten l'osca en apaïsat (env() val 0
+       a la resta de pantalles i tot queda com abans) */
+    left: calc(0.75rem + env(safe-area-inset-left));
+    right: calc(0.75rem + env(safe-area-inset-right));
+    bottom: calc(0.75rem + env(safe-area-inset-bottom));
+    z-index: 40;
+    margin: 0;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5);
+  }
+
+  /* El peu no queda sota l'indicador d'inici de l'iPhone */
+  .peu {
+    padding-bottom: calc(1.2rem + env(safe-area-inset-bottom));
+  }
+
+  /* En mode de marcatge, el toc llarg obre el zoom (tocllarg.js): ni el
+     full "desar la imatge" d'iOS ni la selecció de text hi han de competir */
+  body:not([data-marcatge="consulta"]) .carta,
+  body:not([data-marcatge="consulta"]) .butxaca-funda {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+  .boto-suau {
+    min-height: 44px;
+    padding: 0.6rem 1rem;
+  }
+
+  .album-fletxa,
+  .zoom-tancar {
+    width: 2.75rem;
+    height: 2.75rem;
+  }
+
+  /* Perquè la fila de navegació de l'àlbum càpiga a 320px amb les
+     fletxes grans (el text de l'indicador ja va centrat i és curt) */
+  .album-indicador {
+    min-width: 0;
+  }
+
+  .expansions-ordre {
+    width: 2.75rem;
+  }
+
+  /* Botons +/− de la graella: la mida no canvia (44px reals no caben a
+     la columna), però la zona que respon al dit s'amplia amb un
+     pseudoelement invisible (~39×31px efectius). Errar per pocs píxels
+     va al botó (que atura la propagació), no a la carta del voltant. */
+  .boto-comptador {
+    position: relative;
+  }
+
+  .boto-comptador::before {
+    content: "";
+    position: absolute;
+    inset: -2px -6px;
+  }
+
+  /* Una mica més d'aire entre files de variants (menys tocs errats) */
+  .variants {
+    gap: 0.5rem;
+  }
+
+  /* Al zoom sí que hi ha lloc: botons +/− de 40px de veritat */
+  .zoom-variants .boto-comptador {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+
+  /* Caselles de verificació: quadret visible i zona de toc d'almenys
+     44px d'alçada, com la resta de controls tàctils */
+  .estad-reverses,
+  .expansions-tema {
+    padding: 0.5rem 0;
+    min-height: 44px;
+  }
+
+  .estad-reverses input,
+  .expansions-tema input {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+
+  /* Botonet − de les butxaques de l'àlbum: en tàctil no hi ha clic dret,
+     així que restar es fa amb aquest botó (el crea album.js només en
+     pantalles tàctils; només es veu en mode de marcatge) */
+  .butxaca-resta {
+    position: absolute;
+    left: 0.25rem;
+    bottom: 0.25rem;
+    width: 2rem;
+    height: 2rem;
+    display: none;
+    background: rgba(14, 17, 22, 0.85);
+    color: var(--text);
+    border: 1px solid var(--vora);
+    border-radius: 50%;
+    font-size: 1.1rem;
+    line-height: 1;
+    cursor: pointer;
+  }
+
+  body:not([data-marcatge="consulta"]) .butxaca-resta {
+    display: block;
+  }
+
+  /* El mateix truc que als +/− de la graella: el botó − es queda de
+     32px (44 reals taparien mitja funda) però la zona que respon al
+     dit s'amplia a 44×44 amb un pseudoelement invisible. L'ampliació
+     és asimètrica (cap amunt i cap a la dreta) perquè l'overflow:hidden
+     de la funda no la retalli: el botó és a 4px del cantó inferior
+     esquerre, i el pseudoelement cobreix just de (0,0) a (44,44). */
+  .butxaca-resta::before {
+    content: "";
+    position: absolute;
+    inset: -8px -8px -4px -4px;
+  }
+
+  /* Micro-textos: una mica més grans a la distància de lectura del mòbil */
+  .pastilla-tipus {
+    font-size: 12px;
+  }
+
+  .butxaca-numero,
+  .butxaca-comptador {
+    font-size: 0.78rem;
+  }
+
+  .control label,
+  .control .control-etiqueta,
+  .estad-xifra-nom {
+    font-size: 0.8rem;
+  }
+
+  .zoom-ajuda {
+    font-size: 0.8rem;
+  }
+
+  /* Micro-textos que havien quedat a 12px: preu i número de la carta,
+     nom de variant, lletra petita del Compendi, notes de les xifres
+     d'estadístiques i noms de sèrie (0.8rem = 12,8px) */
+  .carta-preu,
+  .carta-numero,
+  .variant-nom,
+  .expansio-info small,
+  .expansio-progres small,
+  .estad-xifra-nota,
+  .expansions-grup h3 {
+    font-size: 0.8rem;
+  }
+
+  /* La transició de tema al body es queda només amb el fons: animar-hi
+     el color (que s'hereta) obligava a recalcular l'estil de tot l'arbre
+     durant 300 ms a cada canvi d'expansió. A escriptori no canvia res. */
+  body {
+    transition: background-color 0.3s ease;
+  }
+}
+
+/* ---------- Reducció de moviment (accessibilitat) ----------
+   Amb "Redueix el moviment" activat al sistema, totes les animacions i
+   transicions passen a ser instantànies (0.01ms en lloc de 0 perquè els
+   esdeveniments de final d'animació es continuïn disparant). */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
 }

@@ -442,3 +442,21 @@ per defecte va del més antic al més nou, i amb un clic passa del més
 nou al més antic. La preferència es desa al navegador (localStorage),
 de manera que es recorda entre visites, i el rètol del botó explica en
 tot moment quin ordre hi ha aplicat i què farà el clic.
+
+## 34. Campanya mòbil: 89 problemes en 3 rondes d'exploradors
+
+*2026-08-11*
+
+S'escomet la visualització mòbil amb l'operatiu més gran del projecte: 3
+rondes de 8 exploradors (capçalera, graella, àlbum, diàlegs, tàctil,
+tipografia, rendiment i transversal) seguides cadascuna d'un
+planificador-arreglador i un revisor — 30 agents i 89 problemes reals
+arreglats. Els més grossos: l'àlbum passa a una sola pàgina en pantalles
+petites, la capçalera compacta els controls rere un botó de filtres, el
+Compendi guanya un botó × (en tàctil no hi ha tecla Esc), restar còpies a
+l'àlbum té botonet propi (el clic dret no existeix al mòbil), mantenir el
+dit obre el zoom, els objectius tàctils pugen als 44px recomanats, s'evita
+el zoom automàtic de l'iPhone als camps de text, i s'afegeix suport per a
+prefers-reduced-motion. Tot el CSS mòbil viu dins @media (767px, 480px,
+pointer coarse) i el revisor de cada ronda certifica que l'escriptori
+queda intacte.

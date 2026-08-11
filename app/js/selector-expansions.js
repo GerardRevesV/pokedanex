@@ -38,9 +38,13 @@ function crearFila(conjunt, idActiu) {
   // sets moderns és només un requadre amb el codi, massa pobre per al menú
   const simbol = document.createElement("img");
   simbol.className = "expansio-simbol";
+  // lazy i decoding ABANS de src: cada logo pesa ~150 KB; així les files
+  // fora de la finestra del diàleg no es baixen fins que es fa scroll,
+  // i descodificar els PNG grans no bloqueja l'obertura del panell
+  simbol.loading = "lazy";
+  simbol.decoding = "async";
   simbol.src = conjunt.images?.logo ?? conjunt.images?.symbol ?? "";
   simbol.alt = "";
-  simbol.loading = "lazy";
 
   const info = document.createElement("span");
   info.className = "expansio-info";
@@ -150,7 +154,9 @@ function obrir() {
   cerca.value = "";
   filtrar();
   element("selector-expansions").showModal();
-  cerca.focus();
+  // Enfoquem la cerca només amb ratolí: en mòbil, el focus automàtic
+  // aixecaria el teclat en pantalla i taparia la llista d'expansions
+  if (window.matchMedia("(pointer: fine)").matches) cerca.focus();
 }
 
 // Mou el focus a la fila visible següent (+1) o anterior (−1)
@@ -203,6 +209,9 @@ export function iniciarSelectorExpansions({ sets, setActiu, enTriar }) {
   });
 
   element("expansions-cerca").addEventListener("input", filtrar);
+
+  // El botó × (visible només en tàctil, on no hi ha tecla Esc)
+  element("expansions-tancar").addEventListener("click", () => dialeg.close());
 
   // Invertir l'ordre refà la llista al moment i conserva la cerca escrita
   element("expansions-ordre").addEventListener("click", () => {

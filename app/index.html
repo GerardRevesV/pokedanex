@@ -2,9 +2,14 @@
 <html lang="ca">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- viewport-fit=cover: en mòbils amb osca (notch) la pàgina ocupa tota
+       la pantalla i el CSS hi afegeix els marges segurs amb env() -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Pokedanex</title>
   <link rel="stylesheet" href="css/style.css">
+  <!-- Les imatges de cartes venen d'aquest domini: obrir la connexió
+       abans d'hora estalvia temps a la primera imatge (sobretot en 4G) -->
+  <link rel="preconnect" href="https://images.pokemontcg.io">
 </head>
 <body>
 
@@ -16,7 +21,7 @@
              que obre el selector d'expansions (selector-expansions.js) -->
         <button type="button" id="boto-expansions" class="boto-expansions"
                 aria-haspopup="dialog" data-i18n-aria="expansions.obrir">
-          <img id="logo-set" class="logo-set" src="" alt="" hidden>
+          <img id="logo-set" class="logo-set" src="" alt="" decoding="async" hidden>
           <span class="caret" aria-hidden="true">▾</span>
         </button>
       </div>
@@ -41,6 +46,14 @@
           <button type="button" data-vista="album" data-i18n="vista.album">Àlbum</button>
         </div>
       </div>
+      <!-- En mòbil, la resta de controls es pleguen sota aquest botó
+           (a escriptori el botó no es veu i el bloc no altera el layout) -->
+      <button type="button" id="boto-filtres" class="boto-filtres"
+              aria-expanded="false" aria-controls="bloc-filtres">
+        <span data-i18n="filtres.boto">Filtres i opcions</span>
+        <span class="caret" aria-hidden="true">▾</span>
+      </button>
+      <div id="bloc-filtres" class="bloc-filtres">
       <div class="control">
         <span class="control-etiqueta" data-i18n="visual.etiqueta">Visualització</span>
         <!-- Mode de visualització: col·lecció (cartes pendents apagades)
@@ -102,6 +115,7 @@
       <button id="boto-actualitza" class="boto-accent" data-i18n="actualitza.boto">
         Actualitza dades
       </button>
+      </div><!-- /bloc-filtres -->
     </div>
   </header>
 
@@ -151,7 +165,7 @@
       <div class="zoom-fitxa" role="dialog" aria-modal="true" aria-labelledby="zoom-nom">
         <!-- L'aria-label del botó el posa el JavaScript (canvia amb l'idioma) -->
         <button type="button" id="zoom-tancar" class="zoom-tancar">×</button>
-        <img id="zoom-imatge" class="zoom-imatge" alt="">
+        <img id="zoom-imatge" class="zoom-imatge" alt="" decoding="async">
         <div class="zoom-info">
           <span id="zoom-numero" class="zoom-numero"></span>
           <span id="zoom-nom" class="zoom-nom"></span>
@@ -162,7 +176,8 @@
         <button type="button" id="zoom-graella" class="zoom-graella" data-i18n="zoom.veureGraella">
           Veure a la graella
         </button>
-        <p class="zoom-ajuda" data-i18n="zoom.ajuda">Clic fora o tecla Esc per tancar</p>
+        <!-- En tàctil, main.js canvia la clau per la versió sense "Esc" -->
+        <p id="zoom-ajuda" class="zoom-ajuda" data-i18n="zoom.ajuda">Clic fora o tecla Esc per tancar</p>
       </div>
     </div>
 
@@ -174,6 +189,9 @@
                placeholder="" data-i18n-placeholder="expansions.cerca">
         <!-- Botonet per invertir l'ordre per data (text i títol els posa el JS) -->
         <button type="button" id="expansions-ordre" class="expansions-ordre"></button>
+        <!-- El × per tancar: només es veu en tàctil (no hi ha tecla Esc) -->
+        <button type="button" id="expansions-tancar" class="expansions-tancar"
+                data-i18n-aria="expansions.tancar">×</button>
       </div>
       <div id="expansions-llista" class="expansions-llista"></div>
       <p id="expansions-buit" class="expansions-buit"
