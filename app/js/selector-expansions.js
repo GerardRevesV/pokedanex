@@ -79,8 +79,11 @@ function crearFila(conjunt, idActiu) {
 function construirLlista() {
   const { sets, setActiu } = referencies;
   const idActiu = setActiu();
+  // Del més antic al més nou: l'ordre natural d'una col·lecció que creix
+  const ordenats = [...sets].sort((a, b) =>
+    String(a.releaseDate).localeCompare(String(b.releaseDate)));
   const grups = new Map(); // sèrie → les seves expansions, en ordre
-  for (const conjunt of sets) {
+  for (const conjunt of ordenats) {
     if (!grups.has(conjunt.series)) grups.set(conjunt.series, []);
     grups.get(conjunt.series).push(conjunt);
   }

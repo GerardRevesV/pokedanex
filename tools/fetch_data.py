@@ -202,7 +202,8 @@ def actualitzar_sets(conjunt):
     entrada = {camp: conjunt[camp] for camp in CAMPS_SET if camp in conjunt}
     altres = [s for s in registre["sets"] if s["id"] != entrada["id"]]
     # Ordre: del mes nou al mes vell per data de sortida
-    registre["sets"] = sorted(altres + [entrada], key=lambda s: s["releaseDate"], reverse=True)
+    # Del més antic al més nou: l'ordre natural d'una col·lecció que creix
+    registre["sets"] = sorted(altres + [entrada], key=lambda s: s["releaseDate"])
 
     escriure_json(FITXER_SETS, registre)
     print(f"Registre de sets actualitzat a {FITXER_SETS} ({len(registre['sets'])} sets).")

@@ -81,7 +81,7 @@ Què fa exactament l'script (no cal fer res més a mà):
    `app/data/versions/<setId>/AAAA-MM-DD HH-MM-SS.json` (mai sobreescriu res).
 4. Actualitza (o crea) l'índex del set: `app/data/versions/<setId>/index.json`.
 5. Dona d'alta o actualitza el set al registre `app/data/sets.json`
-   (ordenat per data de sortida, del més nou al més vell).
+   (ordenat per data de sortida, del més antic al més nou).
 
 **Avisos coneguts:**
 - L'API falla sovint amb errors 502: l'script ja porta reintents amb espera
