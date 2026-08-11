@@ -112,12 +112,20 @@ function calcularCost() {
 
 // ---------- Formats ----------
 
-// Import en euros amb 2 decimals, amb el format de l'idioma actiu
+// Import en euros amb 2 decimals, amb el format de l'idioma actiu.
+// El formatador es reutilitza entre crides (construir-lo és costós);
+// només es refà si l'idioma canvia.
+let formatadorEuros = null;
+let idiomaFormatador = null;
 function formatarEuros(quantitat) {
-  return new Intl.NumberFormat(idiomaActual(), {
-    style: "currency",
-    currency: "EUR",
-  }).format(quantitat);
+  if (idiomaFormatador !== idiomaActual()) {
+    idiomaFormatador = idiomaActual();
+    formatadorEuros = new Intl.NumberFormat(idiomaFormatador, {
+      style: "currency",
+      currency: "EUR",
+    });
+  }
+  return formatadorEuros.format(quantitat);
 }
 
 // La mateixa data de les dades que surt al peu de la pàgina
@@ -224,8 +232,17 @@ function crearXifra(clauNom, resultat, ambData) {
   return bloc;
 }
 
+// Amb el panell plegat no cal calcular res que no es veu: es deixa
+// anotat que hi ha canvis pendents i es pinta quan es torni a obrir
+let repintatPendent = false;
+
 function pintar() {
   if (!versio) return;
+  if (element("estad-cos").hidden) {
+    repintatPendent = true;
+    return;
+  }
+  repintatPendent = false;
   pintarObjectiu();
   pintarBarres();
   const xifres = element("estad-xifres");
@@ -241,6 +258,8 @@ function aplicarPlegat(obert, desar = true) {
   element("panell-estad").classList.toggle("estad--tancat", !obert);
   element("estad-capcalera").setAttribute("aria-expanded", String(obert));
   element("estad-cos").hidden = !obert;
+  // Si mentre era plegat la col·lecció ha canviat, ara sí que es pinta
+  if (obert && repintatPendent) pintar();
   if (desar) {
     try {
       magatzem()?.setItem(CLAU_OBERT, obert ? "1" : "0");
