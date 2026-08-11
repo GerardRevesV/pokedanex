@@ -1,7 +1,8 @@
 # Arquitectura de Pokedanex
 
 > Com està construïda la web per dins, explicat peça a peça.
-> (Escrit el 2026-08-09, després de l'esquelet de la Fase 1.)
+> (Escrit el 2026-08-09 després de l'esquelet de la Fase 1;
+> actualitzat el 2026-08-11 amb el suport multi-expansió.)
 
 ## Vista general
 
@@ -19,23 +20,30 @@ python -m http.server 8000        (des de l'arrel del repositori)
 ```
 Pokedanex/
 ├── config.json          ← clau de l'API (NO es puja mai a GitHub)
+├── .claude/skills/
+│   └── afegir-expansio/ ← el manual (skill) per afegir expansions noves
 ├── tools/
-│   └── fetch_data.py    ← baixa les dades de l'API i crea versions de fitxer
+│   └── fetch_data.py    ← baixa un set de l'API: python tools/fetch_data.py <setId>
 ├── app/                 ← LA WEB (tot el que hi ha aquí es publicarà)
 │   ├── index.html       ← l'estructura de la pàgina
 │   ├── css/style.css    ← l'aspecte (tema fosc, graella de cartes)
 │   ├── js/
 │   │   ├── i18n.js      ← textos en català, castellà i anglès
-│   │   ├── data.js      ← càrrega i actualització de dades (versions)
+│   │   ├── data.js      ← càrrega de dades: sets, versions i set actiu
 │   │   ├── storage.js   ← accés segur a localStorage (no peta si està bloquejat)
 │   │   ├── variants.js  ← quines variants té cada carta i el preu de cadascuna
 │   │   ├── collection.js← l'estat de la col·lecció (comptadors per variant)
 │   │   ├── album.js     ← la vista d'àlbum 3×3 de dues pàgines
 │   │   ├── stats.js     ← el panell de valor, cost i objectiu de compleció
+│   │   ├── markmode.js  ← el mode de marcatge (Consulta/Normal/Reverse/Holo)
+│   │   ├── temes.js     ← el tema visual de cada expansió (i el per defecte)
+│   │   ├── selector-expansions.js ← el panell "Compendi" per triar expansió
 │   │   └── main.js      ← la interfície: pinta i lliga-ho tot
 │   └── data/
-│       ├── versions.json           ← índex de les versions de fitxer
-│       └── versions/2026-08-09.json ← una versió de dades (cartes + preus)
+│       ├── sets.json    ← registre de les expansions disponibles
+│       └── versions/
+│           ├── sv6pt5/  ← versions datades de Shrouded Fable + index.json
+│           └── sv8pt5/  ← versions datades de Prismatic Evolutions + index.json
 └── docs/ · treball/ · presentacio/  ← documentació i lliurables del treball
 ```
 
@@ -43,16 +51,27 @@ Pokedanex/
 
 ### 1. Dades (`data.js` + `app/data/` + `fetch_data.py`)
 
-Les dades de les cartes (Shrouded Fable: 99 cartes amb imatges i preus de
-Cardmarket/TCGplayer) venen de l'API gratuïta **pokemontcg.io**, però la web
-**mai** en depèn en viu: sempre llegeix una còpia local — la **cau versionada**.
+La web és **multi-expansió**: `app/data/sets.json` és el registre de les
+expansions disponibles (ara Shrouded Fable i Prismatic Evolutions), i cada
+expansió té la seva carpeta de versions. Les dades de les cartes venen de
+l'API gratuïta **pokemontcg.io**, però la web **mai** en depèn en viu:
+sempre llegeix una còpia local — la **cau versionada per expansió**.
 
 Hi ha **dos tipus de versions**, i el selector de la web les fusiona:
 
 | Tipus | Qui les crea | On viuen |
 |---|---|---|
-| De fitxer | `tools/fetch_data.py` (des de l'ordinador) | `app/data/versions/*.json` (es pugen a GitHub) |
-| De navegador | el botó **"Actualitza dades"** de la web | `localStorage` del navegador |
+| De fitxer | `tools/fetch_data.py <setId>` (des de l'ordinador) | `app/data/versions/<setId>/*.json` (es pugen a GitHub) |
+| De navegador | el botó **"Actualitza dades"** de la web | `localStorage`, en claus separades per expansió |
+
+L'**expansió activa** es tria amb el selector "el Compendi" (clic al
+logotip de la capçalera o Ctrl+K): panell amb cercador, símbol oficial,
+data i progrés de compleció de cada set. Cada expansió té el seu **tema
+visual** (`temes.js`); el commutador "tema segons l'expansió" del mateix
+panell decideix si l'estètica canvia amb el set o es queda el turquesa
+Pokedanex. Per afegir una expansió nova hi ha la skill
+`.claude/skills/afegir-expansio` (baixar dades, tema amb contrast
+verificat, comprovacions i documentació).
 
 Cada actualització crea una **versió nova amb la seva data**; mai no
 s'esborra ni se sobreescriu res, i qualsevol versió antiga es pot tornar a
@@ -110,11 +129,15 @@ Els noms de les cartes no es tradueixen mai: són les cartes reals, en anglès.
 | Clau | Contingut |
 |---|---|
 | `pokedanex.lang` | Idioma triat (ca / es / en) |
-| `pokedanex.dataVersions` | Versions de dades creades des del navegador |
-| `pokedanex.collection` | La col·lecció: comptadors per carta i variant |
+| `pokedanex.dataVersions:<setId>` | Versions de navegador, per expansió |
+| `pokedanex.collection` | La col·lecció: comptadors per carta i variant (global, tots els sets) |
 | `pokedanex.view` | Vista activa (graella / àlbum) |
 | `pokedanex.statsOpen` | Si el panell d'estadístiques és obert o plegat |
 | `pokedanex.completionTarget` | L'objectiu de compleció triat |
+| `pokedanex.markMode` | Mode de marcatge (consulta / normal / reverse / holo) |
+| `pokedanex.displayMode` | Visualització (col·lecció / catàleg) |
+| `pokedanex.activeSet` | L'expansió activa |
+| `pokedanex.temaPerSet` | Si l'estètica segueix l'expansió o no |
 
 ## Per què així (resum de decisions)
 
