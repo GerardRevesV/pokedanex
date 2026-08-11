@@ -431,3 +431,14 @@ navegador. El tema triat és un **daurat prismàtic** (`#f0a830`), el
 color de les gemmes irisades del logotip i de la identitat "prismàtica"
 del set, amb contrastos WCAG AA verificats per càlcul (entre 8,3:1 i
 9,3:1 sobre els tres fons foscos, i 8,7:1 el text sobre l'accent).
+
+## 33. Botonet per invertir l'ordre de les expansions
+
+*2026-08-11*
+
+Al panell del Compendi s'ha afegit un **botonet amb una fletxa** (↑/↓)
+al costat de la cerca que inverteix l'ordre de la llista d'expansions:
+per defecte va del més antic al més nou, i amb un clic passa del més
+nou al més antic. La preferència es desa al navegador (localStorage),
+de manera que es recorda entre visites, i el rètol del botó explica en
+tot moment quin ordre hi ha aplicat i què farà el clic.

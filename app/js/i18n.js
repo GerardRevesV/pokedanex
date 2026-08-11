@@ -96,6 +96,8 @@ const TEXTOS = {
     "expansions.capResultat": "Cap expansió no coincideix amb la cerca.",
     "expansions.temaPerSet": "Tema segons l'expansió",
     "expansions.activa": "Expansió activa",
+    "expansions.ordreAsc": "Ordenat del més antic al més nou — clica per invertir",
+    "expansions.ordreDesc": "Ordenat del més nou al més antic — clica per invertir",
   },
   es: {
     "idioma.etiqueta": "Idioma",
@@ -186,6 +188,8 @@ const TEXTOS = {
     "expansions.capResultat": "Ninguna expansión coincide con la búsqueda.",
     "expansions.temaPerSet": "Tema según la expansión",
     "expansions.activa": "Expansión activa",
+    "expansions.ordreAsc": "Ordenado de más antigua a más nueva — clic para invertir",
+    "expansions.ordreDesc": "Ordenado de más nueva a más antigua — clic para invertir",
   },
   en: {
     "idioma.etiqueta": "Language",
@@ -276,6 +280,8 @@ const TEXTOS = {
     "expansions.capResultat": "No expansion matches your search.",
     "expansions.temaPerSet": "Theme follows the expansion",
     "expansions.activa": "Active expansion",
+    "expansions.ordreAsc": "Sorted oldest to newest — click to reverse",
+    "expansions.ordreDesc": "Sorted newest to oldest — click to reverse",
   },
 };
 

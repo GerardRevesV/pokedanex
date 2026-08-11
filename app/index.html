@@ -169,8 +169,12 @@
     <!-- Selector d'expansions: panell modal amb la llista de sets, cerca i
          progrés de cadascun. La llista l'omple selector-expansions.js. -->
     <dialog id="selector-expansions" class="selector-expansions">
-      <input id="expansions-cerca" type="search" autocomplete="off"
-             placeholder="" data-i18n-placeholder="expansions.cerca">
+      <div class="expansions-capcalera">
+        <input id="expansions-cerca" type="search" autocomplete="off"
+               placeholder="" data-i18n-placeholder="expansions.cerca">
+        <!-- Botonet per invertir l'ordre per data (text i títol els posa el JS) -->
+        <button type="button" id="expansions-ordre" class="expansions-ordre"></button>
+      </div>
       <div id="expansions-llista" class="expansions-llista"></div>
       <p id="expansions-buit" class="expansions-buit"
          data-i18n="expansions.capResultat" hidden></p>

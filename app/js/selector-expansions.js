@@ -7,6 +7,11 @@
 import { t, idiomaActual } from "./i18n.js";
 import { comptarAmbPrefix } from "./collection.js";
 import { temaDe, temaPerSetActiu, canviarTemaPerSet, aplicarTema } from "./temes.js";
+import { magatzem } from "./storage.js";
+
+// Sentit de l'ordenació per data de sortida; es recorda entre visites
+const CLAU_ORDRE = "pokedanex.ordreExpansions";
+let ordreDescendent = magatzem()?.getItem(CLAU_ORDRE) === "desc";
 
 // Referències que ens passa main.js en arrencar:
 // { sets, setActiu, enTriar } (llista d'expansions, quina és activa, què fer en triar-ne una)
@@ -81,9 +86,11 @@ function crearFila(conjunt, idActiu) {
 function construirLlista() {
   const { sets, setActiu } = referencies;
   const idActiu = setActiu();
-  // Del més antic al més nou: l'ordre natural d'una col·lecció que creix
+  // Per data de sortida; del més antic al més nou per defecte (l'ordre
+  // natural d'una col·lecció que creix), invertible amb el botonet
   const ordenats = [...sets].sort((a, b) =>
     String(a.releaseDate).localeCompare(String(b.releaseDate)));
+  if (ordreDescendent) ordenats.reverse();
   const grups = new Map(); // sèrie → les seves expansions, en ordre
   for (const conjunt of ordenats) {
     if (!grups.has(conjunt.series)) grups.set(conjunt.series, []);
@@ -124,10 +131,21 @@ function filtrar() {
   element("expansions-buit").hidden = algunaVisible;
 }
 
+// ---------- Ordre per data ----------
+
+// El botonet mostra el sentit actual; el títol explica què farà el clic
+function pintarBotoOrdre() {
+  const boto = element("expansions-ordre");
+  boto.textContent = ordreDescendent ? "↓" : "↑";
+  boto.title = t(ordreDescendent ? "expansions.ordreDesc" : "expansions.ordreAsc");
+  boto.setAttribute("aria-label", boto.title);
+}
+
 // ---------- Obertura i teclat ----------
 
 function obrir() {
   construirLlista();
+  pintarBotoOrdre();
   const cerca = element("expansions-cerca");
   cerca.value = "";
   filtrar();
@@ -185,6 +203,15 @@ export function iniciarSelectorExpansions({ sets, setActiu, enTriar }) {
   });
 
   element("expansions-cerca").addEventListener("input", filtrar);
+
+  // Invertir l'ordre refà la llista al moment i conserva la cerca escrita
+  element("expansions-ordre").addEventListener("click", () => {
+    ordreDescendent = !ordreDescendent;
+    magatzem()?.setItem(CLAU_ORDRE, ordreDescendent ? "desc" : "asc");
+    construirLlista();
+    pintarBotoOrdre();
+    filtrar();
+  });
 
   // L'interruptor del tema per expansió: es desa i s'aplica a l'instant
   const interruptor = element("tema-per-set");

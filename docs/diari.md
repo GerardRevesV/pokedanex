@@ -250,3 +250,24 @@ pokemontcg.io, servidor local de Python i navegador integrat, git.
 **Problemes:** l'API ha estat inestable com sempre (errors 500 a la
 cerca del set i un reintent durant la baixada), però els reintents ja
 previstos ho han absorbit tot.
+
+## 2026-08-11 — Botonet d'ordre al selector d'expansions
+
+**Què s'ha fet:**
+- Afegit un botonet (↑/↓) al costat de la cerca del panell del Compendi
+  per invertir l'ordre de la llista d'expansions per data de sortida
+  (del més antic al més nou per defecte, invertible amb un clic).
+- La tria es desa al navegador (`pokedanex.ordreExpansions`) i el rètol
+  del botó, traduït als tres idiomes, explica l'ordre actual.
+- Verificat al navegador integrat: la llista s'inverteix, la fletxa i
+  el rètol canvien, la preferència queda desada i no hi ha errors de
+  consola.
+
+**Eines usades:** Claude Code, servidor local de Python i navegador
+integrat, git.
+
+**Costos:** 0 €.
+
+**Problemes:** cap; només ha calgut aixecar el servidor de proves en un
+port alternatiu (8001) perquè el 8000 estava ocupat per una altra
+sessió.
