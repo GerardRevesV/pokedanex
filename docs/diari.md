@@ -271,3 +271,57 @@ integrat, git.
 **Problemes:** cap; només ha calgut aixecar el servidor de proves en un
 port alternatiu (8001) perquè el 8000 estava ocupat per una altra
 sessió.
+
+## 2026-08-11 — Dotze expansions noves: de Shrouded Fable fins avui
+
+**Què s'ha fet:**
+- Cercades a l'API totes les expansions publicades des de *Shrouded
+  Fable* (02/08/2024) fins avui: 14 en total, 12 de noves (les altres
+  2 ja hi eren i se n'han refrescat les dades i els preus).
+- Baixades i registrades les 12 noves amb `tools/fetch_data.py`, en
+  cua seqüencial: *Stellar Crown* (175), *Surging Sparks* (252),
+  *Journey Together* (190), *Destined Rivals* (244), *Black Bolt*
+  (172), *White Flare* (173), *Mega Evolution* (188), *Phantasmal
+  Flames* (130), *Ascended Heroes* (295), *Perfect Order* (124),
+  *Chaos Rising* (122) i *Pitch Black* (120). Recomptes verificats
+  fitxer a fitxer: tots quadren amb el total oficial del set.
+- Tema de color nou per a cada set a `temes.js`, triat mirant els
+  logotips (color dominant extret amb Python) i ajustat per càlcul
+  fins a complir WCAG AA (tots entre 6,2:1 i 12,5:1; mínim 4,5:1).
+- **Problema d'art resolt per una via alternativa:** els 4 sets més
+  nous (*Ascended Heroes*, *Perfect Order*, *Chaos Rising* i *Pitch
+  Black*) no tenen logotip ni símbol a images.pokemontcg.io — el CDN
+  serveix el mateix revers de carta genèric per a tots quatre, i al
+  menú s'haurien vist idèntics. S'ha afegit a `fetch_data.py` un
+  diccionari d'imatges alternatives que apunta als logotips de
+  **TCGdex** (assets.tcgdex.net, font oberta i gratuïta); quan
+  pokemontcg.io publiqui l'art oficial, només caldrà esborrar
+  l'entrada corresponent.
+- Verificat al navegador integrat: les 14 expansions al Compendi
+  agrupades en dues sèries (la sèrie nova "Mega Evolution" es crea
+  sola), scroll intern de la llista funcionant (el panell ja el tenia
+  previst i no ha calgut tocar res), canvi d'expansió amb recompte
+  exacte i tema aplicat (provat amb *Pitch Black*, *Stellar Crown* i
+  tornada a *Shrouded Fable*), i zero errors de consola.
+- Millorada la skill `afegir-expansio` amb tot el que s'ha après
+  (vegeu Problemes).
+
+**Eines usades:** Claude Code amb la skill `afegir-expansio`, APIs
+pokemontcg.io i TCGdex, Python (baixades, extracció de colors i càlcul
+de contrast), servidor local i navegador integrat, git.
+
+**Costos:** 0 €.
+
+**Problemes:**
+- La cerca per rang de dates a l'API (`releaseDate:[... TO *]`) torna
+  HTTP 400: s'ha hagut de baixar la llista completa de sets i filtrar
+  per data localment.
+- *Stellar Crown* va esgotar els 6 reintents de l'script (errors 502
+  seguits de l'API); s'ha tornat a llançar al cap d'uns minuts i ha
+  funcionat a la primera.
+- *Ascended Heroes* es va baixar abans que la correcció d'imatges fos
+  a l'script i s'ha hagut de tornar a baixar perquè el registre agafés
+  els logotips de TCGdex.
+- El revers de carta genèric dels 4 sets sense art (mateix fitxer per
+  a tots, detectat comparant-ne les sumes MD5) hauria fet el menú
+  inservible per distingir-los: resolt amb TCGdex com s'explica a dalt.

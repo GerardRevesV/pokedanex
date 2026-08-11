@@ -14,6 +14,32 @@
       }
     },
     {
+      "id": "sv7",
+      "name": "Stellar Crown",
+      "series": "Scarlet & Violet",
+      "printedTotal": 142,
+      "total": 175,
+      "releaseDate": "2024/09/13",
+      "ptcgoCode": "SCR",
+      "images": {
+        "symbol": "https://images.pokemontcg.io/sv7/symbol.png",
+        "logo": "https://images.pokemontcg.io/sv7/logo.png"
+      }
+    },
+    {
+      "id": "sv8",
+      "name": "Surging Sparks",
+      "series": "Scarlet & Violet",
+      "printedTotal": 191,
+      "total": 252,
+      "releaseDate": "2024/11/08",
+      "ptcgoCode": "SSP",
+      "images": {
+        "symbol": "https://images.pokemontcg.io/sv8/symbol.png",
+        "logo": "https://images.pokemontcg.io/sv8/logo.png"
+      }
+    },
+    {
       "id": "sv8pt5",
       "name": "Prismatic Evolutions",
       "series": "Scarlet & Violet",
@@ -24,6 +50,136 @@
       "images": {
         "symbol": "https://images.pokemontcg.io/sv8pt5/symbol.png",
         "logo": "https://images.pokemontcg.io/sv8pt5/logo.png"
+      }
+    },
+    {
+      "id": "sv9",
+      "name": "Journey Together",
+      "series": "Scarlet & Violet",
+      "printedTotal": 159,
+      "total": 190,
+      "releaseDate": "2025/03/28",
+      "ptcgoCode": "JTG",
+      "images": {
+        "symbol": "https://images.pokemontcg.io/sv9/symbol.png",
+        "logo": "https://images.pokemontcg.io/sv9/logo.png"
+      }
+    },
+    {
+      "id": "sv10",
+      "name": "Destined Rivals",
+      "series": "Scarlet & Violet",
+      "printedTotal": 182,
+      "total": 244,
+      "releaseDate": "2025/05/30",
+      "ptcgoCode": "DRI",
+      "images": {
+        "symbol": "https://images.pokemontcg.io/sv10/symbol.png",
+        "logo": "https://images.pokemontcg.io/sv10/logo.png"
+      }
+    },
+    {
+      "id": "zsv10pt5",
+      "name": "Black Bolt",
+      "series": "Scarlet & Violet",
+      "printedTotal": 86,
+      "total": 172,
+      "releaseDate": "2025/07/18",
+      "ptcgoCode": "BLK",
+      "images": {
+        "symbol": "https://images.pokemontcg.io/zsv10pt5/symbol.png",
+        "logo": "https://images.pokemontcg.io/zsv10pt5/logo.png"
+      }
+    },
+    {
+      "id": "rsv10pt5",
+      "name": "White Flare",
+      "series": "Scarlet & Violet",
+      "printedTotal": 86,
+      "total": 173,
+      "releaseDate": "2025/07/18",
+      "ptcgoCode": "WHT",
+      "images": {
+        "symbol": "https://images.pokemontcg.io/rsv10pt5/symbol.png",
+        "logo": "https://images.pokemontcg.io/rsv10pt5/logo.png"
+      }
+    },
+    {
+      "id": "me1",
+      "name": "Mega Evolution",
+      "series": "Mega Evolution",
+      "printedTotal": 132,
+      "total": 188,
+      "releaseDate": "2025/09/26",
+      "ptcgoCode": "MEG",
+      "images": {
+        "symbol": "https://images.pokemontcg.io/me1/symbol.png",
+        "logo": "https://images.pokemontcg.io/me1/logo.png"
+      }
+    },
+    {
+      "id": "me2",
+      "name": "Phantasmal Flames",
+      "series": "Mega Evolution",
+      "printedTotal": 94,
+      "total": 130,
+      "releaseDate": "2025/11/14",
+      "ptcgoCode": "PFL",
+      "images": {
+        "symbol": "https://images.pokemontcg.io/me2/symbol.png",
+        "logo": "https://images.pokemontcg.io/me2/logo.png"
+      }
+    },
+    {
+      "id": "me2pt5",
+      "name": "Ascended Heroes",
+      "series": "Mega Evolution",
+      "printedTotal": 217,
+      "total": 295,
+      "releaseDate": "2026/01/30",
+      "ptcgoCode": "ASC",
+      "images": {
+        "symbol": "https://assets.tcgdex.net/univ/me/me02.5/symbol.png",
+        "logo": "https://assets.tcgdex.net/en/me/me02.5/logo.png"
+      }
+    },
+    {
+      "id": "me3",
+      "name": "Perfect Order",
+      "series": "Mega Evolution",
+      "printedTotal": 88,
+      "total": 124,
+      "releaseDate": "2026/03/27",
+      "ptcgoCode": "POR",
+      "images": {
+        "symbol": "https://assets.tcgdex.net/univ/me/me03/symbol.png",
+        "logo": "https://assets.tcgdex.net/en/me/me03/logo.png"
+      }
+    },
+    {
+      "id": "me4",
+      "name": "Chaos Rising",
+      "series": "Mega Evolution",
+      "printedTotal": 86,
+      "total": 122,
+      "releaseDate": "2026/05/22",
+      "ptcgoCode": "CRI",
+      "images": {
+        "symbol": "https://assets.tcgdex.net/univ/me/me04/symbol.png",
+        "logo": "https://assets.tcgdex.net/en/me/me04/logo.png"
+      }
+    },
+    {
+      "id": "me5",
+      "name": "Pitch Black",
+      "series": "Mega Evolution",
+      "printedTotal": 84,
+      "total": 120,
+      "releaseDate": "2026/07/17",
+      "ptcgoCode": "PBL",
+      "images": {
+        "symbol": "https://assets.tcgdex.net/univ/me/me05/symbol.png",
+        "logo": "https://assets.tcgdex.net/en/me/me05/logo.png"
       }
     }
   ]

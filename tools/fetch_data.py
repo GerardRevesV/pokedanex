@@ -45,6 +45,31 @@ CAMPS_SET = [
     "releaseDate", "ptcgoCode", "images",
 ]
 
+# Sets sense art propi a images.pokemontcg.io: per als sets mes nous, el CDN
+# oficial serveix el revers de carta generic com a "logo" i "symbol" (la
+# mateixa imatge per a tots), i al menu es veurien identics. Mentre no hi
+# hagi art oficial, fem servir els logotips de TCGdex (assets.tcgdex.net),
+# una font oberta alternativa. Quan pokemontcg.io publiqui les imatges
+# reals, nomes cal esborrar l'entrada corresponent d'aquest diccionari.
+IMATGES_ALTERNATIVES = {
+    "me2pt5": {
+        "symbol": "https://assets.tcgdex.net/univ/me/me02.5/symbol.png",
+        "logo": "https://assets.tcgdex.net/en/me/me02.5/logo.png",
+    },
+    "me3": {
+        "symbol": "https://assets.tcgdex.net/univ/me/me03/symbol.png",
+        "logo": "https://assets.tcgdex.net/en/me/me03/logo.png",
+    },
+    "me4": {
+        "symbol": "https://assets.tcgdex.net/univ/me/me04/symbol.png",
+        "logo": "https://assets.tcgdex.net/en/me/me04/logo.png",
+    },
+    "me5": {
+        "symbol": "https://assets.tcgdex.net/univ/me/me05/symbol.png",
+        "logo": "https://assets.tcgdex.net/en/me/me05/logo.png",
+    },
+}
+
 
 def escriure_json(ruta, dades):
     """Escriu un JSON de manera segura: primer en un fitxer temporal i despres
@@ -119,6 +144,11 @@ def baixar_set(set_id, clau_api):
     print(f"Baixant la informacio del set {set_id}...")
     resposta = peticio_api(f"{API_BASE}/sets/{set_id}", clau_api)
     conjunt = resposta["data"]
+    # S'apliquen aqui (i no nomes a sets.json) perque el fitxer de versio
+    # tambe guarda el set sencer i tot el que ve despres queda corregit.
+    if set_id in IMATGES_ALTERNATIVES:
+        conjunt["images"] = {**conjunt.get("images", {}), **IMATGES_ALTERNATIVES[set_id]}
+        print("  Avis: aquest set no te art a pokemontcg.io; es fan servir les imatges de TCGdex.")
     print(f"  Set: {conjunt['name']} ({conjunt['total']} cartes en total).")
     return conjunt
 
