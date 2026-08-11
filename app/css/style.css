@@ -915,6 +915,36 @@ body[data-visualitzacio="cataleg"] .butxaca-funda.carta--restada {
   background: rgba(0, 0, 0, 0.65);
 }
 
+/* La cerca i el botonet d'ordre comparteixen la primera fila del panell */
+.expansions-capcalera {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.expansions-capcalera input[type="search"] {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Botonet per invertir l'ordre per data (fletxa ↑/↓) */
+.expansions-ordre {
+  flex: none;
+  width: 2.4rem;
+  background: var(--fons);
+  color: var(--text-suau);
+  border: 1px solid var(--vora);
+  border-radius: 8px;
+  font: inherit;
+  cursor: pointer;
+}
+
+.expansions-ordre:hover,
+.expansions-ordre:focus-visible {
+  border-color: var(--accent);
+  color: var(--text);
+  outline: none;
+}
+
 /* La cerca del panell, amb l'aspecte dels controls de la capçalera */
 .selector-expansions input[type="search"] {
   background: var(--fons);
@@ -990,8 +1020,8 @@ body[data-visualitzacio="cataleg"] .butxaca-funda.carta--restada {
 
 .expansio-simbol {
   flex: none;
-  width: 76px;
-  height: 42px;
+  width: 228px;
+  height: 126px;
   object-fit: contain;
 }
 
