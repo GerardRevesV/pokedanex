@@ -460,3 +460,23 @@ el zoom automàtic de l'iPhone als camps de text, i s'afegeix suport per a
 prefers-reduced-motion. Tot el CSS mòbil viu dins @media (767px, 480px,
 pointer coarse) i el revisor de cada ronda certifica que l'escriptori
 queda intacte.
+
+## 35. Dotze expansions de cop: el Compendi es posa al dia
+
+*2026-08-11*
+
+S'han afegit **totes les expansions publicades des de Shrouded Fable
+fins avui**: 12 sets nous que se sumen als 2 que ja hi havia, fins a un
+total de **14 expansions i 2.464 cartes**. Són *Stellar Crown*,
+*Surging Sparks*, *Journey Together*, *Destined Rivals*, *Black Bolt*,
+*White Flare* (Scarlet & Violet) i *Mega Evolution*, *Phantasmal
+Flames*, *Ascended Heroes*, *Perfect Order*, *Chaos Rising* i *Pitch
+Black*, aquests sis de la sèrie nova **Mega Evolution**, que el
+Compendi agrupa automàticament sota el seu propi títol. Cada set té el
+seu **tema de color** triat a partir del logotip i verificat per càlcul
+amb contrast WCAG AA. Els 4 sets més nous encara no tenen art al CDN
+oficial (serveixen un revers de carta genèric per a tots): s'ha resolt
+fent que `fetch_data.py` usi els **logotips de TCGdex**, una font
+alternativa oberta, mentre no arribi l'art oficial. La llista del
+Compendi ja feia scroll per dins del panell, així que el menú aguanta
+el creixement sense cap canvi.

@@ -14,6 +14,11 @@ i totes les ordres s'executen des d'aquesta arrel.
 - `app/data/` (sets.json i versions/ — els escriu l'script, no a mà)
 - `app/js/temes.js` (el tema visual del set nou)
 - `docs/historic.md` i `docs/diari.md` (documentació)
+- `tools/fetch_data.py` — **només** el diccionari `IMATGES_ALTERNATIVES`
+  (per a sets sense art oficial; vegeu el pas 2b)
+
+La skill val igual per a **una** expansió que per a **moltes de cop**; als
+passos hi ha les indicacions extres per al cas múltiple.
 
 ---
 
@@ -59,6 +64,24 @@ De la resposta interessa, per a cada candidat:
 amb noms semblants, reedicions, promos), NO triïs tu: mostra a l'usuari els
 candidats amb id, nom, sèrie, data i total de cartes, i demana-li quin és.
 
+**Per trobar "totes les expansions des de X" (cas múltiple):** la cerca per
+rang de dates (`q=releaseDate:[2024/08/02 TO *]`) torna **HTTP 400**
+(comprovat) — no la facis servir. Baixa la llista completa de sets (són
+menys de 200: `pageSize=250` i el `select` de sota per no inflar la
+resposta) i filtra per `releaseDate` localment amb Python:
+
+```
+curl -sG -w "\n%{http_code}" -H "User-Agent: Pokedanex/1.0" --data-urlencode "orderBy=releaseDate" --data-urlencode "select=id,name,series,printedTotal,total,releaseDate,ptcgoCode" --data-urlencode "pageSize=250" https://api.pokemontcg.io/v2/sets
+```
+
+Detalls que ja han sortit de veritat i no t'han de sorprendre:
+- Hi ha ids atípics: `zsv10pt5` (Black Bolt) i `rsv10pt5` (White Flare),
+  dos sets germans publicats el mateix dia.
+- Les sèries canvien (després de "Scarlet & Violet" ve "Mega Evolution",
+  amb ids `me1`, `me2`, `me2pt5`...): el selector de la web agrupa per
+  `series` automàticament i **no cal tocar cap codi** perquè aparegui el
+  grup nou.
+
 Comprova també que el set no sigui ja a `app/data/sets.json`. **Si ja hi és**,
 només cal actualitzar-ne les dades: executa el pas 2 amb la seva verificació,
 salta el pas 3 si el set ja té entrada a `TEMES`, fes la comprovació ràpida
@@ -82,6 +105,19 @@ Què fa exactament l'script (no cal fer res més a mà):
 4. Actualitza (o crea) l'índex del set: `app/data/versions/<setId>/index.json`.
 5. Dona d'alta o actualitza el set al registre `app/data/sets.json`
    (ordenat per data de sortida, del més antic al més nou).
+
+**Cas múltiple (diversos sets de cop):** llança'ls en **cua seqüencial**
+(mai en paral·lel: l'API ja va prou justa) dins d'una sola ordre en segon
+pla, guardant un registre amb l'exit code de cadascun:
+
+```
+for id in sv7 sv8 ...; do echo "=== $id ==="; python tools/fetch_data.py "$id"; echo "--- exit $id: $? ---"; done
+```
+
+En acabar, repassa els exit codes: els que hagin fallat (esgotats els 6
+reintents per 502 en cadena), torna'ls a llançar **al cap d'uns minuts** —
+comprovat que a la segona sol anar a la primera. Mentre la cua corre pots
+avançar feina dels passos 2b i 3 (logotips i temes).
 
 **Avisos coneguts:**
 - L'API falla sovint amb errors 502: l'script ja porta reintents amb espera
@@ -109,6 +145,40 @@ python -c "import json; d=json.load(open(r'app/data/versions/<setId>/index.json'
 Els tres nombres han de coincidir. Si no, torna a executar l'script (la
 versió incompleta no fa nosa: el selector sempre agafa la més nova).
 
+## Pas 2b — Sets sense art oficial (comprovació obligatòria per a sets recents)
+
+Els sets més nous poden **no tenir encara logo ni symbol** a
+images.pokemontcg.io: el CDN **no torna cap error**, sinó que serveix una
+imatge genèrica (el revers de carta Pokémon, 640×892) **idèntica per a tots
+els sets afectats** — al Compendi es veurien tots iguals i indistingibles.
+
+**Com detectar-ho:** baixa els logotips dels sets nous a una carpeta
+temporal i compara'n les sumes MD5; si dos o més sets comparteixen suma,
+són el revers genèric (comprova també el `symbol.png`, que sol estar igual).
+
+**Com resoldre-ho (via alternativa comprovada):** TCGdex, una font oberta i
+gratuïta, sol tenir l'art abans. Troba l'id TCGdex del set (atenció, no
+coincideix amb el de pokemontcg.io: `me2pt5` hi és `me02.5`):
+
+```
+curl -s https://api.tcgdex.net/v2/en/series/me
+```
+
+i comprova que `https://assets.tcgdex.net/en/<serie>/<idTcgdex>/logo.png` i
+`https://assets.tcgdex.net/univ/<serie>/<idTcgdex>/symbol.png` responen 200
+(cal afegir `.png` a les URL que dona l'API). Després afegeix el set al
+diccionari `IMATGES_ALTERNATIVES` de `tools/fetch_data.py` (hi ha entrades
+de mostra) i **torna a executar** `python tools\fetch_data.py <setId>`
+perquè el registre i la versió agafin les imatges bones. L'script avisa amb
+"es fan servir les imatges de TCGdex" quan aplica la substitució. Quan
+pokemontcg.io publiqui l'art oficial, només cal esborrar l'entrada del
+diccionari i tornar a baixar el set.
+
+**Ordre important en el cas múltiple:** si detectes sets sense art, edita
+`IMATGES_ALTERNATIVES` **abans** de llançar la cua de baixades (o abans que
+hi arribi): un set baixat abans de l'entrada al diccionari s'ha de tornar a
+baixar sencer (comprovat amb un set de 295 cartes — es pot evitar).
+
 ## Pas 3 — Assignar el tema visual a `app/js/temes.js`
 
 Cada expansió pot tenir el seu color d'accent. Afegeix una entrada nova a
@@ -134,6 +204,16 @@ temporal i llegeix-los com a imatge (o extreu-ne el color dominant amb un
 petit script de Python); tria el color dominant (mascota de portada,
 logotip) i ajusta'n la lluminositat fins a passar el contrast d'aquí sota.
 El `resplendor` és el mateix color de l'accent en `rgba(...)` amb alfa `0.25`.
+
+**Cas múltiple:** mira igualment cada logotip (el criteri final és la
+identitat del set), però industrialitza els càlculs amb un script de Python
+únic per a tots els sets: extreu les franges de to dominants de cada logotip
+(PIL: redimensiona, descarta píxels transparents, quasi blancs/negres o poc
+saturats, i agrupa per franges de 30° de to), proposa un accent per set i
+**apuja'n la lluminositat en bucle** fins que passi el 4,5:1 sobre els tres
+fons; el text fosc, a la inversa. Així surten d'una tacada els valors i els
+contrastos per als comentaris. Amb molts sets, vigila també que dos sets
+veïns no acabin amb accents gairebé iguals (varia to o lluminositat).
 
 **Verificació OBLIGATÒRIA de contrast (WCAG AA, mínim 4,5:1).** L'accent es
 fa servir com a color de text petit sobre els **tres fons foscos** de la web,
@@ -193,6 +273,22 @@ espera'n la confirmació abans de passar al pas 5.
 
 Si algun punt falla, no continuïs: arregla-ho abans de documentar.
 
+**Notes per al cas múltiple (comprovades amb 14 expansions):**
+- El **scroll del panell ja està previst** (`.expansions-llista` té
+  `overflow-y: auto` i el diàleg `max-height: min(80vh, 42rem)`): amb
+  moltes expansions la llista fa scroll per dins i no cal tocar cap CSS.
+  Verifica-ho igualment (que `scrollHeight > clientHeight` de la llista).
+- Un **grup de sèrie nou** (p. ex. "Mega Evolution") apareix sol.
+- No cal clicar totes les expansions una a una: prova'n **dues o tres de
+  representatives** (una de la sèrie nova, una amb imatges alternatives,
+  la que hagi hagut de repetir baixada) més la tornada a l'original, i
+  valida la resta amb el recompte de fitxers del pas 2 (un bucle de Python
+  sobre tots els sets de `sets.json` comprovant cartes = total = índex).
+- Si el navegador integrat no pot fer captures ("Browser pane is not
+  displayed"), les comprovacions valen igual amb les eines de text:
+  `read_page`, consola i `javascript_tool` (llegir `--accent`, comptar
+  `article`, mirar `dialog.open`...).
+
 ## Pas 5 — Documentar
 
 1. **`docs/historic.md`**: afegeix una entrada nova al final, seguint el
@@ -218,8 +314,10 @@ Abans de donar la feina per acabada, comprova-ho tot:
       (`pokemontcgApiKey`) i cadenes amb pinta de clau (patró d'UUID) —
       no n'hi ha d'aparèixer cap.
 - [ ] Comprova que el **TEU delta** (respecte de l'estat de `git status`
-      anotat al pas 0) només toca: `app/data/**`, `app/js/temes.js` i
-      `docs/**` — els fitxers que ja eren bruts abans de començar no
+      anotat al pas 0) només toca: `app/data/**`, `app/js/temes.js`,
+      `docs/**` i, si has passat pel pas 2b, `tools/fetch_data.py`
+      (i en aquest cas, només el diccionari `IMATGES_ALTERNATIVES` i el
+      seu ús) — els fitxers que ja eren bruts abans de començar no
       compten. **Si el teu delta toca cap altre fitxer, atura't**: vol dir
       que alguna cosa del projecte ha canviat respecte del que aquesta
       skill assumeix, i cal revisar (i segurament actualitzar) la skill
