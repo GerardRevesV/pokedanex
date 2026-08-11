@@ -1,13 +1,18 @@
 // main.js — la interfície: pinta la graella, el cercador i lliga els mòduls.
 
 import { t, idiomaActual, canviarIdioma, aplicarTextos } from "./i18n.js";
-import { carregarLlistaVersions, carregarVersio, actualitzarDades } from "./data.js";
+import {
+  carregarSets, setActiu, setActiuDesat, canviarSetActiu,
+  carregarLlistaVersions, carregarVersio, actualitzarDades,
+} from "./data.js";
 import { variantsDisponibles, preuVariant } from "./variants.js";
 import {
   comptadors, ajustar, enTeCap, subscriure,
   exportarJson, importarJson, buidar,
 } from "./collection.js";
 import { iniciarAlbum, carregarAlbum, mostrarAlbum, refrescarAlbum } from "./album.js";
+import { iniciarSelectorExpansions } from "./selector-expansions.js";
+import { aplicarTema } from "./temes.js";
 import { iniciarEstadistiques, carregarEstadistiques, refrescarEstadistiques } from "./stats.js";
 import { modeActiu, canviarMode, esModeVariant } from "./markmode.js";
 import { magatzem } from "./storage.js";
@@ -17,6 +22,7 @@ let versions = [];       // llista d'entrades per al selector de versions
 let versioActiva = null; // dades completes de la versió que es mostra
 let missatgeActual = null; // {clau, esError} del missatge visible, per retraduir-lo
 let peticioVersio = 0;   // comptador per descartar càrregues de versió que arriben tard
+let peticioLlista = 0;   // el mateix, per a les càrregues de llistes de versions
 let filtreColleccio = "totes"; // filtre actiu: "totes" | "tinc" | "falten"
 let vistaActiva = "graella";   // vista oberta: "graella" | "album"
 
@@ -799,7 +805,7 @@ function anarACartaDeLaGraella(id) {
 
 // ---------- Barra d'eines de la col·lecció ----------
 
-// "X de 99 cartes": quantes cartes diferents de la versió actual tens
+// "X de N cartes": quantes cartes diferents de la versió actual tens
 function pintarBarraColleccio() {
   if (!versioActiva) return;
   const tinc = versioActiva.cards.filter((carta) => enTeCap(carta.id)).length;
@@ -845,38 +851,79 @@ function buidarColleccio() {
 
 async function ferActualitzacio() {
   const boto = element("boto-actualitza");
+  const set = setActiu(); // capturat un cop: l'expansió podria canviar mentre baixem
   boto.disabled = true;
   mostrarMissatge("actualitza.enCurs");
 
   // Primer pas: baixar les dades de l'API (l'única part que pot fallar per culpa de l'API)
   let resultat = null;
   try {
-    resultat = await actualitzarDades();
+    resultat = await actualitzarDades(set);
   } catch {
     mostrarMissatge("actualitza.error", true);
   }
 
-  // Segon pas: refrescar la llista i mostrar la versió nova (si falla, és un error local)
-  if (resultat) {
+  // Segon pas: refrescar la llista i mostrar la versió nova (si falla, és un error local).
+  // Si mentre baixàvem l'usuari ha canviat d'expansió, no repintem res: la
+  // versió nova ja queda desada i apareixerà quan torni a aquesta expansió.
+  if (resultat && setActiu() === set) {
+    const peticio = ++peticioLlista;
     try {
-      versions = await carregarLlistaVersions();
-      omplirSelectorVersions(resultat.id);
-      const nova = versions.find((v) => v.id === resultat.id);
-      // Només anunciem l'èxit si la versió nova s'ha pogut carregar i pintar
-      const carregada = await triarVersio(nova);
-      if (carregada) {
-        mostrarMissatge(resultat.desada ? "actualitza.fet" : "actualitza.senseEspai");
+      const llista = await carregarLlistaVersions(set);
+      if (peticio === peticioLlista) {
+        versions = llista;
+        omplirSelectorVersions(resultat.id);
+        const nova = versions.find((v) => v.id === resultat.id);
+        // Només anunciem l'èxit si la versió nova s'ha pogut carregar i pintar
+        const carregada = await triarVersio(nova);
+        if (carregada) {
+          mostrarMissatge(resultat.desada ? "actualitza.fet" : "actualitza.senseEspai");
+        }
       }
     } catch {
-      mostrarMissatge("graella.error", true);
+      if (peticio === peticioLlista) mostrarMissatge("graella.error", true);
     }
+  } else if (resultat) {
+    // L'actualització ha anat bé encara que ja no mirem aquesta expansió
+    mostrarMissatge(resultat.desada ? "actualitza.fet" : "actualitza.senseEspai");
   }
   boto.disabled = false;
+}
+
+// ---------- Canvi d'expansió ----------
+
+// Canvia l'expansió activa i en mostra la versió de dades més nova.
+// La crida el selector d'expansions (el panell del logotip de la capçalera).
+export async function canviarExpansio(setId) {
+  const efectiu = canviarSetActiu(setId); // valida l'id (desconegut → defecte)
+  aplicarTema(efectiu); // els colors de la web segueixen l'expansió
+  const peticio = ++peticioLlista;
+  mostrarMissatge("graella.carregant");
+  try {
+    const llista = await carregarLlistaVersions(efectiu);
+    // Si mentre esperàvem s'ha demanat una altra llista, descartem aquesta
+    if (peticio !== peticioLlista) return false;
+    versions = llista;
+    omplirSelectorVersions(versions[0]?.id);
+    if (versions.length === 0) {
+      mostrarMissatge("graella.error", true);
+      return false;
+    }
+    // triarVersio ja repinta logotips, filtres, graella, peu, barra,
+    // àlbum i estadístiques amb les dades de l'expansió nova
+    return await triarVersio(versions[0]);
+  } catch {
+    if (peticio === peticioLlista) mostrarMissatge("graella.error", true);
+    return false;
+  }
 }
 
 // ---------- Arrencada ----------
 
 async function iniciar() {
+  // Tema de colors abans del primer pintat: amb l'id desat al navegador,
+  // sense esperar sets.json (així no hi ha flaix turquesa → lila en obrir)
+  aplicarTema(setActiuDesat());
   aplicarTextos();
   element("selector-idioma").value = idiomaActual();
 
@@ -1009,10 +1056,20 @@ async function iniciar() {
   // dades falla, així no queden completament buits
   construirFiltresDesplegables();
 
-  // Carreguem la llista de versions i mostrem la més nova
+  // Carreguem el registre d'expansions (valida quina és l'activa) i,
+  // de l'expansió activa, la llista de versions; mostrem la més nova
   mostrarMissatge("graella.carregant");
+  const peticio = ++peticioLlista;
   try {
-    versions = await carregarLlistaVersions();
+    const sets = await carregarSets();
+    // Amb el registre carregat ja sabem l'expansió activa: n'apliquem el
+    // tema de colors i arrenquem el selector d'expansions de la capçalera
+    aplicarTema(setActiu());
+    iniciarSelectorExpansions({ sets, setActiu, enTriar: canviarExpansio });
+    const llista = await carregarLlistaVersions(setActiu());
+    // Si mentre esperàvem s'ha demanat una altra llista, descartem aquesta
+    if (peticio !== peticioLlista) return;
+    versions = llista;
     omplirSelectorVersions(versions[0]?.id);
     if (versions.length > 0) {
       await triarVersio(versions[0]);
@@ -1020,7 +1077,7 @@ async function iniciar() {
       mostrarMissatge("graella.error", true);
     }
   } catch {
-    mostrarMissatge("graella.error", true);
+    if (peticio === peticioLlista) mostrarMissatge("graella.error", true);
   }
 }
 

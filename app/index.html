@@ -12,8 +12,13 @@
     <div class="fila-marca">
       <div class="marca">
         <h1>Pokedanex</h1>
-        <!-- El logotip del set l'omple el JavaScript amb la URL de les dades -->
-        <img id="logo-set" class="logo-set" src="" alt="" hidden>
+        <!-- El logotip del set (que omple el JavaScript) és alhora el botó
+             que obre el selector d'expansions (selector-expansions.js) -->
+        <button type="button" id="boto-expansions" class="boto-expansions"
+                aria-haspopup="dialog" data-i18n-aria="expansions.obrir">
+          <img id="logo-set" class="logo-set" src="" alt="" hidden>
+          <span class="caret" aria-hidden="true">▾</span>
+        </button>
       </div>
       <div class="control">
         <label for="selector-idioma" data-i18n="idioma.etiqueta">Idioma</label>
@@ -160,6 +165,26 @@
         <p class="zoom-ajuda" data-i18n="zoom.ajuda">Clic fora o tecla Esc per tancar</p>
       </div>
     </div>
+
+    <!-- Selector d'expansions: panell modal amb la llista de sets, cerca i
+         progrés de cadascun. La llista l'omple selector-expansions.js. -->
+    <dialog id="selector-expansions" class="selector-expansions">
+      <div class="expansions-capcalera">
+        <input id="expansions-cerca" type="search" autocomplete="off"
+               placeholder="" data-i18n-placeholder="expansions.cerca">
+        <!-- Botonet per invertir l'ordre per data (text i títol els posa el JS) -->
+        <button type="button" id="expansions-ordre" class="expansions-ordre"></button>
+      </div>
+      <div id="expansions-llista" class="expansions-llista"></div>
+      <p id="expansions-buit" class="expansions-buit"
+         data-i18n="expansions.capResultat" hidden></p>
+      <footer class="expansions-peu">
+        <label class="expansions-tema">
+          <input type="checkbox" id="tema-per-set">
+          <span data-i18n="expansions.temaPerSet">Tema segons l'expansió</span>
+        </label>
+      </footer>
+    </dialog>
   </main>
 
   <footer class="peu">

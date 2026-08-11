@@ -29,6 +29,10 @@ de la col·lecció i quant costaria completar-la.
    eina...), afegir una entrada a `docs/historic.md` amb un **títol** i una
    **explicació** breu. Serveix per recordar els passos seguits i
    reconstruir el procés al treball escrit.
+7. **En acabar qualsevol modificació de la web, passar sempre l'enllaç
+   local** perquè l'Edanna la pugui veure de seguida:
+   http://localhost:8000/app/ (si el servidor no està engegat, arrencar-lo
+   o recordar-li l'ordre `python -m http.server 8000` des de l'arrel).
 
 ## Estructura del repositori
 

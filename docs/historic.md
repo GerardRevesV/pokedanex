@@ -398,3 +398,47 @@ marcar res. El mode Consulta queda exactament com era (clic normal =
 zoom). Perquè la drecera es descobreixi sola, en mode de marcatge les
 cartes mostren un rètol en passar-hi el ratolí per sobre ("Ctrl+clic:
 veure la carta"), traduït als tres idiomes.
+
+## 31. El selector d'expansions: el logotip que obre "el Compendi"
+
+*2026-08-11*
+
+Amb els fonaments multi-expansió a punt, calia una manera bonica i
+escalable de canviar de set. Es van redactar tres propostes de disseny
+(vitrina, panell-llista i carrusel) i va guanyar el **panell-llista**:
+el logotip del set a la capçalera ara és un botó (amb un caret ▾) que
+obre un panell modal amb totes les expansions agrupades per sèrie, cada
+una amb el seu símbol, la data de sortida, una mini-barra de progrés
+("12/99") i un filet del seu color. El panell té **cerca instantània**,
+es mou amb les fletxes del teclat, s'obre amb **Ctrl+K** i es tanca amb
+Esc o clicant fora — tot gràcies a l'element `<dialog>` natiu del
+navegador, que regala el teló i el comportament de finestra modal sense
+codi propi. A més, cada expansió pot tenir el seu **tema de colors**:
+en canviar de set, l'accent de tota la web llisca en 300 ms cap al color
+del set (Shrouded Fable és lila, pel Pecharunt de la portada), amb un
+interruptor al peu del panell per qui prefereixi el turquesa de sempre.
+
+## 32. Prismatic Evolutions: la segona expansió (i l'estrena de la skill)
+
+*2026-08-11*
+
+S'ha afegit la segona expansió del Compendi: **Prismatic Evolutions**
+(`sv8pt5`, gener del 2025), el set de l'Eevee i les seves evolucions,
+amb 131 cartes numerades i secretes fins a 180. És la primera expansió
+afegida seguint la **skill** `afegir-expansio` de dalt a baix: baixada i
+registre amb `fetch_data.py`, tema visual propi i verificació al
+navegador. El tema triat és un **daurat prismàtic** (`#f0a830`), el
+color de les gemmes irisades del logotip i de la identitat "prismàtica"
+del set, amb contrastos WCAG AA verificats per càlcul (entre 8,3:1 i
+9,3:1 sobre els tres fons foscos, i 8,7:1 el text sobre l'accent).
+
+## 33. Botonet per invertir l'ordre de les expansions
+
+*2026-08-11*
+
+Al panell del Compendi s'ha afegit un **botonet amb una fletxa** (↑/↓)
+al costat de la cerca que inverteix l'ordre de la llista d'expansions:
+per defecte va del més antic al més nou, i amb un clic passa del més
+nou al més antic. La preferència es desa al navegador (localStorage),
+de manera que es recorda entre visites, i el rètol del botó explica en
+tot moment quin ordre hi ha aplicat i què farà el clic.

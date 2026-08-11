@@ -130,3 +130,31 @@ crear un compte en un servei extern i no aportaven res més per a aquest
 projecte.
 
 **Cost:** 0 €.
+
+## D-008 · Selector d'expansions amb `<dialog>` natiu i tema de colors per set
+
+**Data:** 2026-08-11
+
+**Decisió:** el canvi d'expansió es fa des d'un panell modal que s'obre
+clicant el logotip del set a la capçalera (o amb Ctrl+K): una llista
+vertical d'expansions agrupades per sèrie, amb cerca, progrés de cada set
+i teclat complet. El panell és un element `<dialog>` natiu del navegador.
+A més, cada expansió pot definir el seu color d'accent (tres variables
+CSS), que s'aplica a tota la web amb una transició suau; un interruptor
+al peu del panell («Tema segons l'expansió», activat per defecte) permet
+tornar al turquesa fix.
+
+**Per què:** una llista vertical funciona igual de bé amb 2 sets que amb
+20 (no sembla mai buida) i escala amb la cerca. El `<dialog>` natiu regala
+el teló fosc, la tecla Esc i el focus tancat a dins sense ni una línia de
+JavaScript: menys codi i més fàcil d'explicar al tribunal. El progrés de
+cada set es calcula comptant els ids de la col·lecció pel seu prefix
+(ex. "sv6pt5-"), sense haver de carregar les dades dels sets no actius.
+El tema per set és l'aportació visual estrella per a la demo i no té risc:
+un set sense tema propi cau al turquesa per defecte.
+
+**Alternatives considerades:** una "vitrina" de capses de sets i un
+carrusel horitzontal. Descartades perquè amb poques expansions es veuen
+buides i perquè obliguen a gestionar el focus i els overlays a mà.
+
+**Cost:** 0 €.

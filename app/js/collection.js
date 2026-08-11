@@ -98,6 +98,13 @@ export function totals() {
   return Object.keys(cartes).length;
 }
 
+// Nombre de cartes diferents que es tenen d'una expansió, comptades pel
+// prefix dels ids (ex. "sv6pt5-"). Permet al selector d'expansions mostrar
+// el progrés de cada set sense carregar-ne les dades.
+export function comptarAmbPrefix(prefix) {
+  return Object.keys(cartes).filter((id) => id.startsWith(prefix)).length;
+}
+
 // ---------- Canvis ----------
 
 // Suma delta (+1, -1...) al comptador d'una variant, sense baixar mai de 0.

@@ -226,3 +226,48 @@ la carta. (2) A macOS, Ctrl+clic no genera un clic sinó el
 esdeveniment de menú contextual: sense arreglar-ho, un usuari de Mac
 que seguís el rètol hauria RESTAT una còpia en lloc de fer zoom; els
 gestors de clic dret ara detecten el Ctrl i obren el zoom també al Mac.
+
+## 2026-08-11 — Expansió nova: Prismatic Evolutions (estrena de la skill)
+
+**Què s'ha fet:**
+- Afegida l'expansió **Prismatic Evolutions** (`sv8pt5`, 180 cartes)
+  seguint per primera vegada la skill `afegir-expansio` pas a pas:
+  identificació del set a l'API, baixada i registre amb
+  `tools/fetch_data.py`, tema visual nou a `temes.js` i verificació
+  completa al navegador (selector, recompte 180/180, canvi de tema
+  d'anada i tornada, zero errors de consola).
+- Tema del set: **daurat prismàtic** `#f0a830` (color dominant de les
+  gemmes del logotip, extret amb un petit script de Python), text
+  `#241600` sobre l'accent. Contrastos WCAG AA calculats: 9,32:1 /
+  8,60:1 / 8,34:1 sobre els tres fons i 8,70:1 el text sobre l'accent
+  (mínim exigit: 4,5:1).
+
+**Eines usades:** Claude Code amb la skill `afegir-expansio`, API
+pokemontcg.io, servidor local de Python i navegador integrat, git.
+
+**Costos:** 0 €.
+
+**Problemes:** l'API ha estat inestable com sempre (errors 500 a la
+cerca del set i un reintent durant la baixada), però els reintents ja
+previstos ho han absorbit tot.
+
+## 2026-08-11 — Botonet d'ordre al selector d'expansions
+
+**Què s'ha fet:**
+- Afegit un botonet (↑/↓) al costat de la cerca del panell del Compendi
+  per invertir l'ordre de la llista d'expansions per data de sortida
+  (del més antic al més nou per defecte, invertible amb un clic).
+- La tria es desa al navegador (`pokedanex.ordreExpansions`) i el rètol
+  del botó, traduït als tres idiomes, explica l'ordre actual.
+- Verificat al navegador integrat: la llista s'inverteix, la fletxa i
+  el rètol canvien, la preferència queda desada i no hi ha errors de
+  consola.
+
+**Eines usades:** Claude Code, servidor local de Python i navegador
+integrat, git.
+
+**Costos:** 0 €.
+
+**Problemes:** cap; només ha calgut aixecar el servidor de proves en un
+port alternatiu (8001) perquè el 8000 estava ocupat per una altra
+sessió.

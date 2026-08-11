@@ -7,9 +7,12 @@
 
 import { magatzem } from "./storage.js";
 
+// Les versions de navegador es desen amb una clau per expansió:
+// "pokedanex.dataVersions:sv6pt5", "pokedanex.dataVersions:sv8pt5"...
 const CLAU_VERSIONS = "pokedanex.dataVersions";
+const CLAU_SET_ACTIU = "pokedanex.activeSet";
+const SET_DEFECTE = "sv6pt5";
 const API_BASE = "https://api.pokemontcg.io/v2";
-const SET_ID = "sv6pt5";
 const MAX_REINTENTS = 4;
 
 // Camps de cada carta que la web fa servir (els mateixos que a tools/fetch_data.py)
@@ -22,16 +25,97 @@ const CAMPS_CARTA = [
 ];
 
 // Versions creades ara mateix que no han cabut al localStorage
-// (només viuen mentre la pàgina és oberta)
+// (només viuen mentre la pàgina és oberta). Cada una porta el seu setId.
 const versionsEnMemoria = [];
+
+// ---------- Registre d'expansions (sets) ----------
+
+// Llista d'expansions llegida de data/sets.json (cache del mòdul)
+let setsEnMemoria = null;
+
+// Llegeix el registre d'expansions (un cop; després es reutilitza)
+export async function carregarSets() {
+  if (setsEnMemoria) return setsEnMemoria;
+  const resposta = await fetch("data/sets.json");
+  if (!resposta.ok) {
+    throw new Error("No s'ha pogut llegir data/sets.json");
+  }
+  const dades = await resposta.json();
+  setsEnMemoria = Array.isArray(dades?.sets) ? dades.sets : [];
+  return setsEnMemoria;
+}
+
+// Expansió activa desada al navegador. Un valor desconegut (o cap)
+// cau a l'expansió per defecte. Cal haver cridat carregarSets() abans
+// perquè la validació tingui la llista contra la qual comparar.
+export function setActiu() {
+  try {
+    const desat = magatzem()?.getItem(CLAU_SET_ACTIU);
+    const conegut = setsEnMemoria?.some((conjunt) => conjunt.id === desat);
+    return conegut ? desat : SET_DEFECTE;
+  } catch {
+    return SET_DEFECTE;
+  }
+}
+
+// L'id d'expansió desat al navegador, sense validar contra sets.json
+// (per aplicar el tema de colors abans del primer pintat, sense esperar
+// cap fetch; temaDe ja cau al tema per defecte amb ids desconeguts)
+export function setActiuDesat() {
+  try {
+    return magatzem()?.getItem(CLAU_SET_ACTIU) ?? SET_DEFECTE;
+  } catch {
+    return SET_DEFECTE;
+  }
+}
+
+// Canvia l'expansió activa (validant-la) i retorna l'id que ha quedat actiu
+export function canviarSetActiu(setId) {
+  const conegut = setsEnMemoria?.some((conjunt) => conjunt.id === setId);
+  const efectiu = conegut ? setId : SET_DEFECTE;
+  try {
+    magatzem()?.setItem(CLAU_SET_ACTIU, efectiu);
+  } catch {
+    // Sense espai: el canvi val igualment, només no es recordarà
+  }
+  return efectiu;
+}
 
 // ---------- Llista de versions ----------
 
-// Llegeix les versions desades al navegador. Cada una: {id, fetchedAt, cardCount, dades}
-function llegirVersionsLocals() {
+// Abans de tenir més d'una expansió, les versions de navegador es desaven
+// totes sota una sola clau. Aquesta migració (un cop per càrrega de pàgina)
+// trasllada la clau antiga a la clau per expansió de sv6pt5, perquè els
+// usuaris que ja tenien versions desades no les perdin.
+let migracioFeta = false;
+function migrarClauAntiga() {
+  if (migracioFeta) return;
+  migracioFeta = true;
+  try {
+    const emmagatzematge = magatzem();
+    if (!emmagatzematge) return;
+    const antic = emmagatzematge.getItem(CLAU_VERSIONS);
+    if (antic === null) return;
+    const clauNova = CLAU_VERSIONS + ":" + SET_DEFECTE;
+    // Si la clau nova ja existeix, no la sobreescrivim: només netegem l'antiga
+    if (emmagatzematge.getItem(clauNova) === null) {
+      emmagatzematge.setItem(clauNova, antic);
+    }
+    // Només s'esborra l'antiga si el trasllat no ha fallat (setItem no ha llançat)
+    emmagatzematge.removeItem(CLAU_VERSIONS);
+  } catch {
+    // Si el trasllat falla (p. ex. sense espai), la clau antiga es conserva:
+    // no es perd res i es tornarà a provar a la propera càrrega
+  }
+}
+
+// Llegeix les versions desades al navegador per a una expansió.
+// Cada una: {id, fetchedAt, cardCount, dades}
+function llegirVersionsLocals(setId) {
+  migrarClauAntiga();
   try {
     // Sense magatzem (galetes bloquejades) no hi ha versions desades
-    const desat = JSON.parse(magatzem()?.getItem(CLAU_VERSIONS));
+    const desat = JSON.parse(magatzem()?.getItem(CLAU_VERSIONS + ":" + setId));
     const versions = Array.isArray(desat?.versions) ? desat.versions : [];
     // Descartem les entrades malformades (p. ex. per un canvi d'esquema
     // futur): així una entrada corrupta no tomba tota la càrrega de la web
@@ -43,11 +127,12 @@ function llegirVersionsLocals() {
   }
 }
 
-// Fusiona les versions de fitxer i les del navegador, de més nova a més vella
-export async function carregarLlistaVersions() {
-  const resposta = await fetch("data/versions.json");
+// Fusiona les versions de fitxer i les del navegador d'una expansió,
+// de més nova a més vella
+export async function carregarLlistaVersions(setId) {
+  const resposta = await fetch(`data/versions/${setId}/index.json`);
   if (!resposta.ok) {
-    throw new Error("No s'ha pogut llegir data/versions.json");
+    throw new Error(`No s'ha pogut llegir data/versions/${setId}/index.json`);
   }
   const index = await resposta.json();
 
@@ -58,10 +143,12 @@ export async function carregarLlistaVersions() {
     file: v.file,
     origen: "fitxer",
   }));
-  const deNavegador = [...llegirVersionsLocals(), ...versionsEnMemoria].map((v) => ({
+  const enMemoria = versionsEnMemoria.filter((v) => v.setId === setId);
+  const deNavegador = [...llegirVersionsLocals(setId), ...enMemoria].map((v) => ({
     id: v.id,
     fetchedAt: v.fetchedAt,
     cardCount: v.cardCount,
+    setId, // per saber a quina expansió buscar les dades en carregar-la
     origen: "navegador",
   }));
 
@@ -79,7 +166,8 @@ export async function carregarVersio(entrada) {
     }
     dades = await resposta.json();
   } else {
-    const totes = [...versionsEnMemoria, ...llegirVersionsLocals()];
+    const enMemoria = versionsEnMemoria.filter((v) => v.setId === entrada.setId);
+    const totes = [...enMemoria, ...llegirVersionsLocals(entrada.setId)];
     dades = totes.find((v) => v.id === entrada.id)?.dades;
     if (!dades) {
       throw new Error("No s'ha trobat la versió " + entrada.id + " al navegador");
@@ -143,12 +231,12 @@ function retallarCarta(carta) {
   return retallada;
 }
 
-// Baixa totes les cartes del set, pàgina a pàgina
-async function baixarCartes(clauApi) {
+// Baixa totes les cartes d'un set, pàgina a pàgina
+async function baixarCartes(setId, clauApi) {
   const cartes = [];
   let pagina = 1;
   while (true) {
-    const url = `${API_BASE}/cards?q=set.id:${SET_ID}&pageSize=250&page=${pagina}`;
+    const url = `${API_BASE}/cards?q=set.id:${setId}&pageSize=250&page=${pagina}`;
     const resposta = await peticioApi(url, clauApi);
     cartes.push(...resposta.data.map(retallarCarta));
     if (cartes.length >= resposta.totalCount || resposta.data.length === 0) break;
@@ -173,27 +261,28 @@ function dataLocalISO(data) {
   );
 }
 
-// Desa una versió nova al navegador. Retorna false si no hi cap
-// (localStorage té un límit d'uns 5 MB).
-function desarVersioLocal(entrada) {
-  const versions = llegirVersionsLocals();
+// Desa una versió nova al navegador (a la clau de la seva expansió).
+// Retorna false si no hi cap (localStorage té un límit d'uns 5 MB).
+function desarVersioLocal(setId, entrada) {
+  const versions = llegirVersionsLocals(setId);
   versions.push(entrada);
   const emmagatzematge = magatzem();
   if (!emmagatzematge) return false; // sense magatzem no es pot desar
   try {
-    emmagatzematge.setItem(CLAU_VERSIONS, JSON.stringify({ versions }));
+    emmagatzematge.setItem(CLAU_VERSIONS + ":" + setId, JSON.stringify({ versions }));
     return true;
   } catch {
     return false;
   }
 }
 
-// Baixa les dades fresques de l'API i crea una versió nova amb la data d'ara.
-// Retorna { id, desada }: desada és false si no ha cabut al localStorage.
-export async function actualitzarDades() {
+// Baixa les dades fresques d'una expansió de l'API i crea una versió nova
+// amb la data d'ara. Retorna { id, desada }: desada és false si no ha
+// cabut al localStorage.
+export async function actualitzarDades(setId) {
   const clauApi = await llegirClauApi();
-  const conjunt = (await peticioApi(`${API_BASE}/sets/${SET_ID}`, clauApi)).data;
-  const cartes = await baixarCartes(clauApi);
+  const conjunt = (await peticioApi(`${API_BASE}/sets/${setId}`, clauApi)).data;
+  const cartes = await baixarCartes(setId, clauApi);
 
   const ara = new Date();
   const p = (n) => String(n).padStart(2, "0");
@@ -211,9 +300,10 @@ export async function actualitzarDades() {
     },
   };
 
-  const desada = desarVersioLocal(entrada);
+  const desada = desarVersioLocal(setId, entrada);
   if (!desada) {
-    versionsEnMemoria.push(entrada); // almenys es podrà consultar avui
+    // Almenys es podrà consultar avui; el setId diu de quina expansió és
+    versionsEnMemoria.push({ ...entrada, setId });
   }
   return { id: entrada.id, desada };
 }
