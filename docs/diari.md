@@ -222,8 +222,8 @@ de Python per verificar, git.
 (1) Ctrl+clic sobre un botó +/− marcava en lloc d'obrir el zoom (els
 botons aturen la propagació del clic); s'ha resolt passant la carta
 sencera als botons, i ara Ctrl+clic hi obre el zoom com a la resta de
-la carta. (2) A macOS, Ctrl+clic no genera un clic sinó el
-esdeveniment de menú contextual: sense arreglar-ho, un usuari de Mac
+la carta. (2) A macOS, Ctrl+clic no genera un clic sinó
+l'esdeveniment de menú contextual: sense arreglar-ho, un usuari de Mac
 que seguís el rètol hauria RESTAT una còpia en lloc de fer zoom; els
 gestors de clic dret ara detecten el Ctrl i obren el zoom també al Mac.
 
@@ -345,3 +345,30 @@ de contrast), servidor local i navegador integrat, git.
 - El revers de carta genèric dels 4 sets sense art (mateix fitxer per
   a tots, detectat comparant-ne les sumes MD5) hauria fet el menú
   inservible per distingir-los: resolt amb TCGdex com s'explica a dalt.
+
+## 2026-08-11 — Nou document «Reptes» i norma 8
+
+**Què s'ha fet:**
+- Creat el document `docs/reptes.md` (les dificultats del projecte
+  explicades en prosa per al treball escrit, amb 5 reptes recuperats del
+  passat) i afegida la norma 8 al CLAUDE.md: cada procés difícil de fer
+  o d'entendre s'hi registra a partir d'ara.
+- Els 5 reptes inicials, reconstruïts a partir de l'històric, el diari,
+  les decisions i l'historial de git: l'API que fallava (403 i 502) i la
+  cau versionada, els dos forats de seguretat de la importació i la
+  revisió per capes, el codi impossible d'activar de la fitxa-zoom, les
+  dues sessions d'IA en paral·lel (worktrees, rebase i el fitxer
+  `tocllarg.js` que hauria trencat la web) i els colors per càlcul amb
+  contrast WCAG.
+- Entrada 36 a `docs/historic.md` registrant el document nou.
+
+**Eines usades:** Claude Code (assistent d'IA), git (historial com a
+font per verificar els fets dels reptes).
+
+**Costos:** 0 €.
+
+**Problemes:** dos reptes candidats recordats de paraula (el debat
+Incolor/Normal de l'Eevee i la memòria cau del navegador després d'una
+publicació) no apareixen enlloc de la documentació existent i no s'han
+pogut redactar amb fets verificables; queden pendents d'afegir amb el
+testimoni de l'Edanna si els recorda.
