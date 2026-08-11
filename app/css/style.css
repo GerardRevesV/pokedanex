@@ -1020,8 +1020,9 @@ body[data-visualitzacio="cataleg"] .butxaca-funda.carta--restada {
 
 .expansio-simbol {
   flex: none;
-  width: 228px;
-  height: 126px;
+  /* Proporció ~2,14:1, la mateixa que els logotips oficials: sense aire mort */
+  width: 120px;
+  height: 56px;
   object-fit: contain;
 }
 
