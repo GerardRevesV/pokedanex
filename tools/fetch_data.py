@@ -1,13 +1,18 @@
-"""Descarrega les dades del set Shrouded Fable (sv6pt5) de pokemontcg.io.
+"""Descarrega les dades d'un set de cartes de pokemontcg.io.
 
-Crea una versio nova amb la data i hora a app/data/versions/ i actualitza
-l'index app/data/versions.json. Mai se sobreescriu cap versio anterior.
+Crea una versio nova amb la data i hora a app/data/versions/<set>/ i
+actualitza l'index d'aquell set (index.json) i el registre de sets
+(app/data/sets.json). Mai se sobreescriu cap versio anterior.
 Nomes fa servir la llibreria estandard.
 
-Us: python tools/fetch_data.py
+Us: python tools/fetch_data.py <id_del_set>
+Exemple: python tools/fetch_data.py sv6pt5
+Sense argument, baixa sv6pt5 (Shrouded Fable) i mostra un avis.
 """
 
 import json
+import os
+import re
 import sys
 import time
 import urllib.error
@@ -18,11 +23,11 @@ from pathlib import Path
 # Rutes del projecte (relatives a aquest fitxer, per poder executar-lo des d'on sigui)
 ARREL = Path(__file__).resolve().parent.parent
 FITXER_CONFIG = ARREL / "config.json"
-CARPETA_VERSIONS = ARREL / "app" / "data" / "versions"
-FITXER_INDEX = ARREL / "app" / "data" / "versions.json"
+CARPETA_DATA = ARREL / "app" / "data"
+FITXER_SETS = CARPETA_DATA / "sets.json"
 
 API_BASE = "https://api.pokemontcg.io/v2"
-SET_ID = "sv6pt5"
+SET_DEFECTE = "sv6pt5"
 MAX_REINTENTS = 6
 
 # Camps de cada carta que la web necessita (la resta es descarta)
@@ -33,6 +38,22 @@ CAMPS_CARTA = [
     "artist", "flavorText", "nationalPokedexNumbers", "images",
     "cardmarket", "tcgplayer",
 ]
+
+# Camps del set que guardem al registre sets.json (la resta es descarta)
+CAMPS_SET = [
+    "id", "name", "series", "printedTotal", "total",
+    "releaseDate", "ptcgoCode", "images",
+]
+
+
+def escriure_json(ruta, dades):
+    """Escriu un JSON de manera segura: primer en un fitxer temporal i despres
+    el mou al lloc definitiu. os.replace es una operacio atomica, aixi que una
+    interrupcio a mig escriure mai deixa el fitxer original corromput."""
+    temporal = ruta.with_name(ruta.name + ".tmp")
+    with open(temporal, "w", encoding="utf-8") as f:
+        json.dump(dades, f, ensure_ascii=False, indent=2)
+    os.replace(temporal, ruta)
 
 
 def llegir_clau_api():
@@ -83,22 +104,32 @@ def retallar_carta(carta):
     return {camp: carta[camp] for camp in CAMPS_CARTA if camp in carta}
 
 
-def baixar_set(clau_api):
+def clau_numero(carta):
+    """Clau d'ordenacio tolerant amb numeros no purament numerics (p. ex. TG01).
+
+    Trosseja el numero en parts de digits i de lletres, com fa el navegador
+    amb l'ordenacio "natural" de data.js: "2" < "10" i "TG1" < "TG10".
+    """
+    parts = re.split(r"(\d+)", str(carta["number"]))
+    return [int(p) if p.isdigit() else p for p in parts]
+
+
+def baixar_set(set_id, clau_api):
     """Baixa la informacio general del set."""
-    print(f"Baixant la informacio del set {SET_ID}...")
-    resposta = peticio_api(f"{API_BASE}/sets/{SET_ID}", clau_api)
+    print(f"Baixant la informacio del set {set_id}...")
+    resposta = peticio_api(f"{API_BASE}/sets/{set_id}", clau_api)
     conjunt = resposta["data"]
     print(f"  Set: {conjunt['name']} ({conjunt['total']} cartes en total).")
     return conjunt
 
 
-def baixar_cartes(clau_api):
+def baixar_cartes(set_id, clau_api):
     """Baixa totes les cartes del set, pagina a pagina."""
     cartes = []
     pagina = 1
     while True:
         print(f"Baixant cartes (pagina {pagina})...")
-        url = f"{API_BASE}/cards?q=set.id:{SET_ID}&pageSize=250&page={pagina}"
+        url = f"{API_BASE}/cards?q=set.id:{set_id}&pageSize=250&page={pagina}"
         resposta = peticio_api(url, clau_api)
         cartes += [retallar_carta(c) for c in resposta["data"]]
         print(f"  {len(cartes)} de {resposta['totalCount']} cartes baixades.")
@@ -106,11 +137,11 @@ def baixar_cartes(clau_api):
             break
         pagina += 1
     # Ordenades pel numero de col.leccio (l'ordre natural de l'album)
-    cartes.sort(key=lambda c: int(c["number"]))
+    cartes.sort(key=clau_numero)
     return cartes
 
 
-def escriure_versio(conjunt, cartes):
+def escriure_versio(set_id, conjunt, cartes):
     """Escriu el fitxer de la versio nova i retorna (id, fetchedAt)."""
     ara = datetime.now().astimezone()
     # L'id inclou l'hora perque mai se sobreescrigui una versio anterior,
@@ -119,8 +150,9 @@ def escriure_versio(conjunt, cartes):
     # punts no son valids als noms de fitxer de Windows.
     id_versio = ara.strftime("%Y-%m-%d %H-%M-%S")
     fetched_at = ara.isoformat(timespec="seconds")
-    CARPETA_VERSIONS.mkdir(parents=True, exist_ok=True)
-    ruta = CARPETA_VERSIONS / f"{id_versio}.json"
+    carpeta_set = CARPETA_DATA / "versions" / set_id
+    carpeta_set.mkdir(parents=True, exist_ok=True)
+    ruta = carpeta_set / f"{id_versio}.json"
     dades = {
         "schemaVersion": 1,
         "fetchedAt": fetched_at,
@@ -128,23 +160,24 @@ def escriure_versio(conjunt, cartes):
         "set": conjunt,
         "cards": cartes,
     }
-    with open(ruta, "w", encoding="utf-8") as f:
-        json.dump(dades, f, ensure_ascii=False, indent=2)
+    escriure_json(ruta, dades)
     print(f"Versio guardada a {ruta}")
     return id_versio, fetched_at
 
 
-def actualitzar_index(id_versio, fetched_at, nombre_cartes):
-    """Afegeix la versio nova a l'index, de mes nova a mes vella."""
+def actualitzar_index(set_id, id_versio, fetched_at, nombre_cartes):
+    """Afegeix la versio nova a l'index del set, de mes nova a mes vella."""
+    fitxer_index = CARPETA_DATA / "versions" / set_id / "index.json"
     try:
-        with open(FITXER_INDEX, encoding="utf-8") as f:
+        with open(fitxer_index, encoding="utf-8") as f:
             index = json.load(f)
     except FileNotFoundError:
         index = {"versions": []}
 
     entrada = {
         "id": id_versio,
-        "file": f"versions/{id_versio}.json",
+        # Ruta relativa a app/data/, que es des d'on la web carrega els fitxers
+        "file": f"versions/{set_id}/{id_versio}.json",
         "fetchedAt": fetched_at,
         "cardCount": nombre_cartes,
     }
@@ -153,19 +186,43 @@ def actualitzar_index(id_versio, fetched_at, nombre_cartes):
     altres = [v for v in index["versions"] if v["id"] != id_versio]
     index["versions"] = sorted(altres + [entrada], key=lambda v: v["fetchedAt"], reverse=True)
 
-    with open(FITXER_INDEX, "w", encoding="utf-8") as f:
-        json.dump(index, f, ensure_ascii=False, indent=2)
-    print(f"Index actualitzat a {FITXER_INDEX} ({len(index['versions'])} versions).")
+    escriure_json(fitxer_index, index)
+    print(f"Index actualitzat a {fitxer_index} ({len(index['versions'])} versions).")
+
+
+def actualitzar_sets(conjunt):
+    """Dona d'alta (o actualitza) el set al registre sets.json."""
+    try:
+        with open(FITXER_SETS, encoding="utf-8") as f:
+            registre = json.load(f)
+    except FileNotFoundError:
+        registre = {"sets": []}
+
+    # Nomes guardem els camps que la web necessita del set
+    entrada = {camp: conjunt[camp] for camp in CAMPS_SET if camp in conjunt}
+    altres = [s for s in registre["sets"] if s["id"] != entrada["id"]]
+    # Ordre: del mes nou al mes vell per data de sortida
+    registre["sets"] = sorted(altres + [entrada], key=lambda s: s["releaseDate"], reverse=True)
+
+    escriure_json(FITXER_SETS, registre)
+    print(f"Registre de sets actualitzat a {FITXER_SETS} ({len(registre['sets'])} sets).")
 
 
 def main():
     print("=== Pokedanex: descarrega de dades ===")
+    if len(sys.argv) > 1:
+        set_id = sys.argv[1]
+    else:
+        set_id = SET_DEFECTE
+        print(f"Avis: no s'ha indicat cap set. Es fara servir el set per defecte ({SET_DEFECTE}).")
+        print("Us: python tools/fetch_data.py <id_del_set>")
     clau_api = llegir_clau_api()
-    conjunt = baixar_set(clau_api)
-    cartes = baixar_cartes(clau_api)
-    id_versio, fetched_at = escriure_versio(conjunt, cartes)
-    actualitzar_index(id_versio, fetched_at, len(cartes))
-    print(f"Fet! {len(cartes)} cartes guardades a la versio {id_versio}.")
+    conjunt = baixar_set(set_id, clau_api)
+    cartes = baixar_cartes(set_id, clau_api)
+    id_versio, fetched_at = escriure_versio(set_id, conjunt, cartes)
+    actualitzar_index(set_id, id_versio, fetched_at, len(cartes))
+    actualitzar_sets(conjunt)
+    print(f"Fet! {len(cartes)} cartes guardades a la versio {id_versio} del set {set_id}.")
 
 
 if __name__ == "__main__":

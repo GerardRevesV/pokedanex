@@ -91,6 +91,11 @@ const TEXTOS = {
     "marcar.holo": "Holo",
     "marcar.senseVariant": "Aquesta carta no té variant {variant}",
     "marcar.ajudaZoom": "Ctrl+clic: veure la carta",
+    "expansions.obrir": "Canvia d'expansió",
+    "expansions.cerca": "Cerca una expansió...",
+    "expansions.capResultat": "Cap expansió no coincideix amb la cerca.",
+    "expansions.temaPerSet": "Tema segons l'expansió",
+    "expansions.activa": "Expansió activa",
   },
   es: {
     "idioma.etiqueta": "Idioma",
@@ -176,6 +181,11 @@ const TEXTOS = {
     "marcar.holo": "Holo",
     "marcar.senseVariant": "Esta carta no tiene variante {variant}",
     "marcar.ajudaZoom": "Ctrl+clic: ver la carta",
+    "expansions.obrir": "Cambia de expansión",
+    "expansions.cerca": "Busca una expansión...",
+    "expansions.capResultat": "Ninguna expansión coincide con la búsqueda.",
+    "expansions.temaPerSet": "Tema según la expansión",
+    "expansions.activa": "Expansión activa",
   },
   en: {
     "idioma.etiqueta": "Language",
@@ -261,6 +271,11 @@ const TEXTOS = {
     "marcar.holo": "Holo",
     "marcar.senseVariant": "This card has no {variant} variant",
     "marcar.ajudaZoom": "Ctrl+click: view the card",
+    "expansions.obrir": "Change expansion",
+    "expansions.cerca": "Search an expansion...",
+    "expansions.capResultat": "No expansion matches your search.",
+    "expansions.temaPerSet": "Theme follows the expansion",
+    "expansions.activa": "Active expansion",
   },
 };
 
@@ -296,7 +311,9 @@ export function t(clau, valors = {}) {
   return text;
 }
 
-// Omple tots els elements marcats amb data-i18n o data-i18n-placeholder
+// Omple tots els elements marcats amb data-i18n, data-i18n-placeholder
+// o data-i18n-aria (aquest últim posa l'aria-label, el nom que el lector
+// de pantalla diu d'un botó que només mostra una imatge o un símbol)
 export function aplicarTextos() {
   document.documentElement.lang = idiomaActual();
   for (const element of document.querySelectorAll("[data-i18n]")) {
@@ -304,5 +321,8 @@ export function aplicarTextos() {
   }
   for (const element of document.querySelectorAll("[data-i18n-placeholder]")) {
     element.placeholder = t(element.dataset.i18nPlaceholder);
+  }
+  for (const element of document.querySelectorAll("[data-i18n-aria]")) {
+    element.setAttribute("aria-label", t(element.dataset.i18nAria));
   }
 }

@@ -9,6 +9,7 @@
   --text-suau: #93a1b3;
   --accent: #2fd6b5;        /* el verd-turquesa del projecte */
   --accent-text: #06231d;   /* text fosc sobre el color d'accent */
+  --resplendor: rgba(47, 214, 181, 0.25); /* halo suau del color d'accent */
   --error: #ff7a6e;
   --or-clar: #e8c877;       /* marc daurat del mode catàleg (to clar) */
   --or-fosc: #9a7a3a;       /* marc daurat del mode catàleg (to fosc) */
@@ -91,6 +92,35 @@ body {
 .logo-set {
   height: 2.4rem;
   width: auto;
+}
+
+/* El logotip del set és un botó: obre el selector d'expansions */
+.boto-expansions {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: none;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  padding: 0.25rem 0.5rem;
+  cursor: pointer;
+}
+
+.boto-expansions:hover,
+.boto-expansions:focus-visible {
+  border-color: var(--accent);
+  box-shadow: 0 0 12px var(--resplendor);
+  outline: none;
+}
+
+.boto-expansions .caret {
+  color: var(--text-suau);
+  font-size: 0.8rem;
+}
+
+.boto-expansions:hover .caret,
+.boto-expansions:focus-visible .caret {
+  color: var(--accent);
 }
 
 .fila-controls {
@@ -858,6 +888,202 @@ body[data-visualitzacio="cataleg"] .butxaca-funda.carta--restada {
 .simbol-set {
   height: 1.1rem;
   width: auto;
+}
+
+/* ---------- Selector d'expansions (panell modal) ---------- */
+
+/* El <dialog> natiu: el navegador el centra i posa el teló tot sol */
+.selector-expansions {
+  width: min(34rem, 92vw);
+  max-height: min(80vh, 42rem);
+  padding: 1rem;
+  background: var(--fons-suau);
+  color: var(--text);
+  border: 1px solid var(--accent);
+  border-radius: 12px;
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.6), 0 0 24px var(--resplendor);
+}
+
+/* Obert, s'organitza en columna: cerca a dalt, llista amb scroll, peu fix */
+.selector-expansions[open] {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.selector-expansions::backdrop {
+  background: rgba(0, 0, 0, 0.65);
+}
+
+/* La cerca del panell, amb l'aspecte dels controls de la capçalera */
+.selector-expansions input[type="search"] {
+  background: var(--fons);
+  color: var(--text);
+  border: 1px solid var(--vora);
+  border-radius: 8px;
+  padding: 0.55rem 0.8rem;
+  font-size: 0.95rem;
+}
+
+.selector-expansions input[type="search"]:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+/* La llista fa scroll per dins; la resta del panell no es mou */
+.expansions-llista {
+  overflow-y: auto;
+  min-height: 3rem;
+}
+
+.expansions-grup + .expansions-grup {
+  margin-top: 0.9rem;
+}
+
+/* Nom de la sèrie (Scarlet & Violet...), com les etiquetes dels controls */
+.expansions-grup h3 {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-suau);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.45rem;
+}
+
+/* Una fila = una expansió; el filet esquerre porta el color del seu tema */
+.expansio-fila {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.55rem 0.7rem;
+  background: var(--fons-carta);
+  color: var(--text);
+  border: 1px solid var(--vora);
+  border-left: 3px solid var(--tema-set, var(--accent));
+  border-radius: 8px;
+  text-align: left;
+  font: inherit;
+  cursor: pointer;
+}
+
+.expansio-fila + .expansio-fila {
+  margin-top: 0.4rem;
+}
+
+.expansio-fila:hover,
+.expansio-fila:focus-visible {
+  border-color: var(--accent);
+  border-left-color: var(--tema-set, var(--accent));
+  outline: none;
+}
+
+/* L'expansió activa porta un punt del color d'accent al final de la fila */
+.expansio-fila[aria-selected="true"]::after {
+  content: "";
+  flex: none;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.expansio-simbol {
+  flex: none;
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+.expansio-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.expansio-info b {
+  font-size: 0.95rem;
+}
+
+.expansio-info small,
+.expansio-progres small {
+  font-size: 0.78rem;
+  color: var(--text-suau);
+}
+
+/* Mini-barra de progrés del set (com les del panell d'estadístiques) */
+.expansio-progres {
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.2rem;
+  width: 5.5rem;
+}
+
+.expansio-progres small {
+  font-variant-numeric: tabular-nums;
+}
+
+.expansio-pista {
+  width: 100%;
+  height: 0.4rem;
+  background: var(--fons);
+  border: 1px solid var(--vora);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.expansio-ple {
+  display: block;
+  height: 100%;
+  background: var(--accent);
+  border-radius: inherit;
+}
+
+.expansions-buit {
+  text-align: center;
+  color: var(--text-suau);
+  padding: 1.5rem 1rem;
+}
+
+/* Peu del panell: l'interruptor del tema per expansió */
+.expansions-peu {
+  border-top: 1px solid var(--vora);
+  padding-top: 0.8rem;
+}
+
+.expansions-tema {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.9rem;
+  color: var(--text-suau);
+  cursor: pointer;
+}
+
+.expansions-tema input {
+  accent-color: var(--accent);
+}
+
+/* ---------- Tema per expansió (transició suau de colors) ---------- */
+
+/* Quan canvia l'expansió, temes.js reescriu --accent i companyia; aquests
+   elements (els que llueixen més el color) hi llisquen en 300 ms. Les
+   fitxes de carta no hi són: tenen la seva transició ràpida de hover
+   (transform inclòs) i les seves vores no porten el color d'accent. */
+body,
+.boto-accent,
+.segmentat button.actiu,
+.carta-numero,
+.comptador-valor--te,
+.estad-ple,
+.estad-xifra-valor,
+.zoom-numero {
+  transition: background-color 0.3s ease, border-color 0.3s ease,
+    color 0.3s ease, box-shadow 0.3s ease;
 }
 
 /* ---------- Zoom de carta ---------- */
