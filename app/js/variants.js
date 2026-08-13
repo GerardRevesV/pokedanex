@@ -53,8 +53,22 @@ export function variantsDisponibles(carta) {
   return ORDRE_VARIANTS.filter((v) => trobades.has(v));
 }
 
-// Preu en euros d'una variant segons Cardmarket, o null si no n'hi ha
-export function preuVariant(carta, variant) {
+// Conversió aproximada de dòlars a euros per als preus de TCGplayer.
+// S'usa NOMÉS de reserva, quan Cardmarket no té preus (passa amb els sets
+// més nous: l'API porta el bloc de Cardmarket buit). És una aproximació
+// orientativa, no una cotització (decisió D-009).
+const TAXA_USD_EUR = 0.9;
+
+// Claus de preus de TCGplayer per variant, en ordre de preferència
+const CLAU_TCGPLAYER_PER_VARIANT = {
+  normal: "normal",
+  reverse: "reverseHolofoil",
+  holo: "holofoil",
+};
+const CLAUS_PREU_TCGPLAYER = ["market", "mid", "low"];
+
+// Preu en euros segons Cardmarket, o null si no n'hi ha
+function preuCardmarket(carta, variant) {
   const preus = carta?.cardmarket?.prices;
   const claus = CLAUS_PREU_CARDMARKET[variant];
   if (!preus || !claus) return null;
@@ -63,4 +77,30 @@ export function preuVariant(carta, variant) {
     if (typeof preu === "number" && preu > 0) return preu;
   }
   return null;
+}
+
+// Preu de reserva: TCGplayer (dòlars) convertit a euros, o null
+function preuTcgplayer(carta, variant) {
+  const grup = carta?.tcgplayer?.prices?.[CLAU_TCGPLAYER_PER_VARIANT[variant]];
+  if (!grup) return null;
+  for (const clau of CLAUS_PREU_TCGPLAYER) {
+    const preu = grup[clau];
+    if (typeof preu === "number" && preu > 0) return preu * TAXA_USD_EUR;
+  }
+  return null;
+}
+
+// Preu en euros d'una variant: Cardmarket primer i, si no en té,
+// TCGplayer convertit de dòlars. null si cap font en té.
+export function preuVariant(carta, variant) {
+  return preuCardmarket(carta, variant) ?? preuTcgplayer(carta, variant);
+}
+
+// Diu si el preu que retorna preuVariant és l'aproximat de TCGplayer
+// (serveix per marcar-lo amb "≈" a la interfície)
+export function preuEsAproximat(carta, variant) {
+  return (
+    preuCardmarket(carta, variant) === null &&
+    preuTcgplayer(carta, variant) !== null
+  );
 }

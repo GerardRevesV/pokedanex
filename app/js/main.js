@@ -5,7 +5,7 @@ import {
   carregarSets, setActiu, setActiuDesat, canviarSetActiu,
   carregarLlistaVersions, carregarVersio, actualitzarDades,
 } from "./data.js";
-import { variantsDisponibles, preuVariant } from "./variants.js";
+import { variantsDisponibles, preuVariant, preuEsAproximat } from "./variants.js";
 import {
   comptadors, ajustar, enTeCap, subscriure,
   exportarJson, importarJson, buidar,
@@ -165,8 +165,26 @@ function formatarNumero(carta) {
   return `${carta.number.padStart(3, "0")}/${total}`;
 }
 
-// Preu orientatiu d'una carta: el de la variant normal o, si no en té,
-// el de la primera variant amb preu conegut; null si cap en té
+// Preu orientatiu d'una carta i si és l'aproximat de TCGplayer, triats
+// d'una sola passada: el de la variant normal o, si no en té, el de la
+// primera variant amb preu conegut; preu null si cap en té. La graella
+// ho fa servir per no repetir la tria de variant a cada fitxa (el
+// repintat és sensible en mòbil).
+function infoPreuCarta(carta) {
+  const normal = preuVariant(carta, "normal");
+  if (normal !== null) {
+    return { preu: normal, aproximat: preuEsAproximat(carta, "normal") };
+  }
+  for (const variant of variantsDisponibles(carta)) {
+    const preu = preuVariant(carta, variant);
+    if (preu !== null) {
+      return { preu, aproximat: preuEsAproximat(carta, variant) };
+    }
+  }
+  return { preu: null, aproximat: false };
+}
+
+// Només el preu (per ordenar per preu sense calcular la marca "≈")
 function preuCarta(carta) {
   const normal = preuVariant(carta, "normal");
   if (normal !== null) return normal;
@@ -444,11 +462,17 @@ function pintarGraella() {
 
     // Preu orientatiu de Cardmarket; si no se'n coneix cap, un guió
     // amb l'explicació en passar-hi el ratolí per sobre
-    const preu = preuCarta(carta);
+    const { preu, aproximat } = infoPreuCarta(carta);
     const espaiPreu = document.createElement("span");
     espaiPreu.className = "carta-preu";
     if (preu !== null) {
-      espaiPreu.textContent = formatarPreu(preu);
+      // El "≈" marca els preus de reserva (TCGplayer convertit de dòlars)
+      if (aproximat) {
+        espaiPreu.textContent = "≈ " + formatarPreu(preu);
+        espaiPreu.title = t("carta.preuAproximat");
+      } else {
+        espaiPreu.textContent = formatarPreu(preu);
+      }
     } else {
       espaiPreu.textContent = "—";
       espaiPreu.title = t("carta.sensePreu");
