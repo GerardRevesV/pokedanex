@@ -346,6 +346,33 @@ de contrast), servidor local i navegador integrat, git.
   a tots, detectat comparant-ne les sumes MD5) hauria fet el menú
   inservible per distingir-los: resolt amb TCGdex com s'explica a dalt.
 
+## 2026-08-11 — Nou document «Reptes» i norma 8
+
+**Què s'ha fet:**
+- Creat el document `docs/reptes.md` (les dificultats del projecte
+  explicades en prosa per al treball escrit, amb 5 reptes recuperats del
+  passat) i afegida la norma 8 al CLAUDE.md: cada procés difícil de fer
+  o d'entendre s'hi registra a partir d'ara.
+- Els 5 reptes inicials, reconstruïts a partir de l'històric, el diari,
+  les decisions i l'historial de git: l'API que fallava (403 i 502) i la
+  cau versionada, els dos forats de seguretat de la importació i la
+  revisió per capes, el codi impossible d'activar de la fitxa-zoom, les
+  dues sessions d'IA en paral·lel (worktrees, rebase i el fitxer
+  `tocllarg.js` que hauria trencat la web) i els colors per càlcul amb
+  contrast WCAG.
+- Entrada 36 a `docs/historic.md` registrant el document nou.
+
+**Eines usades:** Claude Code (assistent d'IA), git (historial com a
+font per verificar els fets dels reptes).
+
+**Costos:** 0 €.
+
+**Problemes:** dos reptes candidats recordats de paraula (el debat
+Incolor/Normal de l'Eevee i la memòria cau del navegador després d'una
+publicació) no apareixen enlloc de la documentació existent i no s'han
+pogut redactar amb fets verificables; queden pendents d'afegir amb el
+testimoni de l'Edanna si els recorda.
+
 ## 2026-08-13 — Arreglat: els preus a zero dels sets nous
 
 **Què s'ha fet:**

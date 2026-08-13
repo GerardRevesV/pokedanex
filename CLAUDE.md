@@ -33,6 +33,12 @@ de la col·lecció i quant costaria completar-la.
    local** perquè l'Edanna la pugui veure de seguida:
    http://localhost:8000/app/ (si el servidor no està engegat, arrencar-lo
    o recordar-li l'ordre `python -m http.server 8000` des de l'arrel).
+8. **Registrar les dificultats a `docs/reptes.md`.** Sempre que hi hagi un
+   procés que sigui difícil de fer o d'entendre per a l'humà (un problema
+   tècnic que costi de resoldre, un concepte que calgui explicar, una
+   decisió complicada...), afegir una entrada a `docs/reptes.md`: un
+   **títol**, la **data** i **un o dos paràgrafs de prosa acabada** en
+   llenguatge planer, pensats per anar directament al treball escrit.
 
 ## Estructura del repositori
 
