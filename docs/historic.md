@@ -480,3 +480,35 @@ fent que `fetch_data.py` usi els **logotips de TCGdex**, una font
 alternativa oberta, mentre no arribi l'art oficial. La llista del
 Compendi ja feia scroll per dins del panell, així que el menú aguanta
 el creixement sense cap canvi.
+
+## 36. Nou document «Reptes»: les dificultats, explicades per al treball
+
+*2026-08-11*
+
+Es crea `docs/reptes.md`, el germà de l'històric però amb la funció
+inversa: si l'històric diu QUÈ hem fet, els Reptes diuen QUÈ HA COSTAT.
+Recull els processos que han estat difícils de fer o d'entendre per a
+una persona que no programa, explicats en un o dos paràgrafs de prosa
+acabada, a punt per copiar al treball escrit. S'estrena amb cinc reptes
+recuperats del passat del projecte — de l'API que fallava fins a les
+dues sessions d'IA que van barrejar les feines i el fitxer perdut que
+hauria trencat la web — i s'afegeix la norma 8 al CLAUDE.md perquè, a
+partir d'ara, cada dificultat nova hi quedi registrada al moment.
+
+## 37. Els preus que no hi eren: la reserva de TCGplayer
+
+*2026-08-13*
+
+L'Edanna descobreix que a Prismatic Evolutions i als sets de Mega
+Evolution el valor de la col·lecció i el cost de completar surten a zero.
+La investigació ho aclareix: l'API no porta cap preu de Cardmarket per a
+aquests sets (el seu bloc està desactualitzat). Els de TCGplayer sí que
+hi són, però només als tres sets que TCGplayer ja té llistats (Prismatic
+Evolutions, Mega Evolution i Phantasmal Flames). S'implementa la cadena
+de reserva de la decisió D-009: Cardmarket primer i, si no n'hi ha,
+TCGplayer convertit de dòlars a euros amb una taxa fixa, marcat amb «≈»
+a la fitxa i amb una nota al panell d'estadístiques quan els totals en
+contenen. Els quatre sets sense cap preu enlloc (Ascended Heroes,
+Perfect Order, Chaos Rising i Pitch Black, massa nous) mantenen el guió
+i el recompte honest de cartes sense preu — comprovat a la cau i, en la
+mesura que l'API en viu va respondre aquell dia, també contra l'API.

@@ -3,7 +3,7 @@
 // Llegeix l'estat d'altres mòduls (collection, variants) i només pinta.
 
 import { t, idiomaActual } from "./i18n.js";
-import { variantsDisponibles, preuVariant } from "./variants.js";
+import { variantsDisponibles, preuVariant, preuEsAproximat } from "./variants.js";
 import { comptadors, enTeCap } from "./collection.js";
 import { magatzem } from "./storage.js";
 
@@ -63,20 +63,26 @@ function variantPrincipal(carta) {
 }
 
 // Valor de la col·lecció: totes les còpies de totes les variants × el seu
-// preu. Les variants sense preu a les dades no sumen, però es compten a part.
+// preu. Les variants sense preu a les dades no sumen, però es compten a part,
+// i també es compten les que entren amb el preu aproximat de reserva (D-009)
+// per poder-ho dir en una nota al costat de la xifra.
 function calcularValor() {
   let total = 0;
   let sensePreu = 0;
+  let aproximats = 0;
   for (const carta of versio.cards) {
     const copies = comptadors(carta.id);
     for (const variant of variantsDisponibles(carta)) {
       if (copies[variant] === 0) continue;
       const preu = preuVariant(carta, variant);
       if (preu === null) sensePreu += 1;
-      else total += copies[variant] * preu;
+      else {
+        total += copies[variant] * preu;
+        if (preuEsAproximat(carta, variant)) aproximats += 1;
+      }
     }
   }
-  return { total, sensePreu };
+  return { total, sensePreu, aproximats };
 }
 
 // Les peces (carta + variant) que falten per assolir l'objectiu:
@@ -102,12 +108,16 @@ function pecesQueFalten() {
 function calcularCost() {
   let total = 0;
   let sensePreu = 0;
+  let aproximats = 0;
   for (const [carta, variant] of pecesQueFalten()) {
     const preu = preuVariant(carta, variant);
     if (preu === null) sensePreu += 1;
-    else total += preu;
+    else {
+      total += preu;
+      if (preuEsAproximat(carta, variant)) aproximats += 1;
+    }
   }
-  return { total, sensePreu };
+  return { total, sensePreu, aproximats };
 }
 
 // ---------- Formats ----------
@@ -205,7 +215,8 @@ function pintarBarres() {
 }
 
 // Una xifra estrella: etiqueta, import gros i notes petites (data dels preus
-// i, si cal, quantes cartes no han pogut comptar per falta de preu)
+// i, si cal, quantes peces entren amb preu aproximat de reserva
+// i quantes no han pogut comptar per falta de preu)
 function crearXifra(clauNom, resultat, ambData) {
   const bloc = document.createElement("div");
   bloc.className = "estad-xifra";
@@ -222,6 +233,7 @@ function crearXifra(clauNom, resultat, ambData) {
 
   const notes = [];
   if (ambData) notes.push(t("estad.preusData", { data: formatarDataHora(versio.fetchedAt) }));
+  if (resultat.aproximats > 0) notes.push(t("estad.preusAproximats", { n: resultat.aproximats }));
   if (resultat.sensePreu > 0) notes.push(t("estad.sensePreu", { n: resultat.sensePreu }));
   if (notes.length > 0) {
     const nota = document.createElement("span");

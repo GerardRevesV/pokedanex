@@ -345,3 +345,42 @@ de contrast), servidor local i navegador integrat, git.
 - El revers de carta genèric dels 4 sets sense art (mateix fitxer per
   a tots, detectat comparant-ne les sumes MD5) hauria fet el menú
   inservible per distingir-los: resolt amb TCGdex com s'explica a dalt.
+
+## 2026-08-13 — Arreglat: els preus a zero dels sets nous
+
+**Què s'ha fet:**
+- Investigat l'error trobat per l'Edanna (valor i cost a zero a Prismatic
+  Evolutions i Mega Evolution): l'API no té preus de Cardmarket per a
+  aquests sets. Comprovat amb un recompte per set: sv8pt5, me1 i me2 tenen
+  0 preus de Cardmarket però tots els de TCGplayer; me2pt5, me3, me4 i me5
+  no tenen cap preu de cap font (el seu bloc de TCGplayer només porta
+  l'enllaç, sense preus).
+- Tornat a consultar l'API en viu el mateix 13-08 per si ja portava preus
+  d'aquests quatre sets: Perfect Order (me3) i Pitch Black (me5) continuen
+  sense cap preu; Chaos Rising (me4) i Ascended Heroes (me2pt5) no s'han
+  pogut comprovar perquè l'API responia amb errors 500 (les fallades
+  intermitents del repte 1), però a la cau tampoc no en tenen cap. Per
+  tant, en aquests quatre sets el valor i el cost seguiran sortint a
+  0,00 € amb el recompte honest de «cartes sense preu» fins que l'API en
+  tingui (queda documentat a D-009).
+- Implementada la cadena de reserva (D-009): Cardmarket → TCGplayer
+  convertit de dòlars (taxa fixa 0,90) marcat amb «≈» → guió honest.
+- Afegida una nota petita al panell d'estadístiques («inclou preus
+  aproximats (≈): n») perquè quan el valor o el cost barregen preus
+  exactes i convertits, la xifra ho digui.
+- Documentat el repte al document de reptes (norma 8).
+
+**Eines usades:** Claude Code, anàlisi de les dades de la cau amb Python,
+navegador integrat per verificar, git.
+
+**Costos:** 0 €.
+
+**Problemes:** el descrit — i la lliçó que un zero enganyós és pitjor que
+una aproximació marcada honestament. A banda, un avís per al pull request:
+aquesta branca (`arregla-preus`) inclou el contingut de la branca `reptes`
+que encara no és a `main` (la capçalera i els reptes 1-6 de
+`docs/reptes.md`, i l'entrada 36 de l'històric), perquè el repte 7 i
+l'entrada 37 no quedin penjats sense els anteriors. Convé fusionar primer
+la branca `reptes` i, si en fusionar la segona hi ha conflicte en aquests
+dos fitxers (totes dues branques hi afegeixen el mateix text), resoldre'l
+quedant-se la versió d'`arregla-preus`, que és la més completa.
