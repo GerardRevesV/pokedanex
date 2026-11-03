@@ -179,3 +179,31 @@ videojocs i joc de cartes, i va deixar la decisió final a l'autora, que
 va acceptar el canvi de criteri. Discrepar amb evidències, i poder-ho
 comprovar un mateix, és una part tan important del mètode com escriure
 codi que funcioni.
+
+## 7. El zero enganyós: quan la font de preus va deixar de tenir preus
+
+*2026-08-13*
+
+Amb les expansions noves va aparèixer un error silenciós dels que costen
+de veure: la web deia que completar Prismatic Evolutions costava 0,00 €,
+i que la col·lecció que en tinguessis també valia zero. No era cap errada
+de càlcul — el codi sumava perfectament — sinó un forat a les dades: la
+font de preus europea (Cardmarket) que l'API ens proporciona estava
+desactualitzada i simplement no tenia cap preu per als sets més nous. El
+programa feia el que li havíem dit («suma els preus de Cardmarket»), i la
+suma de cap preu és zero. La dificultat d'entendre era doble: primer, que
+una web pot estar «bé» i alhora dir mentides si les dades que menja són
+incompletes; i segon, que la solució no era arreglar cap línia trencada,
+sinó decidir una política nova.
+
+La decisió va ser una «cadena de reserva»: si Cardmarket no té el preu,
+es fa servir el de TCGplayer — el mercat americà, que a l'API va més al
+dia, tot i que només cobreix els sets nous que ja té llistats — convertit
+de dòlars a euros amb una taxa fixa aproximada. I com que un preu
+convertit no és exacte, la web ho confessa: els preus de reserva porten
+el símbol «≈» i una explicació en passar-hi el ratolí, i els sets tan
+nous que encara no tenen preu enlloc (quatre, ara mateix) mantenen el
+guió i el recompte de «cartes sense preu». La lliçó per al treball:
+davant de dades incompletes hi ha tres opcions — el zero enganyós,
+l'aproximació honesta o el silenci — i la bona resposta gairebé sempre
+és l'aproximació que diu la veritat sobre si mateixa.

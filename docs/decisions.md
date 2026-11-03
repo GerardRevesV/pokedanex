@@ -64,6 +64,10 @@ de dades. Es va detectar que aquests preus poden anar endarrerits; durant la
 Fase 1-2 s'estudiarà si l'API gratuïta de CardTrader pot servir de
 complement més fresc.
 
+**Matisada per D-009 (2026-08-13):** si Cardmarket no té el preu d'una
+variant, es fa servir de reserva el de TCGplayer convertit de dòlars,
+marcat com a aproximat.
+
 **Cost:** 0 €.
 
 ## D-005 · Treballar amb branques i pull requests
@@ -156,5 +160,48 @@ un set sense tema propi cau al turquesa per defecte.
 **Alternatives considerades:** una "vitrina" de capses de sets i un
 carrusel horitzontal. Descartades perquè amb poques expansions es veuen
 buides i perquè obliguen a gestionar el focus i els overlays a mà.
+
+**Cost:** 0 €.
+
+## D-009 · Cadena de reserva de preus: Cardmarket primer, TCGplayer convertit si no n'hi ha
+
+**Data:** 2026-08-13
+
+**Decisió:** el preu d'una carta surt de Cardmarket (euros) com sempre
+(política D-004, que aquesta decisió matisa); però si Cardmarket no en té
+(passa amb els sets més nous: l'API porta el seu bloc buit), es fa servir
+de reserva el preu de mercat de TCGplayer (dòlars americans) convertit a
+euros amb una taxa fixa aproximada (0,90). Els preus de reserva es
+marquen amb «≈» a la fitxa de la carta, amb l'explicació en passar-hi el
+ratolí, i el panell d'estadístiques afegeix una nota («inclou preus
+aproximats (≈): n») quan el valor o el cost en contenen algun. Si cap
+font té preu, es manté el guió i el recompte honest de «cartes sense
+preu» al panell.
+
+La reserva actua **variant a variant**, no set a set: també en sets amb
+Cardmarket complet, si una variant concreta no hi té preu (un reverse amb
+les claus a zero, una carta sense bloc de Cardmarket), aquella variant
+agafa el preu de TCGplayer i surt marcada amb «≈».
+
+**Per què:** en afegir Prismatic Evolutions i els sets de Mega Evolution
+es va descobrir que el valor de la col·lecció i el cost de completar hi
+sortien a zero: cap carta d'aquells sets no tenia preus de Cardmarket a
+l'API. TCGplayer sí que en té per als sets que ja té llistats —
+Prismatic Evolutions, Mega Evolution i Phantasmal Flames —, i un preu
+aproximat marcat honestament és més útil que un zero enganyós. Els
+altres quatre sets nous (Ascended Heroes, Perfect Order, Chaos Rising i
+Pitch Black) de moment no tenen preu a cap font — comprovat a la cau i,
+el 13-08, contra l'API en viu (que va confirmar Perfect Order i Pitch
+Black sense preus; per als altres dos responia amb els errors
+intermitents coneguts) — i mantenen el guió i el recompte de «cartes
+sense preu» fins que l'API en porti. La taxa fixa és
+una simplificació documentada: per a una web orientativa de
+col·leccionisme és suficient, i evita dependre d'un servei de canvi de
+divises.
+
+**Alternatives considerades:** esperar que l'API actualitzi Cardmarket
+(pot trigar mesos), o integrar l'API de CardTrader (queda apuntada com a
+millora futura a docs/recerca-cardtrader.md; la reserva de TCGplayer és
+gratuïta i immediata perquè les dades ja són a la cau).
 
 **Cost:** 0 €.
