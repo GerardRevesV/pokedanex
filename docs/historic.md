@@ -513,7 +513,28 @@ Perfect Order, Chaos Rising i Pitch Black, massa nous) mantenen el guió
 i el recompte honest de cartes sense preu — comprovat a la cau i, en la
 mesura que l'API en viu va respondre aquell dia, també contra l'API.
 
-## 38. Els documents oficials del treball: requisits i rúbrica, en un full
+## 38. L'efecte de llibre: el full que gira en passar pàgina
+
+*2026-11-03*
+
+Fins ara la vista d'àlbum canviava de pàgina d'una revolada: les cartes
+desapareixien i n'apareixien unes altres al mateix lloc. Ara passa com en
+un llibre de debò. En clicar la fletxa ›, el full de la dreta s'aixeca,
+volta sobre el llom del carpesà i cau cap a l'esquerra; mentre volta
+ensenya pel darrere la pàgina nova, i per sota apareix la pàgina dreta
+següent. La fletxa ‹ fa el mateix moviment del revés. El gir dura poc més
+de mig segon i porta un vel d'ombra que enfosqueix el paper mentre
+s'aixeca i el torna a la llum quan s'ajeu: és l'ombra, més que el
+moviment, la que fa que sembli paper. En pantalles estretes, on l'àlbum
+mostra una sola pàgina, el full volta sobre si mateix.
+
+Tot està fet amb els efectes 3D del CSS i l'API d'animacions que el
+navegador ja porta, sense cap llibreria ni cap cost. Si l'ordinador o el
+mòbil tenen activada l'opció d'accessibilitat «redueix el moviment», o si
+el navegador és massa antic per animar, el canvi de pàgina es fa sec com
+abans: l'àlbum continua funcionant igual.
+
+## 39. Els documents oficials del treball: requisits i rúbrica, en un full
 
 *2026-11-03*
 
@@ -533,7 +554,7 @@ llengua estrangera i les faltes d'ortografia són eliminatòries. La
 comparació amb les orientacions de la promoció anterior deixa clara la
 direcció del canvi: ara pesa més el que es defensa en viu que el paper.
 
-## 39. El guió del treball escrit: què s'explica, com s'ordena i què sobra
+## 40. El guió del treball escrit: què s'explica, com s'ordena i què sobra
 
 *2026-11-03*
 
@@ -556,7 +577,7 @@ inventar. També es recullen les xifres reals del repositori per tenir-les
 a mà al treball: 5.632 línies de codi en 14 fitxers, cap escrita a mà, 40
 commits, 10 pull requests, 13 branques, 14 expansions i 0 € gastats.
 
-## 40. El marc teòric, escrit: de la piulada de Karpathy a la «programació per intenció»
+## 41. El marc teòric, escrit: de la piulada de Karpathy a la «programació per intenció»
 
 *2026-11-03*
 
@@ -586,7 +607,7 @@ amb l'estat de verificació de cada font, perquè les dades que només s'han
 pogut llegir de segona mà quedin marcades i es comprovin abans del
 lliurament.
 
-## 41. L'estudi d'usabilitat: 31 controls, vuit casos d'ús i nou confusions
+## 42. L'estudi d'usabilitat: 31 controls, vuit casos d'ús i nou confusions
 
 *2026-11-03*
 
@@ -614,7 +635,7 @@ recomanació de vuit punts, començant per convertir els filtres en un
 ressaltador amb navegació a l'àlbum. Cap de les nou és un error de
 programació: totes són forats entre peces o paraules mal triades.
 
-## 42. L'estudi que es va espatllar, i la veu del treball
+## 43. L'estudi que es va espatllar, i la veu del treball
 
 *2026-11-03*
 
@@ -648,7 +669,7 @@ l'apartat 11, amb l'ordre de la feina que queda, posant primer el que té
 temps d'espera: confirmar dates amb el tutor, buscar les persones per a les
 proves d'usuari i verificar les fonts pendents.
 
-## 43. Quatre revisors per a un text, i els documents publicats a internet
+## 44. Quatre revisors per a un text, i els documents publicats a internet
 
 *2026-11-04*
 

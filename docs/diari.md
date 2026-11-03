@@ -598,6 +598,48 @@ de recerca segons les orientacions, de manera que abans del lliurament cal
 una lectura ortogràfica completa feta per una persona, no només la cerca de
 patrons que s'ha fet avui.
 
+## 2026-11-03 — L'efecte de llibre en passar pàgina de l'àlbum
+
+**Què s'ha fet:**
+- Estudiat com canviava de pàgina la vista d'àlbum (`app/js/album.js`):
+  la funció `passarPagina()` repintava el carpesà sencer de cop.
+- Implementat el gir del full amb CSS 3D (`perspective`, `rotateY`,
+  `transform-style: preserve-3d`, `backface-visibility`) i l'API
+  d'animacions del navegador, sense cap llibreria: 520 ms, amb l'eix del
+  gir clavat al llom del carpesà i un vel d'ombra que fa l'efecte de
+  paper.
+- Descobert que la numeració de l'àlbum ja encaixava amb un llibre de
+  debò: passar de les pàgines 1-2 a les 3-4 és exactament girar un full,
+  perquè el darrere del full que té la pàgina 2 al davant és la pàgina 3.
+  Per això el full que volta porta la pàgina vella al davant i la nova al
+  darrere, i en acabar es queda al carpesà fent de pàgina esquerra.
+- Fet que el gir no repinti res: les pàgines que no volten ja són les
+  definitives abans de començar i, en acabar, el full s'assenta al seu
+  lloc. Les imatges de les cartes no es tornen a crear ni a descarregar.
+- Respectada la preferència d'accessibilitat «redueix el moviment» i
+  previst el cas d'un navegador sense animacions: en tots dos casos el
+  canvi de pàgina es fa sec i la pàgina continua funcionant igual.
+- Verificat al navegador integrat: gir endavant i enrere, quatre clics
+  ràpids seguits, vista d'una sola pàgina (mòbil), canvi de vista a mig
+  gir, i que els botons + i − i el valor de la col·lecció segueixen bé.
+  Cap error a la consola.
+- Documentada la decisió (D-010), l'entrada 38 de l'històric i el repte 8.
+
+**Eines usades:** Claude Code, el navegador integrat (congelant
+l'animació a mig gir per poder fotografiar-la i mesurar-la), git.
+
+**Costos:** 0 €. Cap servei nou, cap llibreria.
+
+**Problemes:**
+- El port 8000 estava ocupat per un altre servidor local que ja corria,
+  i per provar aquesta branca va caldre servir-la al port 8002. És només
+  cosa de les proves: la web no canvia.
+- En vista d'una sola pàgina, el carpesà s'encongia 6 píxels mentre el
+  full voltava. El motiu: a sota del full hi deixem una pàgina de
+  butxaques buides i invisible perquè el carpesà no es quedi sense res a
+  dins, i aquesta pàgina feia una mica menys d'alçada que una de plena.
+  Resolt fixant-li l'alçada exacta de la pàgina de debò.
+
 ## 2026-11-04 — Revisió del marc teòric amb quatre revisors, i els documents a internet
 
 **Què s'ha fet:**
