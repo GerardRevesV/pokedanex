@@ -647,3 +647,37 @@ tribunal a preguntar-se quina part és de l'autora. S'afegeix també al guió
 l'apartat 11, amb l'ordre de la feina que queda, posant primer el que té
 temps d'espera: confirmar dates amb el tutor, buscar les persones per a les
 proves d'usuari i verificar les fonts pendents.
+
+## 43. Quatre revisors per a un text, i els documents publicats a internet
+
+*2026-11-04*
+
+Dues feines en una sessió. La primera: el marc teòric passa pel mateix
+mètode de revisió per capes que fins ara s'havia aplicat només al codi.
+Quatre revisors independents i simultanis, cadascun amb un únic criteri
+—nivell i claredat, síntesi, rigor de les fonts i llengua catalana—, i un
+orquestrador que decideix què s'aplica i resol els casos en què dos
+revisors demanen coses contràries. El resultat queda registrat a
+`treball/revisio-marc-teoric.md`: el text passa de 4.512 a 3.454 paraules i
+de set capítols a cinc, i es corregeixen tretze errades de llengua greus
+—entre elles «oblita» per «oblida» i «donat tot el text» per «a partir de
+tot el text»—, qualsevol de les quals hauria fet suspendre el treball
+segons la norma de l'institut. Les tres troballes de fons són pitjors i més
+útils: el «0 €» del text contradeia el diari del projecte, que diu que el
+cost de la subscripció d'IA està pendent de documentar; una citació de
+Simon Willison estava mal transcrita («clarament arriscat» quan ell va
+escriure «clarament una idea terrible»); i en explicar per què METR va
+haver de canviar el seu experiment s'havia omès que la paga dels
+participants havia baixat de 150 a 50 dòlars l'hora, que és el motiu que
+més afebleix la interpretació. Es verifiquen també les nou fonts que
+quedaven pendents, amb la troballa que el 2,74× que circula per internet
+sobre codi generat per IA és només de *cross-site scripting*, no una xifra
+general.
+
+La segona feina: els documents del projecte ja es poden llegir des de
+qualsevol ordinador. Es crea un lector a `app/documents/` amb índex
+lateral, filtre de cerca i els documents agrupats, i un script
+(`tools/prepara_documents.py`) que el desplegament executa per copiar
+`docs/` i `treball/` dins de la web. La còpia no es guarda al repositori:
+es genera a cada publicació, de manera que la web sempre serveix l'última
+versió dels documents sense mantenir res a mà.

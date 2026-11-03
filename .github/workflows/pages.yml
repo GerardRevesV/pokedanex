@@ -30,6 +30,15 @@ jobs:
     steps:
       - name: Descarrega el codi
         uses: actions/checkout@v4
+        with:
+          # Tot l'historial: el script dels documents en treu la data de
+          # l'últim canvi de cada fitxer, i una còpia superficial no la té.
+          fetch-depth: 0
+
+      # Copia docs/ i treball/ dins d'app/documents/md/ perquè es publiquin
+      # amb la web. La còpia no es guarda al repositori: es fa aquí.
+      - name: Copia els documents del projecte dins de la web
+        run: python3 tools/prepara_documents.py
 
       - name: Prepara GitHub Pages
         uses: actions/configure-pages@v5

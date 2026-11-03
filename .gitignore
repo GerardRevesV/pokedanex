@@ -1,6 +1,9 @@
 # Secrets — mai pujar a GitHub
 config.json
 
+# Còpia dels documents que fa el desplegament (es genera, no es guarda)
+app/documents/md/
+
 # Residus tècnics
 __pycache__/
 *.pyc

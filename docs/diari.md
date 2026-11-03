@@ -597,3 +597,47 @@ escolat al text. És precisament el tipus d'error que fa suspendre un treball
 de recerca segons les orientacions, de manera que abans del lliurament cal
 una lectura ortogràfica completa feta per una persona, no només la cerca de
 patrons que s'ha fet avui.
+
+## 2026-11-04 — Revisió del marc teòric amb quatre revisors, i els documents a internet
+
+**Què s'ha fet:**
+- Llançats quatre revisors independents i simultanis sobre
+  `treball/marc-teoric.md`, amb un criteri cadascun: nivell i claredat,
+  síntesi i estructura, rigor de les fonts, i llengua catalana. En total, 79
+  troballes.
+- Decidit què s'aplicava de cada revisió i reescrit el text en una sola
+  passada: de 4.512 a 3.454 paraules, de 7 capítols a 5, i de ~30 xifres a
+  13.
+- Verificades les nou fonts que quedaven pendents. Tres citacions del text
+  eren incorrectes i s'han corregit contra la font primària.
+- Reescrit `treball/fonts.md`: ara separa les fonts citades a la Part I de
+  les que queden documentades per a les parts següents, amb la clau de
+  citació de cadascuna.
+- Creat `treball/revisio-marc-teoric.md` amb el registre de la revisió, que
+  serveix de material per a la part de metodologia del treball.
+- Creat el lector de documents a `app/documents/index.html` i l'script
+  `tools/prepara_documents.py`, i connectat al desplegament de GitHub Pages
+  perquè `docs/` i `treball/` es publiquin amb la web.
+
+**Eines usades:** Claude Code amb quatre subagents en paral·lel, cerca web
+per verificar fonts, i cerca de patrons al text per comprovar que les
+correccions de llengua havien quedat aplicades.
+
+**Costos:** 0 € en serveis. (El cost de la subscripció continua pendent de
+documentar, i la revisió de rigor l'ha assenyalat com la primera pregunta
+que farà el tribunal.)
+
+**Problemes:** tres. El primer, que en reescriure el text per corregir una
+paraula en castellà s'hi va tornar a escolar la mateixa paraula
+(«conviene»), que es va detectar i corregir a la verificació final: és la
+prova que una lectura humana abans del lliurament no és opcional. El segon,
+que la navegació a localhost està bloquejada en aquesta sessió, de manera
+que el lector de documents s'ha comprovat per HTTP —les quinze rutes
+responen correctament— però no visualment. I el tercer, de coordinació: el
+pull request #12 d'una altra sessió (l'efecte de llibre de l'àlbum) ja és a
+main i toca els mateixos documents compartits, de manera que el pull request
+#13 ha quedat en conflicte. A més, una tercera sessió té feina sense desar en
+aquesta mateixa carpeta (l'estudi d'usabilitat i el seu repte), que no entra
+en aquest canvi. Hi ha una triple col·lisió de numeració a l'històric i als
+reptes que cal resoldre conservant-ho tot i renumerant en ordre cronològic,
+tal com es va fer a l'entrada 27.

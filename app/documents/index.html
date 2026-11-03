@@ -1,0 +1,397 @@
+<!doctype html>
+<html lang="ca">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Documents del Pokedanex</title>
+<meta name="description" content="El treball de recerca i la documentació del projecte Pokedanex, per llegir des de qualsevol ordinador.">
+<style>
+  :root {
+    --fons: #13151a;
+    --fons-panell: #1b1e26;
+    --fons-suau: #22262f;
+    --vora: #2f3542;
+    --text: #e7e9ee;
+    --text-suau: #a8aebd;
+    --accent: #f0a830;
+    --accent-fluix: rgba(240, 168, 48, .14);
+    --amplada-menu: 19rem;
+  }
+  @media (prefers-color-scheme: light) {
+    :root:not([data-tema="fosc"]) {
+      --fons: #f7f7f9;
+      --fons-panell: #ffffff;
+      --fons-suau: #eceef2;
+      --vora: #d9dce3;
+      --text: #1d2026;
+      --text-suau: #5d646f;
+      --accent: #a86a00;
+      --accent-fluix: rgba(168, 106, 0, .10);
+    }
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--fons);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-size: 17px;
+    line-height: 1.65;
+  }
+
+  /* ---------- Capçalera ---------- */
+  header {
+    position: sticky; top: 0; z-index: 20;
+    display: flex; align-items: center; gap: .75rem;
+    padding: .7rem 1rem;
+    background: var(--fons-panell);
+    border-bottom: 1px solid var(--vora);
+  }
+  header h1 { margin: 0; font-size: 1rem; font-weight: 650; letter-spacing: .01em; }
+  header h1 span { color: var(--accent); }
+  .enllac-web {
+    margin-left: auto; font-size: .82rem; color: var(--text-suau);
+    text-decoration: none; border: 1px solid var(--vora);
+    padding: .3rem .65rem; border-radius: 99px; white-space: nowrap;
+  }
+  .enllac-web:hover { color: var(--accent); border-color: var(--accent); }
+  #obre-menu {
+    display: none; background: var(--fons-suau); color: var(--text);
+    border: 1px solid var(--vora); border-radius: .5rem;
+    padding: .35rem .6rem; font-size: .95rem; cursor: pointer;
+  }
+
+  /* ---------- Disposició ---------- */
+  .pagina { display: flex; align-items: flex-start; }
+
+  nav {
+    width: var(--amplada-menu); flex: 0 0 var(--amplada-menu);
+    position: sticky; top: 3.2rem;
+    height: calc(100vh - 3.2rem); overflow-y: auto;
+    padding: 1.1rem .9rem 3rem;
+    border-right: 1px solid var(--vora);
+    background: var(--fons);
+  }
+  nav input {
+    width: 100%; padding: .45rem .65rem; margin-bottom: 1rem;
+    background: var(--fons-suau); color: var(--text);
+    border: 1px solid var(--vora); border-radius: .5rem;
+    font: inherit; font-size: .9rem;
+  }
+  nav input:focus { outline: 2px solid var(--accent-fluix); border-color: var(--accent); }
+  nav h2 {
+    font-size: .72rem; text-transform: uppercase; letter-spacing: .09em;
+    color: var(--text-suau); margin: 1.3rem 0 .45rem .3rem;
+  }
+  nav h2:first-of-type { margin-top: 0; }
+  nav a {
+    display: block; padding: .42rem .6rem; margin-bottom: .12rem;
+    color: var(--text); text-decoration: none;
+    border-radius: .45rem; font-size: .92rem;
+    border-left: 2px solid transparent;
+  }
+  nav a:hover { background: var(--fons-suau); }
+  nav a.actiu {
+    background: var(--accent-fluix); border-left-color: var(--accent);
+    color: var(--accent); font-weight: 600;
+  }
+  nav a small { display: block; color: var(--text-suau); font-size: .74rem; font-weight: 400; }
+  nav a.actiu small { color: var(--text-suau); }
+
+  main { flex: 1 1 auto; min-width: 0; padding: 2rem 1.5rem 6rem; }
+  .lectura { max-width: 44rem; margin: 0 auto; }
+
+  /* ---------- Portada ---------- */
+  .portada p.entradeta { color: var(--text-suau); font-size: 1.02rem; }
+  .graella { display: grid; gap: .8rem; grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr)); margin: 1.2rem 0 2.2rem; }
+  .fitxa {
+    display: block; padding: .9rem 1rem;
+    background: var(--fons-panell); border: 1px solid var(--vora);
+    border-radius: .7rem; text-decoration: none; color: var(--text);
+  }
+  .fitxa:hover { border-color: var(--accent); }
+  .fitxa strong { display: block; font-size: .96rem; margin-bottom: .2rem; }
+  .fitxa span { color: var(--text-suau); font-size: .8rem; }
+
+  /* ---------- Document ---------- */
+  .meta { color: var(--text-suau); font-size: .83rem; margin-bottom: 1.8rem; }
+  article h1 { font-size: 1.85rem; line-height: 1.2; margin: 0 0 .9rem; }
+  article h2 {
+    font-size: 1.3rem; margin: 2.4rem 0 .7rem;
+    padding-bottom: .3rem; border-bottom: 1px solid var(--vora);
+  }
+  article h3 { font-size: 1.08rem; margin: 1.8rem 0 .5rem; }
+  article h4 { font-size: .98rem; margin: 1.4rem 0 .4rem; color: var(--text-suau); }
+  article p, article li { overflow-wrap: break-word; }
+  article a { color: var(--accent); text-decoration: underline; text-underline-offset: .15em; }
+  article strong { color: var(--text); font-weight: 650; }
+  article blockquote {
+    margin: 1.2rem 0; padding: .7rem 1.1rem;
+    border-left: 3px solid var(--accent);
+    background: var(--accent-fluix); border-radius: 0 .5rem .5rem 0;
+  }
+  article blockquote p:first-child { margin-top: 0; }
+  article blockquote p:last-child { margin-bottom: 0; }
+  article code {
+    background: var(--fons-suau); padding: .12em .4em;
+    border-radius: .3rem; font-size: .88em;
+    font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+  }
+  article pre {
+    background: var(--fons-panell); border: 1px solid var(--vora);
+    padding: .9rem 1rem; border-radius: .6rem; overflow-x: auto;
+  }
+  article pre code { background: none; padding: 0; font-size: .85rem; }
+  .taula-ampla { overflow-x: auto; margin: 1.3rem 0; }
+  article table { border-collapse: collapse; width: 100%; font-size: .89rem; }
+  article th, article td {
+    border: 1px solid var(--vora); padding: .45rem .6rem;
+    text-align: left; vertical-align: top;
+  }
+  article th { background: var(--fons-suau); font-weight: 650; }
+  article hr { border: 0; border-top: 1px solid var(--vora); margin: 2.4rem 0; }
+  article img { max-width: 100%; height: auto; border-radius: .5rem; }
+
+  .avis {
+    padding: 1rem 1.2rem; background: var(--fons-panell);
+    border: 1px solid var(--vora); border-radius: .7rem; color: var(--text-suau);
+  }
+
+  /* ---------- Mòbil ---------- */
+  @media (max-width: 860px) {
+    #obre-menu { display: block; }
+    nav {
+      position: fixed; top: 3.2rem; left: 0; bottom: 0;
+      height: auto; z-index: 15;
+      transform: translateX(-100%); transition: transform .18s ease-out;
+      box-shadow: 0 0 2rem rgba(0,0,0,.45);
+      width: min(var(--amplada-menu), 86vw); flex-basis: auto;
+      background: var(--fons-panell);
+    }
+    nav.obert { transform: translateX(0); }
+    main { padding: 1.4rem 1rem 5rem; }
+    article h1 { font-size: 1.5rem; }
+    body { font-size: 16px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    nav { transition: none; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <button id="obre-menu" aria-label="Obre l'índex de documents" aria-expanded="false">☰</button>
+  <h1>Documents del <span>Pokedanex</span></h1>
+  <a class="enllac-web" href="../">Torna a la web ↗</a>
+</header>
+
+<div class="pagina">
+  <nav id="menu" aria-label="Índex de documents">
+    <input id="filtre" type="search" placeholder="Filtra els documents…" aria-label="Filtra els documents">
+    <div id="llista"></div>
+  </nav>
+
+  <main>
+    <div class="lectura" id="contingut">
+      <p class="avis">Carregant els documents…</p>
+    </div>
+  </main>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/4.3.0/marked.min.js"></script>
+<script>
+(function () {
+  "use strict";
+
+  var menu = document.getElementById("menu");
+  var llista = document.getElementById("llista");
+  var contingut = document.getElementById("contingut");
+  var filtre = document.getElementById("filtre");
+  var botoMenu = document.getElementById("obre-menu");
+
+  var index = null;
+  var cache = {};
+
+  // ---------- utilitats ----------
+
+  function dataLlegible(iso) {
+    if (!iso) return "";
+    var d = new Date(iso);
+    if (isNaN(d)) return "";
+    return d.toLocaleDateString("ca-ES", { day: "numeric", month: "long", year: "numeric" });
+  }
+
+  function documents() {
+    if (!index) return [];
+    return index.grups.reduce(function (acc, g) { return acc.concat(g.documents); }, []);
+  }
+
+  function cercaDoc(id) {
+    return documents().filter(function (d) { return d.id === id; })[0] || null;
+  }
+
+  function tancaMenuMobil() {
+    menu.classList.remove("obert");
+    botoMenu.setAttribute("aria-expanded", "false");
+  }
+
+  // ---------- menú ----------
+
+  function pintaMenu() {
+    llista.innerHTML = "";
+    index.grups.forEach(function (grup) {
+      var titol = document.createElement("h2");
+      titol.textContent = grup.nom;
+      titol.dataset.grup = grup.carpeta;
+      llista.appendChild(titol);
+
+      grup.documents.forEach(function (doc) {
+        var a = document.createElement("a");
+        a.href = "#" + doc.id;
+        a.dataset.id = doc.id;
+        a.innerHTML = "";
+        var fort = document.createElement("span");
+        fort.textContent = doc.titol;
+        a.appendChild(fort);
+        var sub = document.createElement("small");
+        sub.textContent = doc.paraules.toLocaleString("ca-ES") + " paraules";
+        a.appendChild(sub);
+        a.addEventListener("click", tancaMenuMobil);
+        llista.appendChild(a);
+      });
+    });
+    marcaActiu();
+  }
+
+  function marcaActiu() {
+    var id = location.hash.replace(/^#/, "");
+    Array.prototype.forEach.call(llista.querySelectorAll("a"), function (a) {
+      a.classList.toggle("actiu", a.dataset.id === id);
+    });
+  }
+
+  function aplicaFiltre() {
+    var q = filtre.value.trim().toLowerCase();
+    var visiblesPerGrup = {};
+
+    Array.prototype.forEach.call(llista.querySelectorAll("a"), function (a) {
+      var coincideix = !q || a.textContent.toLowerCase().indexOf(q) !== -1;
+      a.style.display = coincideix ? "" : "none";
+      var grup = a.dataset.id.split("/")[0];
+      if (coincideix) visiblesPerGrup[grup] = true;
+    });
+
+    Array.prototype.forEach.call(llista.querySelectorAll("h2"), function (h) {
+      h.style.display = visiblesPerGrup[h.dataset.grup] ? "" : "none";
+    });
+  }
+
+  // ---------- portada ----------
+
+  function pintaPortada() {
+    var html = '<div class="portada"><h1>Documents del Pokedanex</h1>' +
+      '<p class="entradeta">El treball de recerca i tota la documentació del projecte, ' +
+      'sempre amb l\'última versió publicada. Tria un document de la llista.</p></div>';
+
+    index.grups.forEach(function (grup) {
+      html += "<h2>" + grup.nom + "</h2><div class=\"graella\">";
+      grup.documents.forEach(function (doc) {
+        var data = dataLlegible(doc.actualitzat);
+        html += '<a class="fitxa" href="#' + doc.id + '">' +
+          "<strong>" + doc.titol + "</strong><span>" +
+          doc.paraules.toLocaleString("ca-ES") + " paraules" +
+          (data ? " · " + data : "") + "</span></a>";
+      });
+      html += "</div>";
+    });
+
+    contingut.innerHTML = html;
+    document.title = "Documents del Pokedanex";
+  }
+
+  // ---------- document ----------
+
+  function envoltaTaules() {
+    Array.prototype.forEach.call(contingut.querySelectorAll("table"), function (t) {
+      if (t.parentNode.classList.contains("taula-ampla")) return;
+      var caixa = document.createElement("div");
+      caixa.className = "taula-ampla";
+      t.parentNode.insertBefore(caixa, t);
+      caixa.appendChild(t);
+    });
+  }
+
+  function pintaDocument(doc, text) {
+    var data = dataLlegible(doc.actualitzat);
+    var meta = doc.paraules.toLocaleString("ca-ES") + " paraules" +
+      (data ? " · actualitzat el " + data : "") +
+      ' · <a href="md/' + doc.ruta + '">veure l\'original en Markdown</a>';
+
+    contingut.innerHTML = '<p class="meta">' + meta + "</p><article></article>";
+    contingut.querySelector("article").innerHTML = marked.parse(text);
+    envoltaTaules();
+    document.title = doc.titol + " · Pokedanex";
+    window.scrollTo(0, 0);
+  }
+
+  function obre(id) {
+    var doc = cercaDoc(id);
+    if (!doc) { pintaPortada(); return; }
+
+    if (cache[id]) { pintaDocument(doc, cache[id]); return; }
+
+    contingut.innerHTML = '<p class="avis">Carregant «' + doc.titol + "»…</p>";
+    fetch("md/" + doc.ruta)
+      .then(function (r) {
+        if (!r.ok) throw new Error("resposta " + r.status);
+        return r.text();
+      })
+      .then(function (text) {
+        cache[id] = text;
+        pintaDocument(doc, text);
+      })
+      .catch(function (e) {
+        contingut.innerHTML = '<p class="avis">No s\'ha pogut carregar aquest document (' +
+          e.message + ").</p>";
+      });
+  }
+
+  function ruta() {
+    marcaActiu();
+    var id = location.hash.replace(/^#/, "");
+    if (!id) { pintaPortada(); return; }
+    obre(id);
+  }
+
+  // ---------- arrencada ----------
+
+  botoMenu.addEventListener("click", function () {
+    var obert = menu.classList.toggle("obert");
+    botoMenu.setAttribute("aria-expanded", obert ? "true" : "false");
+  });
+  filtre.addEventListener("input", aplicaFiltre);
+  window.addEventListener("hashchange", ruta);
+
+  fetch("md/index.json")
+    .then(function (r) {
+      if (!r.ok) throw new Error("resposta " + r.status);
+      return r.json();
+    })
+    .then(function (dades) {
+      index = dades;
+      pintaMenu();
+      ruta();
+    })
+    .catch(function () {
+      contingut.innerHTML = '<p class="avis">No s\'ha trobat l\'índex dels documents. ' +
+        "Si estàs obrint aquest fitxer en local, cal executar primer " +
+        "<code>python tools/prepara_documents.py</code> i servir la carpeta " +
+        "<code>app/</code> amb un servidor web.</p>";
+    });
+})();
+</script>
+</body>
+</html>
