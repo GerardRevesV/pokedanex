@@ -512,3 +512,24 @@ contenen. Els quatre sets sense cap preu enlloc (Ascended Heroes,
 Perfect Order, Chaos Rising i Pitch Black, massa nous) mantenen el guió
 i el recompte honest de cartes sense preu — comprovat a la cau i, en la
 mesura que l'API en viu va respondre aquell dia, també contra l'API.
+
+## 38. L'efecte de llibre: el full que gira en passar pàgina
+
+*2026-11-03*
+
+Fins ara la vista d'àlbum canviava de pàgina d'una revolada: les cartes
+desapareixien i n'apareixien unes altres al mateix lloc. Ara passa com en
+un llibre de debò. En clicar la fletxa ›, el full de la dreta s'aixeca,
+volta sobre el llom del carpesà i cau cap a l'esquerra; mentre volta
+ensenya pel darrere la pàgina nova, i per sota apareix la pàgina dreta
+següent. La fletxa ‹ fa el mateix moviment del revés. El gir dura poc més
+de mig segon i porta un vel d'ombra que enfosqueix el paper mentre
+s'aixeca i el torna a la llum quan s'ajeu: és l'ombra, més que el
+moviment, la que fa que sembli paper. En pantalles estretes, on l'àlbum
+mostra una sola pàgina, el full volta sobre si mateix.
+
+Tot està fet amb els efectes 3D del CSS i l'API d'animacions que el
+navegador ja porta, sense cap llibreria ni cap cost. Si l'ordinador o el
+mòbil tenen activada l'opció d'accessibilitat «redueix el moviment», o si
+el navegador és massa antic per animar, el canvi de pàgina es fa sec com
+abans: l'àlbum continua funcionant igual.

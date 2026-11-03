@@ -207,3 +207,39 @@ guió i el recompte de «cartes sense preu». La lliçó per al treball:
 davant de dades incompletes hi ha tres opcions — el zero enganyós,
 l'aproximació honesta o el silenci — i la bona resposta gairebé sempre
 és l'aproximació que diu la veritat sobre si mateixa.
+
+## 8. Girar un full en una pantalla plana: el llibre que no hi és
+
+*2026-11-03*
+
+La vista d'àlbum de Pokedanex imita un carpesà obert, amb les butxaques
+de plàstic i tot, però canviava de pàgina com canvia una diapositiva:
+les cartes desapareixien i n'apareixien unes altres al mateix lloc, sense
+cap moviment. El repte era fer-hi passar un full, i la dificultat de fons
+és que una pantalla és plana i una pàgina web no té pàgines: és una
+superfície contínua on les coses es poden moure amunt i avall, però no
+«girar». El que sí que es pot fer és enganyar l'ull. Al navegador se li
+pot dir que un tros de pàgina és un full de paper col·locat en un espai
+amb profunditat, donar-li una cara i un dors, i fer-lo voltar sobre un
+eix. L'eix és el que ho decideix tot: si el full volta pel mig sembla una
+carta de la baralla que gira; perquè sembli un llibre, ha de voltar sobre
+el llom. I el detall que acaba de convèncer no és cap càlcul de
+geometria, sinó la llum: una ombra que enfosqueix el paper mentre
+s'aixeca i el deixa tornar a la claror quan s'ajeu. Sense l'ombra, el
+moviment és correcte i no s'ho creu ningú.
+
+La sorpresa va venir en adonar-nos que l'àlbum ja era un llibre sense
+saber-ho. Com que a l'ordinador se'n veuen dues pàgines alhora, passar de
+les pàgines 1-2 a les 3-4 és exactament el que passa quan gires un full
+de paper: el full que té la pàgina 2 a la cara té la 3 al dors, i en caure
+cap a l'esquerra deixa la 3 a la vista i descobreix la 4 a sota.
+L'animació, doncs, no havia d'inventar cap lògica nova; només havia de
+dir en veu alta el que l'àlbum ja feia en silenci. L'última part del
+repte va ser la menys vistosa i potser la més important: hi ha persones a
+qui els moviments d'aquesta mena els provoquen mareig, i per això els
+ordinadors i els mòbils tenen una opció d'accessibilitat que demana
+reduir el moviment. La web la consulta i, si està activada, canvia de
+pàgina sense cap gir. La mateixa prudència val per als navegadors antics
+que no saben animar: l'efecte és una capa posada a sobre, i si no es pot
+fer, la pàgina canvia igualment. La lliçó per al treball és que un
+adorn mai no pot ser la condició perquè una cosa funcioni.

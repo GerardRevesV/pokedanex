@@ -517,6 +517,9 @@ body:not([data-marcatge="consulta"]) .butxaca-funda:not(.butxaca-funda--buida) {
 /* El carpesà: coberta fosca amb les dues pàgines obertes a dins */
 .album-llibre {
   display: flex;
+  /* De referència per al full que gira (album.js el col·loca a sobre
+     amb mesures preses d’aquí mateix) */
+  position: relative;
   gap: 0.4rem;
   padding: 1.1rem;
   background: linear-gradient(145deg, #232a36, #10151d);
@@ -543,6 +546,76 @@ body:not([data-marcatge="consulta"]) .butxaca-funda:not(.butxaca-funda--buida) {
 .album-pagina:last-child {
   border-radius: 3px 8px 8px 3px;
   box-shadow: inset 14px 0 18px -14px rgba(0, 0, 0, 0.8);
+}
+
+/* ---------- El full que gira (efecte de llibre en passar pàgina) ----------
+   album.js munta un "full" per sobre del carpesà amb la pàgina vella en
+   una cara i la nova a l’altra, i el fa voltar sobre el llom. La
+   perspectiva només s’activa mentre volta (classe --girant): la resta
+   del temps el carpesà és pla i no cal cap context 3D. */
+
+.album-llibre--girant {
+  perspective: 1800px;
+}
+
+.album-full {
+  position: absolute; /* album.js li posa mida i posició exactes */
+  z-index: 2;         /* per sobre de les pàgines del carpesà */
+  transform-style: preserve-3d;
+  /* A mig gir no s’hi pot clicar: un clic al full voltant marcaria una
+     carta sense voler */
+  pointer-events: none;
+  will-change: transform;
+}
+
+/* Les dues cares del full, l’una d’esquena a l’altra: amb
+   backface-visibility només es veu la que mira l’usuari */
+.album-full > .album-full-cara {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+}
+
+/* Cantonades i ombra del llom de cada cara. Aquí no valen les regles de
+   :first-child/:last-child de .album-pagina: la cara del darrere es veu
+   reflectida, i per tant el seu costat del llom és el dret. */
+.album-full > .album-full-cara--davant {
+  border-radius: 3px 8px 8px 3px;
+  box-shadow: inset 14px 0 18px -14px rgba(0, 0, 0, 0.8),
+              0 12px 30px rgba(0, 0, 0, 0.55);
+}
+
+.album-full > .album-full-cara--darrere {
+  transform: rotateY(180deg);
+  border-radius: 8px 3px 3px 8px;
+  box-shadow: inset -14px 0 18px -14px rgba(0, 0, 0, 0.8),
+              0 12px 30px rgba(0, 0, 0, 0.55);
+}
+
+/* El vel d’ombra: el paper s’enfosqueix mentre s’aixeca i torna a la
+   llum quan s’ajeu (album.js n’anima l’opacitat). Més fosc a prop del
+   llom, que és on es plega el full. */
+.album-full-ombra {
+  position: absolute;
+  inset: 0;
+  z-index: 2; /* per sobre de les butxaques i del reflex del plàstic */
+  pointer-events: none;
+  border-radius: inherit;
+  opacity: 0;
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.05));
+}
+
+/* A la cara del darrere el llom queda a la dreta (es veu reflectida) */
+.album-full-cara--darrere > .album-full-ombra {
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.6));
+}
+
+/* Peu dret invisible: en vista d’una sola pàgina el full és l’única
+   pàgina que hi havia, i sense res a sota el carpesà s’encongiria a mig
+   gir. album.js hi deixa una pàgina de butxaques buides, que fa la
+   mateixa mida i no es veu. */
+.album-pagina--mida {
+  visibility: hidden;
 }
 
 .butxaca {
@@ -1358,6 +1431,14 @@ body,
   .album-pagina:last-child {
     border-radius: 8px;
     box-shadow: none;
+  }
+
+  /* El full que gira tampoc no té llom aquí, però sí l'ombra que el
+     separa del carpesà mentre volta */
+  .album-full > .album-full-cara--davant,
+  .album-full > .album-full-cara--darrere {
+    border-radius: 8px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.55);
   }
 }
 
