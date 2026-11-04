@@ -243,3 +243,40 @@ pàgina sense cap gir. La mateixa prudència val per als navegadors antics
 que no saben animar: l'efecte és una capa posada a sobre, i si no es pot
 fer, la pàgina canvia igualment. La lliçó per al treball és que un
 adorn mai no pot ser la condició perquè una cosa funcioni.
+
+## 9. Tot funciona i res no s'entén: el forat que deixen les peces ben fetes
+
+*2026-11-03*
+
+La web ja tenia filtres de raresa, de tipus d'energia i de categoria, una
+vista de graella, una vista d'àlbum, un panell d'estadístiques i un mode de
+marcatge per variants. Cada peça s'havia demanat per separat, s'havia provat
+per separat i funcionava. El dubte va arribar de l'ús real: «hi ha filtres
+com raresa, tipus o energia que no s'apliquen». En comprovar-ho, la
+intuïció era exacta i la causa era més profunda que un error: la graella es
+construeix cada vegada fent passar les cartes pel sedàs dels filtres, mentre
+que l'àlbum agafa la llista sencera i la reparteix per butxaques. Són dos
+camins diferents dins del programa, i els filtres només estaven connectats
+al primer. A la vista Àlbum, sis controls de la capçalera es queden
+visibles, actius i amb el mateix aspecte que quan funcionen, esperant que
+algú els toqui per no fer res. L'estudi que en va sortir
+(`docs/estudi-usabilitat.md`) va trobar vuit problemes més del mateix
+estil, i cap d'ells era un error de programació: eren forats entre peces i
+paraules mal triades, com la paraula «col·lecció», que a la mateixa
+pantalla designa un mode de colors, un filtre i les cartes que tens — unes
+vegades d'una sola expansió i altres de totes.
+
+La lliçó és la que més ha costat d'entendre de tot el projecte, perquè no
+és tècnica. Quan demanes «fes-me un filtre de raresa», la IA et fa un
+filtre de raresa excel·lent: no pregunta si també l'ha de connectar a la
+vista d'àlbum que vas fer la setmana passada, ni t'avisa que la paraula que
+has triat per a l'etiqueta ja estava ocupada dues vegades. Ningú no té la
+pantalla sencera al cap: la IA perquè només veu la petició que té davant, i
+la persona perquè no sap que dins del programa hi ha dos camins diferents.
+Provant les funcionalitats d'una en una no es detecta mai, perquè d'una en
+una totes passen la prova; només apareix quan recorres tasques completes
+—«vull veure quines cartes de foc em falten»— i descobreixes que es
+trenquen pel mig. D'aquí va sortir una manera de treballar nova per al
+projecte: cada cert temps, deixar de demanar funcionalitats i demanar un
+estudi de casos d'ús, que és l'única manera que la persona que no programa
+pugui veure els forats que la IA, peça a peça, no té com veure.
