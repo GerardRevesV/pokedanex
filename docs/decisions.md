@@ -283,3 +283,45 @@ entrenadors no en tenen). Es desactiven en comptes d'amagar-les perquè la
 llista no balli: així es veu que l'opció existeix però que ara no porta
 enlloc. L'opció «Tots» i el valor ja triat no es desactiven mai, perquè el
 desplegable sempre ha de poder tornar enrere.
+
+## D-012 · Les paraules de la interfície, i quatre paranys tancats
+
+**Data:** 2026-11-04
+
+**Decisió:** s'apliquen els punts 3 a 8 de la recomanació de l'estudi
+d'usabilitat. Són canvis petits un per un, però tots ataquen el mateix:
+que la pantalla digui la veritat sense que calgui endevinar-la.
+
+*Noms (punt 3).* «Visualització» passa a dir-se **«Colors»**, que és el que
+fa de debò. El filtre que es deia «Col·lecció» passa a **«Què mostro»**. El
+panell, que calculava només l'expansió oberta però es titulava «de la
+col·lecció», ara diu **«Estadístiques d'aquesta expansió»**, i amb ell «Les
+cartes que en tens valen» i «Completar l'expansió costaria». El comptador
+del peu diu **«X de N cartes d'aquesta expansió»** i, al seu costat, el botó
+que esborra de debò tota la col·lecció passa de «Buidar» a **«Buidar-ho
+tot»**. «Consulta» passa a **«Només mirar»** (punt 7).
+
+*Paranys (punts 4, 5, 6).* Al mòbil, el botó «Filtres i opcions» porta un
+**distintiu amb el nombre de filtres actius**, perquè amb el bloc plegat no
+hi havia cap manera de saber que n'hi havia. **Importar demana confirmació**
+abans de substituir la col·lecció, com ja feia Buidar. I **canviar
+d'expansió treu la cerca i els filtres**.
+
+*Agrupació (punt 8).* «Versió de les dades» i «Actualitza» viuen ara en un
+sol bloc titulat **«Dades»**, i el botó només diu «Actualitza», perquè el
+títol del grup ja diu de què.
+
+**Per què:** l'estudi va comptar que la paraula «col·lecció» designava tres
+coses diferents a la mateixa pantalla, i que dues paraules gairebé iguals
+—«Vista» i «Visualització»— manaven coses que no tenen res a veure. Una
+interfície pot ser correcta i ser il·legible: aquests canvis no arreglen cap
+error de programació, arreglen el que la pantalla fa entendre. Els tres
+paranys (filtres invisibles al mòbil, importar que esborra sense avisar,
+filtres que viatgen d'una expansió a l'altra) eren casos en què la web feia
+exactament el que li havien programat i l'usuari no tenia com saber-ho.
+
+La xifra del distintiu **no compta la cerca**: el cercador es veu sempre,
+fins i tot amb el bloc plegat, i comptar-lo hauria fet sortir un «1» que no
+assenyala res amagat. I el missatge de confirmació d'Importar no diu quantes
+cartes es perdran, sinó que es perd **tot**: era més curt i més honest que
+una xifra que obligava a triar entre «1 cartes» i una frase doble.

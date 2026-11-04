@@ -7,7 +7,7 @@ import {
 } from "./data.js";
 import { variantsDisponibles, preuVariant, preuEsAproximat } from "./variants.js";
 import {
-  comptadors, ajustar, enTeCap, subscriure,
+  comptadors, ajustar, enTeCap, subscriure, totals,
   exportarJson, importarJson, buidar,
 } from "./collection.js";
 import {
@@ -321,6 +321,7 @@ function construirFiltresDesplegables() {
     filtreCategoria,
   );
   actualitzarOpcionsPossibles(); // opcions noves: tornem a mirar què és possible
+  pintarCompteFiltres();         // i el distintiu es retradueix amb l'idioma
 }
 
 // Una carta passa els tres desplegables alhora ("" sempre passa)
@@ -411,6 +412,7 @@ function refrescarRessaltatAlbum() {
 function aplicarFiltres() {
   pintarGraella();
   refrescarRessaltatAlbum();
+  pintarCompteFiltres();
 }
 
 // Els criteris actius en text llegible ("la cerca «pika»", "Raresa: Rare"),
@@ -430,12 +432,34 @@ function criterisActius() {
   return criteris;
 }
 
-// Treu la cerca i tots els filtres d'un cop (botó del missatge de buit)
-function treureElsFiltres() {
+// Deixa la cerca i tots els filtres a zero, sense repintar res
+function netejarCercaIFiltres() {
   element("cercador").value = "";
   triarFiltreColleccio("totes");
   netejarFiltresDesplegables();
+}
+
+// Treu la cerca i tots els filtres d'un cop (botó del missatge de buit)
+function treureElsFiltres() {
+  netejarCercaIFiltres();
   aplicarFiltres();
+}
+
+// Quants filtres hi ha actius. La cerca no hi compta: el cercador es
+// veu sempre. Al mòbil, en canvi, la resta de controls van plegats
+// darrere "Filtres i opcions", i sense aquest distintiu es podien tenir
+// filtres actius -i mitja expansió sense sortir- sense cap pista a la vista.
+function pintarCompteFiltres() {
+  const actius = [
+    filtreColleccio !== "totes",
+    filtreRaresa !== "",
+    filtreTipus !== "",
+    filtreCategoria !== "",
+  ].filter(Boolean).length;
+  const distintiu = element("filtres-compte");
+  distintiu.hidden = actius === 0;
+  distintiu.textContent = actius;
+  distintiu.title = t("filtres.actius", { n: actius });
 }
 
 // El missatge de graella buida: diu quins criteris no han deixat passar
@@ -839,6 +863,10 @@ function aplicarModeMarcatge(mode) {
   // (mostrarMissatge l'amaga sol al cap d'un moment)
   if (esModeVariant() && esTactil.matches) {
     mostrarMissatge("marcar.ajudaTocLlarg");
+  } else if (esModeVariant()) {
+    // A escriptori, el Ctrl+clic només es descobria passant el ratolí
+    // per sobre d'una carta i esperant el rectàngul groc del navegador
+    mostrarMissatge("marcar.ajudaZoomMissatge");
   }
   refrescarAlbum(); // el distintiu de les butxaques depèn del mode actiu
 }
@@ -1043,6 +1071,9 @@ async function importarColleccio(esdeveniment) {
   const fitxer = esdeveniment.target.files[0];
   esdeveniment.target.value = ""; // permet tornar a triar el mateix fitxer
   if (!fitxer) return;
+  // Importar SUBSTITUEIX la col·lecció sencera (de totes les expansions),
+  // no la fusiona. Si hi ha res a perdre es demana abans, com fa "Buidar"
+  if (totals() > 0 && !confirm(t("colleccio.importarConfirma"))) return;
   try {
     const desada = importarJson(await fitxer.text());
     mostrarMissatge(desada ? "colleccio.importada" : "colleccio.senseEspai", !desada);
@@ -1107,6 +1138,10 @@ async function ferActualitzacio() {
 // La crida el selector d'expansions (el panell del logotip de la capçalera).
 export async function canviarExpansio(setId) {
   const efectiu = canviarSetActiu(setId); // valida l'id (desconegut → defecte)
+  // Els filtres no viatgen d'una expansió a l'altra: abans s'hi quedaven
+  // (les rareses i els tipus es repeteixen a gairebé tots els sets) i
+  // s'obria l'expansió nova amb vuit cartes i cap explicació
+  netejarCercaIFiltres();
   aplicarTema(efectiu); // els colors de la web segueixen l'expansió
   const peticio = ++peticioLlista;
   mostrarMissatge("graella.carregant");

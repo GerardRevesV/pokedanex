@@ -50,7 +50,12 @@
            (a escriptori el botó no es veu i el bloc no altera el layout) -->
       <button type="button" id="boto-filtres" class="boto-filtres"
               aria-expanded="false" aria-controls="bloc-filtres">
-        <span data-i18n="filtres.boto">Filtres i opcions</span>
+        <span class="boto-filtres-text">
+          <span data-i18n="filtres.boto">Filtres i opcions</span>
+          <!-- Quants filtres hi ha actius a dins (l'omple main.js): amb el
+               bloc plegat, era l'única cosa que no es veia -->
+          <span id="filtres-compte" class="filtres-compte" hidden></span>
+        </span>
         <span class="caret" aria-hidden="true">▾</span>
       </button>
       <div id="bloc-filtres" class="bloc-filtres">
@@ -110,13 +115,17 @@
           <option value="pokedex" data-i18n="ordre.pokedex">Número de Pokédex</option>
         </select>
       </div>
-      <div class="control">
-        <label for="selector-versio" data-i18n="versio.etiqueta">Versió de les dades</label>
-        <select id="selector-versio"></select>
+      <!-- Les dues coses que toquen les dades, en un sol bloc: quina
+           còpia s'està mirant i el botó de baixar-ne una de nova -->
+      <div class="control" id="control-dades">
+        <span class="control-etiqueta" data-i18n="dades.etiqueta">Dades</span>
+        <div class="dades-fila">
+          <select id="selector-versio" data-i18n-aria="versio.etiqueta"></select>
+          <button id="boto-actualitza" class="boto-accent" data-i18n="actualitza.boto">
+            Actualitza
+          </button>
+        </div>
       </div>
-      <button id="boto-actualitza" class="boto-accent" data-i18n="actualitza.boto">
-        Actualitza dades
-      </button>
       </div><!-- /bloc-filtres -->
     </div>
   </header>
