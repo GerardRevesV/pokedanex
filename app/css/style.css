@@ -139,6 +139,36 @@ body {
   display: none;
 }
 
+/* El text del botó i el distintiu de filtres actius van junts, perquè el
+   space-between del botó no els separi (el distintiu ha de tocar el text) */
+.boto-filtres-text {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.filtres-compte {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.35rem;
+  height: 1.35rem;
+  padding: 0 0.3rem;
+  background: var(--accent);
+  color: var(--accent-text);
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+/* Els dos controls de dades (quina còpia es mira i el botó de baixar-ne
+   una de nova) comparteixen l'etiqueta "Dades" i van en una fila */
+.dades-fila {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
 /* display: contents fa el bloc invisible per al layout: els controls de
    dins participen de la fila flex com sempre (escriptori intacte) */
 .bloc-filtres {
@@ -1559,6 +1589,17 @@ body,
 
   .fila-controls .boto-accent {
     width: 100%;
+  }
+
+  /* Dins del grup "Dades" el selector s’estira i el botó es queda just */
+  .fila-controls .dades-fila .boto-accent {
+    width: auto;
+    flex: 0 0 auto;
+  }
+
+  .fila-controls .dades-fila select {
+    flex: 1;
+    min-width: 0;
   }
 
   /* Els botons segmentats es reparteixen l'amplada disponible */

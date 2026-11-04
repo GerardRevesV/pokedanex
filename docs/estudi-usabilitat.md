@@ -258,8 +258,8 @@ de la manera que les dades permeten.
 
 ## 6. Recomanació, per ordre
 
-> **Estat:** els punts **1 i 2 ja estan fets** (4 de novembre del 2026,
-> decisió D-011). Del 3 al 8, pendents.
+> **Estat:** **tots vuit punts estan fets** (4 de novembre del 2026;
+> els punts 1 i 2 a la decisió D-011, i del 3 al 8 a la D-012).
 
 1. **Fer que la cerca i els filtres ressaltin a l'àlbum** (idea B
    reformulada), i amagar-hi «Ordena per». Això sol tanca C-1.
@@ -267,6 +267,9 @@ de la manera que les dades permeten.
 2. **Desactivar les opcions impossibles** dels desplegables i reescriure el
    missatge de graella buida perquè digui la causa real i ofereixi un botó
    «Treure els filtres». Tanca C-2. — *Fet el 4-11-2026.*
+
+*Els punts 3 a 8 també es van fer el 4-11-2026 (D-012), amb un matis a cada
+un: vegeu la decisió per saber què es va acabar escrivint a cada etiqueta.*
 3. **Desambiguar el vocabulari**: «Visualització» → **«Colors»**; el filtre
    «Col·lecció» → **«Què mostro»**; el panell → «Estadístiques **d'aquesta
    expansió**» i el peu, igual. Tanca C-3 i C-7.

@@ -719,3 +719,33 @@ Pages, `tools/prepara_documents.py` i `app/documents/`). Cal decidir on van.
 També ha quedat detectat, de passada, un desbordament horitzontal al mòbil
 que ve del panell d'estadístiques (`estad-barra-xifres`), anterior a aquests
 canvis i no tocat.
+
+## 2026-11-04 (2a sessió) — Punts 3 a 8 de l'estudi: el vocabulari
+
+**Què s'ha fet:**
+- **Punt 3 (noms):** «Visualització» → «Colors», el filtre «Col·lecció» →
+  «Què mostro», el panell i el peu diuen «d'aquesta expansió», i «Buidar» →
+  «Buidar-ho tot». En català, castellà i anglès.
+- **Punt 4:** distintiu amb el nombre de filtres actius al botó «Filtres i
+  opcions» del mòbil (la cerca no hi compta: el cercador es veu sempre).
+- **Punt 5:** Importar demana confirmació abans de substituir la col·lecció.
+- **Punt 6:** canviar d'expansió treu la cerca i els filtres.
+- **Punt 7:** «Consulta» → «Només mirar», i la pista del Ctrl+clic surt com
+  a missatge en entrar en un mode de marcatge (a escriptori no es veia).
+- **Punt 8:** «Versió de les dades» i «Actualitza» agrupats sota «Dades».
+- Decisió **D-012** i entrada **46** de l'històric.
+
+**Eines usades:** Claude Code i el navegador integrat.
+
+**Costos:** 0 €.
+
+**Problemes:** dos, tots dos trobats provant-ho i no llegint-ho. El primer:
+l'script que fa els canvis tenia un error en el cas d'una línia repetida
+—«Consulta» s'escriu igual en català i en castellà— i va enganxar un tros
+de text al final del fitxer de traduccions, que el va deixar trencat. Es va
+veure de seguida perquè la comprovació de sintaxi va fallar, i a partir
+d'aquí s'ha afegit una comprovació nova: que els tres idiomes tinguin
+exactament les mateixes claus (ara en són 110 cadascun). El segon: el
+missatge de confirmació d'Importar deia «1 cartes». En comptes d'afegir una
+frase per al singular, s'ha tret el número: el que importa no és quantes
+cartes es perden, sinó que es perden **totes**.

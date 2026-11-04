@@ -728,3 +728,27 @@ botó «Treure els filtres». Tècnicament, el canvi de fons és que la cerca i
 els filtres viuen ara en un sol lloc (`predicatActual()` a `main.js`) que
 alimenta els dos camins que pinten cartes, la graella i l'àlbum: era la
 separació entre aquests dos camins la que havia creat el problema.
+
+## 46. Les paraules de la interfície: «Colors», «Què mostro» i quatre paranys menys
+
+*2026-11-04*
+
+S'acaben els punts 3 a 8 de la recomanació de l'estudi d'usabilitat, els que
+no són de funcionament sinó de **comprensió**. «Visualització» passa a
+«Colors»; el filtre «Col·lecció» passa a «Què mostro»; el panell
+d'estadístiques, que sempre havia calculat només l'expansió oberta mentre es
+titulava «de la col·lecció», ara ho diu —«Estadístiques d'aquesta
+expansió»—, i el comptador del peu també; el botó «Buidar», que esborra
+totes les expansions, passa a «Buidar-ho tot»; i «Consulta» passa a «Només
+mirar». Amb això, la paraula «col·lecció» deixa de voler dir tres coses
+diferents a la mateixa pantalla. Es tanquen també quatre paranys: al mòbil
+el botó «Filtres i opcions» porta un distintiu amb el nombre de filtres
+actius (amb el bloc plegat no hi havia cap pista que n'hi hagués); Importar
+demana confirmació abans de substituir la col·lecció sencera, com ja feia
+Buidar; canviar d'expansió treu la cerca i els filtres, que abans hi
+viatjaven i obrien l'expansió nova amb vuit cartes i cap explicació; i la
+pista del Ctrl+clic per veure una carta en gran mentre marques, que a
+escriptori només es descobria per sort, ara surt com a missatge en entrar en
+un mode de marcatge. Finalment, «Versió de les dades» i «Actualitza» s'ajunten
+sota un sol títol, «Dades». Tot són canvis de text i de detall —cap
+funcionalitat nova— i queden registrats a la decisió D-012.
