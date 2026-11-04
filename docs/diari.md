@@ -412,6 +412,192 @@ la branca `reptes` i, si en fusionar la segona hi ha conflicte en aquests
 dos fitxers (totes dues branques hi afegeixen el mateix text), resoldre'l
 quedant-se la versió d'`arregla-preus`, que és la més completa.
 
+## 2026-11-03 — Estudi dels documents oficials del treball de recerca
+
+**Què s'ha fet:**
+- Buidats els tres documents que facilita l'institut: `TR orientacions
+  2025-27.docx` (el vigent per a la promoció de l'Edanna), `TR orientacions
+  2024-26 (1).docx` (el de la promoció anterior) i `Rúbrica Treball recerca
+  Batxillerat-2527.xlsm`.
+- Creat `treball/requisits-i-rubrica.md`, un resum únic amb el calendari, el
+  repartiment de la nota, les tres rúbriques criteri per criteri, les parts
+  i el format obligatoris del treball escrit, les condicions que fan
+  suspendre, les normes de l'exposició oral i les de citació de fonts.
+- Extreta del full de càlcul la fórmula real de la nota, que el document
+  d'orientacions no detalla: `0,30 × escrit + 0,35 × oral + 0,15 ×
+  seguiment 2n + 0,10 × seguiment 1r + 0,10 × esborrany`, arrodonida a un
+  nombre enter. També l'escala de cada criteri (0 / 0,25 / 0,5 / 0,75 / 1) i
+  que cada rúbrica té 10 criteris d'1 punt.
+- Comparades les dues versions de les orientacions: a la 25-27 l'oral puja
+  del 30 % al 35 %, l'escrit baixa del 35 % al 30 %, el seguiment de 2n
+  baixa del 25 % al 15 %, apareix un primer esborrany de setembre que val un
+  10 % i el tribunal pot abaixar la nota de l'escrit si l'alumne/a no sap
+  respondre les preguntes sobre el seu propi treball.
+- Llegit el projecte a la llum de la rúbrica: la web és la «part pràctica» i
+  val 2 dels 10 punts de la memòria escrita; el diari, les decisions,
+  l'històric i els reptes cobreixen els criteris de fonts, de problemes i
+  solucions i de valoració crítica; l'abstract ha d'anar en una llengua
+  estrangera; les il·lustracions necessiten indicació de la font.
+
+**Eines usades:** Claude Code, Python amb `python-docx` i `openpyxl` per
+llegir els documents de Word i el full de càlcul (cap d'ells es pot llegir
+com a text pla).
+
+**Costos:** 0 €. Totes dues llibreries ja eren instal·lades.
+
+**Problemes:** dos, tots dos de calendari i de contingut dels documents. El
+full de la rúbrica només descriu el nivell màxim de cada criteri (l'1), no
+els intermedis, de manera que no se sap exactament què separa un 0,75 d'un
+0,5: ho decideix el tribunal. I el calendari de les orientacions 25-27 ja no
+dona dates exactes —les fixa l'institut cada curs—, però situa el lliurament
+de l'esborrany a mitjans de novembre, el treball definitiu a final de
+novembre o primers de desembre i les exposicions orals al desembre. Si la
+promoció de l'Edanna és la 25-27, aquestes dates són ara mateix i cal
+confirmar-les amb el tutor/a; la planificació del projecte
+(`docs/planificacio.md`) encara apunta a «final de setembre de 2026» com a
+data límit de la part teòrica i convindria revisar-la.
+
+## 2026-11-03 — Pluja d'idees: els continguts del treball escrit
+
+**Què s'ha fet:**
+- Repassat l'històric de procediments (`docs/historic.md`, 38 entrades) i la
+  resta de documentació de `docs/` per inventariar quin material hi ha ja
+  escrit per a cada tema del treball.
+- Comptades les xifres reals del repositori (codi, commits, pull requests,
+  branques, agents, documents) per poder-les citar al treball.
+- Creat `treball/guio-continguts.md`: l'índex proposat del treball escrit en
+  quatre parts i 27 capítols, amb estimació de pàgines, la ubicació de
+  cadascun dels quinze temes de la llista de l'Edanna, el que hi falta, el
+  que sobra i les decisions pendents.
+- Comprovat al repositori què s'ha fet servir de debò i què no, per no
+  explicar al treball eines que no s'han utilitzat.
+
+**Eines usades:** Claude Code, git i recompte de línies amb eines de
+consola.
+
+**Costos:** 0 €.
+
+**Problemes:** tres troballes incòmodes, totes anotades al guió. La primera:
+el marc teòric del treball (què és el vibe coding, d'on surt el terme, qui
+l'ha definit, amb quines fonts externes) no està escrit en cap lloc, i és
+exactament el que es lliura al primer esborrany que val un 10 % de la nota.
+La segona: el projecte no té ni una prova automàtica —tota la comprovació
+ha estat manual al navegador i a través d'agents revisors, i l'única cosa
+automatitzada és la publicació—, de manera que el capítol de «testing» s'ha
+d'escriure reconeixent-ho. I la tercera: els *dynamic workflows* que
+apareixien a la llista de temes no s'han fet servir mai en aquest projecte
+(no hi ha cap `.claude/workflows/`), i explicar-los com a experiència pròpia
+seria inventar; queden com a esment en el capítol del panorama d'eines.
+També queda per confirmar amb l'Edanna si els «forks de xats» es van fer
+servir de debò o si el que es va fer van ser sessions en paral·lel amb
+worktrees, que és l'únic que consta documentat.
+
+## 2026-11-03 — Escrit el marc teòric del treball
+
+**Què s'ha fet:**
+- Cercades i verificades fonts externes citables, que era el forat més gros
+  que havia detectat el guió de continguts. En surten tres fonts
+  institucionals en català (TERMCAT, Departament d'Educació i Universitat de
+  Girona) i vuit internacionals.
+- Escrita la Part I del treball a `treball/marc-teoric.md`: set capítols
+  (què vol dir programar · què és el vibe coding · com funciona el model que
+  escriu el codi · d'un xat a un agent · la memòria d'un agent · el panorama
+  d'eines · què diu la recerca).
+- Creat `treball/fonts.md` amb la bibliografia en el format de l'Annex II de
+  les orientacions i amb l'estat de verificació de cada font.
+- Afegit el capítol 7 al guió de continguts (`treball/guio-continguts.md`),
+  que no estava previst: el treball necessita un apartat sobre l'estat de
+  l'evidència abans de començar.
+- Guardada una norma nova a la memòria del projecte, a petició de l'Edanna:
+  el feedback i les recomanacions no es queden al xat, van sempre a un
+  fitxer del repositori.
+
+**Eines usades:** Claude Code, cerca web i lectura de pàgines web.
+
+**Costos:** 0 €.
+
+**Problemes:** dues pàgines no s'han pogut obrir des d'aquest entorn —
+l'article d'Ars Technica que transcriu la piulada de Karpathy i la pàgina
+oficial de la paraula de l'any de Collins, que ha respost un error d'accés—,
+de manera que aquestes dues citacions s'han pres de fonts secundàries
+fiables i queden marcades amb un avís a `treball/fonts.md` perquè es
+verifiquin abans del lliurament. Passa el mateix amb set dades més (els
+estudis de GitClear i CodeRabbit, el cas de Lovable, l'episodi de Replit, el
+«setembre etern» de GitHub, les dades de Y Combinator i la citació de Simon
+Willison), que s'han llegit a la Viquipèdia i que caldrà citar de
+l'original. I un matís de terminologia que també queda anotat: el TERMCAT
+diu que el terme «programació per intenció» «s'ha fixat», però no consta que
+el seu Consell Supervisor l'hagi normalitzat formalment, així que convé
+consultar la Neoloteca abans d'afirmar-ho al treball.
+
+## 2026-11-03 (2a sessió) — Estudi d'usabilitat de la interfície
+
+**Què s'ha fet:**
+- Resposta a un dubte de l'Edanna sobre la diferència entre els modes
+  Col·lecció i Catàleg (són dos modes de colors, no dos filtres).
+- A partir d'una observació seva —«hi ha filtres com raresa, tipus o
+  energia que no s'apliquen»— s'ha fet un estudi d'usabilitat complet i
+  s'ha desat a `docs/estudi-usabilitat.md`: inventari dels 31 controls de
+  la pantalla principal amb la part de la web on té efecte cadascun, vuit
+  casos d'ús recorreguts pas a pas, i tres mesures sobre les dades reals.
+- S'han documentat nou confusions ordenades per gravetat i una recomanació
+  de vuit punts, i s'han analitzat les dues idees que proposava l'Edanna
+  (mostrar els filtres només quan tinguin sentit; que el filtre porti a la
+  pàgina de l'energia corresponent).
+- Afegida l'entrada 8 a `docs/reptes.md` amb la lliçó de mètode.
+
+**Eines usades:** Claude Code (lectura del codi de `app/js/` i tres scripts
+de mesura sobre els fitxers de dades de les 14 expansions).
+
+**Costos:** 0 €. No s'ha tocat ni una línia de codi de la web.
+
+**Problemes:** cap problema tècnic. La troballa incòmoda és de disseny: sis
+controls de la capçalera no fan res a la vista Àlbum i no ho diuen, i la
+paraula «col·lecció» designa tres coses diferents a la mateixa pantalla.
+Queda pendent decidir quins punts de la recomanació s'implementen i en quin
+ordre; cap canvi de codi no s'ha fet en aquesta sessió.
+
+## 2026-11-03 — Esmenes al marc teòric: l'estudi desactualitzat i la veu del text
+
+**Què s'ha fet:**
+- Investigat si l'estudi de METR del juliol del 2025 continua vigent, a
+  partir de l'observació de l'Edanna que la tecnologia ha canviat molt des
+  del gener del 2026. Trobats i verificats dos documents posteriors a
+  metr.org: el canvi de disseny de l'experiment del 24 de febrer del 2026 i
+  l'enquesta a treballadors tècnics de l'11 de maig del 2026.
+- Reescrit el capítol 7 del marc teòric amb tres precaucions (rigor, data i
+  condicions contràries a les d'aquest projecte) en comptes de dues, i amb
+  una conclusió nova sobre el valor d'un projecte documentat quan no hi ha
+  mesures fiables de les eines actuals.
+- Actualitzat `treball/fonts.md`: les tres entrades de METR passen a estar
+  verificades, amb les adreces primàries i les xifres exactes, i amb les
+  limitacions que reconeixen els mateixos autors.
+- Corregida la veu del text: tret un «teniu a les mans» i un «ens cal», i
+  corregida una paraula escrita en castellà («conviene» per «convé»).
+- Escrits dos apartats nous al guió de continguts: el 10, amb la norma de la
+  veu del treball, i l'11, amb l'ordre de la feina que queda.
+
+**Eines usades:** Claude Code, cerca web amb filtre de domini, lectura de
+pàgines web, cerca de patrons al text per trobar castellanismes i marques de
+primera i segona persona.
+
+**Costos:** 0 €.
+
+**Problemes:** tres, i els tres són de rigor. El primer: diversos blogs
+secundaris expliquen el segon estudi de METR com si fos una «reversió» del
+resultat o com si l'estudi s'hagués «arxivat», i cap de les dues coses és el
+que diu METR; el text del treball s'ha escrit dient només el que diu la
+font original, que és que els resultats no són concloents i que canvien el
+disseny. El segon: una dada que hi havia al capítol —que els participants
+van continuar creient que l'eina els havia accelerat— venia de la
+Viquipèdia; s'ha substituït per la xifra equivalent de la font primària, que
+és que van sobreestimar l'efecte sobre el seu temps en 40 punts percentuals
+de mitjana. I el tercer, el més incòmode: la paraula en castellà que s'havia
+escolat al text. És precisament el tipus d'error que fa suspendre un treball
+de recerca segons les orientacions, de manera que abans del lliurament cal
+una lectura ortogràfica completa feta per una persona, no només la cerca de
+patrons que s'ha fet avui.
+
 ## 2026-11-03 — L'efecte de llibre en passar pàgina de l'àlbum
 
 **Què s'ha fet:**
@@ -453,3 +639,47 @@ l'animació a mig gir per poder fotografiar-la i mesurar-la), git.
   butxaques buides i invisible perquè el carpesà no es quedi sense res a
   dins, i aquesta pàgina feia una mica menys d'alçada que una de plena.
   Resolt fixant-li l'alçada exacta de la pàgina de debò.
+
+## 2026-11-04 — Revisió del marc teòric amb quatre revisors, i els documents a internet
+
+**Què s'ha fet:**
+- Llançats quatre revisors independents i simultanis sobre
+  `treball/marc-teoric.md`, amb un criteri cadascun: nivell i claredat,
+  síntesi i estructura, rigor de les fonts, i llengua catalana. En total, 79
+  troballes.
+- Decidit què s'aplicava de cada revisió i reescrit el text en una sola
+  passada: de 4.512 a 3.454 paraules, de 7 capítols a 5, i de ~30 xifres a
+  13.
+- Verificades les nou fonts que quedaven pendents. Tres citacions del text
+  eren incorrectes i s'han corregit contra la font primària.
+- Reescrit `treball/fonts.md`: ara separa les fonts citades a la Part I de
+  les que queden documentades per a les parts següents, amb la clau de
+  citació de cadascuna.
+- Creat `treball/revisio-marc-teoric.md` amb el registre de la revisió, que
+  serveix de material per a la part de metodologia del treball.
+- Creat el lector de documents a `app/documents/index.html` i l'script
+  `tools/prepara_documents.py`, i connectat al desplegament de GitHub Pages
+  perquè `docs/` i `treball/` es publiquin amb la web.
+
+**Eines usades:** Claude Code amb quatre subagents en paral·lel, cerca web
+per verificar fonts, i cerca de patrons al text per comprovar que les
+correccions de llengua havien quedat aplicades.
+
+**Costos:** 0 € en serveis. (El cost de la subscripció continua pendent de
+documentar, i la revisió de rigor l'ha assenyalat com la primera pregunta
+que farà el tribunal.)
+
+**Problemes:** tres. El primer, que en reescriure el text per corregir una
+paraula en castellà s'hi va tornar a escolar la mateixa paraula
+(«conviene»), que es va detectar i corregir a la verificació final: és la
+prova que una lectura humana abans del lliurament no és opcional. El segon,
+que la navegació a localhost està bloquejada en aquesta sessió, de manera
+que el lector de documents s'ha comprovat per HTTP —les quinze rutes
+responen correctament— però no visualment. I el tercer, de coordinació: el
+pull request #12 d'una altra sessió (l'efecte de llibre de l'àlbum) ja és a
+main i toca els mateixos documents compartits, de manera que el pull request
+#13 ha quedat en conflicte. A més, una tercera sessió té feina sense desar en
+aquesta mateixa carpeta (l'estudi d'usabilitat i el seu repte), que no entra
+en aquest canvi. Hi ha una triple col·lisió de numeració a l'històric i als
+reptes que cal resoldre conservant-ho tot i renumerant en ordre cronològic,
+tal com es va fer a l'entrada 27.

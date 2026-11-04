@@ -533,3 +533,172 @@ navegador ja porta, sense cap llibreria ni cap cost. Si l'ordinador o el
 mòbil tenen activada l'opció d'accessibilitat «redueix el moviment», o si
 el navegador és massa antic per animar, el canvi de pàgina es fa sec com
 abans: l'àlbum continua funcionant igual.
+
+## 39. Els documents oficials del treball: requisits i rúbrica, en un full
+
+*2026-11-03*
+
+L'institut facilita tres documents per al treball de recerca: les
+orientacions de la promoció 25-27, les de la promoció anterior i el full de
+càlcul de la rúbrica amb què el tribunal posa la nota. Se'n fa un buidatge
+complet i es destil·la a `treball/requisits-i-rubrica.md`: el calendari, el
+repartiment de la nota (escrit 30 %, oral 35 %, procés 35 %), els trenta
+criteris de les tres rúbriques —cadascun valorat de 0 a 1 en passos de
+0,25—, les parts obligatòries i el format del document escrit, les
+condicions que fan suspendre i les normes de citació. Del full de càlcul
+se n'extreu la fórmula real de la nota, que els documents d'orientacions no
+detallen, i l'escala exacta de cada criteri. L'últim apartat llegeix el
+projecte Pokedanex amb els ulls de la rúbrica: la web és la «part pràctica»
+i val 2 dels 10 punts de la memòria escrita, l'abstract ha d'anar en una
+llengua estrangera i les faltes d'ortografia són eliminatòries. La
+comparació amb les orientacions de la promoció anterior deixa clara la
+direcció del canvi: ara pesa més el que es defensa en viu que el paper.
+
+## 40. El guió del treball escrit: què s'explica, com s'ordena i què sobra
+
+*2026-11-03*
+
+Pluja d'idees sobre els continguts del treball escrit, recollida a
+`treball/guio-continguts.md`. Es parteix de la llista de temes de l'Edanna
+(skills, regles, GitHub, fusions, proves, branques, agents, memòria,
+plans, continguts de la web, allotjament, errors, mòbil) i es creua amb
+l'inventari del que ja hi ha escrit a `docs/` i amb els criteris de la
+rúbrica. En surt un índex de quatre parts —marc teòric, metodologia,
+el producte, i resultats i conclusions— amb 27 capítols i un repartiment
+de pàgines, amb una idea rectora: **el treball no explica les eines, sinó
+per què va caldre cada eina**, perquè totes van entrar al projecte el dia
+que un problema concret les va exigir i això ja està datat a l'històric.
+L'anàlisi detecta tres coses incòmodes i les deixa escrites: el marc
+teòric no existeix en absolut i és precisament el que es lliura al primer
+esborrany, el projecte no té cap prova automàtica (la comprovació ha estat
+manual i per agents revisors) i els *dynamic workflows* de la llista no
+s'han fet servir mai, de manera que explicar-los com a experiència seria
+inventar. També es recullen les xifres reals del repositori per tenir-les
+a mà al treball: 5.632 línies de codi en 14 fitxers, cap escrita a mà, 40
+commits, 10 pull requests, 13 branques, 14 expansions i 0 € gastats.
+
+## 41. El marc teòric, escrit: de la piulada de Karpathy a la «programació per intenció»
+
+*2026-11-03*
+
+S'escriu la Part I del treball a `treball/marc-teoric.md`: set capítols que
+van de què vol dir programar fins a què diu la recerca sobre si això
+funciona, passant per l'origen del terme, el funcionament d'un model de
+llenguatge, la diferència entre un xat i un agent, les quatre menes de
+memòria que es confonen i el panorama d'eines. Abans d'escriure res es
+busquen i es verifiquen fonts externes, que era el forat més gros que havia
+detectat el guió de continguts. Les tres troballes que més valen per a un
+treball en català són institucionals: el **TERMCAT** ha fixat
+**«programació per intenció»** com a equivalent català de *vibe coding*, el
+**Departament d'Educació** té material propi sobre el tema i la
+**Universitat de Girona** hi ha publicat un article de panorama. A fora,
+queden documentats la piulada original de Karpathy del 2 de febrer del
+2025, la proclamació de *vibe coding* com a paraula de l'any del diccionari
+Collins el novembre del 2025, i tres estudis que donen al treball una
+predicció comprovable en comptes d'un entusiasme: el 45 % de codi generat
+amb vulnerabilitats de Veracode, la caiguda de confiança de l'enquesta de
+Stack Overflow i l'assaig de METR en què els programadors experimentats van
+un 19 % més lents amb IA mentre creuen que van més de pressa. La decisió
+conceptual del capítol 2 és la que ordena tot el treball: Pokedanex **no és
+*vibe coding* en sentit estricte**, perquè ningú no hi ha escrit codi però
+tampoc no s'hi ha acceptat res sense revisar. Es crea també
+`treball/fonts.md`, amb la bibliografia en el format que demana l'institut i
+amb l'estat de verificació de cada font, perquè les dades que només s'han
+pogut llegir de segona mà quedin marcades i es comprovin abans del
+lliurament.
+
+## 42. L'estudi d'usabilitat: 31 controls, vuit casos d'ús i nou confusions
+
+*2026-11-03*
+
+L'Edanna detecta que «hi ha filtres com raresa, tipus o energia que no
+s'apliquen» i demana un estudi de casos d'ús de totes les funcionalitats,
+per saber si la interfície és confusa. L'estudi es fa en tres capes i es
+desa a `docs/estudi-usabilitat.md`: primer un inventari dels 31 controls de
+la pantalla principal, llegint el codi per saber on té efecte cadascun;
+després vuit casos d'ús recorreguts pas a pas; i finalment unes mesures
+sobre les dades reals de les 14 expansions (2.464 cartes) per decidir amb
+números i no d'intuïció. La sospita era certa i té una causa concreta: sis
+controls —el cercador, el filtre Totes/Les tinc/Em falten, Raresa, Tipus
+d'energia, Categoria i Ordena per— només funcionen a la vista Graella,
+perquè la graella es construeix passant les cartes pel sedàs dels filtres
+mentre que l'àlbum agafa la llista sencera; a la vista Àlbum es queden
+visibles i actius sense fer res. Les mesures aporten tres dades que no
+s'havien vist mai: el 58,4 % de les combinacions possibles dels tres
+desplegables no retorna cap carta, cada valor d'un filtre està escampat per
+un terç de les pàgines de l'àlbum (cosa que descarta la idea de «portar-te
+a la pàgina de l'energia»: no existeix), i les rareses ocupen pàgines
+seguides el 94 % de les vegades mentre que els tipus només el 3 %, perquè
+les cartes especials del final del set repeteixen tots els tipus una segona
+vegada. En total es documenten nou confusions ordenades per gravetat i una
+recomanació de vuit punts, començant per convertir els filtres en un
+ressaltador amb navegació a l'àlbum. Cap de les nou és un error de
+programació: totes són forats entre peces o paraules mal triades.
+
+## 43. L'estudi que es va espatllar, i la veu del treball
+
+*2026-11-03*
+
+Dues esmenes al marc teòric a partir d'observacions de l'Edanna, i totes
+dues milloren el treball.
+
+La primera: l'estudi de METR del 2025 que diu que els programadors van un
+19 % més lents amb intel·ligència artificial estava citat sense dir que
+mesurava **les eines de principis del 2025**. Buscant-ho, apareix que el
+mateix METR va repetir l'experiment des de l'agost del 2025 amb 57
+programadors i més de 800 tasques, i que el febrer del 2026 va publicar que
+els resultats ja no són concloents —els intervals de confiança inclouen el
+zero— i que **canvia el disseny de l'estudi**. El motiu pel qual se'ls va
+espatllar és la dada més bona de tot el capítol: entre el 30 % i el 50 %
+dels participants renunciaven a enviar tasques perquè no les volien fer
+sense intel·ligència artificial, i un d'ells no en va completar ni una. En
+poc més d'un any l'eina havia passat de frenar mesurablement els experts a
+ser una cosa sense la qual no volien treballar. El capítol 7 queda reescrit
+amb tres precaucions en comptes de dues, amb les fonts primàries de
+metr.org verificades i amb una conclusió nova: com que no hi ha cap mesura
+fiable de les eines d'avui, un projecte documentat pas a pas amb xifres
+reals no és una anècdota, és una aportació.
+
+La segona: al text s'hi havia escolat un «nosaltres» i, pitjor, una paraula
+en castellà. Es corregeixen, i la qüestió de fons queda escrita com a norma
+al guió de continguts (apartat 10): impersonal al cos del treball, primera
+persona del singular a la Presentació i a l'autocrítica, i **«nosaltres»
+mai**, perquè el treball de recerca és individual i un plural convida el
+tribunal a preguntar-se quina part és de l'autora. S'afegeix també al guió
+l'apartat 11, amb l'ordre de la feina que queda, posant primer el que té
+temps d'espera: confirmar dates amb el tutor, buscar les persones per a les
+proves d'usuari i verificar les fonts pendents.
+
+## 44. Quatre revisors per a un text, i els documents publicats a internet
+
+*2026-11-04*
+
+Dues feines en una sessió. La primera: el marc teòric passa pel mateix
+mètode de revisió per capes que fins ara s'havia aplicat només al codi.
+Quatre revisors independents i simultanis, cadascun amb un únic criteri
+—nivell i claredat, síntesi, rigor de les fonts i llengua catalana—, i un
+orquestrador que decideix què s'aplica i resol els casos en què dos
+revisors demanen coses contràries. El resultat queda registrat a
+`treball/revisio-marc-teoric.md`: el text passa de 4.512 a 3.454 paraules i
+de set capítols a cinc, i es corregeixen tretze errades de llengua greus
+—entre elles «oblita» per «oblida» i «donat tot el text» per «a partir de
+tot el text»—, qualsevol de les quals hauria fet suspendre el treball
+segons la norma de l'institut. Les tres troballes de fons són pitjors i més
+útils: el «0 €» del text contradeia el diari del projecte, que diu que el
+cost de la subscripció d'IA està pendent de documentar; una citació de
+Simon Willison estava mal transcrita («clarament arriscat» quan ell va
+escriure «clarament una idea terrible»); i en explicar per què METR va
+haver de canviar el seu experiment s'havia omès que la paga dels
+participants havia baixat de 150 a 50 dòlars l'hora, que és el motiu que
+més afebleix la interpretació. Es verifiquen també les nou fonts que
+quedaven pendents, amb la troballa que el 2,74× que circula per internet
+sobre codi generat per IA és només de *cross-site scripting*, no una xifra
+general.
+
+La segona feina: els documents del projecte ja es poden llegir des de
+qualsevol ordinador. Es crea un lector a `app/documents/` amb índex
+lateral, filtre de cerca i els documents agrupats, i un script
+(`tools/prepara_documents.py`) que el desplegament executa per copiar
+`docs/` i `treball/` dins de la web. La còpia no es guarda al repositori:
+es genera a cada publicació, de manera que la web sempre serveix l'última
+versió dels documents sense mantenir res a mà.
