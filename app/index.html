@@ -99,7 +99,9 @@
       </div>
       <!-- Ordenació de la graella: les opcions són fixes, així el canvi
            d'idioma les retradueix sense haver de reconstruir-les -->
-      <div class="control">
+      <!-- A la vista d’àlbum aquest control s’amaga (main.js): l’ordre d’un
+           àlbum és físic —el número de col·lecció— i no es pot canviar -->
+      <div class="control" id="control-ordre">
         <label for="ordre-graella" data-i18n="ordre.etiqueta">Ordena per</label>
         <select id="ordre-graella">
           <option value="numero" data-i18n="ordre.numero">Número de col·lecció</option>
@@ -152,6 +154,20 @@
 
     <!-- Vista d'àlbum: dues pàgines obertes amb butxaques 3x3 (album.js) -->
     <section id="album" class="album" hidden>
+      <!-- Barra de coincidències: surt només quan la cerca o algun filtre
+           estan actius. A l’àlbum els filtres no amaguen cap butxaca (un
+           àlbum amb forats és justament la gràcia): ressalten les cartes
+           que coincideixen, diuen a quines pàgines són, i les fletxes
+           salten d’una pàgina amb coincidències a la següent. -->
+      <div id="album-ressaltat" class="album-ressaltat" hidden>
+        <span id="album-ressaltat-text" class="album-ressaltat-text"></span>
+        <div class="album-ressaltat-nav">
+          <button type="button" id="coincidencia-anterior"
+                  class="album-fletxa album-fletxa--petita">&lsaquo;</button>
+          <button type="button" id="coincidencia-seguent"
+                  class="album-fletxa album-fletxa--petita">&rsaquo;</button>
+        </div>
+      </div>
       <div class="album-nav">
         <button type="button" id="album-anterior" class="album-fletxa">‹</button>
         <span id="album-indicador" class="album-indicador"></span>

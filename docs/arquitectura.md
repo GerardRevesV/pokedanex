@@ -116,7 +116,10 @@ Els noms de les cartes no es tradueixen mai: són les cartes reals, en anglès.
   Em falten combinables amb el cercador.
 - **Àlbum (`album.js`):** vista de carpesà real — dues pàgines obertes de
   3×3 butxaques, navegació amb botons i fletxes de teclat, secretes
-  incloses; un clic a una carta salta a la graella.
+  incloses; un clic a una carta salta a la graella. La cerca i els filtres
+  hi **ressalten** en comptes de filtrar (D-010): cap butxaca no desapareix,
+  les cartes que coincideixen porten anell i la barra de coincidències diu
+  a quines pàgines són.
 - **Estadístiques (`stats.js`):** panell plegable amb barres de progrés,
   "la teva col·lecció val X €" (totes les còpies i variants) i "completar-la
   costaria Y €" (suma simple del que falta), amb **objectiu de compleció

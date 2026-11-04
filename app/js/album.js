@@ -11,6 +11,7 @@ import { afegirTocLlarg, clicDeTocLlarg } from "./tocllarg.js";
 
 const CARTES_PER_PAGINA = 9;  // butxaques 3×3 (estàndard dels àlbums Pokémon)
 const CARTES_PER_DOBLE = 18;  // dues pàgines obertes costat a costat
+const MAX_PAGINES_LLISTA = 6; // pàgines que es llisten a la barra abans dels punts
 
 // En pantalles estretes la doble pàgina no hi cap, i en pantalles BAIXES
 // (mòbil apaïsat: més de 767px d'amplada però poca alçada) tampoc: es
@@ -27,6 +28,7 @@ let visible = false;     // si l'àlbum s'està veient ara mateix
 let contenidor = null;   // el bloc #album de la pàgina
 let alTriarCarta = null; // callback amb la carta clicada (mode consulta)
 let alMarcar = null;     // callback per marcar una carta (mode variant)
+let coincideixCarta = null; // predicat de la cerca i els filtres (null = cap actiu)
 
 const element = (id) => document.getElementById(id);
 
@@ -61,6 +63,13 @@ function crearButxaca(carta) {
   if (carta) {
     // Mateix llenguatge visual que la graella: sense cap còpia, apagada
     if (!enTeCap(carta.id)) funda.classList.add("butxaca-funda--pendent");
+    // Ressaltat de la cerca i els filtres: cap butxaca no desapareix mai,
+    // només es distingeixen les cartes que coincideixen de les que no
+    if (coincideixCarta) {
+      funda.classList.add(
+        coincideixCarta(carta) ? "butxaca-funda--coincident" : "butxaca-funda--descartada",
+      );
+    }
     const imatge = document.createElement("img");
     // lazy i decoding ABANS de src: si s'assignen després, la petició ja
     // ha sortit amb l'estat per defecte (eager) i el lazy no fa res
@@ -180,6 +189,72 @@ function pintar() {
   seguent.disabled = doble === totalVistes() - 1;
   anterior.setAttribute("aria-label", t("album.anterior"));
   seguent.setAttribute("aria-label", t("album.seguent"));
+  pintarRessaltat();
+}
+
+// ---------- Ressaltat de la cerca i els filtres ----------
+
+// Pàgines físiques (de 9 butxaques) que contenen alguna coincidència.
+// Les cartes van en ordre, així que n'hi ha prou de comparar amb l'última
+// pàgina afegida per no repetir-la.
+function paginesAmbCoincidencia() {
+  const pagines = [];
+  if (!versio || !coincideixCarta) return pagines;
+  versio.cards.forEach((carta, posicio) => {
+    if (!coincideixCarta(carta)) return;
+    const pagina = Math.floor(posicio / CARTES_PER_PAGINA);
+    if (pagines.at(-1) !== pagina) pagines.push(pagina);
+  });
+  return pagines;
+}
+
+// Les vistes (dobles pàgines, o pàgines soles en mòbil) que en contenen
+function vistesAmbCoincidencia() {
+  const vistaDe = (pagina) =>
+    vistaEstreta.matches ? pagina : Math.floor(pagina / 2);
+  return [...new Set(paginesAmbCoincidencia().map(vistaDe))];
+}
+
+// La llista de pàgines tal com es diria: "1, 4, 8" (i un «i més» si
+// n'hi ha massa, perquè la barra no es faci inacabable)
+function formatarPagines(pagines) {
+  const llista = pagines
+    .slice(0, MAX_PAGINES_LLISTA)
+    .map((pagina) => pagina + 1)
+    .join(", ");
+  return pagines.length > MAX_PAGINES_LLISTA ? llista + "…" : llista;
+}
+
+// La barra de coincidències: quantes n'hi ha, a quines pàgines, i si
+// queda alguna coincidència amunt o avall per a les seves fletxes
+function pintarRessaltat() {
+  const barra = element("album-ressaltat");
+  barra.hidden = !coincideixCarta;
+  if (!coincideixCarta) return;
+  const pagines = paginesAmbCoincidencia();
+  const total = versio.cards.filter((carta) => coincideixCarta(carta)).length;
+  element("album-ressaltat-text").textContent =
+    total === 0 ? t("album.ressaltatCap")
+    : total === 1 ? t("album.ressaltatUna", { pagines: formatarPagines(pagines) })
+    : t("album.ressaltat", { n: total, pagines: formatarPagines(pagines) });
+  const vistes = vistesAmbCoincidencia();
+  const anterior = element("coincidencia-anterior");
+  const seguent = element("coincidencia-seguent");
+  anterior.disabled = !vistes.some((vista) => vista < doble);
+  seguent.disabled = !vistes.some((vista) => vista > doble);
+  anterior.setAttribute("aria-label", t("album.coincidenciaAnterior"));
+  seguent.setAttribute("aria-label", t("album.coincidenciaSeguent"));
+}
+
+// Salta a la vista següent (o anterior) que tingui alguna coincidència
+function anarACoincidencia(delta) {
+  const vistes = vistesAmbCoincidencia();
+  const desti = delta > 0
+    ? vistes.find((vista) => vista > doble)
+    : vistes.filter((vista) => vista < doble).at(-1);
+  if (desti === undefined) return;
+  doble = desti;
+  pintar();
 }
 
 // Passa de vista (delta = −1 enrere, +1 endavant)
@@ -201,6 +276,9 @@ export function iniciarAlbum(callbackCarta, callbackMarcar) {
   alMarcar = callbackMarcar;
   element("album-anterior").addEventListener("click", () => passarPagina(-1));
   element("album-seguent").addEventListener("click", () => passarPagina(1));
+  // Fletxes de la barra de coincidències (salten de coincidència en coincidència)
+  element("coincidencia-anterior").addEventListener("click", () => anarACoincidencia(-1));
+  element("coincidencia-seguent").addEventListener("click", () => anarACoincidencia(1));
   // Si la pantalla creua el llindar (girar el mòbil, canviar la finestra),
   // convertim l'índex perquè es continuï veient la mateixa zona de l'àlbum
   vistaEstreta.addEventListener("change", (esdeveniment) => {
@@ -268,6 +346,21 @@ export function mostrarAlbum(mostra) {
 
 // Repinta l'àlbum si és visible (canvis de mode, d'idioma o de pàgina)
 export function refrescarAlbum() {
+  pintar();
+}
+
+// main.js hi passa un predicat quan la cerca o algun filtre estan actius,
+// i null quan no n'hi ha cap. Si la vista oberta no té cap coincidència,
+// l'àlbum salta a la primera que en tingui: és el "porta'm on són" que
+// a l'àlbum substitueix el filtrar (no existeix «la pàgina» d'un tipus:
+// cada tipus surt al bloc del set base i una altra vegada a les
+// cartes especials del final).
+export function ressaltarAlbum(predicat) {
+  coincideixCarta = predicat;
+  if (versio && predicat) {
+    const vistes = vistesAmbCoincidencia();
+    if (vistes.length > 0 && !vistes.includes(doble)) doble = vistes[0];
+  }
   pintar();
 }
 

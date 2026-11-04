@@ -641,3 +641,39 @@ aquesta mateixa carpeta (l'estudi d'usabilitat i el seu repte), que no entra
 en aquest canvi. Hi ha una triple col·lisió de numeració a l'històric i als
 reptes que cal resoldre conservant-ho tot i renumerant en ordre cronològic,
 tal com es va fer a l'entrada 27.
+
+## 2026-11-04 — Punts 1 i 2 de l'estudi d'usabilitat, implementats
+
+**Què s'ha fet:**
+- **Punt 1 (àlbum):** la cerca i els filtres ja funcionen a la vista
+  d'Àlbum, en forma de ressaltat: les cartes que coincideixen s'encenen amb
+  un anell, la resta s'apaguen, i una barra nova diu quantes n'hi ha i a
+  quines pàgines, amb fletxes per saltar-hi. «Ordena per» s'amaga a l'àlbum.
+- **Punt 2 (desplegables):** les opcions que no donarien cap carta queden
+  desactivades, i el missatge de graella buida diu els criteris reals i
+  ofereix el botó «Treure els filtres».
+- Decisió D-010 registrada a `docs/decisions.md` amb les tres alternatives
+  que es van considerar i per què es va triar aquesta.
+- Fitxers tocats: `app/index.html`, `app/js/main.js`, `app/js/album.js`,
+  `app/js/i18n.js` (textos nous en català, castellà i anglès) i
+  `app/css/style.css`.
+
+**Eines usades:** Claude Code i el navegador integrat per provar-ho.
+
+**Costos:** 0 €.
+
+**Problemes:** dos, tots dos de procés. El primer: el navegador servia la
+versió antiga dels fitxers (la memòria cau), i durant una estona semblava
+que el codi nou no funcionés quan el que passava és que no s'estava
+executant; es va resoldre forçant la recàrrega de cada fitxer. El segon,
+més interessant, és que la primera idea —«que el filtre et porti a la
+pàgina de l'energia»— no es podia fer tal com estava pensada, i es va haver
+de mesurar sobre les dades reals per poder-ho dir amb arguments i proposar
+l'alternativa.
+
+**Pendent:** els canvis estan al disc però **sense cap commit**, perquè la
+còpia de treball tenia alhora feina d'una altra sessió (el workflow de
+Pages, `tools/prepara_documents.py` i `app/documents/`). Cal decidir on van.
+També ha quedat detectat, de passada, un desbordament horitzontal al mòbil
+que ve del panell d'estadístiques (`estad-barra-xifres`), anterior a aquests
+canvis i no tocat.

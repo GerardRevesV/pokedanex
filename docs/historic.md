@@ -681,3 +681,29 @@ lateral, filtre de cerca i els documents agrupats, i un script
 `docs/` i `treball/` dins de la web. La còpia no es guarda al repositori:
 es genera a cada publicació, de manera que la web sempre serveix l'última
 versió dels documents sense mantenir res a mà.
+
+## 42. Els filtres arriben a l'àlbum: ressaltar en comptes de filtrar
+
+*2026-11-04*
+
+S'implementen els dos primers punts de la recomanació de l'estudi
+d'usabilitat. **Punt 1:** la cerca i els quatre filtres ja no són decoratius
+a la vista d'Àlbum. Com que un àlbum amb forats és justament el que un
+col·leccionista vol veure, no amaguen butxaques: encenen les cartes que
+coincideixen amb un anell del color d'accent, apaguen la resta, i afegeixen
+una barra que diu «4 cartes coincideixen · pàgines 1, 8» amb dues fletxes
+per saltar de pàgina en pàgina amb coincidències. Si la pàgina oberta no en
+té cap, l'àlbum hi salta tot sol: és la idea original de «porta'm a la
+pàgina» feta de la manera que les dades permeten, perquè no existeix «la
+pàgina» d'un tipus (D-010). El control «Ordena per» s'amaga a l'àlbum,
+perquè l'ordre d'un àlbum és físic. **Punt 2:** els tres desplegables
+desactiven les opcions que, amb els altres dos tal com estan, no deixarien
+passar cap carta —l'exemple clar és qualsevol tipus d'energia amb la
+categoria «Entrenador»—, cosa que tanca el 58,4 % de combinacions buides que
+havia mesurat l'estudi; i el missatge de graella buida ha deixat de culpar
+sempre «la cerca»: ara enumera els criteris que han deixat fora les cartes
+(«Cap carta no coincideix amb la cerca «zzzz» · Raresa: Rare.») i porta un
+botó «Treure els filtres». Tècnicament, el canvi de fons és que la cerca i
+els filtres viuen ara en un sol lloc (`predicatActual()` a `main.js`) que
+alimenta els dos camins que pinten cartes, la graella i l'àlbum: era la
+separació entre aquests dos camins la que havia creat el problema.
