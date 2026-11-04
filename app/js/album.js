@@ -161,28 +161,31 @@ function crearPagina(inici) {
   return pagina;
 }
 
-// Pinta la vista oberta (doble pàgina o pàgina sola), l'indicador
-// i l'estat dels botons ‹ ›
+// Pinta la vista oberta (doble pàgina o pàgina sola) i el seu indicador
 function pintar() {
   if (!versio || !visible) return;
+  tancarGir(true); // si hi havia un full a mig girar, manda aquest repintat
   const llibre = element("album-llibre");
   llibre.innerHTML = "";
   const inici = doble * cartesPerVista();
-  if (vistaEstreta.matches) {
-    // Pantalla estreta: una sola pàgina i l'indicador en singular
-    llibre.append(crearPagina(inici));
-    element("album-indicador").textContent = t("album.indicadorSola", {
-      n: doble + 1,
-      total: totalVistes(),
-    });
-  } else {
-    llibre.append(crearPagina(inici), crearPagina(inici + CARTES_PER_PAGINA));
-    element("album-indicador").textContent = t("album.indicador", {
-      primera: doble * 2 + 1,
-      segona: doble * 2 + 2,
-      total: totalVistes() * 2,
-    });
-  }
+  // Pantalla estreta: una sola pàgina (el CSS fa servir el mateix llindar)
+  if (vistaEstreta.matches) llibre.append(crearPagina(inici));
+  else llibre.append(crearPagina(inici), crearPagina(inici + CARTES_PER_PAGINA));
+  pintarIndicador();
+}
+
+// L'indicador de pàgines i l'estat dels botons ‹ ›. Va a part de pintar()
+// perquè en passar pàgina el número ha de canviar de seguida, mentre el
+// full encara volta.
+function pintarIndicador() {
+  if (!versio) return;
+  element("album-indicador").textContent = vistaEstreta.matches
+    ? t("album.indicadorSola", { n: doble + 1, total: totalVistes() })
+    : t("album.indicador", {
+        primera: doble * 2 + 1,
+        segona: doble * 2 + 2,
+        total: totalVistes() * 2,
+      });
   const anterior = element("album-anterior");
   const seguent = element("album-seguent");
   anterior.disabled = doble === 0;
@@ -253,16 +256,202 @@ function anarACoincidencia(delta) {
     ? vistes.find((vista) => vista > doble)
     : vistes.filter((vista) => vista < doble).at(-1);
   if (desti === undefined) return;
+  // Si la coincidència és a la vista del costat, el full gira com sempre;
+  // si és més lluny no és passar pàgina sinó anar-hi, i el salt és sec
+  if (Math.abs(desti - doble) === 1) {
+    passarPagina(desti - doble);
+    return;
+  }
   doble = desti;
   pintar();
 }
 
-// Passa de vista (delta = −1 enrere, +1 endavant)
+// Passa de vista (delta = −1 enrere, +1 endavant) girant el full
 function passarPagina(delta) {
   const nova = doble + delta;
   if (nova < 0 || nova >= totalVistes()) return;
+  // Un full que encara volta s'assenta de cop: així dues passades
+  // seguides (clics ràpids, fletxa mantinguda) no s'encavalquen
+  tancarGir(false);
+  const velles = [...element("album-llibre").children];
+  const mides = mesurarFull(velles); // null si el gir no toca o no es pot fer
   doble = nova;
-  pintar();
+  pintarIndicador();
+  if (!mides) {
+    pintar(); // canvi sec, com abans del gir
+    return;
+  }
+  try {
+    girarFull(delta > 0, velles, mides);
+  } catch (error) {
+    // Si el full no es pot muntar, el canvi de pàgina s'ha de veure igual
+    console.warn("[àlbum] no s'ha pogut girar el full:", error);
+    tancarGir(true);
+    pintar();
+  }
+}
+
+// ---------- El gir del full (l'efecte de llibre en passar pàgina) ----------
+// En passar pàgina el carpesà no es repinta de cop: es munta un "full" per
+// sobre, amb la pàgina vella en una cara i la nova a l'altra, i es fa
+// voltar sobre el llom amb CSS 3D. Les pàgines que no volten ja són les
+// definitives, i en acabar el gir el full s'assenta al seu lloc sense
+// repintar res (les imatges no es tornen a crear).
+
+const DURADA_GIR = 520; // ms: prou per veure el paper, prou poc per no esperar
+const CORBA_GIR = "cubic-bezier(0.45, 0.05, 0.3, 1)"; // arrenca viu, aterra suau
+
+// Preferència d'accessibilitat del sistema: amb la reducció de moviment
+// activada no es gira res (el canvi de pàgina es fa sec)
+const reduirMoviment = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+let girActual = null; // { full, animacions, assentar } mentre un full volta
+
+// Mesures del full que ha de girar, preses amb les pàgines encara al seu
+// lloc. Retorna null si el gir no toca o no es pot fer: aleshores el canvi
+// de pàgina es fa sec, exactament com abans.
+function mesurarFull(velles) {
+  if (reduirMoviment.matches) return null;
+  if (typeof Element.prototype.animate !== "function") return null;
+  const dues = !vistaEstreta.matches; // doble pàgina o pàgina sola
+  // El llibre ha d'estar tal com l'esperem: dues pàgines o una de sola
+  if (velles.length !== (dues ? 2 : 1)) return null;
+  const model = dues ? velles[1] : velles[0]; // la pàgina que farà de full
+  if (!model.offsetWidth || !model.offsetHeight) return null;
+  return {
+    dues,
+    x: model.offsetLeft,
+    y: model.offsetTop,
+    ample: model.offsetWidth,
+    alt: model.offsetHeight,
+    // L'eix del gir: el llom del carpesà (el mig del buit entre les dues
+    // pàgines obertes) a escriptori; el centre del full en pàgina sola
+    eix: dues
+      ? `${(velles[0].offsetLeft + velles[0].offsetWidth + model.offsetLeft) / 2 - model.offsetLeft}px center`
+      : "center",
+  };
+}
+
+// Converteix una pàgina en una cara del full i li posa el vel d'ombra (que
+// retorna) perquè el paper sembli entrar i sortir de la llum
+function muntarCara(pagina, darrere) {
+  pagina.classList.add(
+    "album-full-cara",
+    darrere ? "album-full-cara--darrere" : "album-full-cara--davant",
+  );
+  const ombra = document.createElement("div");
+  ombra.className = "album-full-ombra";
+  pagina.append(ombra);
+  return ombra;
+}
+
+// Torna la cara a ser una pàgina normal del carpesà
+function desmuntarCara(cara) {
+  cara.classList.remove(
+    "album-full-cara",
+    "album-full-cara--davant",
+    "album-full-cara--darrere",
+  );
+  cara.querySelector(".album-full-ombra")?.remove();
+  return cara;
+}
+
+// Munta el full i engega el gir. "velles" són les pàgines que hi havia al
+// llibre i "doble" ja apunta a la vista NOVA.
+function girarFull(endavant, velles, mides) {
+  const llibre = element("album-llibre");
+  const inici = doble * cartesPerVista();
+  // Les pàgines de la vista nova (la segona només a doble pàgina)
+  const novaPrimera = crearPagina(inici);
+  const novaSegona = mides.dues ? crearPagina(inici + CARTES_PER_PAGINA) : null;
+
+  // Qui es queda al carpesà i qui fa de full:
+  //  · endavant, el full és la pàgina dreta vella: cau cap a l'esquerra
+  //    ensenyant pel darrere la nova pàgina esquerra, i mentre s'aixeca
+  //    apareix a sota la nova pàgina dreta;
+  //  · enrere, el full torna de l'esquerra a la dreta amb la nova pàgina
+  //    dreta al davant i la vella esquerra al darrere.
+  // "ranura" és la pàgina del carpesà que el full acabarà substituint.
+  let ranura;
+  let caraDavant;
+  let caraDarrere;
+  if (mides.dues) {
+    ranura = endavant ? velles[0] : velles[1];
+    llibre.replaceChildren(
+      endavant ? ranura : novaPrimera,
+      endavant ? novaSegona : ranura,
+    );
+    caraDavant = endavant ? velles[1] : novaSegona;
+    caraDarrere = endavant ? novaPrimera : velles[0];
+  } else {
+    // Pàgina sola: el full volta sobre el seu centre i a sota es deixa una
+    // pàgina de butxaques buides invisible, perquè el carpesà no
+    // s'encongeixi mentre volta l'única pàgina que hi havia
+    ranura = crearPagina(versio.cards.length); // cap carta: totes buides
+    ranura.classList.add("album-pagina--mida");
+    ranura.style.height = `${mides.alt}px`; // clavada a la pàgina de debò
+    llibre.replaceChildren(ranura);
+    caraDavant = endavant ? velles[0] : novaPrimera;
+    caraDarrere = endavant ? novaPrimera : velles[0];
+  }
+  // La cara amb el contingut nou és la que es quedarà al carpesà
+  const caraNova = endavant ? caraDarrere : caraDavant;
+
+  const full = document.createElement("div");
+  full.className = "album-full";
+  full.style.left = `${mides.x}px`;
+  full.style.top = `${mides.y}px`;
+  full.style.width = `${mides.ample}px`;
+  full.style.height = `${mides.alt}px`;
+  full.style.transformOrigin = mides.eix;
+  const ombraDavant = muntarCara(caraDavant, false);
+  const ombraDarrere = muntarCara(caraDarrere, true);
+  full.append(caraDavant, caraDarrere);
+  llibre.append(full);
+  llibre.classList.add("album-llibre--girant");
+
+  // Enrere és el mateix gir del revés (direction: "reverse"): així les
+  // tres animacions van sempre sincronitzades
+  const comu = {
+    duration: DURADA_GIR,
+    easing: CORBA_GIR,
+    fill: "both",
+    direction: endavant ? "normal" : "reverse",
+  };
+  const gir = {
+    full,
+    animacions: [
+      full.animate(
+        [{ transform: "rotateY(0deg)" }, { transform: "rotateY(-180deg)" }],
+        comu,
+      ),
+      // La cara de davant s'enfosqueix en aixecar-se i la de darrere
+      // s'aclareix en ajeure's: és l'ombra la que fa que sembli paper
+      ombraDavant.animate([{ opacity: 0 }, { opacity: 0.85 }], comu),
+      ombraDarrere.animate([{ opacity: 0.85 }, { opacity: 0 }], comu),
+    ],
+    assentar() {
+      ranura.replaceWith(desmuntarCara(caraNova));
+    },
+  };
+  girActual = gir;
+  Promise.all(gir.animacions.map((animacio) => animacio.finished))
+    .then(() => {
+      if (girActual === gir) tancarGir(false);
+    })
+    .catch(() => {}); // cancel·lar el gir rebutja la promesa: ja està tractat
+}
+
+// Talla el gir en curs i deixa el llibre a la vista nova. Amb "descartar"
+// només es treu el full: qui ho demana ja repinta tot el carpesà.
+function tancarGir(descartar) {
+  const gir = girActual;
+  if (!gir) return;
+  girActual = null;
+  for (const animacio of gir.animacions) animacio.cancel();
+  if (!descartar) gir.assentar();
+  gir.full.remove();
+  element("album-llibre").classList.remove("album-llibre--girant");
 }
 
 // ---------- Funcions públiques (les crida main.js) ----------
@@ -341,6 +530,8 @@ export function carregarAlbum(dades) {
 export function mostrarAlbum(mostra) {
   visible = mostra;
   contenidor.hidden = !mostra;
+  // Si s'amaga a mig gir, el full s'assenta al seu lloc de seguida
+  if (!mostra) tancarGir(false);
   if (mostra) pintar();
 }
 

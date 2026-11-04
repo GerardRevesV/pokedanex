@@ -380,7 +380,7 @@ function actualitzarOpcionsPossibles() {
 
 // El sedàs complet ("passa la cerca i tots els filtres actius"), amb la
 // consulta calculada un sol cop. El fan servir els DOS camins que pinten
-// cartes: la graella i el ressaltat de l'àlbum (D-010).
+// cartes: la graella i el ressaltat de l'àlbum (D-011).
 function predicatActual() {
   const consulta = element("cercador").value.trim().toLowerCase();
   return (carta) =>

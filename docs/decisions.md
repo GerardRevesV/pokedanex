@@ -206,7 +206,41 @@ gratuïta i immediata perquè les dades ja són a la cau).
 
 **Cost:** 0 €.
 
-## D-010 · A l'àlbum els filtres ressalten, no filtren
+## D-010 · L'efecte de llibre fet amb el navegador, sense cap llibreria
+
+**Data:** 2026-11-03
+
+**Decisió:** fer el gir del full de l'àlbum amb els efectes
+tridimensionals que el CSS ja porta de sèrie (girar un element com si
+fos un full de paper a l'espai, amb cara i dors) i amb l'API
+d'animacions del navegador, en comptes d'afegir al projecte una
+llibreria especialitzada en «page flip». El gir dura 520 mil·lèsimes de
+segon, volta sobre el llom del carpesà i s'acompanya d'una ombra que
+s'enfosqueix mentre el paper s'aixeca.
+
+**Per què:** el navegador ja sap fer-ho tot sol. Una llibreria d'aquest
+estil pesa centenars de kilobytes, obliga a reescriure com es dibuixen
+les pàgines de l'àlbum i afegeix una dependència externa que algun dia
+caldrà actualitzar; amb el CSS no hi ha res a instal·lar, res a
+mantenir i res a pagar. La durada tampoc és arbitrària: per sota de
+quatre dècimes el gir no s'arriba a veure, i per sobre de sis es fa
+pesat quan es passen moltes pàgines seguides.
+
+També s'ha decidit que l'efecte sigui **una capa per sobre i no una
+peça del mecanisme**: les pàgines noves ja hi són abans que el full
+comenci a voltar, i si l'animació no es pot fer —perquè l'usuari té
+activada l'opció «redueix el moviment» del sistema, o perquè el
+navegador és massa antic— el canvi de pàgina es fa sec i prou. Un efecte
+bonic no pot ser mai la condició perquè la web funcioni.
+
+**Alternatives considerades:** una llibreria de page flip (descartada
+pel pes i la dependència); esvair una pàgina i encendre l'altra, que és
+molt més senzill però no explica res (podria ser qualsevol web, no un
+àlbum de cromos); i deixar-ho tal com estava.
+
+**Cost:** 0 €.
+
+## D-011 · A l'àlbum els filtres ressalten, no filtren
 
 **Data:** 2026-11-04
 
