@@ -457,8 +457,14 @@ no es poden fer; les altres són escriure, i escriure va en línia recta.
    estan en prosa acabada.
 7. **Part III, el producte** (capítols 18-23). També té el material fet, a
    `docs/especificacions.md` i `docs/arquitectura.md`. Aquí fan falta
-   **captures de pantalla**, i convé fer-les mentre la web estigui com es
-   vol explicar.
+   **captures de pantalla**, i hi ha una trampa de calendari: la interfície
+   està canviant ara mateix. Els *pull requests* #14 i #15 reanomenen
+   controls i textos —el panell d'estadístiques i el comptador del peu ara
+   diuen «d'aquesta expansió» en comptes de «de la col·lecció»— i canvien
+   com es comporten els filtres a l'àlbum. **Les captures s'han de fer quan
+   aquests canvis ja siguin a la web publicada**, no abans, o mostraran una
+   interfície que ja no existeix. I val més no citar literalment cap text de
+   la interfície sense comprovar-lo el dia que s'escriu el capítol.
 8. **Tancar la Fase 3 del projecte** si encara no ho està: publicar i provar
    la web amb els usuaris del punt 2, i apuntar els resultats.
 
