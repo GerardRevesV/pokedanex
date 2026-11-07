@@ -280,3 +280,38 @@ trenquen pel mig. D'aquí va sortir una manera de treballar nova per al
 projecte: cada cert temps, deixar de demanar funcionalitats i demanar un
 estudi de casos d'ús, que és l'única manera que la persona que no programa
 pugui veure els forats que la IA, peça a peça, no té com veure.
+
+## 10. Quan l'autora no entén el seu propi treball
+
+*2026-11-07*
+
+El marc teòric el va escriure la intel·ligència artificial de cap a peus: va
+buscar les fonts, les va llegir, en va treure les dades i en va redactar el
+text, i després quatre revisors —també de la mateixa família d'eines— el van
+escurçar i el van corregir. El resultat era un capítol correcte, ben citat i
+més madur del que s'espera de 1r de batxillerat, i precisament per això va
+aparèixer una dificultat que no té res de tècnic: en llegir-lo, l'autora va
+marcar sis passatges amb la mateixa frase, «no ho entenc, canvia-ho o
+explica-ho millor». Eren, un per un, els passatges on el text havia estat més
+eficient: una idea densa dita en tres línies, com que la màquina no contesta
+mai dues vegades igual, o que el que de debò aporta un agent és que li has
+passat la feina de comprovar. Dites així, són certes i impecables; dites
+així, tampoc no les pot defensar qui no ha fet la lectura d'on surten. La
+sortida no va ser abaixar el nivell, sinó allargar: cada idea densa es va
+tornar a escriure amb un exemple del mateix projecte al costat, i el capítol
+va créixer més de dues-centes paraules. El canvi val la pena, perquè en un
+treball de recerca el que no pots explicar amb les teves paraules no és teu
+encara, per ben escrit que estigui.
+
+El mateix dia va aparèixer una segona dificultat, menys profunda però més
+perillosa. L'autora havia deixat els comentaris a la pàgina del pull request
+de GitHub i, tot seguit, havia clicat «Resolve conversation» a cada un, perquè
+havia entès el botó com un «ja t'ho he enviat». Set dels nou comentaris
+constaven, doncs, com a resolts sense que ningú no hagués tocat el text. El
+parany és fàcil de caure-hi: GitHub els mostra plegats i en gris, i qualsevol
+que hi passés —persona o màquina— entendria que allò ja està fet. Es va
+descobrir de casualitat, comparant la data de l'últim canvi del fitxer amb la
+dels comentaris, i és la mena d'error que no deixa rastre: no falla res, només
+que la feina no s'ha fet. D'aquí surt una norma de treball petita i útil per a
+tot el projecte: la prova que una cosa està feta és el text, no cap marca de
+cap plafó.

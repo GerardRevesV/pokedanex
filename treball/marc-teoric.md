@@ -48,9 +48,7 @@ argot vol dir confiar que aquestes eines milloren molt de pressa. Karpathy
 explicava com ho feia ell: parlava amb l'eina per veu, acceptava tots els
 canvis que li proposava sense llegir-los i, quan sortia un error, el copiava
 i l'enganxava a la conversa sense ni comentar-lo. Deia que això li servia
-per a projectes petits de cap de setmana. (La piulada no s'ha pogut consultar
-directament; se'n cita la transcripció que en fan la Viquipèdia i Ars
-Technica, en traducció pròpia.)
+per a projectes petits de cap de setmana.
 
 Val la pena aturar-se en un detall, perquè és la clau de tot el treball: en
 el sentit original del terme, fer *vibe coding* vol dir **no llegir el
@@ -146,11 +144,19 @@ s'ha après d'exemples correctes. Que ho sigui de debò és una altra qüestió,
 no es pot saber mirant-lo per sobre. La part de metodologia recull els casos
 d'aquesta mena que van aparèixer al projecte.
 
-Hi ha un últim tret que convé saber: **aquestes eines no contesten mai dues
-vegades igual**. Si se'ls fa la mateixa pregunta dos cops, les respostes
-poden ser diferents, i sovint ho són. Per a un treball de recerca això té una
-conseqüència: el que surt d'aquí no es pot repetir exactament, només de
-manera aproximada.
+Hi ha un últim tret que convé saber: **la mateixa pregunta no dona mai la
+mateixa resposta**. Com que el model tria entre continuacions possibles i no
+sempre tria la mateixa, si se li demana dues vegades seguides la mateixa cosa
+en fa dues versions diferents. En aquest projecte es va notar a cada pas:
+demanar el mateix botó dos dies diferents no tornava el mateix codi.
+
+Això canvia la manera de llegir aquesta recerca. En un experiment de ciències,
+qualsevol altra persona que repeteixi els passos ha d'obtenir el mateix
+resultat; aquí, qui repetís aquest projecte amb les mateixes instruccions no
+tindria la mateixa pàgina, sinó una altra que s'hi assembla. Per això el
+treball documenta el **mètode** —què es va demanar, en quin ordre i què es va
+rebutjar— i no només el resultat: el resultat no es pot repetir, el mètode
+sí.
 
 ---
 
@@ -174,10 +180,18 @@ provoca un error a la pàgina, l'agent pot obrir la pàgina, llegir el missatge
 d'error que mostra el navegador, deduir-ne la causa, corregir el fitxer i
 tornar a provar-ho sense intervenció humana.
 
-Aquest bucle és el canvi de fons, perquè trasllada a la màquina la part de
-l'ofici que no és escriure: comprovar. I és el que fa possible la pregunta
-d'aquest treball, perquè la persona pot quedar-se en el paper de dir què vol
-i de jutjar si el resultat és bo.
+Aquest bucle és el que de debò canvia les coses, i es veu millor amb un
+exemple. Programar no és només escriure: és escriure, provar, trobar què no
+funciona i tornar-hi. D'aquestes quatre feines, un xat només en fa la
+primera, i les altres tres queden per a la persona. Un agent les fa totes
+quatre: escriu el codi, obre la pàgina, veu que el botó no respon i ho
+arregla.
+
+Per això es pot plantejar la pregunta d'aquest treball. A qui no programa no
+se li demana que escrigui, ni que provi, ni que esmeni: se li demana que
+digui què vol i que miri si el que ha sortit és el que volia. Decidir i
+jutjar són les dues feines que queden a mans humanes, i cap de les dues
+demana saber programar.
 
 ### Subagents i receptes guardades
 
@@ -217,10 +231,15 @@ llegeix al començament de cada sessió. Per això les regles es van posar per
 escrit el primer dia. No és burocràcia: és l'únic mecanisme perquè una
 decisió sobrevisqui a la sessió en què es va prendre.
 
-Aquesta distinció té una conseqüència que el projecte va comprovar de la
-manera dura: dues sessions que treballen alhora **no comparteixen res**. La
-part de metodologia explica què va passar el dia que totes dues van escriure
-al mateix document del projecte.
+D'aquí surt una conseqüència que el projecte va aprendre de la manera dura.
+Amb aquestes eines es pot tenir **més d'una conversa oberta alhora**, i de
+vegades convé: mentre una s'ocupa de l'àlbum, l'altra arregla els preus. Però
+cada conversa té la seva pròpia finestra de context i no veu la de l'altra,
+de manera que cap de les dues sap què està fent la seva companya. Mentre
+toquen fitxers diferents, no passa res. El dia que totes dues van escriure al
+mateix document del projecte, cadascuna hi va posar la seva versió i van
+quedar dues entrades amb el mateix número. La part de metodologia explica com
+es va detectar i com es va resoldre.
 
 ---
 
@@ -242,13 +261,16 @@ l'Educació de la Universitat de Girona (ICE Josep Pallach, 2026).
 L'article de l'ICE hi afegeix una advertència que convé retenir: «el *vibe
 coding* no substitueix la programació tradicional».
 
-Que aquestes eines obren la porta a qui no programa no és una intuïció
-d'aquest treball. El Departament d'Educació de la Generalitat de Catalunya hi
-dedica material propi i presenta la novetat en els mateixos termes: permet
-«als docents crear aplicacions educatives sense tenir coneixements de
-programació» (Departament d'Educació, 2025).
+La idea que aquestes eines obren la porta a qui no programa no se l'ha
+inventada aquest treball: també ho diu l'administració. El Departament
+d'Educació de la Generalitat de Catalunya hi dedica material propi per als
+mestres i ho explica en els mateixos termes: permet «als docents crear
+aplicacions educatives sense tenir coneixements de programació»
+(Departament d'Educació, 2025). Dit d'una altra manera, la pregunta d'aquest
+treball —si algú sense coneixements pot fer una web útil— ja se la fa qui ha
+de decidir què s'ensenya a les escoles.
 
-### Què fa servir tothom
+### Què fa servir tothom, i qui se'n refia
 
 L'enquesta anual de Stack Overflow, una de les comunitats de programadors més
 grans del món, dona una fotografia útil de l'any 2025: el **84 %** dels que
@@ -257,6 +279,14 @@ artificial, davant el 76 % de l'any anterior. Però la dada més interessant va
 en direcció contrària: **com més es fan servir, menys se'n refia la gent**.
 Els que diuen que se'n refien han passat del **43 % al 33 %** en un any
 (Stack Overflow, 2025).
+
+Aquestes dues xifres, llegides juntes, són el retrat del problema que aquest
+treball es troba a la part pràctica: l'eina és prou bona perquè gairebé
+tothom la faci servir i prou poc fiable perquè els qui la fan servir cada dia
+se'n refiïn cada vegada menys. I si els professionals, que saben llegir el
+codi, se'n refien poc, qui no programa encara té menys manera de saber si el
+que li ha sortit és bo. D'aquí surt tot el mètode de revisió que explica la
+Part II.
 
 ### Per què aquest projecte va triar un agent de codi
 
@@ -317,10 +347,8 @@ van mesurar són les de principis del 2025, diverses generacions de models
 enrere, i el camp s'ha mogut tant que el mateix estudi ha deixat de poder-se
 fer. METR el va repetir a partir de l'agost del 2025 i el febrer del 2026 va
 anunciar que canviarà el disseny de l'experiment, perquè els resultats ja no
-són prou clars per afirmar ni que l'eina freni ni que acceleri. Dels quatre
-motius que dona, un és prosaic —la paga dels participants va baixar de 150 a
-50 dòlars l'hora, cosa que per si sola explica part de la caiguda de
-participació—, però un altre és revelador: entre el **30 % i el 50 %** dels
+són prou clars per afirmar ni que l'eina freni ni que acceleri. Dels motius
+que dona, n'hi ha un de revelador: entre el **30 % i el 50 %** dels
 programadors renunciaven a enviar feines perquè no les volien fer sense
 intel·ligència artificial, i un d'ells no va completar ni una de les que li
 havien tocat sense l'eina (METR, 2026). En poc més d'un any, aquesta família
@@ -334,15 +362,6 @@ una persona sense coneixements previs que comença un projecte nou i petit.
 Per això l'estudi de METR no refuta la hipòtesi d'aquest treball: en delimita
 l'abast. Diu que aquestes eines no són una drecera per a qui ja sap, cosa que
 no exclou que siguin una porta d'entrada per a qui no sap.
-
-**Un cas concret i una veu crítica.** Entre els episodis d'aquests dos anys
-n'hi ha un d'especialment pertinent, perquè és d'un generador de webs: una
-anàlisi de 1.645 aplicacions fetes amb la plataforma Lovable va trobar que
-170 tenien un problema que deixava exposades dades personals dels seus
-usuaris (segons Semafor, 2025). I el programador Simon Willison, que és una
-de les veus més citades del debat, ho va resumir així: «arribar a un codi en
-producció a base de *vibe coding* és clarament una idea terrible» (Willison,
-2025, traducció pròpia).
 
 ### Què se'n deriva per a aquest treball
 
