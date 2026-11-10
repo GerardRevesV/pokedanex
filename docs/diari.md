@@ -719,3 +719,79 @@ Pages, `tools/prepara_documents.py` i `app/documents/`). Cal decidir on van.
 També ha quedat detectat, de passada, un desbordament horitzontal al mòbil
 que ve del panell d'estadístiques (`estad-barra-xifres`), anterior a aquests
 canvis i no tocat.
+
+## 2026-11-04 (2a sessió) — Punts 3 a 8 de l'estudi: el vocabulari
+
+**Què s'ha fet:**
+- **Punt 3 (noms):** «Visualització» → «Colors», el filtre «Col·lecció» →
+  «Què mostro», el panell i el peu diuen «d'aquesta expansió», i «Buidar» →
+  «Buidar-ho tot». En català, castellà i anglès.
+- **Punt 4:** distintiu amb el nombre de filtres actius al botó «Filtres i
+  opcions» del mòbil (la cerca no hi compta: el cercador es veu sempre).
+- **Punt 5:** Importar demana confirmació abans de substituir la col·lecció.
+- **Punt 6:** canviar d'expansió treu la cerca i els filtres.
+- **Punt 7:** «Consulta» → «Només mirar», i la pista del Ctrl+clic surt com
+  a missatge en entrar en un mode de marcatge (a escriptori no es veia).
+- **Punt 8:** «Versió de les dades» i «Actualitza» agrupats sota «Dades».
+- Decisió **D-012** i entrada **46** de l'històric.
+
+**Eines usades:** Claude Code i el navegador integrat.
+
+**Costos:** 0 €.
+
+**Problemes:** dos, tots dos trobats provant-ho i no llegint-ho. El primer:
+l'script que fa els canvis tenia un error en el cas d'una línia repetida
+—«Consulta» s'escriu igual en català i en castellà— i va enganxar un tros
+de text al final del fitxer de traduccions, que el va deixar trencat. Es va
+veure de seguida perquè la comprovació de sintaxi va fallar, i a partir
+d'aquí s'ha afegit una comprovació nova: que els tres idiomes tinguin
+exactament les mateixes claus (ara en són 110 cadascun). El segon: el
+missatge de confirmació d'Importar deia «1 cartes». En comptes d'afegir una
+frase per al singular, s'ha tret el número: el que importa no és quantes
+cartes es perden, sinó que es perden **totes**.
+
+## 2026-11-07 — Els comentaris del marc teòric, llegits i aplicats
+
+**Què s'ha fet:**
+- Lectura dels nou comentaris de l'Edanna al pull request #13 sobre
+  `treball/marc-teoric.md`.
+- Aplicats els vuit que demanaven alguna cosa: tres retallades i cinc
+  passatges reescrits o aclarits.
+- `treball/fonts.md`: Semafor i Willison baixen a les fonts reservades per a
+  les parts següents, perquè el paràgraf que les citava ja no hi és; la
+  rebaixa de la paga de l'estudi de METR passa de «dada citada» a «dada
+  disponible i no citada»; i la reserva sobre la piulada de Karpathy, que
+  abans anava al cos del text, queda documentada a la fitxa de la font.
+- Contestat cada fil a GitHub explicant què s'ha fet, i marcats com a
+  resolts.
+- Entrada **47** de l'històric i repte **10**.
+
+**Eines usades:** Claude Code i l'API de GitHub (`gh`).
+
+**Costos:** 0 € (de subscripció a part, pendent de documentar).
+
+**Problemes:** el gros va ser descobrir que set dels nou fils constaven com a
+resolts sense que el text s'hagués canviat: l'Edanna havia entès «Resolve
+conversation» com «ja t'ho he enviat». Si la sessió s'hagués fiat de la
+marca, s'haurien perdut sis peticions seves. Es va veure comparant la data de
+l'últim canvi del fitxer amb la dels comentaris. El segon problema va ser
+d'eina i es va resoldre de seguida: el primer intent d'escriure l'script de
+substitucions des del terminal va petar per les cometes del text català, i es
+va haver de crear el fitxer d'una altra manera.
+
+## 2026-11-10 — La frase de Willison, recuperada
+
+**Què s'ha fet:**
+- L'Edanna ha rellegit aquí mateix, al xat, els cinc passatges reescrits del
+  marc teòric per comprovar si ara s'entenen.
+- Recuperada la frase de Simon Willison al capítol 5, en una sola línia, dins
+  de «Què se'n deriva per a aquest treball».
+- `treball/fonts.md`: la fitxa de Willison torna a les fonts citades; Semafor
+  es queda a les reservades.
+- Entrada **48** de l'històric.
+
+**Eines usades:** Claude Code.
+
+**Costos:** 0 € (de subscripció a part, pendent de documentar).
+
+**Problemes:** cap.

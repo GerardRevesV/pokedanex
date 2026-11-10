@@ -35,7 +35,7 @@ Pokedanex/
 │   │   ├── collection.js← l'estat de la col·lecció (comptadors per variant)
 │   │   ├── album.js     ← la vista d'àlbum 3×3 de dues pàgines
 │   │   ├── stats.js     ← el panell de valor, cost i objectiu de compleció
-│   │   ├── markmode.js  ← el mode de marcatge (Consulta/Normal/Reverse/Holo)
+│   │   ├── markmode.js  ← el mode de marcatge (Només mirar/Normal/Reverse/Holo)
 │   │   ├── temes.js     ← el tema visual de cada expansió (i el per defecte)
 │   │   ├── selector-expansions.js ← el panell "Compendi" per triar expansió
 │   │   └── main.js      ← la interfície: pinta i lliga-ho tot
@@ -138,7 +138,7 @@ Els noms de les cartes no es tradueixen mai: són les cartes reals, en anglès.
 | `pokedanex.statsOpen` | Si el panell d'estadístiques és obert o plegat |
 | `pokedanex.completionTarget` | L'objectiu de compleció triat |
 | `pokedanex.markMode` | Mode de marcatge (consulta / normal / reverse / holo) |
-| `pokedanex.displayMode` | Visualització (col·lecció / catàleg) |
+| `pokedanex.displayMode` | Colors (col·lecció / catàleg) |
 | `pokedanex.activeSet` | L'expansió activa |
 | `pokedanex.temaPerSet` | Si l'estètica segueix l'expansió o no |
 
