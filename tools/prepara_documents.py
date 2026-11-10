@@ -35,6 +35,7 @@ ORDRE = {
         "preliminars.md",
         "index-comentat.md",
         "marc-teoric.md",
+        "part-2-metodologia.md",
         "part-3-producte.md",
         "fonts.md",
     ],

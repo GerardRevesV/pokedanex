@@ -4,7 +4,7 @@ Llista viva del que queda per fer, per decidir o per apuntar. Quan una cosa
 es resol no s'esborra: es passa a «Fet», amb la data, perquè en quedi
 constància per al treball.
 
-*Última actualització: 10 de novembre del 2026.*
+*Última actualització: 11 de novembre del 2026.*
 
 ## Costos per documentar
 
@@ -29,7 +29,22 @@ constància per al treball.
 
 ## El treball escrit
 
-- [ ] Part II, metodologia (capítols 6 a 15): per escriure.
+- [ ] Una lectura de la Part II feta per algú que no l'hagi escrit. Les
+  dues revisions (fets i claredat) les han fet ajudants de la mateixa IA.
+- [ ] Part II, capítol 6: diu que l'eina llegeix `CLAUDE.md` tota sola a
+  cada conversa. Cal citar-ho amb la documentació oficial de l'eina a
+  `treball/fonts.md`.
+- [ ] Part II, capítol 10: la revisió del marc teòric hi surt amb 96
+  observacions, que és la suma de la taula de
+  `treball/revisio-marc-teoric.md`. El diari del 4 de novembre en diu 79
+  (no hi compta les 17 errades «mitjanes» de llengua). Decidir quina
+  xifra es dona.
+- [ ] Part II, capítol 12: diu que no consta cap revisió del codi feta per
+  una persona. Si algú l'ha mirat, cal dir-ho i apuntar qui i quan.
+- [ ] Part II, capítol 14: diu que no consta cap prova en un telèfon de
+  debò. Si l'Edanna ha obert la web al seu mòbil, cal apuntar-ho.
+- [ ] El treball no explica enlloc qui escriu el text del treball i com
+  (l'autora, la màquina, o totes dues). Cal decidir on es diu.
 - [ ] Part IV, resultats i conclusions: per escriure.
 - [ ] Proves amb usuaris: sense fer. En depenen la frase de resultats de
   l'abstract («PENDENT») i les conclusions.
@@ -56,6 +71,8 @@ constància per al treball.
 
 ## Fet
 
+- [x] *11-11-2026.* Part II, metodologia (capítols 6 a 15): esborrany
+  escrit i revisat dues vegades.
 - [x] *10-11-2026.* Preus antics i erronis: segona font i regla de quatre
   passos (decisió D-013).
 - [x] *10-11-2026.* El capítol 19 i les captures de la Part III, posats al

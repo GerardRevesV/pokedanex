@@ -47,7 +47,7 @@ Els estudis que hi ha sobre la seguretat i la qualitat del codi generat i
 sobre si de debò es va més de pressa. La conclusió marca el mètode del
 treball: el codi de la màquina s'ha de revisar.
 
-## Part II — Metodologia: com s'ha treballat *(per escriure)*
+## Part II — Metodologia: com s'ha treballat *(en esborrany)*
 
 El cor del treball. Cada capítol és un problema que va aparèixer durant el
 projecte i la manera com es va resoldre.
@@ -55,51 +55,56 @@ projecte i la manera com es va resoldre.
 **6. Les regles del joc**
 Les normes que es van posar per escrit abans de començar: no escriure cap
 línia de codi a mà, no passar de 20 euros al mes, fer-ho tot en català i
-documentar cada pas. I com la màquina les llegeix a cada sessió.
+documentar cada pas. Com la màquina les llegeix a cada sessió, i els quatre
+documents on s'apunta tot el que es fa.
 
 **7. Dir-ho bé: com es demana una cosa a la màquina**
 Què canvia entre una petició vaga i una de concreta. L'exemple és
 l'entrevista de preguntes i respostes amb què es va decidir què havia de fer
-la web.
+la web. I el límit de demanar les coses peça a peça.
 
 **8. Pensar abans de fer: els plans**
 Per què es fa escriure un pla a la màquina i es llegeix abans de deixar-li
-tocar res, i com el projecte es va repartir en fases que es tanquen una
-darrere l'altra.
+tocar res, com el projecte es va repartir en fases, i per què abans de
+construir es mira què hi ha fet.
 
 **9. Quan la feina es repeteix: les receptes guardades**
-Afegir una col·lecció de cartes nova eren sempre els mateixos passos. Es van
+Afegir una expansió de cartes nova eren sempre els mateixos passos. Es van
 guardar com una recepta que la màquina segueix sola, i amb ella es van afegir
-dotze col·leccions de cop.
+dotze expansions de cop.
 
 **10. Repartir la feina: agents i subagents**
 Com es reparteix una feina gran entre diversos ajudants que treballen alhora.
-El cas d'estudi és la revisió de la web al mòbil: tres rondes d'exploradors
-que van trobar 89 problemes.
+El cas d'estudi és la revisió de la web al mòbil: tres rondes d'ajudants
+que van trobar 89 problemes. El mateix mètode es va fer servir per revisar
+el marc teòric.
 
 **11. Dues converses alhora**
 Què passa quan hi ha dues converses obertes treballant en el mateix projecte:
-cap de les dues sap què fa l'altra. El dia que totes dues van escriure al
-mateix document, i què s'hi va aprendre.
+cap de les dues sap què fa l'altra. Tres casos del projecte, i què s'hi va
+aprendre.
 
 **12. La revisió per capes**
 El capítol més important. Com que l'autora no llegeix el codi, cada canvi
-passa per diversos revisors independents i per una prova al navegador abans
-de donar-lo per bo. Així es van trobar dos forats de seguretat.
+passa per diversos revisors, que no són qui l'ha escrit, i per una prova al
+navegador abans de donar-lo per bo. Així es van trobar dos forats de
+seguretat. El límit: tots els revisors són la mateixa màquina.
 
 **13. Guardar-ho tot: l'historial de canvis**
 Com es desa cada versió del projecte per poder tornar enrere, i per què cada
-canvi es fa a part i es revisa abans d'ajuntar-lo amb la resta.
+canvi es fa a part i es revisa abans d'ajuntar-lo amb la resta. I per què
+una marca de «resolt» no és cap prova.
 
 **14. Com es comprova que funciona**
-Com s'ha provat la web: a mà, en un navegador de veritat, a l'ordinador i al
-mòbil. El capítol diu amb franquesa què no s'ha fet (proves automàtiques) i
-què s'hi hauria guanyat.
+Com s'ha provat la web: fent-la servir en un navegador, a l'ordinador i en
+una pantalla de mòbil simulada. El capítol diu què no s'ha fet: proves
+automàtiques, proves en un telèfon de debò i proves amb usuaris.
 
 **15. Quan la màquina s'equivoca**
 El catàleg d'errors reals del projecte: codi que semblava correcte i no es
 podia activar, un servei de dades que fallava quan volia, un preu que
-sortia a zero, i el dia que la màquina va contradir l'autora i tenia raó ella.
+sortia a zero, i el dia que la màquina va contradir l'autora i tenia raó la
+màquina.
 
 ## Part III — El producte: la web Pokedanex *(en esborrany)*
 

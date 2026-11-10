@@ -913,3 +913,30 @@ a `docs/pendents.md`).
 **Problemes:** dues sessions havien escrit alhora als mateixos documents i
 havien fet servir el mateix número de repte. La fusió es va haver de
 resoldre a mà.
+
+## 2026-11-11 — La Part II: la metodologia
+
+**Què s'ha fet:**
+- Recollits en una fitxa els fets de la Part II (dates, xifres, casos),
+  trets del diari, l'històric, les decisions i els reptes.
+- Decidit que es mantenen els deu capítols de l'índex (6 a 15), sense
+  treure'n ni afegir-ne cap.
+- Escrit l'esborrany de `treball/part-2-metodologia.md`: unes 3.400
+  paraules i tres taules.
+- Dues revisions amb ajudants que no havien escrit el text: fets (sis
+  errors corregits i una quinzena de frases ajustades) i claredat.
+- Posats al dia l'índex comentat, la llista de pendents i el lector de
+  documents.
+- Entrada **54** de l'històric.
+
+**Eines usades:** Claude Code, amb tres ajudants: un per a la fitxa de
+fets i dos per a les revisions.
+
+**Costos:** 0 € (de subscripció a part, pendent de documentar).
+
+**Problemes:** l'esborrany deia coses que sonaven bé i no eren exactes:
+qui havia marcat uns comentaris com a resolts, quines normes s'havien
+afegit i quan, o que cada conversa té carpeta pròpia «des de llavors».
+Totes es van trobar comparant el text amb els documents. A més, dues
+fonts del projecte donen xifres diferents de la revisió del marc teòric
+(79 i 96 observacions); queda apuntat a pendents.
