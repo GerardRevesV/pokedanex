@@ -816,3 +816,20 @@ va haver de crear el fitxer d'una altra manera.
 **Problemes:** falten dades que no són al projecte i que no es podien
 inventar: l'institut, el tutor o tutora, la motivació personal i els
 agraïments. Han quedat marcades al text perquè l'Edanna les doni.
+
+## 2026-11-10 (4a sessió) — L'índex comentat
+
+**Què s'ha fet:**
+- Escrit `treball/index-comentat.md`: l'índex del treball amb una explicació
+  d'una a tres línies de cada capítol, per ensenyar-lo a la professora.
+- Revisat contra l'històric, els reptes i el marc teòric.
+- El document surt al lector de documents de la web.
+- Entrada **51** de l'històric.
+
+**Eines usades:** Claude Code.
+
+**Costos:** 0 € (de subscripció a part, pendent de documentar).
+
+**Problemes:** una altra sessió tenia canvis sense desar als mateixos dos
+documents (l'entrada 50 de l'històric i la seva del diari). S'ha desat només
+la part d'aquesta sessió, sense tocar la de l'altra.

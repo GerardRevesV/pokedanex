@@ -861,3 +861,21 @@ tutora, la motivació personal i els agraïments. Són dades i paraules que
 només pot donar l'Edanna i al text queden marcades amb «PER OMPLIR». La frase
 de resultats de l'abstract queda com a «PENDENT» fins que es facin les proves
 amb usuaris.
+
+## 51. L'índex comentat: cada capítol en dues línies, per ensenyar-lo a la professora
+
+*2026-11-10*
+
+L'índex dels preliminars només porta els títols, i un títol com «Les regles
+del joc» no diu gaire a qui no ha seguit el projecte. Es fa un document a
+part, `treball/index-comentat.md`, que repeteix l'índex i hi afegeix, sota
+cada un dels 26 capítols, d'una a tres línies que diuen què explica. Serveix
+perquè la professora pugui opinar sobre l'estructura abans que s'escrigui la
+resta: de moment només la Part I està escrita, i de les altres tres el
+document diu què ha d'explicar cada capítol, no què explica ja.
+
+És una eina de treball i no s'entrega. Les explicacions surten del guió i dels
+documents del projecte, i cada dada que hi surt (les dotze col·leccions
+afegides de cop, els 89 problemes de la revisió al mòbil, els dos forats de
+seguretat, els 0 euros de publicació) s'ha comprovat contra l'històric i els
+reptes.
