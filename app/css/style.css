@@ -426,8 +426,13 @@ select:focus {
   box-shadow: 0 0 0 2px var(--accent);
 }
 
+/* El missatge de buit porta el botó «Treure els filtres» a sota */
 .graella-buida {
   grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.9rem;
   text-align: center;
   color: var(--text-suau);
   padding: 3rem 1rem;
@@ -512,6 +517,46 @@ body:not([data-marcatge="consulta"]) .butxaca-funda:not(.butxaca-funda--buida) {
   text-align: center;
   color: var(--text-suau);
   font-size: 0.9rem;
+}
+
+/* ---------- Ressaltat de la cerca i els filtres a l'àlbum ---------- */
+
+/* Amb un filtre actiu, l'àlbum no treu cap butxaca: apaga les cartes que
+   no coincideixen i posa un anell d'accent a les que sí. L'apagat va a la
+   funda sencera (plàstic inclòs) i no a la imatge, perquè no es confongui
+   amb el gris de les cartes que encara no tens. */
+.album-ressaltat {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.4rem 0.5rem 0.4rem 0.9rem;
+  background: var(--fons-suau);
+  border: 1px solid var(--accent);
+  border-radius: 999px;
+}
+
+.album-ressaltat-text {
+  color: var(--accent);
+  font-size: 0.85rem;
+}
+
+.album-ressaltat-nav {
+  display: flex;
+  gap: 0.3rem;
+}
+
+.album-fletxa--petita {
+  width: 1.8rem;
+  height: 1.8rem;
+  font-size: 1.1rem;
+}
+
+.butxaca-funda--descartada {
+  opacity: 0.28;
+}
+
+.butxaca-funda--coincident {
+  box-shadow: 0 0 0 2px var(--accent), 0 0 14px var(--resplendor);
 }
 
 /* El carpesà: coberta fosca amb les dues pàgines obertes a dins */

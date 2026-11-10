@@ -239,3 +239,47 @@ molt més senzill però no explica res (podria ser qualsevol web, no un
 àlbum de cromos); i deixar-ho tal com estava.
 
 **Cost:** 0 €.
+
+## D-011 · A l'àlbum els filtres ressalten, no filtren
+
+**Data:** 2026-11-04
+
+**Decisió:** la cerca i els filtres (Totes/Les tinc/Em falten, Raresa,
+Tipus d'energia, Categoria) ara també tenen efecte a la vista d'Àlbum, però
+**d'una altra manera que a la graella**: a la graella amaguen les cartes que
+no coincideixen; a l'àlbum no amaguen res. Les cartes que coincideixen
+queden enceses i amb un anell del color d'accent, les altres s'apaguen, i
+apareix una barra que diu quantes coincidències hi ha i a quines pàgines,
+amb dues fletxes per saltar d'una pàgina amb coincidències a la següent.
+Si la pàgina oberta no en té cap, l'àlbum salta tot sol a la primera que en
+tingui. El control «Ordena per» s'amaga a l'àlbum.
+
+Alhora, els tres desplegables **desactiven les opcions que no donarien cap
+carta** tenint en compte els altres dos, i el missatge de graella buida diu
+quins criteris han deixat fora les cartes i ofereix un botó per treure'ls
+tots.
+
+**Per què:** l'estudi d'usabilitat (`docs/estudi-usabilitat.md`) va trobar
+que sis controls de la capçalera no feien res a la vista d'Àlbum, perquè la
+graella es construeix passant les cartes pel sedàs dels filtres i l'àlbum
+agafava la llista sencera. Es van considerar tres sortides. Amagar els
+controls a l'àlbum hauria fet saltar la interfície i hauria tret una
+funcionalitat útil. Fer-los filtrar de debò hauria buidat butxaques: un
+àlbum amb nou cartes de foc enganxades a les tres primeres butxaques ja no
+és un àlbum, i els forats són justament el que un col·leccionista hi vol
+veure. La idea inicial —«que el filtre et porti a la pàgina de l'energia
+corresponent»— es va mesurar sobre les 14 expansions i no es pot fer
+literalment: **no existeix «la pàgina» d'un tipus**, perquè cada tipus surt
+al bloc del set base i una segona vegada a les cartes especials del final
+(només el 3 % dels tipus ocupa pàgines seguides, i cada tipus toca el 35,8 %
+de les pàgines de l'àlbum). El ressaltat amb navegació compleix la mateixa
+intenció —«porta'm on són»— amb la informació que les dades permeten dir de
+debò.
+
+La desactivació d'opcions ataca un número mesurat: el **58,4 %** de les
+combinacions possibles dels tres desplegables no retornava cap carta (per
+exemple, qualsevol tipus d'energia amb la categoria «Entrenador», perquè els
+entrenadors no en tenen). Es desactiven en comptes d'amagar-les perquè la
+llista no balli: així es veu que l'opció existeix però que ara no porta
+enlloc. L'opció «Tots» i el valor ja triat no es desactiven mai, perquè el
+desplegable sempre ha de poder tornar enrere.
