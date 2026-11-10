@@ -831,8 +831,9 @@ tres coses.
 
 **Quins capítols fan falta.** L'índex queda en quatre parts i 26 capítols
 numerats de corrido: 5 de marc teòric (els que ja hi ha escrits), 10 de
-metodologia, 6 del producte i 5 de resultats i conclusions. De passada
-s'arregla la numeració del guió, que repetia el número 7.
+metodologia, 6 del producte i 5 de resultats i conclusions. La numeració és
+nova: la del guió repetia el número 7 i encara no s'ha tocat, de manera que
+els números dels dos documents no coincideixen fins que el guió s'actualitzi.
 
 **Quantes pàgines té cada part.** El pressupost suma 47 pàgines, dins de les
 40-50 que es volen: 9 de preliminars i introducció, 10 de marc teòric, 11 de
