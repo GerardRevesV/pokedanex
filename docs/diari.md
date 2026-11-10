@@ -749,3 +749,49 @@ exactament les mateixes claus (ara en són 110 cadascun). El segon: el
 missatge de confirmació d'Importar deia «1 cartes». En comptes d'afegir una
 frase per al singular, s'ha tret el número: el que importa no és quantes
 cartes es perden, sinó que es perden **totes**.
+
+## 2026-11-07 — Els comentaris del marc teòric, llegits i aplicats
+
+**Què s'ha fet:**
+- Lectura dels nou comentaris de l'Edanna al pull request #13 sobre
+  `treball/marc-teoric.md`.
+- Aplicats els vuit que demanaven alguna cosa: tres retallades i cinc
+  passatges reescrits o aclarits.
+- `treball/fonts.md`: Semafor i Willison baixen a les fonts reservades per a
+  les parts següents, perquè el paràgraf que les citava ja no hi és; la
+  rebaixa de la paga de l'estudi de METR passa de «dada citada» a «dada
+  disponible i no citada»; i la reserva sobre la piulada de Karpathy, que
+  abans anava al cos del text, queda documentada a la fitxa de la font.
+- Contestat cada fil a GitHub explicant què s'ha fet, i marcats com a
+  resolts.
+- Entrada **47** de l'històric i repte **10**.
+
+**Eines usades:** Claude Code i l'API de GitHub (`gh`).
+
+**Costos:** 0 € (de subscripció a part, pendent de documentar).
+
+**Problemes:** el gros va ser descobrir que set dels nou fils constaven com a
+resolts sense que el text s'hagués canviat: l'Edanna havia entès «Resolve
+conversation» com «ja t'ho he enviat». Si la sessió s'hagués fiat de la
+marca, s'haurien perdut sis peticions seves. Es va veure comparant la data de
+l'últim canvi del fitxer amb la dels comentaris. El segon problema va ser
+d'eina i es va resoldre de seguida: el primer intent d'escriure l'script de
+substitucions des del terminal va petar per les cometes del text català, i es
+va haver de crear el fitxer d'una altra manera.
+
+## 2026-11-10 — La frase de Willison, recuperada
+
+**Què s'ha fet:**
+- L'Edanna ha rellegit aquí mateix, al xat, els cinc passatges reescrits del
+  marc teòric per comprovar si ara s'entenen.
+- Recuperada la frase de Simon Willison al capítol 5, en una sola línia, dins
+  de «Què se'n deriva per a aquest treball».
+- `treball/fonts.md`: la fitxa de Willison torna a les fonts citades; Semafor
+  es queda a les reservades.
+- Entrada **48** de l'històric.
+
+**Eines usades:** Claude Code.
+
+**Costos:** 0 € (de subscripció a part, pendent de documentar).
+
+**Problemes:** cap.

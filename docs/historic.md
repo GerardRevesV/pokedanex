@@ -752,3 +752,70 @@ escriptori només es descobria per sort, ara surt com a missatge en entrar en
 un mode de marcatge. Finalment, «Versió de les dades» i «Actualitza» s'ajunten
 sota un sol títol, «Dades». Tot són canvis de text i de detall —cap
 funcionalitat nova— i queden registrats a la decisió D-012.
+
+## 47. Els comentaris de l'Edanna al marc teòric, aplicats
+
+*2026-11-07*
+
+L'Edanna va deixar nou comentaris sobre `treball/marc-teoric.md` a la pàgina
+del pull request #13. Dos demanaven treure text, sis deien alguna variant de
+«no ho entenc, canvia-ho o explica-ho millor» i un era la prova de
+verificació del canal, de la setmana passada. En anar a aplicar-los va
+aparèixer una sorpresa: set dels nou fils constaven com a **resolts** i, en
+canvi, el fitxer no s'havia tocat des del 4 de novembre. Els havia resolt
+ella mateixa just després d'escriure'ls, entenent «Resolve conversation» com
+«ja t'ho he enviat» i no com «ja està arreglat». No s'havia perdut cap
+petició, però tampoc no se n'havia aplicat cap. En aquesta sessió s'han
+aplicat totes vuit.
+
+**El que s'ha tret.** L'avís entre parèntesis que deia que la piulada de
+Karpathy no s'havia pogut consultar directament; la frase sobre la paga dels
+participants de l'estudi de METR, que allargava el raonament sense
+sostenir-lo; i el paràgraf sencer «Un cas concret i una veu crítica», que
+portava el cas de les aplicacions de Lovable amb dades exposades i la frase
+de Simon Willison.
+
+**El que s'ha reescrit, perquè no s'entenia.** Que la mateixa pregunta no
+dona mai la mateixa resposta —ara amb el que això vol dir per a una recerca,
+que el mètode es pot repetir i el resultat no—; el bucle de l'agent —ara amb
+les quatre feines de programar, escriure, provar, trobar l'error i
+esmenar-lo, i qui en fa cadascuna—; el fet que dues converses obertes alhora
+no comparteixen res —ara amb el cas real de les dues entrades amb el mateix
+número—; i la citació del Departament d'Educació, dita planerament. De
+l'enquesta de Stack Overflow l'Edanna preguntava si realment feia falta: s'ha
+conservat i se li ha afegit un paràgraf que diu per què hi és, perquè les
+seves dues xifres (tothom ho fa servir, cada vegada se'n refien menys) són el
+retrat del problema que el projecte es troba a la part pràctica.
+
+**El que cal tenir present.** Amb el paràgraf de Lovable i Willison fora, el
+capítol 5 es queda sense l'única veu crítica citada i sense l'únic cas
+concret d'una web feta amb aquestes eines que va acabar ensenyant dades dels
+usuaris. L'argument no queda despenjat, perquè la dada de Veracode —el 45 %
+del codi generat amb vulnerabilitats— continua al text i és la que sosté la
+conclusió del capítol. Però si algun professor pregunta per la part crítica
+de la bibliografia, la resposta ha de sortir d'aquella dada i no de la frase
+de Willison, que ara només consta a `treball/fonts.md`.
+
+Les dues fonts que han quedat sense citar —Semafor i Willison— han baixat a
+la secció de fonts reservades per a les parts següents, amb el motiu escrit
+al costat: una bibliografia no pot dir «citada a la Part I» d'una cosa que ja
+no s'hi cita. El capítol passa de 3.454 a 3.691 paraules: explicar-se bé
+costa paraules.
+
+## 48. La veu crítica torna al capítol 5, en una sola línia
+
+*2026-11-10*
+
+En aplicar els comentaris de l'Edanna (entrada 47) es va treure el paràgraf
+«Un cas concret i una veu crítica», i va quedar apuntat que el capítol 5 es
+quedava sense cap veu crítica citada. Tres dies després es decideix
+recuperar-ne la meitat: la frase de Simon Willison —«arribar a un codi en
+producció a base de *vibe coding* és clarament una idea terrible»— torna al
+text, però no com a paràgraf propi sinó com a tancament del primer paràgraf
+de «Què se'n deriva per a aquest treball», que és on fa més servei: just
+després de dir que la màquina no escriu codi fiable tota sola. El cas de
+Lovable no es recupera.
+
+A la bibliografia, la fitxa de Willison torna a les fonts citades a la Part I
+amb l'historial escrit (treta el dia 7, recuperada el dia 10), i Semafor es
+queda sola a les reservades.
