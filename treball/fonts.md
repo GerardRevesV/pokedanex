@@ -149,30 +149,6 @@ En anglès. ✅ **(METR, 2026)**
 > (interval de −15 % a +9 %) per als nous. METR diu que el biaix va en contra
 > seu: «likely biases the speedup estimate downward».
 
----
-
-# Fonts documentades i reservades per a les parts següents
-
-No se citen a la Part I. Es deixen aquí amb les dades comprovades perquè la
-metodologia i els resultats les puguin fer servir.
-
-**Nota del 7 de novembre del 2026.** Les dues entrades següents —Semafor i
-Willison— sí que es citaven a la Part I. El paràgraf que les portava («Un cas
-concret i una veu crítica») s'ha tret del marc teòric a petició de l'autora,
-i per això baixen aquí. Les dades continuen comprovades i es poden recuperar
-en qualsevol moment, a la Part I o a les conclusions.
-
-**Semafor.** «The AI coding platform Lovable left user data exposed», 29 de
-maig del 2025. En anglès. ⚠️ **(Semafor, 2025)**
-> Dada citada: l'escaneig de 1.645 aplicacions web fetes amb Lovable, de les
-> quals 170 permetien a qualsevol accedir a dades dels usuaris (noms, adreces
-> electròniques, informació financera i claus d'API). L'escaneig el va fer un
-> enginyer de Replit i el va revisar Semafor; el problema té identificador
-> CVE-2025-48757.
-> **No s'ha pogut obrir l'article original**; el recompte de 170 de 1.645 és
-> coincident en totes les fonts secundàries consultades. Cal localitzar
-> l'adreça exacta de Semafor i comprovar-hi el títol.
-
 **WILLISON, Simon.** «Quotes for Benj Edwards on vibe coding». *Simon
 Willison's Weblog*, 6 de març del 2025.
 https://simonwillison.net/b/8547
@@ -188,6 +164,36 @@ En anglès. ✅ **(Willison, 2025)**
 > settings» i, molt pertinent per a aquest projecte, «If an LLM wrote every
 > line of your code but you've reviewed, tested and understood it all [...]
 > that's using an LLM as a typing assistant».
+> **Historial:** la frase es va treure del cos el 7 de novembre del 2026,
+> amb el paràgraf «Un cas concret i una veu crítica», i es va recuperar el 10
+> de novembre en una sola línia, a l'apartat «Què se'n deriva per a aquest
+> treball», perquè el capítol no es quedés sense cap veu crítica citada.
+
+---
+
+# Fonts documentades i reservades per a les parts següents
+
+No se citen a la Part I. Es deixen aquí amb les dades comprovades perquè la
+metodologia i els resultats les puguin fer servir.
+
+**Nota del 7 de novembre del 2026, actualitzada el dia 10.** L'entrada
+següent —Semafor— sí que es citava a la Part I. El paràgraf que la portava
+(«Un cas concret i una veu crítica») s'ha tret del marc teòric a petició de
+l'autora, i per això baixa aquí. La dada es pot recuperar en qualsevol
+moment, a la Part I o a les conclusions. La fitxa de Willison, que va baixar
+amb ella, ha tornat a les fonts citades el 10 de novembre, quan la seva frase
+es va recuperar al text.
+
+**Semafor.** «The AI coding platform Lovable left user data exposed», 29 de
+maig del 2025. En anglès. ⚠️ **(Semafor, 2025)**
+> Dada citada: l'escaneig de 1.645 aplicacions web fetes amb Lovable, de les
+> quals 170 permetien a qualsevol accedir a dades dels usuaris (noms, adreces
+> electròniques, informació financera i claus d'API). L'escaneig el va fer un
+> enginyer de Replit i el va revisar Semafor; el problema té identificador
+> CVE-2025-48757.
+> **No s'ha pogut obrir l'article original**; el recompte de 170 de 1.645 és
+> coincident en totes les fonts secundàries consultades. Cal localitzar
+> l'adreça exacta de Semafor i comprovar-hi el títol.
 
 **METR.** *Measuring the Self-Reported Impact of Early-2026 AI on Technical
 Worker Productivity*, de Joel Becker. 11 de maig del 2026.
@@ -259,9 +265,8 @@ https://en.wikipedia.org/wiki/Vibe_coding ✅
 on vibes?». Març del 2025.
 https://arstechnica.com/ai/2025/03/is-vibe-coding-with-ai-gnarly-or-reckless-maybe-some-of-both/ ⚠️
 > No s'ha pogut obrir des d'aquest entorn. És l'article per al qual Simon
-> Willison va escriure les frases que la bibliografia recull —ara reservades
-> per a les parts següents— i una de les dues fonts de la transcripció de la
-> piulada de Karpathy.
+> Willison va escriure la frase que es cita, i una de les dues fonts de la
+> transcripció de la piulada de Karpathy.
 
 ---
 

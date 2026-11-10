@@ -778,3 +778,20 @@ l'últim canvi del fitxer amb la dels comentaris. El segon problema va ser
 d'eina i es va resoldre de seguida: el primer intent d'escriure l'script de
 substitucions des del terminal va petar per les cometes del text català, i es
 va haver de crear el fitxer d'una altra manera.
+
+## 2026-11-10 — La frase de Willison, recuperada
+
+**Què s'ha fet:**
+- L'Edanna ha rellegit aquí mateix, al xat, els cinc passatges reescrits del
+  marc teòric per comprovar si ara s'entenen.
+- Recuperada la frase de Simon Willison al capítol 5, en una sola línia, dins
+  de «Què se'n deriva per a aquest treball».
+- `treball/fonts.md`: la fitxa de Willison torna a les fonts citades; Semafor
+  es queda a les reservades.
+- Entrada **48** de l'històric.
+
+**Eines usades:** Claude Code.
+
+**Costos:** 0 € (de subscripció a part, pendent de documentar).
+
+**Problemes:** cap.

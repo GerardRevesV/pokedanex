@@ -369,7 +369,10 @@ Si es llegeixen juntes, aquestes dades diuen una cosa bastant coherent: **la
 intel·ligència artificial escriu codi que funciona, però no escriu codi
 fiable tota sola**. El problema no és que no en sàpiga; és que no té cap
 manera de saber què no sap, i qui no llegeix el que ha generat la màquina
-tampoc no té manera de saber-ho.
+tampoc no té manera de saber-ho. El programador Simon Willison, una de les
+veus més citades d'aquest debat, ho diu sense embuts: «arribar a un codi en
+producció a base de *vibe coding* és clarament una idea terrible» (Willison,
+2025, traducció pròpia).
 
 Aquesta conclusió de la bibliografia és la que va determinar el mètode de
 treball del projecte, i converteix el treball en una cosa més interessant que

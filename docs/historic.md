@@ -801,3 +801,21 @@ la secció de fonts reservades per a les parts següents, amb el motiu escrit
 al costat: una bibliografia no pot dir «citada a la Part I» d'una cosa que ja
 no s'hi cita. El capítol passa de 3.454 a 3.691 paraules: explicar-se bé
 costa paraules.
+
+## 48. La veu crítica torna al capítol 5, en una sola línia
+
+*2026-11-10*
+
+En aplicar els comentaris de l'Edanna (entrada 47) es va treure el paràgraf
+«Un cas concret i una veu crítica», i va quedar apuntat que el capítol 5 es
+quedava sense cap veu crítica citada. Tres dies després es decideix
+recuperar-ne la meitat: la frase de Simon Willison —«arribar a un codi en
+producció a base de *vibe coding* és clarament una idea terrible»— torna al
+text, però no com a paràgraf propi sinó com a tancament del primer paràgraf
+de «Què se'n deriva per a aquest treball», que és on fa més servei: just
+després de dir que la màquina no escriu codi fiable tota sola. El cas de
+Lovable no es recupera.
+
+A la bibliografia, la fitxa de Willison torna a les fonts citades a la Part I
+amb l'historial escrit (treta el dia 7, recuperada el dia 10), i Semafor es
+queda sola a les reservades.
