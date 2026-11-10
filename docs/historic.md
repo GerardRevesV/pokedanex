@@ -819,3 +819,44 @@ Lovable no es recupera.
 A la bibliografia, la fitxa de Willison torna a les fonts citades a la Part I
 amb l'historial escrit (treta el dia 7, recuperada el dia 10), i Semafor es
 queda sola a les reservades.
+
+## 49. Els preliminars i la introducció, en esborrany, amb el pressupost de pàgines
+
+*2026-11-10*
+
+Es comença a escriure el que va davant del cos del treball. El document nou,
+`treball/preliminars.md`, porta la portada, l'abstract en anglès, l'esquema
+de l'índex, la presentació i la introducció. Abans d'escriure es van decidir
+tres coses.
+
+**Quins capítols fan falta.** L'índex queda en quatre parts i 26 capítols
+numerats de corrido: 5 de marc teòric (els que ja hi ha escrits), 10 de
+metodologia, 6 del producte i 5 de resultats i conclusions. De passada
+s'arregla la numeració del guió, que repetia el número 7.
+
+**Quantes pàgines té cada part.** El pressupost suma 47 pàgines, dins de les
+40-50 que es volen: 9 de preliminars i introducció, 10 de marc teòric, 11 de
+metodologia, 8 del producte, 6 de resultats i conclusions i 3 de glossari i
+fonts. Els annexos no hi compten. Queden tres pàgines de marge per a taules i
+figures.
+
+**Què vol dir «útil».** La hipòtesi parla d'una web útil i el guió ja avisava
+que aquesta paraula s'havia de definir abans de treure conclusions. La
+introducció proposa tres condicions: que la web faci bé el que promet, que la
+pugui fer servir algú que no ha participat en el projecte, i que estigui a
+l'abast (publicada, per a ordinador i mòbil, i per menys de 20 euros al mes).
+És una proposta: l'Edanna l'ha de donar per bona.
+
+El text es va revisar dues vegades. La primera, fet per fet contra els
+documents del projecte i contra el marc teòric, i en van sortir vuit
+correccions: per exemple, deia que els programadors de l'estudi de METR eren
+dos grups diferents, quan eren els mateixos fent feines amb l'eina i sense, i
+deia que l'Edanna ja podia explicar amb les seves paraules els passatges
+reescrits, cosa que encara no s'ha comprovat. La segona revisió va ser de
+claredat i de llargada.
+
+El que no s'ha escrit, expressament: el nom de l'institut, el del tutor o
+tutora, la motivació personal i els agraïments. Són dades i paraules que
+només pot donar l'Edanna i al text queden marcades amb «PER OMPLIR». La frase
+de resultats de l'abstract queda com a «PENDENT» fins que es facin les proves
+amb usuaris.

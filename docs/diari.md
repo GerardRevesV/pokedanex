@@ -795,3 +795,24 @@ va haver de crear el fitxer d'una altra manera.
 **Costos:** 0 € (de subscripció a part, pendent de documentar).
 
 **Problemes:** cap.
+
+## 2026-11-10 (2a sessió) — Els preliminars i la introducció
+
+**Què s'ha fet:**
+- Decidit l'índex definitiu (26 capítols en quatre parts) i el pressupost de
+  pàgines de tot el treball: 47, dins de les 40-50 previstes.
+- Escrit l'esborrany de `treball/preliminars.md`: portada, abstract en
+  anglès, esquema de l'índex, presentació i introducció.
+- Proposada una definició de «útil» amb tres condicions, que faltava.
+- Dues revisions del text: una de fets i referències (vuit correccions) i una
+  de claredat i llargada.
+- El document nou surt al lector de documents de la web.
+- Entrada **49** de l'històric.
+
+**Eines usades:** Claude Code.
+
+**Costos:** 0 € (de subscripció a part, pendent de documentar).
+
+**Problemes:** falten dades que no són al projecte i que no es podien
+inventar: l'institut, el tutor o tutora, la motivació personal i els
+agraïments. Han quedat marcades al text perquè l'Edanna les doni.

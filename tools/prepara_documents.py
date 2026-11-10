@@ -32,6 +32,7 @@ ORDRE = {
     "treball": [
         "requisits-i-rubrica.md",
         "guio-continguts.md",
+        "preliminars.md",
         "marc-teoric.md",
         "fonts.md",
     ],
