@@ -683,3 +683,38 @@ aquesta mateixa carpeta (l'estudi d'usabilitat i el seu repte), que no entra
 en aquest canvi. Hi ha una triple col·lisió de numeració a l'històric i als
 reptes que cal resoldre conservant-ho tot i renumerant en ordre cronològic,
 tal com es va fer a l'entrada 27.
+
+## 2026-11-10 — Les barres d'estadístiques aixafades al mòbil
+
+**Què s'ha fet:**
+- Reproduït el defecte que s'havia vist en fer les captures de la Part III:
+  a 390 píxels d'amplada, amb 30 cartes marcades i el panell
+  d'estadístiques obert, el bloc de barres feia 83 píxels, la barra 2
+  píxels, i el recompte sortia 11 píxels fora de la pantalla (la pàgina
+  sencera es podia arrossegar de costat).
+- Trobada la causa a `app/css/style.css`: al bloc de pantalles de fins a
+  480 píxels, el `width: 100%` del bloc de barres no feia res perquè el
+  `flex: 1` de la regla general el deixa sense efecte.
+- Corregit amb una línia (`flex: 1 1 100%` en lloc de `width: 100%`) dins
+  del mateix bloc de mòbil. No s'ha tocat cap regla d'escriptori.
+- Comprovat al navegador integrat, mesurant els elements: a 390 píxels la
+  barra fa 165 píxels i el recompte acaba dins de la pantalla; a 320 i a
+  470 píxels també; a 600 i a 1280 píxels les regles que s'apliquen són
+  les mateixes d'abans.
+- Fet en una branca pròpia (`arregla-barres-estad-mobil`) i en una carpeta
+  de treball a part, perquè una altra sessió feia servir la carpeta
+  principal.
+
+**Eines usades:** Claude Code i el seu navegador integrat, amb mides de
+pantalla simulades. No s'ha provat en un telèfon de debò.
+
+**Costos:** 0 € en serveis. Uns 20 minuts.
+
+**Problemes:** un, i no era de la web. Per veure la branca nova calia un
+segon servidor local, i es va engegar al port 8002 sense saber que una
+altra sessió ja en tenia un al mateix port. Windows no va donar cap error:
+va deixar els dos servidors escoltant alhora, i el navegador rebia la
+pàgina vella, de manera que la correcció semblava no funcionar tot i ser
+bona. Es va descobrir comparant el full d'estils que rebia el navegador amb
+el del disc, i es va resoldre fent servir un port lliure. Queda explicat a
+`docs/reptes.md`.

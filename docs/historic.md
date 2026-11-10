@@ -702,3 +702,31 @@ lateral, filtre de cerca i els documents agrupats, i un script
 `docs/` i `treball/` dins de la web. La còpia no es guarda al repositori:
 es genera a cada publicació, de manera que la web sempre serveix l'última
 versió dels documents sense mantenir res a mà.
+
+## 53. Les barres d'estadístiques, aixafades al mòbil: una línia de CSS
+
+*2026-11-10*
+
+En fer les captures de mòbil per a la Part III del treball es va veure, de
+passada, que amb el panell d'estadístiques obert les barres de progrés
+quedaven aixafades i el recompte («30/99») sortia tallat per la dreta. Es
+comprova al navegador amb una pantalla simulada de 390 píxels i es
+confirma: el bloc de les barres feia 83 píxels d'ample, la barra en si en
+feia 2, i el recompte acabava 11 píxels més enllà de la vora de la
+pantalla.
+
+La causa és una regla que ja volia arreglar això mateix. En pantalles
+estretes es treia l'amplada mínima del bloc de barres i se li demanava
+«ocupa el 100 %», però aquesta segona ordre no tenia cap efecte: una regla
+anterior, la que reparteix l'espai del panell, la deixava sense valor. Sense
+mínim i sense amplada pròpia, el bloc ja no saltava a la línia de sota i es
+conformava amb el racó que deixaven lliure els controls de l'objectiu. La
+correcció és una sola línia a `app/css/style.css`, dins del bloc de
+pantalles de fins a 480 píxels: la mateixa ordre, dita amb la propietat que
+sí que mana (`flex-basis`). Ara el bloc ocupa una fila sencera: a 390
+píxels la barra passa de 2 a 165 píxels i el recompte es llegeix sencer; a
+320 píxels també hi cap. L'escriptori no canvia, perquè la regla només
+s'aplica a pantalles estretes.
+
+La numeració d'aquesta entrada salta del 44 al 53 expressament: les
+entrades 45 a 52 són en branques que encara no s'han fusionat a `main`.
