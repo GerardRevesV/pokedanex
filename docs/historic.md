@@ -879,3 +879,42 @@ documents del projecte, i cada dada que hi surt (les dotze col·leccions
 afegides de cop, els 89 problemes de la revisió al mòbil, els dos forats de
 seguretat, els 0 euros de publicació) s'ha comprovat contra l'històric i els
 reptes.
+
+## 52. La Part III en esborrany, amb les primeres captures de la web
+
+*2026-11-10*
+
+S'escriu la Part III del treball, la que explica el producte: sis capítols
+(del 16 al 21) a `treball/part-3-producte.md`, amb unes 2.100 paraules i
+set figures. És la primera part del treball que porta imatges.
+
+Abans d'escriure es va fer un estudi de quines pantalles calia ensenyar
+(`docs/estudi-captures-part3.md`). El criteri: una captura entra si
+demostra una cosa que el text afirma, si s'entén sense haver fet servir la
+web i si no repeteix el que ja ensenya una altra. Entren la graella, el
+panell d'estadístiques, l'àlbum, el zoom, el selector d'expansions, dues
+fitxes de carta (preu exacte i preu aproximat) i dues pantalles de mòbil.
+Queden fora el mode Catàleg, els desplegables i la barra d'adreces.
+
+Les captures no s'han fet a mà. Les fa `tools/captures_part3.mjs`, que obre
+la web en un navegador sense finestra, marca una col·lecció d'exemple de 30
+cartes i desa les imatges a `treball/figures/`. Si la web canvia abans del
+lliurament, tornar-lo a executar les refà totes iguals. No ha calgut
+instal·lar res.
+
+Perquè les imatges es vegin al lector de documents de la web s'han tocat
+dues coses: el script que hi copia els documents ara copia també la carpeta
+de figures, i el lector busca les imatges al costat del document.
+
+El text es va revisar dues vegades. La primera, fet per fet contra les
+especificacions, les decisions, l'històric i el codi: en van sortir set
+correccions. La més important: deia que la web no demana mai dades al
+servei extern, i sí que ho fa quan algú prem «Actualitza». La segona
+revisió va ser de claredat: paraules sense explicar («servidor», «ports») i
+una mateixa paraula amb dos sentits.
+
+Dues coses queden apuntades. El guió parlava de 5.632 línies de codi i avui
+se'n compten 6.035: la xifra s'haurà de tornar a comptar al final. I a les
+captures de mòbil, amb el panell d'estadístiques obert, les barres de
+progrés es veien aixafades i un número sortia tallat; no s'ha comprovat en
+un telèfon real ni s'ha arreglat aquí.

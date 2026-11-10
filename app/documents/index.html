@@ -331,7 +331,11 @@
       ' · <a href="md/' + doc.ruta + '">veure l\'original en Markdown</a>';
 
     contingut.innerHTML = '<p class="meta">' + meta + "</p><article></article>";
-    contingut.querySelector("article").innerHTML = marked.parse(text);
+    contingut.querySelector("article").innerHTML = marked.parse(text, {
+      // Les imatges dels documents porten rutes relatives (figures/x.jpg):
+      // s'han de buscar al costat del document, no al costat del lector.
+      baseUrl: "md/" + doc.ruta
+    });
     envoltaTaules();
     document.title = doc.titol + " · Pokedanex";
     window.scrollTo(0, 0);

@@ -833,3 +833,26 @@ agraïments. Han quedat marcades al text perquè l'Edanna les doni.
 **Problemes:** una altra sessió tenia canvis sense desar als mateixos dos
 documents (l'entrada 50 de l'històric i la seva del diari). S'ha desat només
 la part d'aquesta sessió, sense tocar la de l'altra.
+
+## 2026-11-10 (5a sessió) — La Part III i les captures
+
+**Què s'ha fet:**
+- Estudi previ de quines pantalles val la pena ensenyar
+  (`docs/estudi-captures-part3.md`).
+- Nou captures de la web fetes automàticament amb
+  `tools/captures_part3.mjs`, desades a `treball/figures/`.
+- Escrit l'esborrany de `treball/part-3-producte.md`: capítols 16 a 21,
+  unes 2.100 paraules i set figures.
+- El lector de documents de la web ara ensenya les imatges.
+- Dues revisions del text: fets (set correccions) i claredat.
+- Entrada **52** de l'històric i repte **11**.
+
+**Eines usades:** Claude Code, Chrome sense finestra (ja instal·lat) i
+Node.js (ja instal·lat).
+
+**Costos:** 0 € (de subscripció a part, pendent de documentar).
+
+**Problemes:** la primera captura de l'àlbum sortia amb la capçalera tapant
+la primera fila de cartes, i es va haver de refer. A les captures de mòbil
+s'ha vist un possible defecte del panell d'estadístiques, pendent de
+comprovar.
