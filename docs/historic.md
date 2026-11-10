@@ -862,20 +862,29 @@ només pot donar l'Edanna i al text queden marcades amb «PER OMPLIR». La frase
 de resultats de l'abstract queda com a «PENDENT» fins que es facin les proves
 amb usuaris.
 
-## 51. L'índex comentat: cada capítol en dues línies, per ensenyar-lo a la professora
+## 50. Els preus: revisió, una segona font i un sistema de quatre regles
 
 *2026-11-10*
 
-L'índex dels preliminars només porta els títols, i un títol com «Les regles
-del joc» no diu gaire a qui no ha seguit el projecte. Es fa un document a
-part, `treball/index-comentat.md`, que repeteix l'índex i hi afegeix, sota
-cada un dels 26 capítols, d'una a tres línies que diuen què explica. Serveix
-perquè la professora pugui opinar sobre l'estructura abans que s'escrigui la
-resta: de moment només la Part I està escrita, i de les altres tres el
-document diu què ha d'explicar cada capítol, no què explica ja.
+Es revisen els preus de les catorze expansions amb un programet que aplica
+la mateixa regla que la web i compara les dues fonts entre elles. En surten
+quatre expansions sense cap preu, preus de Cardmarket de fa gairebé un any i
+una desena de cartes amb preus erronis (cartes de cèntims que comptaven com
+si en valguessin 7, 27 i 42 euros). Es tornen a baixar totes les dades i no
+canvia gairebé res: el problema és a la font, pokemontcg.io, que ha deixat
+d'actualitzar els preus europeus.
 
-És una eina de treball i no s'entrega. Les explicacions surten del guió i dels
-documents del projecte, i cada dada que hi surt (les dotze col·leccions
-afegides de cop, els 89 problemes de la revisió al mòbil, els dos forats de
-seguretat, els 0 euros de publicació) s'ha comprovat contra l'històric i els
-reptes.
+La solució té dues parts. La primera és una **segona font**, TCGdex,
+gratuïta i sense clau, que porta els preus de Cardmarket del dia abans i
+separa les cartes corrents de les que duen segell de torneig. La segona és
+un **sistema de quatre regles** (decisió D-013) que tria el preu de cada
+carta: quatre fonts per ordre de confiança, només valen els preus de menys
+de 60 dies, si no n'hi ha cap es fa servir el menys vell, i si euros i
+dòlars discrepen moltíssim es tria el més baix. Tot el que no sigui un preu
+de Cardmarket al dia surt marcat amb «≈» i la web en diu el motiu.
+
+El programa de baixada (`tools/fetch_data.py`) i el botó «Actualitza» de la
+web baixen ara de totes dues fonts, i la tria del preu viu en un sol lloc
+(`app/js/variants.js`). Resultat, comprovat amb el codi real de la web
+sobre les 4.016 peces: 4.003 amb preu de Cardmarket al dia, 13 marcades amb
+«≈» i cap sense preu. Abans n'hi havia 1.068 sense preu.

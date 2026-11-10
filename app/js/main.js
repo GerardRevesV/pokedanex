@@ -5,7 +5,7 @@ import {
   carregarSets, setActiu, setActiuDesat, canviarSetActiu,
   carregarLlistaVersions, carregarVersio, actualitzarDades,
 } from "./data.js";
-import { variantsDisponibles, preuVariant, preuEsAproximat } from "./variants.js";
+import { variantsDisponibles, preuVariant, motiuPreuAproximat } from "./variants.js";
 import {
   comptadors, ajustar, enTeCap, subscriure, totals,
   exportarJson, importarJson, buidar,
@@ -167,30 +167,41 @@ function formatarNumero(carta) {
   return `${carta.number.padStart(3, "0")}/${total}`;
 }
 
-// Preu orientatiu d'una carta i si és l'aproximat de TCGplayer, triats
-// d'una sola passada: el de la variant normal o, si no en té, el de la
-// primera variant amb preu conegut; preu null si cap en té. La graella
+// Preu orientatiu d'una carta i, si porta la marca "≈", el motiu
+// ("aproximat", "antic" o "dubtos"; null si no en porta), triats
+// d'una sola passada: el de la primera variant de la carta amb preu
+// conegut (normal, holo, reverse); preu null si cap en té. La graella
 // ho fa servir per no repetir la tria de variant a cada fitxa (el
 // repintat és sensible en mòbil).
+// Les variants que la carta té de debò, en l'ordre en què donen el preu
+// orientatiu: primer la versió base (la normal o, si no n'hi ha, l'holo)
+// i al final el reverse. Demanar el preu d'una variant inexistent podria
+// tornar el d'una font antiga que no distingeix variants.
+function variantsPerPreu(carta) {
+  const disponibles = variantsDisponibles(carta);
+  return ["normal", "holo", "reverse"].filter((v) => disponibles.includes(v));
+}
+
 function infoPreuCarta(carta) {
-  const normal = preuVariant(carta, "normal");
-  if (normal !== null) {
-    return { preu: normal, aproximat: preuEsAproximat(carta, "normal") };
-  }
-  for (const variant of variantsDisponibles(carta)) {
+  for (const variant of variantsPerPreu(carta)) {
     const preu = preuVariant(carta, variant);
     if (preu !== null) {
-      return { preu, aproximat: preuEsAproximat(carta, variant) };
+      return { preu, motiu: motiuPreuAproximat(carta, variant) };
     }
   }
-  return { preu: null, aproximat: false };
+  return { preu: null, motiu: null };
 }
+
+// La clau de text que explica cada motiu del "≈"
+const TEXT_MOTIU_PREU = {
+  aproximat: "carta.preuAproximat",
+  antic: "carta.preuAntic",
+  dubtos: "carta.preuDubtos",
+};
 
 // Només el preu (per ordenar per preu sense calcular la marca "≈")
 function preuCarta(carta) {
-  const normal = preuVariant(carta, "normal");
-  if (normal !== null) return normal;
-  for (const variant of variantsDisponibles(carta)) {
+  for (const variant of variantsPerPreu(carta)) {
     const preu = preuVariant(carta, variant);
     if (preu !== null) return preu;
   }
@@ -600,16 +611,17 @@ function pintarGraella() {
       info.append(linia);
     }
 
-    // Preu orientatiu de Cardmarket; si no se'n coneix cap, un guió
-    // amb l'explicació en passar-hi el ratolí per sobre
-    const { preu, aproximat } = infoPreuCarta(carta);
+    // Preu orientatiu (el sistema de fonts és a variants.js); si no se'n
+    // coneix cap, un guió amb l'explicació en passar-hi el ratolí per sobre
+    const { preu, motiu } = infoPreuCarta(carta);
     const espaiPreu = document.createElement("span");
     espaiPreu.className = "carta-preu";
     if (preu !== null) {
-      // El "≈" marca els preus de reserva (TCGplayer convertit de dòlars)
-      if (aproximat) {
+      // El "≈" marca tot preu que no sigui de Cardmarket i al dia; el
+      // títol en diu el motiu (convertit de dòlars, antic o dubtós)
+      if (motiu) {
         espaiPreu.textContent = "≈ " + formatarPreu(preu);
-        espaiPreu.title = t("carta.preuAproximat");
+        espaiPreu.title = t(TEXT_MOTIU_PREU[motiu]);
       } else {
         espaiPreu.textContent = formatarPreu(preu);
       }
