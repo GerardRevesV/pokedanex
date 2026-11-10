@@ -14,6 +14,10 @@ const CLAU_SET_ACTIU = "pokedanex.activeSet";
 const SET_DEFECTE = "sv6pt5";
 const API_BASE = "https://api.pokemontcg.io/v2";
 const MAX_REINTENTS = 4;
+// Segona font de preus (decisió D-013): TCGdex, oberta, gratuïta i sense
+// clau, que actualitza cada dia els preus de Cardmarket i de TCGplayer
+const TCGDEX_BASE = "https://api.tcgdex.net/v2/en";
+const TCGDEX_SIMULTANIES = 8; // peticions alhora (n'hi ha una per carta)
 
 // Camps de cada carta que la web fa servir (els mateixos que a tools/fetch_data.py)
 const CAMPS_CARTA = [
@@ -173,6 +177,9 @@ export async function carregarVersio(entrada) {
       throw new Error("No s'ha trobat la versió " + entrada.id + " al navegador");
     }
   }
+  // Cada carta recorda de quin dia són les seves dades: el sistema de
+  // preus (variants.js) ho necessita per saber si un preu és massa vell
+  for (const carta of dades.cards) carta.dataDades = dades.fetchedAt;
   // Cartes sempre ordenades pel número de col·lecció (l'ordre de l'àlbum);
   // la comparació numèrica de textos tolera números com "TG01"
   dades.cards.sort((a, b) =>
@@ -248,6 +255,51 @@ async function baixarCartes(setId, clauApi) {
   return cartes;
 }
 
+// Nom en minúscules i només amb lletres i xifres, per comparar les dues fonts
+function normalitzarNom(nom) {
+  return String(nom).toLowerCase().replace(/[^a-z0-9]/g, "");
+}
+
+// Es queda amb el que la web fa servir de TCGdex: quines variants existeixen
+// i els preus de cadascuna (el mateix retall que a tools/fetch_data.py)
+function retallarTcgdex(dades) {
+  const detall = (dades.variants_detailed ?? []).map((variant) => {
+    const entrada = { type: variant.type };
+    if (variant.foil) entrada.foil = variant.foil;
+    if (variant.stamp) entrada.stamp = variant.stamp;
+    if (variant.pricing) entrada.pricing = variant.pricing;
+    return entrada;
+  });
+  return { variants: dades.variants, variants_detailed: detall };
+}
+
+// Afegeix a cada carta el bloc "tcgdex" (variants i preus de TCGdex).
+// Si TCGdex falla o no coneix una carta, aquella carta es queda sense bloc
+// i el sistema de preus fa servir les altres fonts: mai s'atura l'actualització.
+async function afegirPreusTcgdex(setId, cartes) {
+  const tcgdexId = setsEnMemoria?.find((conjunt) => conjunt.id === setId)?.tcgdexId;
+  if (!tcgdexId) return;
+  let seguent = 0;
+  async function treballar() {
+    while (seguent < cartes.length) {
+      const carta = cartes[seguent++];
+      const numero = String(carta.number);
+      const local = /^\d+$/.test(numero) ? numero.padStart(3, "0") : numero;
+      try {
+        const url = `${TCGDEX_BASE}/cards/${encodeURIComponent(tcgdexId + "-" + local)}`;
+        const dades = await peticioApi(url, null);
+        // Comprovació de seguretat: és la mateixa carta a les dues fonts?
+        if (normalitzarNom(dades.name) === normalitzarNom(carta.name)) {
+          carta.tcgdex = retallarTcgdex(dades);
+        }
+      } catch {
+        // Sense TCGdex per a aquesta carta: es queda amb les altres fonts
+      }
+    }
+  }
+  await Promise.all(Array.from({ length: TCGDEX_SIMULTANIES }, treballar));
+}
+
 // Data en format ISO amb l'hora local (com fa tools/fetch_data.py)
 function dataLocalISO(data) {
   const p = (n) => String(n).padStart(2, "0");
@@ -283,6 +335,7 @@ export async function actualitzarDades(setId) {
   const clauApi = await llegirClauApi();
   const conjunt = (await peticioApi(`${API_BASE}/sets/${setId}`, clauApi)).data;
   const cartes = await baixarCartes(setId, clauApi);
+  await afegirPreusTcgdex(setId, cartes);
 
   const ara = new Date();
   const p = (n) => String(n).padStart(2, "0");
@@ -294,7 +347,7 @@ export async function actualitzarDades(setId) {
     dades: {
       schemaVersion: 1,
       fetchedAt: dataLocalISO(ara),
-      source: "pokemontcg.io",
+      source: "pokemontcg.io + tcgdex.net",
       set: conjunt,
       cards: cartes,
     },
