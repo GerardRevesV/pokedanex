@@ -160,16 +160,18 @@ que el va resoldre, en l'ordre en què va passar.
 17. **Què havia de fer** — l'especificació: col·leccionar cartes, calcular
     el valor i el cost de completar. Les decisions d'abast de la v1.
 18. **Com està feta per dins** — les tres capes (dades, idiomes,
-    interfície), amb un esquema. 5.632 línies de codi en 14 fitxers, cap
-    d'elles escrita a mà.
+    interfície), amb un esquema. Unes 6.300 línies de codi en 14 fitxers
+    (10 de novembre del 2026), cap d'elles escrita a mà.
 19. **Les funcionalitats, una per una** — la graella de cartes, el mode
     Catàleg, l'àlbum 3×3, el zoom amb Ctrl+clic, el Compendi d'expansions
     amb tema de color propi, el marcatge ràpid, els filtres, el panell
     d'estadístiques, els tres idiomes.
-20. **D'on surten les dades i els preus** — l'API pokemontcg.io, la cau
-    local versionada, i la cadena de preus Cardmarket → TCGplayer convertit
-    → guió honest quan no n'hi ha. Per què un zero enganyós és pitjor que
-    una aproximació marcada. (Decisions D-003, D-004, D-009; repte 7.)
+20. **D'on surten les dades i els preus** — les dues fonts (pokemontcg.io
+    i TCGdex), la cau local versionada, i la regla de preus en quatre
+    passos: quatre fonts per ordre de confiança, només preus recents, el
+    menys antic si no n'hi ha cap, i el més baix si euros i dòlars
+    discrepen molt. Per què un zero enganyós és pitjor que una aproximació
+    marcada. (Decisions D-003, D-004, D-009, D-013; reptes 7 i 11.)
 21. **Ordinador i mòbil: el mateix web, dues pantalles** — què canvia quan
     no hi ha ratolí (no hi ha clic dret, no hi ha tecla Esc, el dit no és
     precís), els 44 píxels dels objectius tàctils, l'àlbum que es replega.
@@ -272,7 +274,7 @@ Dades reals, comptades al repositori el 3 de novembre del 2026:
 
 | | |
 |---|---|
-| Línies de codi | **5.632**, en 14 fitxers |
+| Línies de codi | **5.632**, en 14 fitxers (el 10 de novembre ja eren 6.346) |
 | Línies escrites a mà per l'Edanna | **0** |
 | Dades de cartes descarregades | 5,6 MB |
 | Commits | 40 |

@@ -28,7 +28,7 @@ Una captura entra si compleix tres condicions:
 | Vista d'àlbum | La funció més original: nou cartes per pàgina, com un arxivador de debò | 18 | **Entra** |
 | Zoom d'una carta | Que es pot mirar una carta de prop | 18 | **Entra**, petita |
 | El Compendi (selector d'expansions) | Que hi ha 14 expansions i cadascuna té el seu progrés | 18 | **Entra**, petita |
-| Dues fitxes de carta, una amb preu exacte i una amb «≈» | La política de preus honesta | 19 | **Entra.** Són dos retalls petits, de costat |
+| Dues fitxes de carta, una amb preu de Cardmarket recent i una amb «≈» (la busca el programa: en queden 13 a tota la web) | La política de preus honesta | 19 | **Entra.** Són dos retalls petits, de costat |
 | Graella i àlbum en pantalla de mòbil | Que la mateixa web s'adapta a una pantalla estreta | 20 | **Entra**, les dues de costat |
 | Mode Catàleg (tot en color) | Poca cosa: s'assembla massa a la graella | 18 | **Fora.** S'explica en una frase |
 | Desplegables dels filtres | Res que no es pugui dir amb paraules | 18 | **Fora** |
@@ -50,8 +50,10 @@ del lliurament.
 
 - **La col·lecció que es veu és un exemple** fet per a les captures (30
   cartes de 99). No és la col·lecció de ningú.
-- **Els preus són els de l'11 d'agost del 2026**, la versió de dades que
-  la web tenia carregada. La data es veu a la mateixa captura.
+- **Els preus són els del dia que es fan les captures.** Les primeres
+  duien preus de l'11 d'agost del 2026; es van refer el 10 de novembre,
+  després del canvi de font de preus (decisió D-013), i ara duen els
+  d'aquell dia. La data es veu a la mateixa captura.
 - **Les captures de mòbil estan fetes amb una pantalla simulada** de 390
   píxels d'amplada, no amb un telèfon de debò.
 

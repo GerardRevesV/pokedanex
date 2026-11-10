@@ -51,7 +51,7 @@ async function desa(nom, selector) {
   const params = { format: "jpeg", quality: 88 };
   if (selector) {
     const c = await js(`(() => { const r = document.querySelector(${JSON.stringify(selector)}).getBoundingClientRect();
-      return { x: r.x - 8, y: r.y - 8, width: r.width + 16, height: r.height + 16 }; })()`);
+      return { x: r.x + scrollX - 8, y: r.y + scrollY - 8, width: r.width + 16, height: r.height + 16 }; })()`);
     params.clip = { ...c, scale: 1 };
   }
   const r = await cdp("Page.captureScreenshot", params);
@@ -133,10 +133,31 @@ try {
   await desa("fig-compendi");
   await clic("#expansions-tancar");
 
-  // Una expansió nova, sense preus de Cardmarket: surten els preus «≈»
-  await js("localStorage.setItem('pokedanex.activeSet', 'me1')");
-  await carrega();
-  await desa("fig-preu-aproximat", "#graella > article:nth-child(1)");
+  // Un preu marcat amb «≈»: en queden molt pocs, o sigui que es busca la
+  // primera carta que en porti, expansió per expansió
+  let trobada = null;
+  for (const set of ["sv8", "me1", "me2", "me2pt5", "me3", "me4", "me5",
+    "sv7", "sv8pt5", "sv9", "sv10", "zsv10pt5", "rsv10pt5", "sv6pt5"]) {
+    await js(`localStorage.setItem('pokedanex.activeSet', '${set}')`);
+    await carrega();
+    trobada = await js(`(() => {
+      const a = [...document.querySelectorAll('#graella > article')]
+        .find((x) => x.textContent.includes('≈'));
+      if (!a) return null;
+      a.id = 'carta-aprox';
+      a.querySelector('.variant-fila .boto-comptador:last-child').click();
+      const marca = [...a.querySelectorAll('*')]
+        .find((e) => e.children.length === 0 && e.textContent.includes('≈'));
+      return a.textContent.replace(/\s+/g, ' ').slice(0, 120) + ' | motiu: ' +
+        (marca && (marca.title || marca.getAttribute('aria-label')));
+    })()`);
+    if (trobada) { console.log("preu aproximat:", set, trobada); break; }
+  }
+  if (!trobada) throw new Error("cap carta amb preu «≈»");
+  await sotaCapcalera("#carta-aprox");
+  await espera(600);
+  await desa("fig-preu-aproximat", "#carta-aprox");
+  await js("scrollTo(0, 0)");
 
   // El mateix web en una pantalla de mòbil
   await js("localStorage.setItem('pokedanex.activeSet', 'sv6pt5')");

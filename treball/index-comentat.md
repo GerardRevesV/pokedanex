@@ -101,7 +101,7 @@ El catàleg d'errors reals del projecte: codi que semblava correcte i no es
 podia activar, un servei de dades que fallava quan volia, un preu que
 sortia a zero, i el dia que la màquina va contradir l'autora i tenia raó ella.
 
-## Part III — El producte: la web Pokedanex *(per escriure)*
+## Part III — El producte: la web Pokedanex *(en esborrany)*
 
 Què ha sortit de tot plegat: la web, explicada per a qui no l'ha vista.
 
@@ -120,9 +120,10 @@ cartes per pàgina, el zoom, els filtres, les estadístiques i el selector de
 col·leccions.
 
 **19. D'on surten les dades i els preus**
-D'on es treuen les cartes i els preus, per què se'n guarda una còpia dins del
-projecte i què fa la web quan una carta no té preu: dir-ho, en comptes
-d'ensenyar un zero que enganya.
+D'on es treuen les cartes i els preus (dues fonts), per què se'n guarda una
+còpia dins del projecte i què fa la web quan un preu falta, és antic o és
+dubtós: marcar-lo i dir-ne el motiu, en comptes d'ensenyar un número que
+enganya.
 
 **20. Ordinador i mòbil**
 Què canvia quan no hi ha ratolí i la pantalla és petita, i què s'ha fet

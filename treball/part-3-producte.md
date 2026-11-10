@@ -65,7 +65,7 @@ dir: la col·lecció es queda en aquell navegador i en aquell aparell. Per
 portar-la a un altre, la web permet exportar-la a un fitxer i importar-la
 després.
 
-En total, el 10 de novembre del 2026 la web eren 14 fitxers i unes 6.000
+En total, el 10 de novembre del 2026 la web eren 14 fitxers i unes 6.300
 línies de codi. L'autora no n'ha escrit cap: totes les ha generat la
 intel·ligència artificial.
 
@@ -102,8 +102,8 @@ sempre hi ha la data dels preus, perquè un preu sense data no diu gaire.
 ![El panell d'estadístiques](figures/fig-estadistiques.jpg)
 
 *Figura 2. El panell d'estadístiques. Amb l'objectiu de les 64 cartes
-numerades, la col·lecció d'exemple val 6,26 € i completar-la costaria
-6,96 €, amb preus de l'11 d'agost del 2026.*
+numerades, la col·lecció d'exemple val 4,91 € i completar-la costaria
+8,75 €, amb preus del 10 de novembre del 2026.*
 
 **L'àlbum.** Els col·leccionistes guarden les cartes en arxivadors amb
 fulls de nou butxaques. La vista d'àlbum (figura 3) ensenya les cartes
@@ -128,46 +128,78 @@ d'expansió, la web canvia també de color: cada una té el seu.
 
 ## 19. D'on surten les dades i els preus
 
-La web no s'inventa res: les cartes, les imatges i els preus venen de
-**pokemontcg.io**, un servei gratuït d'internet que dona aquestes dades a
-qui les demana. Els preus que porta són els de Cardmarket, el mercat
-europeu de cartes, en euros. La web els fa servir suposant cartes en
-anglès i en bon estat.
+La web no s'inventa res. Les dades venen de dos serveis gratuïts
+d'internet, que les donen a qui les demana. Les cartes i les imatges venen
+de **pokemontcg.io**. Els preus venen sobretot de **TCGdex**, que cada dia
+recull els de Cardmarket, el mercat europeu de cartes, en euros. La web
+els fa servir suposant cartes en anglès i en bon estat.
 
-Des del principi es va veure que aquest servei fallava de tant en tant.
-Per això es va decidir que la web no en dependria per funcionar. No li
-demana les dades cada vegada que algú la visita: treballa amb una **còpia
-desada**, que porta la data del dia que es va fer. Només li torna a
-demanar dades quan algú prem el botó «Actualitza», i llavors es crea una
-còpia nova sense esborrar les anteriors. Si el servei cau, la web continua funcionant amb l'última
+Des del principi es va veure que un servei així pot fallar. Per això es va
+decidir que la web no en dependria per funcionar. No demana les dades cada
+vegada que algú la visita: treballa amb una **còpia desada**, que porta la
+data del dia que es va fer. Només en torna a demanar quan algú prem el
+botó «Actualitza», i llavors es crea una còpia nova sense esborrar les
+anteriors. Si un servei cau, la web continua funcionant amb l'última
 còpia, i a més es poden tornar a consultar els preus d'un altre dia.
 
-El problema més difícil va arribar amb les expansions noves. La web deia
-que completar-ne una costava 0,00 €. El càlcul era correcte: el servei no
-tenia cap preu de Cardmarket per a aquelles cartes, i la suma de cap preu
-és zero. Però un zero així enganya, perquè qui el llegeix entén que les
-cartes són gratuïtes.
+Els preus van donar dos problemes, i tots dos tenien la mateixa forma: un
+número que semblava bo i no ho era.
 
-La solució va ser una regla en tres passos:
+El primer va arribar amb les expansions noves. La web deia que
+completar-ne una costava 0,00 €. El càlcul era correcte: no hi havia cap
+preu de Cardmarket per a aquelles cartes, i la suma de cap preu és zero.
+Però un zero així enganya, perquè qui el llegeix entén que les cartes són
+gratuïtes. Es va arreglar fent servir, quan faltava el preu europeu, el de
+TCGplayer, el mercat nord-americà, passat a euros i marcat amb el signe
+«≈» perquè es veiés que era una aproximació.
 
-1. Si hi ha preu de Cardmarket, es fa servir aquest.
-2. Si no n'hi ha, es fa servir el de TCGplayer, el mercat nord-americà,
-   passat de dòlars a euros amb un canvi fix (un dòlar, 0,90 euros). Com
-   que és una aproximació, la web el marca amb el signe «≈» (figura 6).
-3. Si cap dels dos mercats té preu, la web hi posa un guió i compta a
-   part quantes cartes s'han quedat sense preu.
+El segon es va descobrir el 10 de novembre del 2026, en revisar els preus
+de les catorze expansions. Al principi tots els preus venien de
+pokemontcg.io, i aquest servei havia deixat d'actualitzar els de
+Cardmarket sense avisar: la majoria tenien entre nou mesos i un any. A
+més, una desena de cartes de pocs cèntims comptaven com si en valguessin
+7, 27 o 42 euros. Per això es va afegir TCGdex com a segona font i es va
+escriure una regla nova, en quatre passos:
 
-| Preu de Cardmarket | Preu aproximat |
+1. Hi ha quatre preus possibles, ordenats de més a menys fiable: el de
+   Cardmarket i el de TCGplayer segons TCGdex, i els mateixos dos segons
+   pokemontcg.io. Els preus en dòlars es passen a euros amb un canvi fix
+   (un dòlar, 0,90 euros).
+2. Un preu només val si és recent, és a dir, si té menys de 60 dies quan
+   es baixen les dades. Es fa servir el primer de la llista que ho
+   compleixi.
+3. Si no n'hi ha cap de recent, es fa servir el menys antic.
+4. Si el preu en euros i el preu en dòlars d'una mateixa carta són molt
+   diferents (l'un cinc vegades l'altre, o més), es tria el més baix.
+
+Tot preu que no sigui de Cardmarket, recent i sense dubtes surt marcat amb
+«≈» (figura 6), i en passar-hi el ratolí per sobre la web en diu el motiu:
+és convertit de dòlars, és antic o és dubtós. Si cap font no té preu, la
+web hi posa un guió i compta a part quantes cartes s'han quedat sense.
+
+| Preu de Cardmarket | Preu marcat amb «≈» |
 |---|---|
-| ![Fitxa d'una carta amb preu exacte](figures/fig-carta.jpg) | ![Fitxa d'una carta amb preu aproximat](figures/fig-preu-aproximat.jpg) |
+| ![Fitxa d'una carta amb preu de Cardmarket](figures/fig-carta.jpg) | ![Fitxa d'una carta amb el preu marcat amb el signe ≈](figures/fig-preu-aproximat.jpg) |
 
 *Figura 6. Dues fitxes de carta. A l'esquerra, una carta de Shrouded Fable
-amb preu de Cardmarket. A la dreta, una de l'expansió Mega Evolution, amb
-el preu convertit i marcat amb «≈».*
+amb preu de Cardmarket recent. A la dreta, una de Surging Sparks amb el
+preu marcat amb «≈»: les fonts no es posaven d'acord i la web ha triat el
+preu més baix.*
+
+Amb la regla nova, de les 4.016 peces que hi ha a les catorze expansions,
+4.003 tenen preu de Cardmarket recent, 13 surten marcades amb «≈» i cap es
+queda sense preu. Abans de la revisió n'hi havia 1.068 sense preu.
+
+La regla té límits, i s'han de dir. El pas 4 només funciona si la carta té
+preu en tots dos mercats: si només n'hi ha un i és erroni, no es detecta.
+I els dos números de la regla, els 60 dies i les cinc vegades, es van
+triar mirant les dades, no amb cap càlcul.
 
 La idea de fons val per a qualsevol web que treballi amb dades d'altri:
-quan falta una dada, és millor una aproximació que avisa que ho és, o un
-buit que es veu, que no pas un número que sembla exacte i no ho és.
+és millor una aproximació que avisa que ho és, o un buit que es veu, que
+no pas un número que sembla exacte i no ho és. I les dades d'un servei
+extern s'han de tornar a revisar de tant en tant, perquè poden deixar de
+ser bones sense que res ho indiqui.
 
 ## 20. Ordinador i mòbil: la mateixa web en dues pantalles
 

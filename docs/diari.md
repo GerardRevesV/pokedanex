@@ -891,3 +891,25 @@ Node.js (ja instal·lat).
 la primera fila de cartes, i es va haver de refer. A les captures de mòbil
 s'ha vist un possible defecte del panell d'estadístiques, pendent de
 comprovar.
+
+## 2026-11-10 (6a sessió) — La Part III, al dia amb els preus nous
+
+**Què s'ha fet:**
+- Ajuntada la feina dels preus (3a sessió) amb la de la Part III.
+- Reescrit el capítol 19 amb les dues fonts i la regla de quatre passos.
+- Refetes les nou captures amb les dades del 10 de novembre; corregit un
+  error del programa de captures.
+- Corregides les xifres i descripcions que havien quedat velles a la Part
+  III, al guió, a l'índex comentat i a l'estudi de captures.
+- El repte de les captures passa a ser el **12** i es mou al final.
+- Creat `docs/pendents.md`, la llista de coses pendents.
+- Entrada **53** de l'històric.
+
+**Eines usades:** Claude Code; Chrome sense finestra per a les captures.
+
+**Costos:** 0 € (de subscripció a part, pendent de documentar; ara apuntat
+a `docs/pendents.md`).
+
+**Problemes:** dues sessions havien escrit alhora als mateixos documents i
+havien fet servir el mateix número de repte. La fusió es va haver de
+resoldre a mà.

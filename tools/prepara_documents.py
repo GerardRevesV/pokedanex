@@ -40,6 +40,7 @@ ORDRE = {
     ],
     "docs": [
         "planificacio.md",
+        "pendents.md",
         "especificacions.md",
         "historic.md",
         "diari.md",

@@ -945,3 +945,43 @@ se'n compten 6.035: la xifra s'haurà de tornar a comptar al final. I a les
 captures de mòbil, amb el panell d'estadístiques obert, les barres de
 progrés es veien aixafades i un número sortia tallat; no s'ha comprovat en
 un telèfon real ni s'ha arreglat aquí.
+
+## 53. La Part III es posa al dia amb els preus nous, i neix la llista de pendents
+
+*2026-11-10*
+
+El mateix dia que es va escriure la Part III, una altra sessió de treball va
+canviar la manera de triar els preus (entrada 50, decisió D-013). En ajuntar
+les dues feines, el capítol 19 explicava una regla que la web ja no feia
+servir. Es demana repassar-ho tot i arreglar les contradiccions i els errors
+que surtin. Se'n troben vuit:
+
+- **El capítol 19** parlava d'una sola font i d'una regla de tres passos. Ara
+  explica les dues fonts, la regla de quatre passos, el resultat (de 4.016
+  peces, 4.003 amb preu de Cardmarket recent, 13 marcades amb «≈» i cap
+  sense preu) i els límits de la regla.
+- **Les captures** duien preus de l'11 d'agost. S'han refet totes amb les
+  dades del 10 de novembre, i el peu de la figura 2 diu ara 4,91 € i 8,75 €.
+- **La figura 6** ensenyava una carta de Mega Evolution amb «≈», i aquella
+  carta ja té preu de Cardmarket. Ara el programa de captures busca tot sol
+  una carta que porti el signe: n'ha trobat una de Surging Sparks, marcada
+  perquè les fonts no es posaven d'acord.
+- **El programa de captures tenia un error**: retallava malament una carta
+  si la pàgina s'havia desplaçat, i en sortia un rectangle negre. Arreglat.
+- **Les línies de codi**: la Part III deia «unes 6.000» i amb el codi nou
+  són 6.346. Ara diu «unes 6.300», i el guió, que encara deia 5.632, porta
+  la xifra nova amb la data.
+- **Dos reptes amb el número 11**, un de cada sessió. El de les captures
+  passa a ser el 12. De passada es veu que s'havia desat al mig del
+  document, entre el repte 5 i el 6, i es mou al final.
+- **L'índex comentat** deia que la Part III estava «per escriure» i descrivia
+  el capítol 19 amb la regla antiga.
+- **El guió** descrivia el mateix capítol amb la cadena de preus antiga.
+
+Les entrades anteriors de l'històric i dels reptes no es toquen: expliquen
+què era veritat el dia que es van escriure.
+
+A petició, es crea també `docs/pendents.md`, una llista viva del que queda
+per fer o per apuntar. La primera cosa que hi entra és el cost de la
+subscripció de l'eina d'intel·ligència artificial, que és l'única despesa
+del projecte i encara no està documentada enlloc.
