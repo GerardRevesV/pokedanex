@@ -145,6 +145,17 @@ python -c "import json; d=json.load(open(r'app/data/versions/<setId>/index.json'
 Els tres nombres han de coincidir. Si no, torna a executar l'script (la
 versió incompleta no fa nosa: el selector sempre agafa la més nova).
 
+## Pas 2a — Comprovar la segona font de preus (TCGdex)
+
+Des de la decisió D-013, `fetch_data.py` baixa també els preus de TCGdex,
+carta a carta. La sortida ha de dir **«N de N cartes amb dades de TCGdex»**
+(o quasi totes). Si en diu 0 o molt poques, l'id del set a TCGdex no és el
+que la regla dedueix (`sv7` → `sv07`, `sv8pt5` → `sv08.5`): busca l'id bo a
+`https://api.tcgdex.net/v2/en/sets`, afegeix-lo al diccionari
+`TCGDEX_IDS_ESPECIALS` de `tools/fetch_data.py` i torna a executar la
+baixada. Sense TCGdex la web funciona igualment, però amb els preus de la
+font antiga (marcats amb «≈» o absents).
+
 ## Pas 2b — Sets sense art oficial (comprovació obligatòria per a sets recents)
 
 Els sets més nous poden **no tenir encara logo ni symbol** a

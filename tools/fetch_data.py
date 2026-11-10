@@ -16,7 +16,9 @@ import re
 import sys
 import time
 import urllib.error
+import urllib.parse
 import urllib.request
+from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime
 from pathlib import Path
 
@@ -39,10 +41,23 @@ CAMPS_CARTA = [
     "cardmarket", "tcgplayer",
 ]
 
+# Segona font de preus (decisio D-013): TCGdex, una base de dades oberta i
+# gratuita que actualitza cada dia els preus de Cardmarket i de TCGplayer,
+# variant a variant. No demana clau.
+TCGDEX_BASE = "https://api.tcgdex.net/v2/en"
+TCGDEX_FILS = 8  # peticions simultanies (una per carta)
+
+# TCGdex anomena els sets d'una altra manera. La regla general es
+# "sv7" -> "sv07" i "sv8pt5" -> "sv08.5"; aqui nomes hi van les excepcions.
+TCGDEX_IDS_ESPECIALS = {
+    "zsv10pt5": "sv10.5b",  # Black Bolt
+    "rsv10pt5": "sv10.5w",  # White Flare
+}
+
 # Camps del set que guardem al registre sets.json (la resta es descarta)
 CAMPS_SET = [
     "id", "name", "series", "printedTotal", "total",
-    "releaseDate", "ptcgoCode", "images",
+    "releaseDate", "ptcgoCode", "images", "tcgdexId",
 ]
 
 # Sets sense art propi a images.pokemontcg.io: per als sets mes nous, el CDN
@@ -95,7 +110,7 @@ def llegir_clau_api():
     return None
 
 
-def peticio_api(url, clau_api):
+def peticio_api(url, clau_api, silenci=False):
     """Fa una peticio GET a l'API amb reintents (l'API falla sovint amb 502)."""
     for intent in range(1, MAX_REINTENTS + 1):
         try:
@@ -114,13 +129,16 @@ def peticio_api(url, clau_api):
                 and error.code != 429
             )
             if es_permanent:
-                print(f"Error permanent de l'API ({error}). No te sentit reintentar.")
+                if not silenci:
+                    print(f"Error permanent de l'API ({error}). No te sentit reintentar.")
                 raise
             if intent == MAX_REINTENTS:
-                print(f"Error: l'API ha fallat {MAX_REINTENTS} vegades seguides. Ho deixem estar.")
+                if not silenci:
+                    print(f"Error: l'API ha fallat {MAX_REINTENTS} vegades seguides. Ho deixem estar.")
                 raise
             espera = 2 ** intent  # 2, 4, 8, 16, 32 segons
-            print(f"  L'API ha fallat ({error}). Reintent {intent}/{MAX_REINTENTS - 1} d'aqui a {espera} s...")
+            if not silenci:
+                print(f"  L'API ha fallat ({error}). Reintent {intent}/{MAX_REINTENTS - 1} d'aqui a {espera} s...")
             time.sleep(espera)
 
 
@@ -171,6 +189,79 @@ def baixar_cartes(set_id, clau_api):
     return cartes
 
 
+def id_tcgdex(set_id):
+    """Tradueix l'id d'un set de pokemontcg.io al de TCGdex."""
+    if set_id in TCGDEX_IDS_ESPECIALS:
+        return TCGDEX_IDS_ESPECIALS[set_id]
+    trobat = re.fullmatch(r"([a-z]+?)(\d+)(pt5)?", set_id)
+    if not trobat:
+        return None
+    lletres, numero, mig = trobat.groups()
+    return f"{lletres}{int(numero):02d}{'.5' if mig else ''}"
+
+
+def normalitzar_nom(nom):
+    """Nom en minuscules i nomes amb lletres i xifres, per comparar les dues fonts."""
+    return re.sub(r"[^a-z0-9]", "", str(nom).lower())
+
+
+def retallar_tcgdex(dades):
+    """Es queda amb el que la web fa servir de TCGdex: quines variants
+    existeixen i els preus de cadascuna. Es un retall mecanic: la tria del
+    preu la fa la web (app/js/variants.js), en un sol lloc."""
+    detall = []
+    for variant in dades.get("variants_detailed") or []:
+        entrada = {"type": variant.get("type")}
+        for camp in ("foil", "stamp"):
+            if variant.get(camp):
+                entrada[camp] = variant[camp]
+        if variant.get("pricing"):
+            entrada["pricing"] = variant["pricing"]
+        detall.append(entrada)
+    return {"variants": dades.get("variants"), "variants_detailed": detall}
+
+
+def afegir_preus_tcgdex(set_id, cartes):
+    """Afegeix a cada carta el bloc "tcgdex" (variants i preus de TCGdex).
+
+    Si TCGdex falla o no coneix una carta, aquella carta es queda sense
+    bloc i la web fa servir les altres fonts: mai s'atura la descarrega."""
+    tcgdex_id = id_tcgdex(set_id)
+    if not tcgdex_id:
+        print("Avis: no se sap l'id d'aquest set a TCGdex; se salta la segona font.")
+        return None
+
+    def baixar(carta):
+        numero = str(carta["number"])
+        local = numero.zfill(3) if numero.isdigit() else numero
+        url = f"{TCGDEX_BASE}/cards/{urllib.parse.quote(f'{tcgdex_id}-{local}')}"
+        try:
+            dades = peticio_api(url, None, silenci=True)
+        except Exception:  # una carta sense preu no ha d'aturar res
+            return carta, None, "error"
+        # Comprovacio de seguretat: mateixa carta a les dues fonts?
+        if normalitzar_nom(dades.get("name")) != normalitzar_nom(carta["name"]):
+            return carta, None, "nom"
+        return carta, retallar_tcgdex(dades), None
+
+    print(f"Baixant preus de TCGdex ({tcgdex_id}), carta a carta...")
+    amb_preu = 0
+    problemes = {"error": [], "nom": []}
+    with ThreadPoolExecutor(max_workers=TCGDEX_FILS) as fils:
+        for carta, bloc, problema in fils.map(baixar, cartes):
+            if bloc:
+                carta["tcgdex"] = bloc
+                amb_preu += 1
+            else:
+                problemes[problema].append(carta["id"])
+    print(f"  {amb_preu} de {len(cartes)} cartes amb dades de TCGdex.")
+    if problemes["error"]:
+        print(f"  Avis: {len(problemes['error'])} cartes no s'han pogut baixar: {problemes['error'][:8]}")
+    if problemes["nom"]:
+        print(f"  Avis: {len(problemes['nom'])} cartes amb nom diferent a TCGdex (descartades): {problemes['nom'][:8]}")
+    return tcgdex_id
+
+
 def escriure_versio(set_id, conjunt, cartes):
     """Escriu el fitxer de la versio nova i retorna (id, fetchedAt)."""
     ara = datetime.now().astimezone()
@@ -186,7 +277,7 @@ def escriure_versio(set_id, conjunt, cartes):
     dades = {
         "schemaVersion": 1,
         "fetchedAt": fetched_at,
-        "source": "pokemontcg.io",
+        "source": "pokemontcg.io + tcgdex.net",
         "set": conjunt,
         "cards": cartes,
     }
@@ -250,6 +341,9 @@ def main():
     clau_api = llegir_clau_api()
     conjunt = baixar_set(set_id, clau_api)
     cartes = baixar_cartes(set_id, clau_api)
+    tcgdex_id = afegir_preus_tcgdex(set_id, cartes)
+    if tcgdex_id:
+        conjunt["tcgdexId"] = tcgdex_id  # el boto "Actualitza dades" el llegeix de sets.json
     id_versio, fetched_at = escriure_versio(set_id, conjunt, cartes)
     actualitzar_index(set_id, id_versio, fetched_at, len(cartes))
     actualitzar_sets(conjunt)
