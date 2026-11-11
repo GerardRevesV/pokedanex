@@ -1088,3 +1088,51 @@ instal·lada) i Microsoft Word (ja instal·lat).
 
 **Problemes:** a l'ordinador no hi havia cap programa per convertir els
 textos a Word directament, i s'ha hagut de fer la conversió a mida.
+
+## 2026-11-11 (8a sessió) — Les dades que només tenia l'Edanna
+
+**Què s'ha fet:**
+- Llegida la proposta inicial de l'Edanna (un document de Word del març).
+- Fetes les preguntes dels buits «PER OMPLIR», per tandes, i omplerts amb
+  les seves respostes: portada, motivació, agraïments, objectius i inici
+  del treball.
+- Actualitzada la pàgina de guia del document d'entrega.
+- Amb més respostes: el primer tutor a la presentació, el pare al
+  capítol 14 i dos passatges fora.
+- Repassat què diu el text que ha fet l'autora, i apuntades a pendents
+  tres coses que el tribunal pot preguntar.
+- Dit al text que el compte de GitHub i el projecte anterior són del
+  pare de l'autora.
+- Afegit al capítol 15 com va veure l'Edanna el cost de 0,00 €: marcant
+  col·leccions, amb cartes sense preu.
+- Repassades les mencions del pare de l'autora: consta com a propietari
+  del compte de GitHub i com a ajuda per revisar la web.
+- Consultada la pàgina oficial de preus de l'eina i afegit al capítol 21
+  el preu del pla més barat, amb la font.
+- Entrades **63** a **67** de l'històric.
+
+**Eines usades:** Claude Code.
+
+**Costos:** 0 € (de subscripció a part, pendent de confirmar).
+
+**Problemes:** el cost de la subscripció que diu l'Edanna (20 euros al
+mes) no quadra amb el nom del pla que informa l'eina, i no s'ha escrit al
+treball fins que es confirmi.
+
+## 2026-11-11 (9a sessió) — El document unificat i els comentaris de l'Edanna
+
+**Què s'ha fet:**
+- El programa que munta el Word fa ara també un sol fitxer de text amb tot
+  el treball (`treball/revisio-tot-junt.md`), per revisar-lo d'una tirada.
+- PR 25, contra `main`, amb aquest fitxer i els canvis que havien quedat
+  fora del PR 24.
+- Aplicats els quatre comentaris de l'Edanna (un al PR 24 i tres al 25).
+- Entrada **68** de l'històric.
+
+**Eines usades:** Claude Code i el seu navegador integrat.
+
+**Costos:** 0 € (de subscripció a part).
+
+**Problemes:** els comentaris de l'Edanna no es veien. A GitHub, un
+comentari fet dins d'una revisió queda com a esborrany fins que la revisió
+s'envia, i mentrestant només el veu qui l'ha escrit.

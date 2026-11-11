@@ -1,7 +1,5 @@
 # Part II — Metodologia: com s'ha treballat
 
-*Esborrany de l'11 de novembre del 2026. Capítols 6 a 15.*
-
 La Part I explica què és el *vibe coding*. Aquesta explica com s'ha fet
 servir en aquest projecte. Cada capítol parteix d'un problema que va
 aparèixer durant la feina i explica com es va resoldre. Les dates, les
@@ -103,9 +101,7 @@ norma no s'ha complert del tot: la Fase 4, que és aquest treball escrit,
 s'ha començat amb la Fase 3 encara oberta, perquè falten les proves amb
 usuaris.
 
-**Mirant abans què hi ha.** Abans de construir es va consultar un
-projecte anterior, d'un altre joc de cartes, per veure com resolia
-problemes semblants. I quan calia triar un disseny, es demanaven tres
+**Comparant propostes.** Quan calia triar un disseny, es demanaven tres
 propostes per escrit i se'n triava una.
 
 **Amb un pla escrit per a cada tasca.** Abans de tocar res, la màquina
@@ -228,10 +224,6 @@ preparava un fitxer fals amb mala intenció i un usuari el carregava, la
 web d'aquell usuari es podia espatllar. Amb fitxers normals tot
 funcionava: fent servir la web, el problema no es veia.
 
-El mètode s'ha aplicat també al text d'aquest treball: les parts escrites
-s'han revisat dues vegades, una per comprovar els fets contra els
-documents i una per comprovar que s'entenen.
-
 Totes les capes les fa la mateixa màquina. Que una còpia revisi la feina
 d'una altra redueix els errors, i els resultats ho mostren, però no és el
 mateix que la revisió d'un programador expert. Als documents del projecte
@@ -243,7 +235,8 @@ Si la màquina espatlla una cosa que funcionava, cal poder tornar enrere.
 Per a això serveix **git**, un programa que guarda una fotografia del
 projecte cada vegada que es fa un canvi, amb una nota que diu què s'ha
 canviat. Aquestes fotografies es desen també a internet, a **GitHub**,
-on es guarda el projecte des que es va començar la web.
+on es guarda el projecte des que es va començar la web. El compte de
+GitHub és del pare de l'autora.
 
 En tancar la Fase 1 es va decidir treballar sempre de la mateixa manera:
 
@@ -271,6 +264,9 @@ error i que els números siguin els que han de ser. En una de les
 revisions, per exemple, un revisor va tornar a fer a part tots els
 càlculs de valor i de cost, cèntim a cèntim, i els va comparar amb els de
 la web.
+
+El pare de l'autora també ha ajudat a revisar la web: l'ha provat i hi ha
+donat consells.
 
 Algunes coses es comproven per càlcul. Que les lletres es llegeixin bé
 sobre cada color de fons es va mesurar amb una fórmula de contrast
@@ -327,8 +323,11 @@ persona.
 
 **Hi ha errors que només veu qui fa servir la web.** El zero i els
 controls que no feien res no els va trobar cap revisor. Els va trobar
-l'autora, que mirava la web com una col·leccionista. No saber programar
-no li ho va impedir.
+l'autora, que mirava la web com una col·leccionista. El zero el va veure
+marcant col·leccions: hi havia cartes sense preu, i el total no podia
+ser bo. Els controls, prement els botons un per un per comprovar que tot
+anava bé: a la vista d'àlbum no passava res. No saber programar no li ho
+va impedir.
 
 **De vegades qui s'equivoca és la persona.** L'autora va demanar dues
 vegades que el tipus d'una carta, l'Eevee, digués «Normal» en lloc

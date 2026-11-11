@@ -2,33 +2,27 @@
 
 > ⚠️ **Nota de treball, per esborrar abans del lliurament.** Aquest document
 > conté les parts que van davant del cos del treball: portada, abstract,
-> índex, presentació i introducció. Tot el que hi ha entre claudàtors i
-> comença per **«PER OMPLIR»** són dades que només pot donar l'Edanna (el nom
-> de l'institut, la motivació personal, els agraïments…) i que no s'han
-> volgut inventar. Les frases marcades amb **«PENDENT»** depenen de feina que
-> encara no està feta: les proves amb usuaris i les conclusions. Al final hi
-> ha el pressupost de pàgines de tot el treball, que és una eina de treball i
-> no s'entrega.
+> índex, presentació i introducció. La frase marcada amb **«PENDENT»** depèn
+> de les proves amb usuaris, que encara no s'han fet. Al final hi ha el
+> pressupost de pàgines de tot el treball, que no s'entrega.
 
 ---
 
 ## Portada
 
-**Títol (provisional):** Fer una web sense saber programar: el cas del
-Pokedanex
+**Títol:** *Vibe coding*: fer una web sense saber programar
 
-**Subtítol (provisional):** Un experiment de programació per intenció
-(*vibe coding*)
+**Subtítol:** Un experiment de programació per intenció
 
-**Autora:** Edanna [PER OMPLIR: cognoms]
+**Autora:** Edanna Reves Blanco
 
-**Grup classe:** [PER OMPLIR]
+**Grup classe:** 2n de batxillerat A
 
-**Tutor/a:** [PER OMPLIR]
+**Tutora:** Rosa Martínez
 
-**Centre:** [PER OMPLIR: nom de l'institut]
+**Centre:** Maristes Anna Ravell
 
-**Data:** [PER OMPLIR: la del lliurament]
+**Data:** 30 de novembre del 2026
 
 ---
 
@@ -126,9 +120,10 @@ is wrong.
 
 ## Presentació
 
-Em dic Edanna [PER OMPLIR: cognoms] i soc alumna de batxillerat de
-[PER OMPLIR: nom de l'institut]. Aquest és el meu treball de recerca, que he
-fet amb la tutoria de [PER OMPLIR: nom del tutor o tutora].
+Em dic Edanna Reves Blanco, tinc 16 anys i soc alumna de 2n de batxillerat
+de Maristes Anna Ravell. Aquest és el meu treball de recerca, que he fet amb
+la tutoria de Rosa Martínez. El vaig començar el març del 2026, quan feia
+1r, amb Josep Carbonell de tutor fins al final d'aquell curs.
 
 El treball parteix d'una pregunta que es pot dir en una línia: **es pot crear
 una pàgina web útil sense saber programar?** Per respondre-la no n'hi havia
@@ -139,10 +134,20 @@ document, que explica com s'ha fet i què se n'ha après.
 
 ### Per què aquest tema
 
-[PER OMPLIR: la motivació personal, amb les paraules de l'Edanna. Tres
-preguntes per escriure-la: Per què les cartes Pokémon? D'on va sortir la idea
-de fer-ho amb intel·ligència artificial? Què esperava que passés abans de
-començar?]
+Sempre m'ha interessat el món de la tecnologia, sobretot la intel·ligència
+artificial. Quan vaig saber què era el *vibe coding*, vaig voler provar de
+fer una pàgina web d'aquesta manera.
+
+Vaig triar una web de cartes Pokémon perquè m'interessa el col·leccionisme
+i és una eina que em resulta útil a mi mateixa. Crec que també pot ajudar
+altres col·leccionistes.
+
+Abans de començar pensava que tot seria més autònom i que la
+intel·ligència artificial no faria gairebé cap error. No ha estat així, i
+això ha canviat la pregunta del treball. Al principi em preguntava només si
+es podia fer una web sense programar. En veure que la màquina tota sola no
+en tenia prou, la pregunta important va passar a ser si la web que en
+sortia era útil.
 
 ### Com s'ha fet
 
@@ -160,14 +165,10 @@ les decisions en un registre de decisions i els problemes més difícils
 en un document a part. Aquests documents són la font principal de la
 part pràctica del treball, i van als annexos.
 
-[PER OMPLIR, i convé parlar-ne amb el tutor/a: una frase que digui amb
-claredat quina ajuda de la intel·ligència artificial hi ha hagut en la
-redacció d'aquest document, i no només en el codi.]
-
 ### Les dificultats
 
-N'hi ha hagut unes quantes, i el treball en dedica un capítol sencer, el 15. N'avanço
-tres, perquè són de tres menes diferents.
+N'hi ha hagut unes quantes, i el treball en dedica un capítol sencer, el
+15. N'avanço dues, perquè són de dues maneres diferents.
 
 La primera va ser tècnica. La web treu les dades de les cartes d'un servei
 d'internet gratuït, i aquest servei fallava quan volia: de vegades responia i
@@ -181,14 +182,19 @@ van aparèixer dos forats de seguretat que jo no hauria vist mai. Cap d'aquests
 errors es va trobar mirant la web: es van trobar perquè hi havia revisions
 fetes expressament per buscar-los.
 
-La tercera va ser la que menys m'esperava: entendre el meu propi treball. El
-primer esborrany de la part teòrica tenia passatges que no entenia. Els vaig
-marcar un per un i es van tornar a escriure amb exemples del projecte.
-
 ### Agraïments
 
-[PER OMPLIR: a qui vol donar les gràcies l'Edanna. Si algú l'ha acompanyada
-durant el projecte, aquest és el lloc per dir qui és i en què ha ajudat.]
+Vull donar les gràcies, sobretot, al meu pare. Sense ell aquest treball no
+hauria estat possible.
+
+Ell paga la subscripció de Claude perquè jo la pugui fer servir, i el
+projecte es desa al seu compte de GitHub. Li n'estic molt agraïda.
+
+També m'ha ajudat a entendre els conceptes fonamentals de la
+intel·ligència artificial i dels agents, que són la base d'aquest treball.
+I m'ha ajudat a revisar la web: l'ha provat i m'ha donat consells.
+
+Gràcies per haver-me acompanyat durant tot el camí.
 
 ---
 
@@ -247,7 +253,7 @@ treball, la web es considera útil si compleix tres condicions:
 
 ### Els objectius
 
-De la hipòtesi en surten quatre objectius concrets:
+De la hipòtesi en surten cinc objectius concrets:
 
 - **Construir** una web real i publicar-la sense que l'autora escrigui cap
   línia de codi.
@@ -255,6 +261,8 @@ De la hipòtesi en surten quatre objectius concrets:
   què falla i què costa.
 - **Comprovar** si el resultat és útil, amb les tres condicions de l'apartat
   anterior.
+- **Donar a conèixer** la programació per intenció (*vibe coding*): què
+  és, com funciona i quins límits té.
 - **Esbrinar** què ha de fer la persona quan el codi l'escriu una màquina.
 
 L'últim objectiu és el que dona interès al treball. Si la resposta a la
@@ -262,6 +270,9 @@ hipòtesi és que sí, la pregunta següent és inevitable: si no has escrit el
 codi, què has fet tu?
 
 ### Com s'ha investigat
+
+El treball va començar el 24 de març del 2026, amb la tria del tema i de la
+hipòtesi. La web es va començar a construir el 9 d'agost del 2026.
 
 El mètode és un experiment amb un sol cas: un projecte, una persona i una
 eina. Té un avantatge i un límit, i tots dos s'han de dir.
@@ -312,10 +323,10 @@ comprovar quan el text es passi al processador de textos.
 
 | Part | Pàgines | Paraules aproximades | Estat |
 |---|---|---|---|
-| Portada | 1 | — | Falten dades |
+| Portada | 1 | — | Feta |
 | Abstract | 1 | 250 | Esborrany; falta la frase de resultats |
 | Índex | 2 | — | Es genera al final |
-| Presentació | 2 | 650 | Esborrany; falten motivació i agraïments |
+| Presentació | 2 | 650 | Esborrany |
 | Introducció | 3 | 1.000 | Esborrany |
 | Part I — Marc teòric (5 capítols) | 10 | 3.700 | Esborrany revisat (3.600 paraules) |
 | Part II — Metodologia (10 capítols) | 11 | 3.700 | Esborrany (3.200 paraules) |

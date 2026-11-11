@@ -229,7 +229,7 @@ problemes. Els canvis més visibles (figura 7) són aquests:
 una pantalla simulada de 390 píxels d'amplada, no amb un telèfon.*
 
 Aquell mateix dia es va treballar l'**accessibilitat**, que vol dir que la
-web la pugui fer servir tothom, també qui hi veu malament. Cada expansió
+web la pugui fer servir tothom, també les persones amb problemes de vista. Cada expansió
 té el seu color, i un color bonic pot ser impossible de llegir. Les normes
 internacionals d'accessibilitat (WCAG) ho mesuren amb un número, el
 contrast entre el text i el fons, que ha de ser com a mínim de 4,5 a 1.
@@ -262,6 +262,10 @@ La web és pública des del 10 d'agost del 2026 en aquesta adreça:
 
 **https://gerardrevesv.github.io/pokedanex/**
 
+L'allotjament és el del compte de GitHub del pare de l'autora. Per això
+l'adreça comença amb el seu nom d'usuari, `gerardrevesv`, i no amb el
+d'ella.
+
 La publicació és automàtica. Cada vegada que un canvi s'aprova i s'afegeix
 a la versió principal del codi, la web es torna a publicar sola: el primer
 cop que es va comprovar, el canvi era visible al cap d'un minut. Ningú no
@@ -269,4 +273,5 @@ ha de copiar fitxers a mà.
 
 El cost de l'allotjament és de **0 €**. Tampoc no costen res les dades ni
 les eines de publicació. L'única despesa del projecte és la subscripció de
-l'eina d'intel·ligència artificial.
+l'eina d'intel·ligència artificial, que és de pagament: el pla de pagament
+més barat costa 18 euros al mes si es paga mes a mes (Anthropic, 2026).

@@ -1,12 +1,10 @@
 # Glossari
 
-*Esborrany de l'11 de novembre del 2026.*
-
 Les paraules tècniques del treball, per ordre alfabètic. El número entre
 parèntesis és el capítol on s'expliquen amb més detall.
 
-**Accessibilitat.** Que una web la pugui fer servir tothom, també qui hi
-veu malament. (20)
+**Accessibilitat.** Que una web la pugui fer servir tothom, també les
+persones amb problemes de vista. (20)
 
 **Agent.** Un model de llenguatge que, a més de respondre, pot fer coses:
 llegir i escriure fitxers, executar ordres i obrir un navegador. Fa una

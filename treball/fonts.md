@@ -270,6 +270,18 @@ https://arstechnica.com/ai/2025/03/is-vibe-coding-with-ai-gnarly-or-reckless-may
 
 ---
 
+# Fonts citades a la Part III (el producte)
+
+**Anthropic.** «Plans & pricing». Pàgina oficial de preus de Claude.
+https://claude.com/pricing
+Consultada l'11 de novembre del 2026. En anglès. ✅ **(Anthropic, 2026)**
+> Font del preu del pla de pagament més barat, que es diu Pro: 18 euros al
+> mes si es paga mes a mes, o 15 euros al mes si es paga l'any sencer (180
+> euros). La pàgina no diu si aquests preus porten els impostos inclosos.
+> El mateix dia hi constaven dos plans més, de 90 i de 180 euros al mes.
+
+---
+
 # Fonts primàries pròpies (documentació del projecte)
 
 El treball té una característica poc habitual: una part important de les

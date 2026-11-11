@@ -1175,3 +1175,113 @@ esborrar abans del lliurament») i el pressupost de pàgines. Les marques
 
 El Word no es guarda al projecte: es torna a generar cada vegada, i així
 sempre surt dels textos tal com són aquell dia.
+
+## 63. Les dades de l'Edanna: portada, motivació i agraïments
+
+*11 de novembre del 2026*
+
+Als preliminars hi havia buits marcats «PER OMPLIR» que només podia omplir
+l'Edanna. S'omplen amb dues fonts: la seva proposta inicial del treball, un
+document seu del març, i les respostes que ha donat a unes preguntes
+fetes una per una.
+
+- **Portada.** Títol nou, «*Vibe coding*: fer una web sense saber
+  programar», que ajunta el d'ella i el que hi havia. Autora, grup,
+  tutora, centre i data d'entrega (30 de novembre del 2026).
+- **Per què aquest tema.** La idea va sortir de veure el seu pare fent un
+  joc amb intel·ligència artificial. Hi consta també què esperava abans de
+  començar, que tot fos més autònom i gairebé sense errors, i que per això
+  la pregunta va passar de «es pot fer una web» a «es pot fer una web
+  útil».
+- **Agraïments**, al seu pare.
+- **Objectius.** N'hi havia quatre i ara són cinc: s'hi afegeix «donar a
+  conèixer el *vibe coding*», que era a la proposta inicial.
+- **L'inici del treball**, el 24 de març del 2026, ara surt també a la
+  introducció.
+
+A petició seva es treu el buit que demanava una frase sobre l'ajuda de la
+intel·ligència artificial en la redacció. No s'hi escriu res en lloc seu.
+
+Queda una dada per confirmar abans d'escriure-la: el cost de la
+subscripció. És a `docs/pendents.md`.
+
+## 64. Més dades de l'Edanna: el primer tutor i el paper del pare
+
+*11 de novembre del 2026*
+
+Tres canvis petits als textos, a partir de més respostes de l'Edanna:
+
+- **El primer tutor.** Del 24 de març fins al final del curs anterior, el
+  tutor va ser Josep Carbonell. La presentació ho diu.
+- **El pare.** L'Edanna explica que el seu pare ha provat la pàgina. El
+  capítol 14 ara ho diu, en una frase. No s'ha atribuït cap error concret
+  a les seves proves, perquè els documents del projecte no apunten qui va
+  trobar cada cosa.
+- **Dos passatges fora**, a petició seva: la tercera dificultat de la
+  presentació i una frase del capítol 12, que parlaven de com s'ha escrit i
+  revisat el text del treball. La presentació passa d'avançar tres
+  dificultats a dues.
+
+## 65. El compte de GitHub i el projecte anterior, amb nom
+
+*11 de novembre del 2026*
+
+Dues coses del text podien fer dubtar qui el llegís. L'adreça de la web
+porta un nom d'usuari que no és el de l'autora, i el capítol 8 parlava
+d'«un projecte anterior, d'un altre joc de cartes» sense dir de qui era.
+L'Edanna confirma que totes dues coses són del seu pare, i el text ara ho
+diu als capítols 8, 13 i 21. Així lliga amb la presentació, on explica que
+la idea li va venir de veure'l fer un joc amb intel·ligència artificial.
+
+Després l'Edanna demana treure del tot la referència al projecte anterior.
+El capítol 8 ja no en parla: l'apartat passa a dir-se «Comparant
+propostes» i explica només que es demanaven tres dissenys abans de
+triar-ne un.
+
+## 66. Què diu el treball del pare de l'autora
+
+*11 de novembre del 2026*
+
+L'Edanna decideix què ha de constar del seu pare al treball: que el compte
+de GitHub és seu i que ha ajudat a revisar la web. Es repassen totes les
+mencions i queden aquestes:
+
+- **Agraïments:** el compte de GitHub i l'ajuda a revisar la web.
+- **Capítol 13:** el compte de GitHub és seu.
+- **Capítol 14:** ha ajudat a revisar la web, provant-la i donant consells.
+- **Capítol 21:** el nom de l'adreça de la web és el del seu compte.
+
+Surt de la presentació la frase que explicava que la idea havia vingut de
+veure'l fer un joc amb intel·ligència artificial.
+
+## 67. El preu de l'eina, amb font
+
+*11 de novembre del 2026*
+
+El treball deia que l'única despesa era la subscripció de l'eina
+d'intel·ligència artificial, sense cap xifra. Es consulta la pàgina oficial
+de preus i s'afegeix al capítol 21 el del pla de pagament més barat: 18
+euros al mes si es paga mes a mes. La font queda apuntada a
+`treball/fonts.md`, amb la data de la consulta.
+
+El que ha costat exactament aquest projecte queda per al capítol 22, i el
+que cal aclarir abans és a `docs/pendents.md`.
+
+## 68. Tres comentaris de l'Edanna al document unificat
+
+*11 de novembre del 2026*
+
+L'Edanna llegeix tot el treball en un sol document, al PR 25, i hi deixa
+tres comentaris. S'apliquen als textos d'origen i el document unificat es
+torna a generar.
+
+- **Agraïments, més llargs.** Demana que hi consti que el seu pare paga la
+  subscripció de l'eina, que li n'està agraïda, i que la va ajudar a
+  entendre els conceptes fonamentals de la intel·ligència artificial i dels
+  agents.
+- **«Menes» passa a «maneres»**, a la presentació.
+- **«També qui hi veu malament»** no s'entenia. Ara diu «també les
+  persones amb problemes de vista», al capítol 20 i al glossari.
+
+Abans n'havia deixat un altre al PR 24: treure la línia «Esborrany de l'11
+de novembre» del glossari. S'ha tret també de la Part II.
