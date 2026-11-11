@@ -11,7 +11,8 @@
       "images": {
         "symbol": "https://images.pokemontcg.io/sv6pt5/symbol.png",
         "logo": "https://images.pokemontcg.io/sv6pt5/logo.png"
-      }
+      },
+      "tcgdexId": "sv06.5"
     },
     {
       "id": "sv7",
@@ -24,7 +25,8 @@
       "images": {
         "symbol": "https://images.pokemontcg.io/sv7/symbol.png",
         "logo": "https://images.pokemontcg.io/sv7/logo.png"
-      }
+      },
+      "tcgdexId": "sv07"
     },
     {
       "id": "sv8",
@@ -37,7 +39,8 @@
       "images": {
         "symbol": "https://images.pokemontcg.io/sv8/symbol.png",
         "logo": "https://images.pokemontcg.io/sv8/logo.png"
-      }
+      },
+      "tcgdexId": "sv08"
     },
     {
       "id": "sv8pt5",
@@ -50,7 +53,8 @@
       "images": {
         "symbol": "https://images.pokemontcg.io/sv8pt5/symbol.png",
         "logo": "https://images.pokemontcg.io/sv8pt5/logo.png"
-      }
+      },
+      "tcgdexId": "sv08.5"
     },
     {
       "id": "sv9",
@@ -63,7 +67,8 @@
       "images": {
         "symbol": "https://images.pokemontcg.io/sv9/symbol.png",
         "logo": "https://images.pokemontcg.io/sv9/logo.png"
-      }
+      },
+      "tcgdexId": "sv09"
     },
     {
       "id": "sv10",
@@ -76,7 +81,8 @@
       "images": {
         "symbol": "https://images.pokemontcg.io/sv10/symbol.png",
         "logo": "https://images.pokemontcg.io/sv10/logo.png"
-      }
+      },
+      "tcgdexId": "sv10"
     },
     {
       "id": "zsv10pt5",
@@ -89,7 +95,8 @@
       "images": {
         "symbol": "https://images.pokemontcg.io/zsv10pt5/symbol.png",
         "logo": "https://images.pokemontcg.io/zsv10pt5/logo.png"
-      }
+      },
+      "tcgdexId": "sv10.5b"
     },
     {
       "id": "rsv10pt5",
@@ -102,7 +109,8 @@
       "images": {
         "symbol": "https://images.pokemontcg.io/rsv10pt5/symbol.png",
         "logo": "https://images.pokemontcg.io/rsv10pt5/logo.png"
-      }
+      },
+      "tcgdexId": "sv10.5w"
     },
     {
       "id": "me1",
@@ -115,7 +123,8 @@
       "images": {
         "symbol": "https://images.pokemontcg.io/me1/symbol.png",
         "logo": "https://images.pokemontcg.io/me1/logo.png"
-      }
+      },
+      "tcgdexId": "me01"
     },
     {
       "id": "me2",
@@ -128,7 +137,8 @@
       "images": {
         "symbol": "https://images.pokemontcg.io/me2/symbol.png",
         "logo": "https://images.pokemontcg.io/me2/logo.png"
-      }
+      },
+      "tcgdexId": "me02"
     },
     {
       "id": "me2pt5",
@@ -141,7 +151,8 @@
       "images": {
         "symbol": "https://assets.tcgdex.net/univ/me/me02.5/symbol.png",
         "logo": "https://assets.tcgdex.net/en/me/me02.5/logo.png"
-      }
+      },
+      "tcgdexId": "me02.5"
     },
     {
       "id": "me3",
@@ -154,7 +165,8 @@
       "images": {
         "symbol": "https://assets.tcgdex.net/univ/me/me03/symbol.png",
         "logo": "https://assets.tcgdex.net/en/me/me03/logo.png"
-      }
+      },
+      "tcgdexId": "me03"
     },
     {
       "id": "me4",
@@ -167,7 +179,8 @@
       "images": {
         "symbol": "https://assets.tcgdex.net/univ/me/me04/symbol.png",
         "logo": "https://assets.tcgdex.net/en/me/me04/logo.png"
-      }
+      },
+      "tcgdexId": "me04"
     },
     {
       "id": "me5",
@@ -180,7 +193,8 @@
       "images": {
         "symbol": "https://assets.tcgdex.net/univ/me/me05/symbol.png",
         "logo": "https://assets.tcgdex.net/en/me/me05/logo.png"
-      }
+      },
+      "tcgdexId": "me05"
     }
   ]
 }

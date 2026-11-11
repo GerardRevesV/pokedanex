@@ -315,3 +315,28 @@ dels comentaris, i és la mena d'error que no deixa rastre: no falla res, només
 que la feina no s'ha fet. D'aquí surt una norma de treball petita i útil per a
 tot el projecte: la prova que una cosa està feta és el text, no cap marca de
 cap plafó.
+
+## 11. Quan la font menteix sense avisar: els preus que no eren de la carta
+
+*2026-11-10*
+
+Durant mesos la web havia donat preus que semblaven bons. No fallava res:
+cada carta tenia la seva xifra, les sumes quadraven i a sota hi deia «preus
+de l'11 d'agost». La dificultat va ser adonar-se que aquella data era la del
+dia que s'havien baixat les dades, no la dels preus. Cada preu duia amagada
+la seva pròpia data, i la majoria eren de gairebé un any abans. A més, unes
+quantes cartes de cèntims comptaven com si en valguessin quaranta euros,
+perquè la font hi posava el preu d'una altra versió de la mateixa carta, la
+que porta un segell de torneig. Cap d'aquestes coses es veu mirant la
+pantalla. Només van sortir en comparar dues fonts entre elles, carta per
+carta, i preguntar-se per què discrepaven tant.
+
+El segon pas difícil va ser acceptar que no hi ha cap font que tingui raó
+sempre. La font nova és molt millor, però també s'equivoca en quatre cartes.
+Per això la solució no ha estat canviar una font per una altra, sinó
+escriure unes regles que no es refien de cap: es mira si el preu és recent,
+es compara amb el de l'altre mercat i, quan dues fonts discrepen moltíssim,
+es tria la xifra prudent i es marca amb un «≈» perquè qui mira la web sàpiga
+que aquell preu no és segur. Per al treball, la lliçó és que una dada pot
+ser falsa sense que res no s'espatlli, i que l'única defensa és contrastar-la
+amb una altra i dir obertament quan no se n'està segur.
