@@ -1136,3 +1136,25 @@ treball fins que es confirmi.
 **Problemes:** els comentaris de l'Edanna no es veien. A GitHub, un
 comentari fet dins d'una revisió queda com a esborrany fins que la revisió
 s'envia, i mentrestant només el veu qui l'ha escrit.
+
+## 2026-11-11 (10a sessió) — Revisió de llegibilitat
+
+**Què s'ha fet:**
+- Llegit tot el document unificat buscant paràgrafs massa tècnics per a
+  una persona de 17 anys.
+- Llista de 15 punts, amb propostes, a `treball/revisio-llegibilitat.md`.
+- Proposta de reescriptura dels 15 punts, amb el text d'ara i el nou, a
+  `treball/proposta-llegibilitat.md`, per acceptar-los un per un.
+- L'Edanna els accepta tots: aplicats als textos i document unificat
+  regenerat.
+- Passada d'estil: 49 frases fetes de les correccions de la IA, reescrites
+  amb un to més planer (entrada **70** de l'històric).
+- Revisats tots els canvis i el format del Word, i arreglat el programa
+  que el munta (entrada **71**). El Word nou és a l'escriptori.
+- Entrada **69** de l'històric.
+
+**Eines usades:** Claude Code.
+
+**Costos:** 0 € (de subscripció a part).
+
+**Problemes:** cap.

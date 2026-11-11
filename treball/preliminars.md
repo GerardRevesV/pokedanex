@@ -232,11 +232,11 @@ experiment amb setze programadors experimentats, les feines que feien amb
 l'eina els portaven un 19 % més de temps que les que feien sense, tot i que
 ells es pensaven que els feia anar més de pressa (METR, 2025).
 
-És a dir: la màquina escriu codi que funciona, però no sempre és de fiar, i
-qui la fa servir no sempre s'adona del que passa. Si això els passa als
+És a dir: la màquina escriu codi que funciona, però no sempre és de fiar,
+i qui la fa servir no sempre s'adona del que passa. Si això els passa als
 professionals, què li passarà a algú que ni tan sols sap llegir el codi?
-Aquesta és la raó per la qual la hipòtesi val la pena: la resposta no se sap
-d'entrada.
+Per això val la pena comprovar la hipòtesi: no se sap quina serà la
+resposta.
 
 ### Què vol dir «útil»
 
@@ -265,9 +265,9 @@ De la hipòtesi en surten cinc objectius concrets:
   és, com funciona i quins límits té.
 - **Esbrinar** què ha de fer la persona quan el codi l'escriu una màquina.
 
-L'últim objectiu és el que dona interès al treball. Si la resposta a la
-hipòtesi és que sí, la pregunta següent és inevitable: si no has escrit el
-codi, què has fet tu?
+L'últim objectiu és potser el més interessant. Si la resposta a la
+hipòtesi és que sí, de seguida surt una altra pregunta: si no has escrit
+el codi, què has fet tu?
 
 ### Com s'ha investigat
 
@@ -275,7 +275,7 @@ El treball va començar el 24 de març del 2026, amb la tria del tema i de la
 hipòtesi. La web es va començar a construir el 9 d'agost del 2026.
 
 El mètode és un experiment amb un sol cas: un projecte, una persona i una
-eina. Té un avantatge i un límit, i tots dos s'han de dir.
+eina. Això té un avantatge i un límit.
 
 L'avantatge és que tot està registrat. Les afirmacions de la part pràctica no
 surten de la memòria de l'autora, sinó de documents escrits mentre es feia la
@@ -289,7 +289,7 @@ resultat no es pot repetir, però la manera de treballar sí.
 
 ### Com està organitzat aquest document
 
-El treball té quatre parts, i l'ordre no és casual.
+El treball té quatre parts, i cadascuna va en aquest ordre per un motiu.
 
 La **Part I** recull el que ja se sabia abans de començar: què és la
 programació per intenció, com funcionen les eines i què diuen els estudis.

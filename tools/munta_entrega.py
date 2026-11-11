@@ -70,7 +70,7 @@ hi haurà l'índex normal, amb els títols i els números de pàgina.
   pàgines.
 """
 
-INLINE = re.compile(r"(\*\*\*.+?\*\*\*|\*\*.+?\*\*|\*.+?\*|`.+?`)")
+INLINE = re.compile(r"(\*\*\*.+?\*\*\*|\*\*.+?\*\*(?!\*)|\*.+?\*|`.+?`)")
 IMATGE = re.compile(r"!\[(.*?)\]\((.+?)\)")
 
 
@@ -100,6 +100,7 @@ def escriu(par, text, negreta=False, cursiva=False):
 def imatge(par, ruta, ample):
     fitxer = TREBALL / ruta
     par.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    par.paragraph_format.keep_with_next = True
     par.add_run().add_picture(str(fitxer), width=ample)
 
 
@@ -116,6 +117,7 @@ def taula(doc, linies):
             par = cel·les[j].paragraphs[0]
             par.paragraph_format.line_spacing = 1.15
             par.paragraph_format.space_after = Pt(2)
+            par.alignment = WD_ALIGN_PARAGRAPH.LEFT
             m = IMATGE.fullmatch(text)
             if m:
                 imatge(par, m.group(2), Cm(15.2 / cols))
@@ -123,10 +125,87 @@ def taula(doc, linies):
                 escriu(par, text, negreta=(i == 0))
             for r in par.runs:
                 r.font.size = Pt(10)
-    doc.add_paragraph().paragraph_format.space_after = Pt(0)
+            for q in cel·les[j].paragraphs:
+                q.paragraph_format.keep_with_next = True
+    final = doc.add_paragraph()
+    final.paragraph_format.space_after = Pt(0)
+    final.paragraph_format.keep_with_next = True
 
 
-def afegeix(doc, md, salt=True):
+MIDA_TITOL = {1: 14, 2: 13, 3: 12}
+
+
+def titol(doc, text, nivell, a_index):
+    """Un títol. Si no ha de sortir a l'índex, es fa amb un paràgraf normal."""
+    if a_index:
+        escriu(doc.add_heading(level=nivell), text)
+        return
+    par = doc.add_paragraph()
+    par.alignment = WD_ALIGN_PARAGRAPH.LEFT
+    par.paragraph_format.keep_with_next = True
+    par.paragraph_format.space_before = Pt(12)
+    escriu(par, text, negreta=True)
+    for r in par.runs:
+        r.font.size = Pt(MIDA_TITOL[nivell])
+
+
+def portada(doc, md):
+    """La portada: títol gran i centrat, i les dades de l'autora a sota."""
+    dades = dict(re.findall(r"\*\*(.+?):\*\* (.+)", md))
+
+    def linia(text, mida, negreta=False, abans=0, despres=6):
+        par = doc.add_paragraph()
+        par.alignment = WD_ALIGN_PARAGRAPH.CENTER
+        par.paragraph_format.line_spacing = 1.15
+        par.paragraph_format.space_before = Pt(abans)
+        par.paragraph_format.space_after = Pt(despres)
+        escriu(par, text, negreta=negreta)
+        for r in par.runs:
+            r.font.size = Pt(mida)
+
+    linia("TREBALL DE RECERCA", 12, abans=110, despres=30)
+    linia(dades.get("Títol", ""), 28, negreta=True, despres=14)
+    linia(dades.get("Subtítol", ""), 16, despres=0)
+    linia(dades.get("Autora", ""), 16, negreta=True, abans=190, despres=14)
+    for clau in ("Tutora", "Grup classe", "Centre", "Data"):
+        if clau in dades:
+            text = dades[clau] if clau in ("Centre", "Data", "Grup classe") else f"{clau}: {dades[clau]}"
+            linia(text, 12)
+
+
+def index_automatic(doc):
+    """L'índex de Word: es fa sol a partir dels títols, amb el número de pàgina."""
+    from docx.oxml import OxmlElement
+    from docx.oxml.ns import qn
+
+    par = doc.add_paragraph()
+    par.alignment = WD_ALIGN_PARAGRAPH.LEFT
+
+    def camp(tipus=None, text=None):
+        r = par.add_run()
+        if tipus:
+            c = OxmlElement("w:fldChar")
+            c.set(qn("w:fldCharType"), tipus)
+        else:
+            c = OxmlElement("w:instrText")
+            c.set(qn("xml:space"), "preserve")
+            c.text = text
+        r._r.append(c)
+
+    camp("begin")
+    camp(text='TOC \\o "1-2" \\h \\z \\u')
+    camp("separate")
+    par.add_run("Per veure l'índex, feu clic aquí amb el botó dret i trieu «Actualitza el camp».")
+    camp("end")
+    nota = doc.add_paragraph()
+    escriu(nota, "*La Part IV (capítols 22 a 26), les fonts d'informació i els annexos "
+                 "encara no hi surten, perquè no estan escrits. L'índex comentat de les "
+                 "pàgines següents diu què hi anirà.*")
+    for r in nota.runs:
+        r.font.size = Pt(10)
+
+
+def afegeix(doc, md, salt=True, a_index=True):
     """Converteix un text Markdown senzill en paràgrafs del document."""
     blocs = re.split(r"\n\s*\n", md.strip())
     primer = True
@@ -140,12 +219,18 @@ def afegeix(doc, md, salt=True):
             nivell = len(m.group(1))
             if nivell == 1 and (salt or not primer):
                 doc.add_paragraph().add_run().add_break(WD_BREAK.PAGE)
-            h = doc.add_heading(level=nivell)
-            escriu(h, m.group(2).strip())
+            nom = m.group(2).strip()
+            if nivell == 1 and nom == "Portada":
+                portada(doc, md)
+                return
+            titol(doc, nom, nivell, a_index)
+            if nivell == 1 and nom == "Índex":
+                index_automatic(doc)
+                return
             primer = False
             resta = "\n".join(linies[1:]).strip()
             if resta:
-                afegeix(doc, resta, salt=False)
+                afegeix(doc, resta, salt=False, a_index=a_index)
             continue
         primer = False
         if cap.startswith("|"):
@@ -162,21 +247,28 @@ def afegeix(doc, md, salt=True):
                     elements[-1] += " " + l.strip()
             for e in elements:
                 escriu(doc.add_paragraph(style="List Number" if numerada else "List Bullet"), e)
-            if numerada:  # cada llista numerada torna a començar per 1
-                reinicia_numeracio(doc, len(elements))
+            if numerada:  # cada llista comença pel número que porta al text
+                reinicia_numeracio(doc, len(elements), int(re.match(r"\d+", cap).group()))
         elif IMATGE.fullmatch(bloc.strip()):
             imatge(doc.add_paragraph(), IMATGE.fullmatch(bloc.strip()).group(2), Cm(15))
         else:
             text = " ".join(l.strip() for l in linies)
             par = doc.add_paragraph()
-            escriu(par, text)
+            # Un títol en negreta sol a la primera línia va en una línia pròpia.
+            if len(linies) > 1 and re.fullmatch(r"\*\*.+\*\*( \*\(.+\)\*)?", cap.strip()):
+                par.alignment = WD_ALIGN_PARAGRAPH.LEFT  # justificat, el salt estira el títol
+                escriu(par, cap.strip())
+                par.add_run().add_break()
+                escriu(par, " ".join(l.strip() for l in linies[1:]))
+            else:
+                escriu(par, text)
             if re.fullmatch(r"\*(Taula|Figura) .+\*", text, re.S):
                 par.alignment = WD_ALIGN_PARAGRAPH.CENTER
                 for r in par.runs:
                     r.font.size = Pt(10)
 
 
-def reinicia_numeracio(doc, quants):
+def reinicia_numeracio(doc, quants, inici=1):
     """Dona a les últimes `quants` línies numerades una numeració pròpia."""
     from docx.oxml import OxmlElement
     from docx.oxml.ns import qn
@@ -202,7 +294,7 @@ def reinicia_numeracio(doc, quants):
     over = OxmlElement("w:lvlOverride")
     over.set(qn("w:ilvl"), "0")
     start = OxmlElement("w:startOverride")
-    start.set(qn("w:val"), "1")
+    start.set(qn("w:val"), str(inici))
     over.append(start)
     num.append(over)
     numbering.append(num)
@@ -281,6 +373,43 @@ def munta_md():
     print(f"{desti.relative_to(ARREL)}  ({len(cos.split())} paraules)")
 
 
+def numera_pagines(doc):
+    """Posa el número de pàgina, centrat, al peu de cada pàgina."""
+    from docx.oxml import OxmlElement
+    from docx.oxml.ns import qn
+
+    peu = doc.sections[0].footer.paragraphs[0]
+    peu.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    for tipus, text in (("begin", None), (None, "PAGE"), ("end", None)):
+        r = peu.add_run()
+        r.font.size = Pt(10)
+        if tipus:
+            c = OxmlElement("w:fldChar")
+            c.set(qn("w:fldCharType"), tipus)
+        else:
+            c = OxmlElement("w:instrText")
+            c.set(qn("xml:space"), "preserve")
+            c.text = text
+        r._r.append(c)
+
+
+def actualitza_index(desti):
+    """Demana al Word que ompli l'índex. Si no hi ha Word, es queda per omplir."""
+    import subprocess
+
+    ordre = (
+        "$w = New-Object -ComObject Word.Application; $n = $w.Documents.Count; "
+        f"$d = $w.Documents.Open('{desti}'); "
+        "foreach ($t in $d.TablesOfContents) { $t.Update() }; "
+        "$d.Save(); $d.Close(); if ($n -eq 0) { $w.Quit() }"
+    )
+    try:
+        subprocess.run(["powershell", "-NoProfile", "-Command", ordre], check=True,
+                       capture_output=True, timeout=180)
+    except Exception:
+        print("Avís: no s'ha pogut omplir l'índex. Obriu el Word i actualitzeu-lo a mà.")
+
+
 def main():
     if "--md" in sys.argv:
         munta_md()
@@ -294,17 +423,22 @@ def main():
     normal.font.name, normal.font.size = "Calibri", Pt(12)
     normal.paragraph_format.line_spacing = 1.5
     normal.paragraph_format.space_after = Pt(8)
+    normal.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
     for nom in ("Heading 1", "Heading 2", "Heading 3", "Intense Quote"):
         doc.styles[nom].font.name = "Calibri"
         doc.styles[nom].font.color.rgb = RGBColor(0x1F, 0x1F, 0x1F)
     doc.styles["Intense Quote"].font.italic = False
 
+    # La guia, l'índex i l'índex comentat no surten a l'índex automàtic.
+    fora = ("# Guia d'aquesta entrega", "# Índex")
     for i, tros in enumerate(trossos()):
-        afegeix(doc, tros, salt=(i > 0))
+        afegeix(doc, tros, salt=(i > 0), a_index=not tros.lstrip().startswith(fora))
+    numera_pagines(doc)
 
     SORTIDA.mkdir(exist_ok=True)
     desti = SORTIDA / f"Pokedanex-entrega-parcial-{date.today().isoformat()}.docx"
     doc.save(desti)
+    actualitza_index(desti)
     paraules = sum(len(p.text.split()) for p in doc.paragraphs)
     print(f"{desti.relative_to(ARREL)}  ({paraules} paraules, {len(doc.inline_shapes)} imatges)")
 

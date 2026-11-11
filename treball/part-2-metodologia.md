@@ -69,9 +69,10 @@ i en bon estat. De la tercera, que es podrien comptar les còpies
 repetides. Les respostes es van escriure en un document d'especificacions,
 i la web es va construir a partir d'aquest document (capítol 16).
 
-L'entrevista funciona perquè capgira els papers. Qui no sap programar no
-sap quines preguntes s'ha de fer. La màquina sí que ho sap, i les fa. La
-persona només ha de respondre sobre el que vol, que és el que coneix.
+L'entrevista va funcionar perquè les preguntes les feia la màquina. Qui no
+sap programar no sap quines preguntes s'ha de fer. La màquina sí que ho
+sap, i les fa. La persona només ha de respondre sobre el que vol, que és
+el que coneix.
 
 Un cop feta la web, les peticions eren concretes: per exemple, que el
 botó esquerre del ratolí sumés una carta i el dret la restés. Una petició
@@ -92,14 +93,24 @@ persona, i no només la peça nova.
 Una màquina que escriu codi molt de pressa també s'equivoca molt de
 pressa. Per això abans de fer es planifica, de tres maneres.
 
-**Per fases.** El 9 d'agost es va escriure una planificació amb sis
-fases, de la 0 a la 5, cadascuna amb un objectiu i un resultat per
-entregar. La norma diu que no se'n comença cap sense tancar l'anterior.
-Segons la planificació, les fases 0, 1 i 2 (decidir què havia de fer la
-web, triar les eines i construir-la) es van tancar el 9 d'agost. La
-norma no s'ha complert del tot: la Fase 4, que és aquest treball escrit,
-s'ha començat amb la Fase 3 encara oberta, perquè falten les proves amb
-usuaris.
+**Per fases.** El 9 d'agost es va escriure una planificació amb sis fases,
+cadascuna amb un objectiu i un resultat per entregar. La norma diu que no
+se'n comença cap sense tancar l'anterior. Les tres primeres es van tancar
+el mateix 9 d'agost.
+
+| Fase | Què és | Estat |
+|---|---|---|
+| 0 | Decidir què ha de fer la web | Feta |
+| 1 | Triar les eines i preparar la base | Feta |
+| 2 | Construir la web | Feta |
+| 3 | Publicar-la i provar-la amb usuaris | Oberta |
+| 4 | Escriure aquest treball | En curs |
+| 5 | Preparar la presentació | Per fer |
+
+*Taula 2. Les fases del projecte el novembre del 2026.*
+
+La norma no s'ha complert del tot: aquest treball (Fase 4) s'ha començat
+abans de tancar la Fase 3, perquè falten les proves amb usuaris.
 
 **Comparant propostes.** Quan calia triar un disseny, es demanaven tres
 propostes per escrit i se'n triava una.
@@ -167,7 +178,7 @@ diferents. Poden coincidir tots en un mateix error.
 
 També es poden tenir obertes dues converses sobre el mateix projecte,
 cadascuna amb la seva feina. És còmode, però té un problema que no es veu
-fins que passa: **una conversa no sap res del que fa l'altra**. No
+fins que passa: una conversa no sap res del que fa l'altra. No
 comparteixen memòria.
 
 Al projecte va passar diverses vegades. Dos casos ho expliquen bé.
@@ -191,8 +202,8 @@ tot quan s'ajunta.
 
 ## 12. La revisió per capes
 
-Aquest capítol respon a l'objecció més seriosa que es pot fer al
-projecte: si l'autora no llegeix el codi, com sap que està bé?
+Aquest capítol respon a una pregunta important: si l'autora no llegeix el
+codi, com sap que està bé?
 
 L'autora no comprova el codi: comprova la web, fent-la servir. El codi el
 revisa la màquina, però no la mateixa còpia que l'ha escrit. Cada bloc de
@@ -208,7 +219,7 @@ ajudant diferent, que no ha escrit el que revisa:
 | 5 | Revisor final | Ho torna a mirar tot amb ulls nous i comprova les correccions |
 | 6 | Prova al navegador | La web s'obre i es fa servir |
 
-*Taula 2. La cadena de revisió, fixada l'11 d'agost del 2026.*
+*Taula 3. La cadena de revisió, fixada l'11 d'agost del 2026.*
 
 La idea és la mateixa que quan es demana a algú altre que llegeixi un
 text propi: qui l'ha escrit llegeix el que volia dir, i no el que hi diu.
@@ -232,27 +243,32 @@ no hi consta cap revisió del codi feta per una persona.
 ## 13. Guardar-ho tot: l'historial de canvis
 
 Si la màquina espatlla una cosa que funcionava, cal poder tornar enrere.
-Per a això serveix **git**, un programa que guarda una fotografia del
-projecte cada vegada que es fa un canvi, amb una nota que diu què s'ha
-canviat. Aquestes fotografies es desen també a internet, a **GitHub**,
+Per a això serveix **git**, un programa que fa una fotografia del projecte
+cada vegada que es fa un canvi, amb una nota que diu què s'ha canviat. És
+com l'historial de versions d'un document compartit: es pot veure com era
+el projecte qualsevol dia i recuperar-lo. Aquestes fotografies es desen
+també a internet, a **GitHub**,
 on es guarda el projecte des que es va començar la web. El compte de
 GitHub és del pare de l'autora.
 
-En tancar la Fase 1 es va decidir treballar sempre de la mateixa manera:
+En tancar la Fase 1 es va decidir treballar sempre de la mateixa manera,
+que s'assembla a fer un esborrany abans de tocar el document bo:
 
-1. Cada canvi es fa en una **branca**, que és una còpia del projecte on
-   es pot treballar sense tocar la versió bona.
-2. Quan el canvi està acabat, s'obre un ***pull request***: una petició
-   d'ajuntar la branca amb la versió bona. Allà es veu, línia per línia,
+1. Cada canvi es fa en una **branca**: una còpia del projecte on es pot
+   provar el que calgui sense tocar la versió bona.
+2. Quan el canvi està acabat, es demana d'ajuntar-lo amb la versió bona.
+   Aquesta petició es diu ***pull request***, i hi surt, línia per línia,
    què canvia.
-3. La màquina el revisa (capítol 12) i l'autora prova la web. Si tot
-   està bé, es **fusiona**, és a dir, s'ajunta amb la versió bona. En
-   aquell moment la web publicada s'actualitza tota sola (capítol 21).
+3. La màquina revisa el canvi (capítol 12) i l'autora prova la web. Si tot
+   està bé, la branca s'ajunta amb la versió bona, que és el que es diu
+   **fusionar**. En aquell moment la web publicada s'actualitza tota sola
+   (capítol 21).
 
-Això dona tres coses. Es pot tornar enrere. Cap canvi del codi no arriba a
-la web publicada sense haver passat per una revisió. I en queda constància:
-cada *pull request* és una prova de què es va fer i quan. A principis de
-novembre del 2026 se n'havien obert una vintena en tot el projecte.
+Treballar així té tres avantatges. Es pot tornar enrere. Cap canvi del
+codi no arriba a la web publicada sense haver passat per una revisió. I en
+queda constància: cada *pull request* és una prova de què es va fer i
+quan. A principis de novembre del 2026 se n'havien obert una vintena en
+tot el projecte.
 
 ## 14. Com es comprova que funciona
 
@@ -294,19 +310,19 @@ al preu. Només es veia mirant.
 
 ## 15. Quan la màquina s'equivoca
 
-La màquina s'equivoca, i en un projecte així l'important és saber com.
-La taula 3 recull els casos més clars.
+La màquina s'equivoca, i en un projecte així l'important és saber com. La
+taula 4 recull els casos més clars.
 
 | Què va passar | Com es va descobrir | Què es va fer |
 |---|---|---|
-| El servei d'internet que dona les dades rebutjava les peticions, i després fallava de tant en tant | A la primera prova de baixar dades | La web treballa amb una còpia desada de les dades |
+| El servei d'internet que dona les dades al principi no les volia donar, i després fallava de tant en tant | A la primera prova de baixar dades | La web treballa amb una còpia desada de les dades |
 | Un fitxer preparat amb mala intenció podia espatllar la web | A la revisió per capes | Es va corregir abans de publicar res |
 | Un tros de codi estava ben escrit però no es podia arribar a fer servir mai | A la revisió per capes | Es va esborrar |
 | Completar una expansió nova «costava» 0,00 € | Ho va veure l'autora fent servir la web | Preu aproximat, marcat amb «≈» |
 | Sis controls no feien res a la vista d'àlbum | Ho va veure l'autora fent servir la web | Es van connectar els filtres a l'àlbum i es van canviar noms |
 | Preus de feia gairebé un any, i cartes de cèntims valorades en 7, 27 i 42 € | En comparar dues fonts de preus | Segona font i regla nova de preus |
 
-*Taula 3. Errors del projecte, com es van descobrir i què es va fer.*
+*Taula 4. Errors del projecte, com es van descobrir i què es va fer.*
 
 D'aquests casos es treuen quatre idees.
 
