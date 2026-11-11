@@ -28,9 +28,9 @@ novembre del 2026.
   trobar ell, i per això el text no n'hi atribueix cap. Si l'Edanna o el
   seu pare en recorden algun de concret, es pot afegir.
 
-- [ ] Les taules d'errors de la Part II diuen dues vegades «ho va veure
-  l'autora fent servir la web» (el cost de 0,00 € i els sis controls de
-  l'àlbum). L'Edanna ha de poder explicar què va veure i quan.
+- [ ] Els sis controls que no feien res a la vista d'àlbum (Part II,
+  capítols 7 i 15): l'Edanna ha de poder explicar com se'n va adonar. El
+  cas del cost de 0,00 € ja el té explicat al capítol 15.
 
 ## El treball escrit
 

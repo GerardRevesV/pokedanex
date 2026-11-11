@@ -1103,6 +1103,8 @@ textos a Word directament, i s'ha hagut de fer la conversió a mida.
   tres coses que el tribunal pot preguntar.
 - Dit al text que el compte de GitHub i el projecte anterior són del
   pare de l'autora.
+- Afegit al capítol 15 com va veure l'Edanna el cost de 0,00 €: marcant
+  col·leccions, amb cartes sense preu.
 - Entrades **63**, **64** i **65** de l'històric.
 
 **Eines usades:** Claude Code.
