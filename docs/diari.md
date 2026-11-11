@@ -1105,7 +1105,9 @@ textos a Word directament, i s'ha hagut de fer la conversió a mida.
   pare de l'autora.
 - Afegit al capítol 15 com va veure l'Edanna el cost de 0,00 €: marcant
   col·leccions, amb cartes sense preu.
-- Entrades **63**, **64** i **65** de l'històric.
+- Repassades les mencions del pare de l'autora: consta com a propietari
+  del compte de GitHub i com a ajuda per revisar la web.
+- Entrades **63** a **66** de l'històric.
 
 **Eines usades:** Claude Code.
 

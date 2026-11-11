@@ -267,7 +267,7 @@ revisions, per exemple, un revisor va tornar a fer a part tots els
 càlculs de valor i de cost, cèntim a cèntim, i els va comparar amb els de
 la web.
 
-La web també l'ha provat el pare de l'autora, que l'ha fet servir i hi ha
+El pare de l'autora també ha ajudat a revisar la web: l'ha provat i hi ha
 donat consells.
 
 Algunes coses es comproven per càlcul. Que les lletres es llegeixin bé

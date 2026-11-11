@@ -1237,3 +1237,19 @@ Després l'Edanna demana treure del tot la referència al projecte anterior.
 El capítol 8 ja no en parla: l'apartat passa a dir-se «Comparant
 propostes» i explica només que es demanaven tres dissenys abans de
 triar-ne un.
+
+## 66. Què diu el treball del pare de l'autora
+
+*11 de novembre del 2026*
+
+L'Edanna decideix què ha de constar del seu pare al treball: que el compte
+de GitHub és seu i que ha ajudat a revisar la web. Es repassen totes les
+mencions i queden aquestes:
+
+- **Agraïments:** el compte de GitHub i l'ajuda a revisar la web.
+- **Capítol 13:** el compte de GitHub és seu.
+- **Capítol 14:** ha ajudat a revisar la web, provant-la i donant consells.
+- **Capítol 21:** el nom de l'adreça de la web és el del seu compte.
+
+Surt de la presentació la frase que explicava que la idea havia vingut de
+veure'l fer un joc amb intel·ligència artificial.

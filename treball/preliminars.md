@@ -135,10 +135,8 @@ document, que explica com s'ha fet i què se n'ha après.
 ### Per què aquest tema
 
 Sempre m'ha interessat el món de la tecnologia, sobretot la intel·ligència
-artificial. La idea del treball va sortir a casa. Vaig veure que el meu
-pare feia un joc amb intel·ligència artificial, i ell em va explicar què
-era el *vibe coding*. Em vaig inspirar per fer una pàgina web de la mateixa
-manera.
+artificial. Quan vaig saber què era el *vibe coding*, vaig voler provar de
+fer una pàgina web d'aquesta manera.
 
 Vaig triar una web de cartes Pokémon perquè m'interessa el col·leccionisme
 i és una eina que em resulta útil a mi mateixa. Crec que també pot ajudar
@@ -186,9 +184,8 @@ fetes expressament per buscar-los.
 
 ### Agraïments
 
-Vull donar les gràcies al meu pare. Ell és qui em va inspirar, i m'ha
-ajudat durant tot el camí: provant la pàgina i donant-me consells, entre
-altres coses.
+Vull donar les gràcies al meu pare. El projecte es desa al seu compte de
+GitHub, i m'ha ajudat a revisar la web: l'ha provat i m'ha donat consells.
 
 ---
 
