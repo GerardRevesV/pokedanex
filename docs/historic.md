@@ -985,3 +985,33 @@ A petició, es crea també `docs/pendents.md`, una llista viva del que queda
 per fer o per apuntar. La primera cosa que hi entra és el cost de la
 subscripció de l'eina d'intel·ligència artificial, que és l'única despesa
 del projecte i encara no està documentada enlloc.
+
+## 57. Les barres d'estadístiques, aixafades al mòbil: una línia de CSS
+
+*2026-11-10*
+
+En fer les captures de mòbil per a la Part III del treball es va veure, de
+passada, que amb el panell d'estadístiques obert les barres de progrés
+quedaven aixafades i el recompte («30/99») sortia tallat per la dreta. Es
+comprova al navegador amb una pantalla simulada de 390 píxels i es
+confirma: el bloc de les barres feia 83 píxels d'ample, la barra en si en
+feia 2, i el recompte acabava 11 píxels més enllà de la vora de la
+pantalla.
+
+La causa és una regla que ja volia arreglar això mateix. En pantalles
+estretes es treia l'amplada mínima del bloc de barres i se li demanava
+«ocupa el 100 %», però aquesta segona ordre no tenia cap efecte: una regla
+anterior, la que reparteix l'espai del panell, la deixava sense valor. Sense
+mínim i sense amplada pròpia, el bloc ja no saltava a la línia de sota i es
+conformava amb el racó que deixaven lliure els controls de l'objectiu. La
+correcció és una sola línia a `app/css/style.css`, dins del bloc de
+pantalles de fins a 480 píxels: la mateixa ordre, dita amb la propietat que
+sí que mana (`flex-basis`). Ara el bloc ocupa una fila sencera: a 390
+píxels la barra passa de 2 a 165 píxels i el recompte es llegeix sencer; a
+320 píxels també hi cap. L'escriptori no canvia, perquè la regla només
+s'aplica a pantalles estretes.
+
+Aquesta entrada es va escriure el 10 de novembre amb el número 53, en una
+branca a part. En ajuntar-la amb la resta ja hi havia una altra entrada 53
+i les 54 a 56 eren a la branca de la Part II, de manera que passa a ser la
+57 encara que sigui anterior.

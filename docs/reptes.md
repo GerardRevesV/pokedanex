@@ -359,3 +359,28 @@ s'hi veu de debò: que la col·lecció és un exemple, de quin dia són els
 preus i que la pantalla de mòbil és simulada. La lliçó és la mateixa que
 amb els preus aproximats de la web: una dada que no és exactament el que
 sembla s'ha de marcar, i una imatge és una dada com qualsevol altra.
+
+## 13. Dos servidors al mateix port: quan la correcció és bona i no es veu
+
+*2026-11-10*
+
+Arreglar les barres d'estadístiques del mòbil va ser canviar una línia. El
+que va costar va ser creure's que la línia funcionava. Per provar el canvi
+sense molestar una altra sessió de treball, la IA va engegar un segon
+servidor local —el programa que serveix la web a l'ordinador mateix— en un
+port diferent, el 8002. Un port és com el número de porta d'un edifici: el
+navegador truca a una porta concreta i li respon qui hi hagi darrere. El que
+la IA no sabia és que una altra sessió ja tenia un servidor a la mateixa
+porta, i Windows, en lloc de queixar-se, va deixar que tots dos hi
+escoltessin alhora. El navegador trucava i li responia l'altre, amb la
+versió vella de la pàgina.
+
+El resultat era desconcertant: el fitxer del disc tenia la correcció, el
+navegador insistia que no, i la primera sospita —que la correcció estava
+mal pensada— era falsa. La IA va trigar tres intents a deixar de mirar el
+CSS i començar a mirar qui responia: va demanar a la pàgina que li
+ensenyés el full d'estils que havia rebut, va veure que no era el del disc,
+i va llistar els programes que escoltaven al port. N'hi havia dos. Amb un
+port lliure, la mateixa línia va funcionar a la primera. La lliçó per al
+treball és que, quan una prova contradiu el que hauria de passar, abans de
+dubtar de la solució cal comprovar que s'està provant el que un es pensa.

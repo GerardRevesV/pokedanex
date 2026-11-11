@@ -1680,10 +1680,14 @@ body,
   }
 
   /* Barres d'estadístiques: sense mínim fix (desbordava a 320px)
-     i amb el nom més curt perquè la pista de progrés respiri */
+     i amb el nom més curt perquè la pista de progrés respiri.
+     El bloc ocupa una fila sencera amb flex-basis (i no amb width, que
+     el "flex: 1" de base deixa sense efecte): sense mínim i amb base 0,
+     el bloc es quedava al costat dels controls de l'objectiu amb només
+     ~83px, les barres aixafades i el recompte fora de la pantalla */
   .estad-barres {
     min-width: 0;
-    width: 100%;
+    flex: 1 1 100%;
   }
 
   .estad-barra-nom {
