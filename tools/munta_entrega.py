@@ -5,11 +5,14 @@ comentat, les parts escrites i el glossari. De cada text en treu les notes
 internes de treball (les que diuen «per esborrar abans del lliurament») i el
 pressupost de pàgines, que no s'entreguen.
 
-Ús:  python tools/munta_entrega.py
-Surt a treball/entrega/ (no es guarda al repositori: es torna a generar).
+Ús:  python tools/munta_entrega.py         fa el Word, a treball/entrega/
+     python tools/munta_entrega.py --md    fa un sol fitxer de text per
+                                           revisar, treball/revisio-tot-junt.md
+Cap dels dos es guarda al repositori: es tornen a generar.
 """
 
 import re
+import sys
 from datetime import date
 from pathlib import Path
 
@@ -29,9 +32,8 @@ Aquest document recull el que hi ha escrit del treball de recerca fins a
 l'11 de novembre del 2026. És una entrega parcial: tot el que hi ha és en
 esborrany i encara es pot canviar.
 
-Dins del text, les marques **[PER OMPLIR]** i **[PENDENT]** assenyalen el
-que falta: dades que encara s'han de posar o frases que depenen de feina
-que no està feta.
+Dins del text, la marca **[PENDENT]** assenyala una frase que depèn de
+feina que encara no està feta.
 
 | Apartat | Estat | Què hi falta |
 |---|---|---|
@@ -251,7 +253,38 @@ def seccions_preliminars():
     return sec
 
 
+def trossos():
+    """Els apartats del document, en l'ordre de lectura."""
+    pre = seccions_preliminars()
+    return (
+        [GUIA]
+        + [pre[nom] for nom in ("Portada", "Abstract", "Índex")]
+        + [llegeix("index-comentat.md")]
+        + [pre[nom] for nom in ("Presentació", "Introducció")]
+        + [llegeix(f) for f in ("marc-teoric.md", "part-2-metodologia.md",
+                                "part-3-producte.md", "glossari.md")]
+    )
+
+
+def munta_md():
+    """Un sol fitxer de text amb tot, per llegir-lo i revisar-lo d'una tirada."""
+    cap = ("> **Còpia per revisar.** Aquest fitxer es genera sol a partir dels "
+           "textos de `treball/`. No s'ha de corregir aquí: els canvis es fan "
+           "als textos d'origen i es torna a generar.\n\n")
+    cos = "\n\n---\n\n".join(t.strip() for t in trossos())
+    cos = re.sub(r"^# Guia d'aquesta entrega", "# Pokedanex: tot el treball en un sol document\n\n"
+                 "## Guia d'aquesta entrega", cos)
+    desti = TREBALL / "revisio-tot-junt.md"
+    desti.write_text(cos.replace("# Pokedanex: tot el treball en un sol document\n\n",
+                                 "# Pokedanex: tot el treball en un sol document\n\n" + cap, 1) + "\n",
+                     encoding="utf-8", newline="\n")
+    print(f"{desti.relative_to(ARREL)}  ({len(cos.split())} paraules)")
+
+
 def main():
+    if "--md" in sys.argv:
+        munta_md()
+        return
     doc = Document()
     for s in doc.sections:
         s.page_width, s.page_height = Cm(21), Cm(29.7)
@@ -266,15 +299,8 @@ def main():
         doc.styles[nom].font.color.rgb = RGBColor(0x1F, 0x1F, 0x1F)
     doc.styles["Intense Quote"].font.italic = False
 
-    pre = seccions_preliminars()
-    afegeix(doc, GUIA, salt=False)
-    for nom in ("Portada", "Abstract", "Índex"):
-        afegeix(doc, pre[nom])
-    afegeix(doc, llegeix("index-comentat.md"))
-    for nom in ("Presentació", "Introducció"):
-        afegeix(doc, pre[nom])
-    for fitxer in ("marc-teoric.md", "part-2-metodologia.md", "part-3-producte.md", "glossari.md"):
-        afegeix(doc, llegeix(fitxer))
+    for i, tros in enumerate(trossos()):
+        afegeix(doc, tros, salt=(i > 0))
 
     SORTIDA.mkdir(exist_ok=True)
     desti = SORTIDA / f"Pokedanex-entrega-parcial-{date.today().isoformat()}.docx"
