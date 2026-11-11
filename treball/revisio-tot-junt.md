@@ -8,9 +8,6 @@ Aquest document recull el que hi ha escrit del treball de recerca fins a
 l'11 de novembre del 2026. És una entrega parcial: tot el que hi ha és en
 esborrany i encara es pot canviar.
 
-Dins del text, la marca **[PENDENT]** assenyala una frase que depèn de
-feina que encara no està feta.
-
 | Apartat | Estat | Què hi falta |
 |---|---|---|
 | Portada | Feta | Res |

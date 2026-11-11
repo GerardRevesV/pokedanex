@@ -1172,7 +1172,8 @@ s'envia, i mentrestant només el veu qui l'ha escrit.
   treball, i no el nom de l'eina (entrada **73**).
 - L'Edanna retoca el Word a mà. Es compara amb el generat i es passa el
   canvi al repositori: a la taula de la guia, el marc teòric passa
-  d'«Esborrany revisat» a «Esborrany».
+  d'«Esborrany revisat» a «Esborrany», i es treu la frase que explicava la
+  marca [PENDENT].
 
 **Eines usades:** Claude Code.
 
