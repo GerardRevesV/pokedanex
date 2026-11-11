@@ -51,7 +51,7 @@ constància per al treball.
 - [ ] Part IV, resultats i conclusions: per escriure.
 - [ ] Proves amb usuaris: sense fer. En depenen la frase de resultats de
   l'abstract («PENDENT») i les conclusions.
-- [ ] Glossari: fa unes 500 paraules i el pressupost era d'una pàgina
+- [ ] Glossari: fa unes 550 paraules i el pressupost era d'una pàgina
   (350). Decidir si es retalla o se li dona mitja pàgina més.
 - [ ] Glossari: afegir-hi les paraules noves de la Part IV quan s'escrigui.
 - [ ] Una lectura de la Part III feta per algú que no l'hagi escrit. Les
@@ -74,7 +74,7 @@ constància per al treball.
 
 ## Fet
 
-- [x] *11-11-2026.* Glossari: esborrany amb 27 paraules.
+- [x] *11-11-2026.* Glossari: esborrany amb 30 paraules.
 - [x] *11-11-2026.* El treball escrit i els canvis pendents de la web, a
   la versió principal (PR 22 i 23).
 - [x] *10-11-2026.* Panell d'estadístiques al mòbil: les barres ja ocupen

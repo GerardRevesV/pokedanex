@@ -15,14 +15,17 @@ acció, en mira el resultat i decideix la següent. (3)
 **Ajudant.** Una còpia de la mateixa màquina a qui la conversa principal
 encarrega una part de la feina. En anglès, *subagent*. (10)
 
-**Al·lucinació.** Quan un model de llenguatge s'inventa una dada que sembla
-creïble i no és certa. (2)
-
 **Allotjament.** El servei que té una web sempre encesa a internet perquè
 tothom la pugui visitar. En anglès, *hosting*. (21)
 
+**Al·lucinació.** Quan un model de llenguatge s'inventa una dada que sembla
+creïble i no és certa. (2)
+
 **Branca.** Una còpia del projecte on es pot treballar sense tocar la
 versió bona. (13)
+
+**Cardmarket.** El mercat europeu de cartes col·leccionables. Els preus de
+la web, en euros, surten d'allà. (19)
 
 **Codi.** Les instruccions, escrites en un llenguatge de programació, que
 diuen a l'ordinador què ha de fer. (1)
@@ -45,6 +48,9 @@ té 14. (9)
 **Finestra de context.** Tot el que el model pot tenir al davant en un
 moment donat: la conversa i els fitxers que ha llegit. És gran, però
 s'acaba. (3)
+
+**Fitxer.** Cada document que es desa a l'ordinador amb un nom. El codi
+d'una web està repartit en fitxers. (17)
 
 **Fusionar.** Ajuntar una branca amb la versió bona del projecte. (13)
 
@@ -88,3 +94,6 @@ estricte, vol dir acceptar aquest codi sense llegir-lo. (1)
 
 **Web estàtica.** Una web feta només de fitxers, sense cap programa
 funcionant en un altre ordinador ni cap base de dades. (17)
+
+**Xat.** Una conversa amb un model de llenguatge que només respon amb
+text. Si dona codi, la persona l'ha de copiar i provar ella mateixa. (3)

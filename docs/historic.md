@@ -1097,7 +1097,7 @@ D'ara endavant, cada PR nou es fa directament contra `main`.
 
 *11 de novembre del 2026*
 
-S'escriu `treball/glossari.md`: 27 paraules tècniques del treball, per
+S'escriu `treball/glossari.md`: 30 paraules tècniques del treball, per
 ordre alfabètic, cadascuna explicada en una o dues línies i amb el número
 del capítol on surt amb més detall. Les definicions no són noves: són les
 mateixes que ja donen el marc teòric i les parts II i III, escurçades. Es

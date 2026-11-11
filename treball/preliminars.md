@@ -321,7 +321,7 @@ comprovar quan el text es passi al processador de textos.
 | Part II — Metodologia (10 capítols) | 11 | 3.700 | Esborrany (3.200 paraules) |
 | Part III — El producte (6 capítols) | 8 | 2.200 | Esborrany (2.500 paraules) |
 | Part IV — Resultats i conclusions (5 capítols) | 6 | 2.000 | Per escriure |
-| Glossari | 1 | 350 | Esborrany (500 paraules: cal retallar o donar-li mitja pàgina més) |
+| Glossari | 1 | 350 | Esborrany (550 paraules: cal retallar o donar-li mitja pàgina més) |
 | Fonts d'informació | 2 | — | Recollides a `fonts.md` |
 | **Total** | **47** | | |
 

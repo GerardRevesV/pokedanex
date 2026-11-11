@@ -1020,7 +1020,7 @@ que tenia desat, i semblava que l'arreglada del mòbil s'havia perdut.
 ## 2026-11-11 (4a sessió) — El glossari
 
 **Què s'ha fet:**
-- Escrit `treball/glossari.md`, amb 27 paraules i unes 500 paraules de
+- Escrit `treball/glossari.md`, amb 30 termes i unes 550 paraules de
   text, a partir de les definicions que ja hi havia a les parts I, II i
   III.
 - Comprovat que cada definició i cada número de capítol quadren amb el
