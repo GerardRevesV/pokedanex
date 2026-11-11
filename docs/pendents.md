@@ -11,11 +11,18 @@ novembre del 2026.
 
 ## Costos per documentar
 
-- [ ] **La subscripció de l'eina d'intel·ligència artificial.** L'Edanna
-  diu que són 20 euros al mes i que entra dins del pressupost. **Cal
-  confirmar-ho abans d'escriure-ho al treball:** l'eina informa que el
-  compte amb què es treballa té un pla que es diu «Ultra». Falta saber
-  quin pla és, quant costa de debò, des de quin mes es paga i qui el paga.
+- [ ] **La subscripció de l'eina d'intel·ligència artificial** (capítol
+  22, per escriure). El projecte s'ha fet amb una part d'una subscripció
+  compartida. Segons l'autora, l'ús que n'ha fet correspon al del pla més
+  barat de l'eina. Proposta de redacció, que diu això i res més:
+  «El projecte s'ha fet amb una part d'una subscripció compartida. L'ús
+  que n'ha fet correspon, aproximadament, al del pla més barat de l'eina,
+  que costa 20 dòlars al mes més IVA.» Abans d'escriure-ho cal:
+  - comprovar el preu a la pàgina oficial i posar-lo a `treball/fonts.md`;
+  - fer el compte en euros: 20 dòlars més el 21 % d'IVA són uns 21,80 €
+    amb el canvi del treball (0,90), una mica per sobre dels 20 € de la
+    norma. El capítol 24 (límits) ho ha de dir;
+  - dir des de quin mes es compta.
 - [ ] **El cost total del projecte**, mes a mes, en una taula per al
   treball (capítol de resultats).
 - [ ] **El temps dedicat.** Segons l'Edanna: unes 30 hores a la pàgina web
