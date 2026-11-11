@@ -1053,3 +1053,19 @@ tenia assignada.
 
 **Problemes:** les parts es van escriure en dies diferents i cadascuna
 parlava de les altres tal com estaven aquell dia.
+
+## 2026-11-11 (6a sessió) — Passada d'estil a la Part I
+
+**Què s'ha fet:**
+- Reescrita la Part I amb frases més curtes i sense incisos entre guions,
+  perquè tingui el mateix to que les parts II i III. El contingut no
+  canvia.
+- Comparades la versió vella i la nova amb un petit programa: mateixes
+  xifres, cites, fonts i noms.
+- Entrada **61** de l'històric.
+
+**Eines usades:** Claude Code.
+
+**Costos:** 0 € (de subscripció a part, pendent de documentar).
+
+**Problemes:** cap.

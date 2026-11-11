@@ -317,7 +317,7 @@ comprovar quan el text es passi al processador de textos.
 | Índex | 2 | — | Es genera al final |
 | Presentació | 2 | 650 | Esborrany; falten motivació i agraïments |
 | Introducció | 3 | 1.000 | Esborrany |
-| Part I — Marc teòric (5 capítols) | 10 | 3.700 | Esborrany revisat (3.450 paraules) |
+| Part I — Marc teòric (5 capítols) | 10 | 3.700 | Esborrany revisat (3.600 paraules) |
 | Part II — Metodologia (10 capítols) | 11 | 3.700 | Esborrany (3.200 paraules) |
 | Part III — El producte (6 capítols) | 8 | 2.200 | Esborrany (2.500 paraules) |
 | Part IV — Resultats i conclusions (5 capítols) | 6 | 2.000 | Per escriure |

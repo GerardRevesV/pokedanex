@@ -31,9 +31,6 @@ constància per al treball.
 
 - [ ] **Abans d'entregar:** treure de cada document la «Nota de treball»
   del principi i el pressupost de pàgines dels preliminars.
-- [ ] Part I: fa servir molts incisos entre guions llargs i frases més
-  llargues que les parts II i III. Si es vol un to igual a tot el treball,
-  cal una passada d'estil al marc teòric.
 - [ ] Introducció: no parla de la primera etapa del treball (del 24 de
   març al 9 d'agost del 2026). Només surt en una frase del capítol 6.
 - [ ] Part II, capítols 6 i 13: les xifres de l'històric, dels reptes i
@@ -82,6 +79,8 @@ constància per al treball.
 
 ## Fet
 
+- [x] *11-11-2026.* Part I: passada d'estil perquè soni com les parts II
+  i III.
 - [x] *11-11-2026.* Glossari: esborrany amb 30 paraules.
 - [x] *11-11-2026.* El treball escrit i els canvis pendents de la web, a
   la versió principal (PR 22 i 23).

@@ -1135,3 +1135,21 @@ comentat i glossari) per veure si es contradiuen. Es corregeix això:
   pàgines, i les notes dels dos índexs diuen què hi ha escrit de debò.
 
 El que no s'ha tocat i queda per decidir és a `docs/pendents.md`.
+
+## 61. La Part I, amb el mateix to que les altres
+
+*11 de novembre del 2026*
+
+El marc teòric es va escriure primer, i tenia frases més llargues i molts
+incisos entre guions. Les parts II i III, escrites després, són més
+planeres, i en llegir-les seguides es notava el canvi. Es reescriu la Part
+I frase per frase sense tocar-ne el contingut: les frases llargues es
+parteixen, els incisos passen a ser frases senceres i algunes paraules es
+canvien per altres de més corrents.
+
+La mitjana baixa de 16 a 13 paraules per frase, i dels 17 guions llargs
+només en queda el del títol. Per assegurar que no s'havia perdut res, es
+van comparar automàticament la versió vella i la nova: hi ha les mateixes
+xifres, les mateixes cites, les mateixes fonts i els mateixos noms. L'únic
+afegit és una frase que explica què vol dir «en producció» a la cita de
+Simon Willison.
