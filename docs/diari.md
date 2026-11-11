@@ -1170,6 +1170,9 @@ s'envia, i mentrestant només el veu qui l'ha escrit.
 - Word regenerat amb el paràgraf nou, i pull request 27 obert.
 - Les propietats del Word ara porten el nom de l'autora i el títol del
   treball, i no el nom de l'eina (entrada **73**).
+- L'Edanna retoca el Word a mà. Es compara amb el generat i es passa el
+  canvi al repositori: a la taula de la guia, el marc teòric passa
+  d'«Esborrany revisat» a «Esborrany».
 
 **Eines usades:** Claude Code.
 

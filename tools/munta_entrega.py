@@ -43,7 +43,7 @@ feina que encara no està feta.
 | Índex comentat | Només per a aquesta entrega | No anirà al treball final |
 | Presentació | Esborrany | Res de gros |
 | Introducció | Esborrany | Res de gros |
-| Part I. Marc teòric (capítols 1 a 5) | Esborrany revisat | Res de gros |
+| Part I. Marc teòric (capítols 1 a 5) | Esborrany | Res de gros |
 | Part II. Metodologia (capítols 6 a 15) | Esborrany | Posar-hi les xifres exactes del dia de l'entrega final |
 | Part III. El producte (capítols 16 a 21) | Esborrany | Refer les captures de pantalla amb les dades finals |
 | Part IV. Resultats i conclusions (capítols 22 a 26) | Per escriure | Tot. Depèn de les proves amb usuaris, que encara no s'han fet |
