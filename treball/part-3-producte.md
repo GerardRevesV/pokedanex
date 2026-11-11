@@ -273,4 +273,5 @@ ha de copiar fitxers a mà.
 
 El cost de l'allotjament és de **0 €**. Tampoc no costen res les dades ni
 les eines de publicació. L'única despesa del projecte és la subscripció de
-l'eina d'intel·ligència artificial.
+l'eina d'intel·ligència artificial, que és de pagament: el pla de pagament
+més barat costa 18 euros al mes si es paga mes a mes (Anthropic, 2026).

@@ -1253,3 +1253,16 @@ mencions i queden aquestes:
 
 Surt de la presentació la frase que explicava que la idea havia vingut de
 veure'l fer un joc amb intel·ligència artificial.
+
+## 67. El preu de l'eina, amb font
+
+*11 de novembre del 2026*
+
+El treball deia que l'única despesa era la subscripció de l'eina
+d'intel·ligència artificial, sense cap xifra. Es consulta la pàgina oficial
+de preus i s'afegeix al capítol 21 el del pla de pagament més barat: 18
+euros al mes si es paga mes a mes. La font queda apuntada a
+`treball/fonts.md`, amb la data de la consulta.
+
+El que ha costat exactament aquest projecte queda per al capítol 22, i el
+que cal aclarir abans és a `docs/pendents.md`.

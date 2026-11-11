@@ -1107,7 +1107,9 @@ textos a Word directament, i s'ha hagut de fer la conversió a mida.
   col·leccions, amb cartes sense preu.
 - Repassades les mencions del pare de l'autora: consta com a propietari
   del compte de GitHub i com a ajuda per revisar la web.
-- Entrades **63** a **66** de l'històric.
+- Consultada la pàgina oficial de preus de l'eina i afegit al capítol 21
+  el preu del pla més barat, amb la font.
+- Entrades **63** a **67** de l'històric.
 
 **Eines usades:** Claude Code.
 
