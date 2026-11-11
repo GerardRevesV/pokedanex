@@ -325,9 +325,11 @@ persona.
 
 **Hi ha errors que només veu qui fa servir la web.** El zero i els
 controls que no feien res no els va trobar cap revisor. Els va trobar
-l'autora, que mirava la web com una col·leccionista. El zero, per exemple,
-el va veure marcant col·leccions: hi havia cartes sense preu, i el total
-no podia ser bo. No saber programar no li ho va impedir.
+l'autora, que mirava la web com una col·leccionista. El zero el va veure
+marcant col·leccions: hi havia cartes sense preu, i el total no podia
+ser bo. Els controls, prement els botons un per un per comprovar que tot
+anava bé: a la vista d'àlbum no passava res. No saber programar no li ho
+va impedir.
 
 **De vegades qui s'equivoca és la persona.** L'autora va demanar dues
 vegades que el tipus d'una carta, l'Eevee, digués «Normal» en lloc
