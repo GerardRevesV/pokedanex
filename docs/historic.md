@@ -1355,3 +1355,13 @@ trobi sense explicació, s'afegeix un paràgraf al final del capítol 13
 Markdown dins del repositori, en què ha ajudat la IA, i que l'historial de
 canvis és a GitHub i no al Word. El text el proposa l'Edanna; la IA
 l'adapta a la tercera persona de la resta del capítol.
+
+## 73. El Word porta el nom de l'autora a les propietats
+
+A les propietats del Word (Fitxer > Informació) hi sortia com a autor
+«python-docx», que és el nom de l'eina que fabrica el fitxer, i el títol
+era buit. El programa que munta el Word (`tools/munta_entrega.py`) ara hi
+posa l'autora i el títol que hi ha a la portada del treball. Ho fa dues
+vegades, perquè el Word, quan omple l'índex, hi apunta l'usuari de
+l'ordinador com a darrer autor. El temps d'edició continua sent zero: és
+veritat que el fitxer es genera de cop, i el capítol 13 ja ho explica.

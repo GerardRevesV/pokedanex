@@ -410,6 +410,21 @@ def actualitza_index(desti):
         print("Avís: no s'ha pogut omplir l'índex. Obriu el Word i actualitzeu-lo a mà.")
 
 
+def posa_propietats(doc):
+    """Omple les propietats del fitxer (autora i títol) amb les dades de la portada.
+
+    Sense això hi surt el nom de l'eina que fa el Word, i no el de l'autora.
+    """
+    dades = dict(re.findall(r"\*\*(.+?):\*\* (.+)", llegeix("preliminars.md")))
+    autora = dades.get("Autora", "").strip()
+    titol = dades.get("Títol", "").replace("*", "").strip()
+    cp = doc.core_properties
+    cp.author = cp.last_modified_by = autora
+    cp.title = titol
+    cp.subject = "Treball de recerca"
+    cp.comments = ""
+
+
 def main():
     if "--md" in sys.argv:
         munta_md()
@@ -437,8 +452,13 @@ def main():
 
     SORTIDA.mkdir(exist_ok=True)
     desti = SORTIDA / f"Pokedanex-entrega-parcial-{date.today().isoformat()}.docx"
+    posa_propietats(doc)
     doc.save(desti)
     actualitza_index(desti)
+    # El Word, en omplir l'índex, hi apunta l'usuari de l'ordinador: es torna a posar.
+    final = Document(desti)
+    posa_propietats(final)
+    final.save(desti)
     paraules = sum(len(p.text.split()) for p in doc.paragraphs)
     print(f"{desti.relative_to(ARREL)}  ({paraules} paraules, {len(doc.inline_shapes)} imatges)")
 

@@ -1167,6 +1167,9 @@ s'envia, i mentrestant només el veu qui l'ha escrit.
   explicar-ho al treball en lloc d'amagar-ho.
 - Paràgraf nou al final del capítol 13, amb el text proposat per
   l'Edanna, i document unificat regenerat (entrada **72** de l'històric).
+- Word regenerat amb el paràgraf nou, i pull request 27 obert.
+- Les propietats del Word ara porten el nom de l'autora i el títol del
+  treball, i no el nom de l'eina (entrada **73**).
 
 **Eines usades:** Claude Code.
 
