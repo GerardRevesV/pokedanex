@@ -9,7 +9,7 @@
 
 ## Abans del cos del treball
 
-**Presentació** *(esborrany, amb dades per omplir)*
+**Presentació** *(esborrany)*
 L'única part en primera persona: per què s'ha triat el tema, com s'ha fet el
 treball, quines dificultats hi ha hagut i els agraïments.
 

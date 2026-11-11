@@ -2,12 +2,9 @@
 
 > ⚠️ **Nota de treball, per esborrar abans del lliurament.** Aquest document
 > conté les parts que van davant del cos del treball: portada, abstract,
-> índex, presentació i introducció. Tot el que hi ha entre claudàtors i
-> comença per **«PER OMPLIR»** són dades que només pot donar l'Edanna. Les
-> frases marcades amb **«PENDENT»** depenen de feina que
-> encara no està feta: les proves amb usuaris i les conclusions. Al final hi
-> ha el pressupost de pàgines de tot el treball, que és una eina de treball i
-> no s'entrega.
+> índex, presentació i introducció. La frase marcada amb **«PENDENT»** depèn
+> de les proves amb usuaris, que encara no s'han fet. Al final hi ha el
+> pressupost de pàgines de tot el treball, que no s'entrega.
 
 ---
 

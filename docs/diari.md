@@ -1099,6 +1099,8 @@ textos a Word directament, i s'ha hagut de fer la conversió a mida.
 - Actualitzada la pàgina de guia del document d'entrega.
 - Amb més respostes: el primer tutor a la presentació, el pare al
   capítol 14 i dos passatges fora.
+- Repassat què diu el text que ha fet l'autora, i apuntades a pendents
+  tres coses que el tribunal pot preguntar.
 - Entrades **63** i **64** de l'històric.
 
 **Eines usades:** Claude Code.
