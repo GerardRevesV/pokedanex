@@ -1,7 +1,5 @@
 # Glossari
 
-*Esborrany de l'11 de novembre del 2026.*
-
 Les paraules tècniques del treball, per ordre alfabètic. El número entre
 parèntesis és el capítol on s'expliquen amb més detall.
 

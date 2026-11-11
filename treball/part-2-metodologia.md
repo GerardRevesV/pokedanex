@@ -1,7 +1,5 @@
 # Part II — Metodologia: com s'ha treballat
 
-*Esborrany de l'11 de novembre del 2026. Capítols 6 a 15.*
-
 La Part I explica què és el *vibe coding*. Aquesta explica com s'ha fet
 servir en aquest projecte. Cada capítol parteix d'un problema que va
 aparèixer durant la feina i explica com es va resoldre. Les dates, les
