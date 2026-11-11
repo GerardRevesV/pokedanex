@@ -1016,3 +1016,75 @@ la feina fins a la versió principal.
 a la versió principal, si demanava ajuntar-se amb una altra branca. En la
 primera comprovació, a més, el navegador ensenyava un full d'estils antic
 que tenia desat, i semblava que l'arreglada del mòbil s'havia perdut.
+
+## 2026-11-11 (4a sessió) — El glossari
+
+**Què s'ha fet:**
+- Escrit `treball/glossari.md`, amb 30 termes i unes 550 paraules de
+  text, a partir de les definicions que ja hi havia a les parts I, II i
+  III.
+- Comprovat que cada definició i cada número de capítol quadren amb el
+  text.
+- Posades al dia la taula d'estat dels preliminars i la nota de l'índex
+  comentat.
+- Entrada **59** de l'històric.
+
+**Eines usades:** Claude Code.
+
+**Costos:** 0 € (de subscripció a part, pendent de documentar).
+
+**Problemes:** cap. El glossari surt una mica més llarg que la pàgina que
+tenia assignada.
+
+## 2026-11-11 (5a sessió) — Repassada abans d'entregar a la professora
+
+**Què s'ha fet:**
+- Glossari revisat: ordre alfabètic i tres paraules més (30 en total). Se
+  li dona una pàgina i mitja al pressupost de pàgines.
+- Llegits seguits tots els apartats que s'entreguen i corregides les
+  contradiccions entre ells: referències entre parts, dates, xifres,
+  títols i paraules sense explicar.
+- Actualitzades les notes de l'índex i de l'índex comentat.
+- Entrada **60** de l'històric.
+
+**Eines usades:** Claude Code.
+
+**Costos:** 0 € (de subscripció a part, pendent de documentar).
+
+**Problemes:** les parts es van escriure en dies diferents i cadascuna
+parlava de les altres tal com estaven aquell dia.
+
+## 2026-11-11 (6a sessió) — Passada d'estil a la Part I
+
+**Què s'ha fet:**
+- Reescrita la Part I amb frases més curtes i sense incisos entre guions,
+  perquè tingui el mateix to que les parts II i III. El contingut no
+  canvia.
+- Comparades la versió vella i la nova amb un petit programa: mateixes
+  xifres, cites, fonts i noms.
+- Entrada **61** de l'històric.
+
+**Eines usades:** Claude Code.
+
+**Costos:** 0 € (de subscripció a part, pendent de documentar).
+
+**Problemes:** cap.
+
+## 2026-11-11 (7a sessió) — El document d'entrega en Word
+
+**Què s'ha fet:**
+- Escrit `tools/munta_entrega.py`, que ajunta els textos en un sol Word i
+  en treu les notes internes.
+- Afegida una pàgina de guia al principi: què hi ha, en quin estat i què
+  falta.
+- Comprovat el resultat: s'ha buscat dins del Word qualsevol resta de notes
+  o de format, i s'ha obert amb Word per veure'n les pàgines (44).
+- Entrada **62** de l'històric.
+
+**Eines usades:** Claude Code, Python amb la biblioteca python-docx (ja
+instal·lada) i Microsoft Word (ja instal·lat).
+
+**Costos:** 0 € (de subscripció a part, pendent de documentar).
+
+**Problemes:** a l'ordinador no hi havia cap programa per convertir els
+textos a Word directament, i s'ha hagut de fer la conversió a mida.

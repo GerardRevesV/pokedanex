@@ -52,9 +52,10 @@ projecte té quatre documents que s'omplen a cada sessió:
 
 *Taula 1. Els quatre documents de procés del projecte.*
 
-L'11 de novembre del 2026 l'històric tenia 53 entrades, i hi havia 13
-decisions i 12 reptes escrits. Són la font d'aquesta part del treball:
-sense ells no es podria explicar què va passar tres mesos enrere.
+A principis de novembre del 2026 l'històric tenia més de cinquanta entrades,
+i hi havia 13 decisions i una dotzena de reptes escrits. Són la font
+d'aquesta part del treball: sense ells no es podria explicar què va passar
+tres mesos enrere.
 
 ## 7. Dir-ho bé: com es demana una cosa a la màquina
 
@@ -135,7 +136,8 @@ segueix. El projecte en té una, creada l'11 d'agost del 2026.
 
 Es va estrenar aquell mateix dia amb una expansió de 180 cartes, i tot
 seguit se'n van afegir dotze més d'una sola tirada. La web va passar de 2
-expansions a 14, amb 2.464 cartes.
+expansions a 14, amb 2.464 cartes (4.016 peces, si cada variant d'una carta
+es compta a part).
 
 Una recepta no es fa un cop i prou. En afegir les dotze expansions es va
 veure que quatre no tenien logotip oficial, i el pas per resoldre-ho es
@@ -254,11 +256,10 @@ En tancar la Fase 1 es va decidir treballar sempre de la mateixa manera:
    està bé, es **fusiona**, és a dir, s'ajunta amb la versió bona. En
    aquell moment la web publicada s'actualitza tota sola (capítol 21).
 
-Això dona tres coses. Es pot tornar enrere. Cap canvi del codi no arriba
-a la web publicada sense haver passat per una revisió. I en queda
-constància: cada *pull request* és una prova de què es va fer i quan.
-L'11 de novembre del 2026 se n'havien obert 20 en tot el projecte, i 18
-ja estaven fusionats.
+Això dona tres coses. Es pot tornar enrere. Cap canvi del codi no arriba a
+la web publicada sense haver passat per una revisió. I en queda constància:
+cada *pull request* és una prova de què es va fer i quan. A principis de
+novembre del 2026 se n'havien obert una vintena en tot el projecte.
 
 ## 14. Com es comprova que funciona
 

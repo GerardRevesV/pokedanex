@@ -1092,3 +1092,86 @@ En ajuntar-ho, l'entrada de les barres del mòbil, que portava el número
 53, passa a ser la 57.
 
 D'ara endavant, cada PR nou es fa directament contra `main`.
+
+## 59. El glossari
+
+*11 de novembre del 2026*
+
+S'escriu `treball/glossari.md`: 30 paraules tècniques del treball, per
+ordre alfabètic, cadascuna explicada en una o dues línies i amb el número
+del capítol on surt amb més detall. Les definicions no són noves: són les
+mateixes que ja donen el marc teòric i les parts II i III, escurçades. Es
+fa ara perquè la professora ha demanat el que hi ha fins al moment.
+
+De passada es posen al dia dues dades que havien quedat velles: la taula
+d'estat dels preliminars i la nota de l'índex comentat, que encara deien
+que les parts II i III estaven per escriure.
+
+## 60. Repassada del que s'entrega a la professora
+
+*11 de novembre del 2026*
+
+La professora demana el que hi ha fet fins ara. Abans d'entregar-ho es
+llegeixen seguits tots els apartats (preliminars, parts I, II i III, índex
+comentat i glossari) per veure si es contradiuen. Es corregeix això:
+
+- **Referències entre parts.** La Part I deia «la part de metodologia
+  explica...» perquè es va escriure quan la Part II no existia. Ara diu el
+  número del capítol (10, 11, 15 o 22).
+- **«Independents».** L'abstract i la Part I parlaven de revisions
+  «independents». La Part II explica que totes les fa la mateixa màquina,
+  i la paraula s'ha tret.
+- **Les dates.** «El primer dia» volia dir el 9 d'agost, i el treball va
+  començar el 24 de març. Ara diu «el primer dia de feina amb la web».
+- **Xifres que caduquen.** La Part II donava el nombre exacte d'entrades
+  de l'històric i de pull requests «l'11 de novembre», i aquell mateix dia
+  ja havien canviat. Ara són aproximades, fins a l'entrega final.
+- **Paraules sense explicar**, que és el que més ha marcat l'Edanna en les
+  seves revisions: «vulnerabilitats» passa a «forats de seguretat», «capes
+  gratuïtes» a «modalitat gratuïta», «dades d'altri» a «dades que són
+  d'altres», i s'explica què és una «peça» quan es compten 4.016.
+- **Títols.** El capítol 20 tenia un títol a l'índex i un altre al text.
+- **El glossari** passa a tenir una pàgina i mitja al pressupost de
+  pàgines, i les notes dels dos índexs diuen què hi ha escrit de debò.
+
+El que no s'ha tocat i queda per decidir és a `docs/pendents.md`.
+
+## 61. La Part I, amb el mateix to que les altres
+
+*11 de novembre del 2026*
+
+El marc teòric es va escriure primer, i tenia frases més llargues i molts
+incisos entre guions. Les parts II i III, escrites després, són més
+planeres, i en llegir-les seguides es notava el canvi. Es reescriu la Part
+I frase per frase sense tocar-ne el contingut: les frases llargues es
+parteixen, els incisos passen a ser frases senceres i algunes paraules es
+canvien per altres de més corrents.
+
+La mitjana baixa de 16 a 13 paraules per frase, i dels 17 guions llargs
+només en queda el del títol. Per assegurar que no s'havia perdut res, es
+van comparar automàticament la versió vella i la nova: hi ha les mateixes
+xifres, les mateixes cites, les mateixes fonts i els mateixos noms. L'únic
+afegit és una frase que explica què vol dir «en producció» a la cita de
+Simon Willison.
+
+## 62. El document d'entrega parcial, en Word
+
+*11 de novembre del 2026*
+
+Els textos del treball són fitxers separats, escrits en un format senzill
+de text. Per entregar-los a la professora calia un sol document de Word. Es
+fa un petit programa, `tools/munta_entrega.py`, que els ajunta en ordre:
+una pàgina de guia, la portada, l'abstract, l'índex, l'índex comentat, la
+presentació, la introducció, les parts I, II i III i el glossari. En surten
+44 pàgines.
+
+La pàgina de guia és nova. Diu, apartat per apartat, què està escrit i què
+hi falta, i avisa que l'índex comentat només hi és en aquesta entrega: al
+treball final hi haurà l'índex normal.
+
+El programa treu les notes internes de cada text (les que diuen «per
+esborrar abans del lliurament») i el pressupost de pàgines. Les marques
+«PER OMPLIR» i «PENDENT» es queden, en color, perquè es vegi què falta.
+
+El Word no es guarda al projecte: es torna a generar cada vegada, i així
+sempre surt dels textos tal com són aquell dia.

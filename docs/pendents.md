@@ -29,6 +29,15 @@ constància per al treball.
 
 ## El treball escrit
 
+- [ ] **Entrega parcial a la professora.** El Word es genera amb
+  `python tools/munta_entrega.py` i surt a `treball/entrega/`. Abans
+  d'enviar-lo, l'Edanna l'ha de llegir sencer i omplir o treure les marques
+  «PER OMPLIR» que vulgui.
+- [ ] Introducció: no parla de la primera etapa del treball (del 24 de
+  març al 9 d'agost del 2026). Només surt en una frase del capítol 6.
+- [ ] Part II, capítols 6 i 13: les xifres de l'històric, dels reptes i
+  dels pull requests ara són aproximades («més de cinquanta», «una
+  vintena»). Posar-hi les exactes el dia de l'entrega final.
 - [ ] **L'ús d'IA en el text del treball.** El treball no diu com s'ha
   escrit el text. Mirar què demana la normativa del centre sobre declarar
   l'ús d'intel·ligència artificial i parlar-ho amb el tutor.
@@ -51,7 +60,7 @@ constància per al treball.
 - [ ] Part IV, resultats i conclusions: per escriure.
 - [ ] Proves amb usuaris: sense fer. En depenen la frase de resultats de
   l'abstract («PENDENT») i les conclusions.
-- [ ] Glossari: ajornat.
+- [ ] Glossari: afegir-hi les paraules noves de la Part IV quan s'escrigui.
 - [ ] Una lectura de la Part III feta per algú que no l'hagi escrit. Les
   dues revisions les ha fet la mateixa IA que la va redactar.
 - [ ] El guió (`treball/guio-continguts.md`) numera la Part III del 17 al
@@ -72,6 +81,11 @@ constància per al treball.
 
 ## Fet
 
+- [x] *11-11-2026.* Document d'entrega parcial en Word, amb una pàgina de
+  guia al principi.
+- [x] *11-11-2026.* Part I: passada d'estil perquè soni com les parts II
+  i III.
+- [x] *11-11-2026.* Glossari: esborrany amb 30 paraules.
 - [x] *11-11-2026.* El treball escrit i els canvis pendents de la web, a
   la versió principal (PR 22 i 23).
 - [x] *10-11-2026.* Panell d'estadístiques al mòbil: les barres ja ocupen

@@ -9,3 +9,6 @@ __pycache__/
 *.pyc
 .DS_Store
 Thumbs.db
+
+# Document d'entrega (es genera amb tools/munta_entrega.py)
+treball/entrega/

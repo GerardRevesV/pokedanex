@@ -37,6 +37,7 @@ ORDRE = {
         "marc-teoric.md",
         "part-2-metodologia.md",
         "part-3-producte.md",
+        "glossari.md",
         "fonts.md",
     ],
     "docs": [

@@ -1,11 +1,11 @@
 # Índex comentat
 
-> **Document de treball, no s'entrega.** És l'índex de
-> `treball/preliminars.md` amb una explicació d'una a tres línies de cada
-> capítol, pensat per ensenyar-lo a la professora i comentar-lo amb ella. De
-> moment només la Part I està escrita; de la resta, el que hi ha aquí és el
-> que cada capítol **ha d'explicar**. Els títols de les parts II, III i IV
-> són provisionals.
+> **Document d'aclariment: no forma part del treball.** És l'índex del
+> treball amb una explicació d'una a tres línies de cada capítol, perquè es
+> vegi d'un cop d'ull què diu cadascun. Les parts I, II i III i el glossari
+> ja estan escrits, en esborrany, i el que hi ha aquí n'és el resum. La Part
+> IV encara no està escrita: el que hi ha aquí és el que cada capítol **ha
+> d'explicar**, i els títols són provisionals.
 
 ## Abans del cos del treball
 
@@ -17,7 +17,7 @@ treball, quines dificultats hi ha hagut i els agraïments.
 La pregunta i la hipòtesi, per què la resposta no és evident, què vol dir que
 una web sigui «útil», els objectius i l'ordre del document.
 
-## Part I — Marc teòric: què és la programació per intenció *(escrita)*
+## Part I — Marc teòric: què és la programació per intenció *(en esborrany)*
 
 Què se sabia del tema abans de començar. Tot el que s'hi afirma ve de fonts
 externes citades.
@@ -119,8 +119,8 @@ i el que es veu a la pantalla), amb un esquema. Sense entrar en el codi.
 
 **18. Les funcionalitats, una per una**
 Un recorregut per la web amb captures: la graella de cartes, l'àlbum de nou
-cartes per pàgina, el zoom, els filtres, les estadístiques i el selector de
-col·leccions.
+cartes per pàgina, el zoom, els filtres, les estadístiques i el selector
+d'expansions.
 
 **19. D'on surten les dades i els preus**
 D'on es treuen les cartes i els preus (dues fonts), per què se'n guarda una
@@ -162,7 +162,7 @@ Si la hipòtesi es confirma, amb quins matisos, i quins dubtes queden oberts.
 
 ## Després del cos del treball
 
-**Glossari** *(per fer)*
+**Glossari** *(en esborrany)*
 Les paraules tècniques del treball, explicades en una o dues línies cadascuna.
 
 **Fonts d'informació** *(fetes per a la Part I)*
