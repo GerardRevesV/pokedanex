@@ -262,8 +262,9 @@ La web és pública des del 10 d'agost del 2026 en aquesta adreça:
 
 **https://gerardrevesv.github.io/pokedanex/**
 
-El nom que surt a l'adreça és el del compte de GitHub, que és del pare de
-l'autora.
+L'allotjament és el del compte de GitHub del pare de l'autora. Per això
+l'adreça comença amb el seu nom d'usuari, `gerardrevesv`, i no amb el
+d'ella.
 
 La publicació és automàtica. Cada vegada que un canvi s'aprova i s'afegeix
 a la versió principal del codi, la web es torna a publicar sola: el primer
