@@ -140,8 +140,8 @@ enlloc o un preu que no és a les dades.
 D'aquí surt la conseqüència pràctica més important de tot el treball:
 **plausible no vol dir correcte**. Un codi generat per intel·ligència
 artificial té exactament l'aspecte que ha de tenir un codi correcte, perquè
-s'ha après d'exemples correctes. Que ho sigui de debò és una altra qüestió, i
-no es pot saber mirant-lo per sobre. La part de metodologia recull els casos
+s'ha après d'exemples correctes. Que ho sigui de debò és una altra qüestió,
+i no es pot saber mirant-lo per sobre. El capítol 15 recull els casos
 d'aquesta mena que van aparèixer al projecte.
 
 Hi ha un últim tret que convé saber: **la mateixa pregunta no dona mai la
@@ -195,14 +195,14 @@ demana saber programar.
 
 ### Subagents i receptes guardades
 
-Un agent pot engegar **altres agents** —anomenats subagents— i encarregar-los
-una tasca concreta i tancada perquè la facin pel seu compte i només li
-tornin la conclusió. Serveix per a dues coses: la **concentració**, perquè
-cada subagent comença de zero amb una única feina i sense el soroll de la
-conversa anterior, i el **paral·lelisme**, perquè diversos subagents poden
-treballar alhora sobre aspectes diferents del mateix problema. El capítol de
-metodologia explica l'operatiu més gran del projecte, en què trenta agents
-van corregir vuitanta-nou problemes de la versió mòbil de la pàgina.
+Un agent pot engegar **altres agents** —anomenats subagents— i
+encarregar-los una tasca concreta i tancada perquè la facin pel seu compte i
+només li tornin la conclusió. Serveix per a dues coses: la **concentració**,
+perquè cada subagent comença de zero amb una única feina i sense el soroll
+de la conversa anterior, i el **paral·lelisme**, perquè diversos subagents
+poden treballar alhora sobre aspectes diferents del mateix problema. El
+capítol 10 explica el cas més gran del projecte, en què trenta agents van
+trobar i corregir vuitanta-nou problemes de la versió mòbil de la pàgina.
 
 També es pot deixar escrita una **recepta** —en aquestes eines se'n diu
 *skill*— amb els passos d'una feina que es repeteix, i l'agent la llegeix i
@@ -228,18 +228,18 @@ comença a repetir preguntes ja resoltes.
 finestra de context s'esborra entre sessions, la memòria real viu en
 fitxers: en aquest projecte, un document amb les regles del joc que l'agent
 llegeix al començament de cada sessió. Per això les regles es van posar per
-escrit el primer dia. No és burocràcia: és l'únic mecanisme perquè una
-decisió sobrevisqui a la sessió en què es va prendre.
+escrit el primer dia de feina amb la web. No és burocràcia: és l'únic
+mecanisme perquè una decisió sobrevisqui a la sessió en què es va prendre.
 
 D'aquí surt una conseqüència que el projecte va aprendre de la manera dura.
 Amb aquestes eines es pot tenir **més d'una conversa oberta alhora**, i de
-vegades convé: mentre una s'ocupa de l'àlbum, l'altra arregla els preus. Però
-cada conversa té la seva pròpia finestra de context i no veu la de l'altra,
-de manera que cap de les dues sap què està fent la seva companya. Mentre
-toquen fitxers diferents, no passa res. El dia que totes dues van escriure al
-mateix document del projecte, cadascuna hi va posar la seva versió i van
-quedar dues entrades amb el mateix número. La part de metodologia explica com
-es va detectar i com es va resoldre.
+vegades convé: mentre una s'ocupa de l'àlbum, l'altra arregla els preus.
+Però cada conversa té la seva pròpia finestra de context i no veu la de
+l'altra, de manera que cap de les dues sap què està fent la seva companya.
+Mentre toquen fitxers diferents, no passa res. El dia que totes dues van
+escriure al mateix document del projecte, cadascuna hi va posar la seva
+versió i van quedar dues entrades amb el mateix número. El capítol 11
+explica com es va resoldre.
 
 ---
 
@@ -299,9 +299,9 @@ el procés és la matèria primera: amb un generador d'aplicacions hi hauria una
 web, però no hi hauria cap història per explicar.
 
 Sobre el cost: la despesa en serveis externs —allotjament, dades de cartes i
-repositori— ha estat de **0 €**, tot amb capes gratuïtes. El cost de la
-subscripció de l'eina d'intel·ligència artificial es detalla a l'apartat de
-costos de la part de resultats.
+repositori— ha estat de **0 €**, perquè tots tenen una modalitat gratuïta.
+El cost de la subscripció de l'eina d'intel·ligència artificial es detalla
+al capítol 22.
 
 ---
 
@@ -315,9 +315,9 @@ xarxes socials.
 **El codi generat funciona, però és menys segur.** L'empresa de seguretat
 Veracode va demanar a més de cent models d'intel·ligència artificial que
 resolguessin vuitanta feines de programació triades precisament perquè és
-fàcil deixar-hi vulnerabilitats, i va trobar que aproximadament el **45 %**
-del codi generat en contenia alguna. La conclusió que n'extreu és la que més
-hauria de fer pensar: amb els anys el codi generat funciona cada vegada
+fàcil deixar-hi forats de seguretat, i va trobar que aproximadament el **45
+%** del codi generat en contenia alguna. La conclusió que n'extreu és la que
+més hauria de fer pensar: amb els anys el codi generat funciona cada vegada
 millor, però no és cada vegada més segur (segons la nota de premsa de
 Veracode, 2025).
 
@@ -375,13 +375,13 @@ producció a base de *vibe coding* és clarament una idea terrible» (Willison,
 2025, traducció pròpia).
 
 Aquesta conclusió de la bibliografia és la que va determinar el mètode de
-treball del projecte, i converteix el treball en una cosa més interessant que
-una demostració: en una **predicció comprovable**. Si la recerca té raó, un
-projecte fet deixant-se anar, en el sentit estricte del terme de Karpathy,
-hauria d'acabar amb vulnerabilitats i amb codi que ningú no entén. La
-resposta del projecte va ser no deixar-se anar, sinó afegir capes de revisió
-independents entre la generació del codi i la seva publicació. La part de
-metodologia explica com es va fer i la de resultats, què s'hi va trobar.
+treball del projecte, i converteix el treball en una cosa més interessant
+que una demostració: en una **predicció comprovable**. Si la recerca té raó,
+un projecte fet deixant-se anar, en el sentit estricte del terme de
+Karpathy, hauria d'acabar amb forats de seguretat i amb codi que ningú no
+entén. La resposta del projecte va ser no deixar-se anar, sinó afegir capes
+de revisió entre la generació del codi i la seva publicació. La Part II
+explica com es va fer i la Part IV, què s'hi va trobar.
 
 I que no hi hagi mesures fiables de les eines d'avui afecta el valor d'aquest
 treball, de manera que convé dir-ho clarament. Un projecte documentat pas a

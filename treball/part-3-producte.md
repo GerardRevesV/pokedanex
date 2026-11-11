@@ -186,22 +186,23 @@ amb preu de Cardmarket recent. A la dreta, una de Surging Sparks amb el
 preu marcat amb «≈»: les fonts no es posaven d'acord i la web ha triat el
 preu més baix.*
 
-Amb la regla nova, de les 4.016 peces que hi ha a les catorze expansions,
-4.003 tenen preu de Cardmarket recent, 13 surten marcades amb «≈» i cap es
-queda sense preu. Abans de la revisió n'hi havia 1.068 sense preu.
+Amb la regla nova, de les 4.016 peces que hi ha a les catorze expansions
+(cada variant d'una carta compta com una peça), 4.003 tenen preu de
+Cardmarket recent, 13 surten marcades amb «≈» i cap es queda sense preu.
+Abans de la revisió n'hi havia 1.068 sense preu.
 
 La regla té límits, i s'han de dir. El pas 4 només funciona si la carta té
 preu en tots dos mercats: si només n'hi ha un i és erroni, no es detecta.
 I els dos números de la regla, els 60 dies i les cinc vegades, es van
 triar mirant les dades, no amb cap càlcul.
 
-La idea de fons val per a qualsevol web que treballi amb dades d'altri:
-és millor una aproximació que avisa que ho és, o un buit que es veu, que
-no pas un número que sembla exacte i no ho és. I les dades d'un servei
-extern s'han de tornar a revisar de tant en tant, perquè poden deixar de
-ser bones sense que res ho indiqui.
+La idea de fons val per a qualsevol web que treballi amb dades que són
+d'altres: és millor una aproximació que avisa que ho és, o un buit que es
+veu, que no pas un número que sembla exacte i no ho és. I les dades d'un
+servei extern s'han de tornar a revisar de tant en tant, perquè poden deixar
+de ser bones sense que res ho indiqui.
 
-## 20. Ordinador i mòbil: la mateixa web en dues pantalles
+## 20. Ordinador i mòbil
 
 La web es va pensar per a ordinador, i en un mòbil no n'hi ha prou de
 fer-ho tot més petit. Canvien tres coses. La pantalla és estreta. No hi ha
@@ -248,14 +249,14 @@ pugui obrir tothom, els fitxers han d'estar en un ordinador connectat
 sempre a internet. D'aquest servei se'n diu allotjament, o *hosting*, i
 sovint es paga.
 
-Aquí es va fer servir **GitHub Pages**. GitHub és el servei on ja es
-desava el codi del projecte, i ofereix allotjament gratuït amb una
-condició: que el codi sigui públic, a la vista de tothom. Abans d'acceptar
-es va comprovar que no s'hi hagués desat mai cap contrasenya ni cap clau.
-Que el codi sigui públic, a més, va bé al treball: qui el vulgui revisar,
-pot fer-ho. Es van mirar dues alternatives, Netlify i Cloudflare Pages, i
-es van descartar perquè obligaven a obrir un compte en un altre servei
-sense donar res a canvi.
+Aquí es va fer servir **GitHub Pages**. GitHub és el servei on ja es desava
+el codi del projecte, i ofereix allotjament gratuït amb una condició: que el
+codi sigui públic, a la vista de tothom. Abans d'acceptar es va comprovar
+que no s'hi hagués desat mai cap contrasenya ni cap altra dada secreta. Que
+el codi sigui públic, a més, va bé al treball: qui el vulgui revisar, pot
+fer-ho. Es van mirar dues alternatives, Netlify i Cloudflare Pages, i es van
+descartar perquè obligaven a obrir un compte en un altre servei sense donar
+res a canvi.
 
 La web és pública des del 10 d'agost del 2026 en aquesta adreça:
 

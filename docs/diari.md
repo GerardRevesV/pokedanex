@@ -1035,3 +1035,21 @@ que tenia desat, i semblava que l'arreglada del mòbil s'havia perdut.
 
 **Problemes:** cap. El glossari surt una mica més llarg que la pàgina que
 tenia assignada.
+
+## 2026-11-11 (5a sessió) — Repassada abans d'entregar a la professora
+
+**Què s'ha fet:**
+- Glossari revisat: ordre alfabètic i tres paraules més (30 en total). Se
+  li dona una pàgina i mitja al pressupost de pàgines.
+- Llegits seguits tots els apartats que s'entreguen i corregides les
+  contradiccions entre ells: referències entre parts, dates, xifres,
+  títols i paraules sense explicar.
+- Actualitzades les notes de l'índex i de l'índex comentat.
+- Entrada **60** de l'històric.
+
+**Eines usades:** Claude Code.
+
+**Costos:** 0 € (de subscripció a part, pendent de documentar).
+
+**Problemes:** les parts es van escriure en dies diferents i cadascuna
+parlava de les altres tal com estaven aquell dia.

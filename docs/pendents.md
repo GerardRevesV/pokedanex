@@ -29,6 +29,16 @@ constància per al treball.
 
 ## El treball escrit
 
+- [ ] **Abans d'entregar:** treure de cada document la «Nota de treball»
+  del principi i el pressupost de pàgines dels preliminars.
+- [ ] Part I: fa servir molts incisos entre guions llargs i frases més
+  llargues que les parts II i III. Si es vol un to igual a tot el treball,
+  cal una passada d'estil al marc teòric.
+- [ ] Introducció: no parla de la primera etapa del treball (del 24 de
+  març al 9 d'agost del 2026). Només surt en una frase del capítol 6.
+- [ ] Part II, capítols 6 i 13: les xifres de l'històric, dels reptes i
+  dels pull requests ara són aproximades («més de cinquanta», «una
+  vintena»). Posar-hi les exactes el dia de l'entrega final.
 - [ ] **L'ús d'IA en el text del treball.** El treball no diu com s'ha
   escrit el text. Mirar què demana la normativa del centre sobre declarar
   l'ús d'intel·ligència artificial i parlar-ho amb el tutor.
@@ -51,8 +61,6 @@ constància per al treball.
 - [ ] Part IV, resultats i conclusions: per escriure.
 - [ ] Proves amb usuaris: sense fer. En depenen la frase de resultats de
   l'abstract («PENDENT») i les conclusions.
-- [ ] Glossari: fa unes 550 paraules i el pressupost era d'una pàgina
-  (350). Decidir si es retalla o se li dona mitja pàgina més.
 - [ ] Glossari: afegir-hi les paraules noves de la Part IV quan s'escrigui.
 - [ ] Una lectura de la Part III feta per algú que no l'hagi escrit. Les
   dues revisions les ha fet la mateixa IA que la va redactar.

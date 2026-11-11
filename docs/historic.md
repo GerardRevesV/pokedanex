@@ -1106,3 +1106,32 @@ fa ara perquè la professora ha demanat el que hi ha fins al moment.
 De passada es posen al dia dues dades que havien quedat velles: la taula
 d'estat dels preliminars i la nota de l'índex comentat, que encara deien
 que les parts II i III estaven per escriure.
+
+## 60. Repassada del que s'entrega a la professora
+
+*11 de novembre del 2026*
+
+La professora demana el que hi ha fet fins ara. Abans d'entregar-ho es
+llegeixen seguits tots els apartats (preliminars, parts I, II i III, índex
+comentat i glossari) per veure si es contradiuen. Es corregeix això:
+
+- **Referències entre parts.** La Part I deia «la part de metodologia
+  explica...» perquè es va escriure quan la Part II no existia. Ara diu el
+  número del capítol (10, 11, 15 o 22).
+- **«Independents».** L'abstract i la Part I parlaven de revisions
+  «independents». La Part II explica que totes les fa la mateixa màquina,
+  i la paraula s'ha tret.
+- **Les dates.** «El primer dia» volia dir el 9 d'agost, i el treball va
+  començar el 24 de març. Ara diu «el primer dia de feina amb la web».
+- **Xifres que caduquen.** La Part II donava el nombre exacte d'entrades
+  de l'històric i de pull requests «l'11 de novembre», i aquell mateix dia
+  ja havien canviat. Ara són aproximades, fins a l'entrega final.
+- **Paraules sense explicar**, que és el que més ha marcat l'Edanna en les
+  seves revisions: «vulnerabilitats» passa a «forats de seguretat», «capes
+  gratuïtes» a «modalitat gratuïta», «dades d'altri» a «dades que són
+  d'altres», i s'explica què és una «peça» quan es compten 4.016.
+- **Títols.** El capítol 20 tenia un títol a l'índex i un altre al text.
+- **El glossari** passa a tenir una pàgina i mitja al pressupost de
+  pàgines, i les notes dels dos índexs diuen què hi ha escrit de debò.
+
+El que no s'ha tocat i queda per decidir és a `docs/pendents.md`.
