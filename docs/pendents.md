@@ -29,12 +29,6 @@ constància per al treball.
 
 ## El treball escrit
 
-- [ ] **El treball escrit no és a la versió principal (`main`).** Els PR
-  14, 15, 17 i 19 es van fusionar, però cadascun dins de la branca de
-  l'anterior i en un ordre que els ha deixat a mig camí. A `main` només hi
-  ha el marc teòric; els preliminars i la Part III són a la branca
-  `usabilitat-textos`. Cal un PR que ho porti tot a `main` (té conflictes
-  per resoldre).
 - [ ] **L'ús d'IA en el text del treball.** El treball no diu com s'ha
   escrit el text. Mirar què demana la normativa del centre sobre declarar
   l'ús d'intel·ligència artificial i parlar-ho amb el tutor.
@@ -70,8 +64,6 @@ constància per al treball.
 
 ## La web
 
-- [ ] Panell d'estadístiques al mòbil: les barres es veuen aixafades i un
-  número surt tallat. S'està mirant en una altra sessió de treball.
 - [ ] Comprovar la web en un telèfon de debò. Fins ara només s'ha provat
   amb una pantalla simulada de 390 píxels.
 - [ ] Els dos números de la regla de preus (60 dies i cinc vegades) es van
@@ -80,6 +72,10 @@ constància per al treball.
 
 ## Fet
 
+- [x] *11-11-2026.* El treball escrit i els canvis pendents de la web, a
+  la versió principal (PR 22 i 23).
+- [x] *10-11-2026.* Panell d'estadístiques al mòbil: les barres ja ocupen
+  tota la fila (PR 20). Falta refer la captura de mòbil de la Part III.
 - [x] *11-11-2026.* Part II, metodologia (capítols 6 a 15): esborrany
   escrit i revisat dues vegades.
 - [x] *10-11-2026.* Preus antics i erronis: segona font i regla de quatre
