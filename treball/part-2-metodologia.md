@@ -162,10 +162,6 @@ Repartir la feina té dos avantatges. El primer és el temps. El segon és
 que cada ajudant mira una sola cosa, i per això troba detalls que en una
 revisió general passen per alt.
 
-El mateix mètode va servir per al text. El 4 de novembre, quatre ajudants
-van revisar alhora el marc teòric, cadascun amb un encàrrec diferent. Van
-fer 96 observacions, i el text va passar de 4.512 paraules a 3.454.
-
 Els ajudants són la mateixa màquina amb encàrrecs diferents, no persones
 diferents. Poden coincidir tots en un mateix error.
 
@@ -176,7 +172,7 @@ cadascuna amb la seva feina. És còmode, però té un problema que no es veu
 fins que passa: **una conversa no sap res del que fa l'altra**. No
 comparteixen memòria.
 
-Al projecte va passar diverses vegades. Tres casos ho expliquen bé.
+Al projecte va passar diverses vegades. Dos casos ho expliquen bé.
 
 El 10 d'agost, dues converses van apuntar la seva feina a l'històric
 alhora, i totes dues van posar el número 21 a la seva entrada. En ajuntar
@@ -190,11 +186,6 @@ parts de la web necessitaven: si s'hagués publicat així, la web no
 s'hauria obert. La solució va ser donar a cada conversa una carpeta de
 treball pròpia. És el que s'intenta fer des de llavors, tot i que al
 novembre encara van coincidir dues converses a la mateixa carpeta.
-
-I el 10 de novembre, mentre una conversa escrivia la Part III d'aquest
-treball, una altra canviava la manera de calcular els preus. El capítol
-19 va quedar explicant una regla que la web ja no feia servir. En
-repassar-ho van sortir vuit contradiccions i errors.
 
 Treballar en paral·lel estalvia temps, però obliga a tres coses: separar
 bé la feina de cada conversa, donar-li una carpeta pròpia i repassar-ho
@@ -268,13 +259,6 @@ a la web publicada sense haver passat per una revisió. I en queda
 constància: cada *pull request* és una prova de què es va fer i quan.
 L'11 de novembre del 2026 se n'havien obert 20 en tot el projecte, i 18
 ja estaven fusionats.
-
-Una marca, però, no és una prova. GitHub permet escriure comentaris sobre
-un text i marcar-los com a «resolts». Al novembre, l'autora va fer nou
-comentaris al marc teòric i en va marcar set com a resolts, entenent que
-així els enviava. El text no havia canviat. Es va descobrir comparant les
-dates, i d'aquí va sortir una norma: la prova que una cosa està feta és
-el text canviat, no la marca.
 
 ## 14. Com es comprova que funciona
 
@@ -350,9 +334,3 @@ vegades que el tipus d'una carta, l'Eevee, digués «Normal» en lloc
 d'«Incolor». La màquina no ho va fer: va consultar les dades oficials del
 joc de cartes, on el tipus és Incolor, i ho va explicar. L'autora ho va
 acceptar. Si la màquina hagués dit que sí, la web tindria una dada falsa.
-
-L'últim cas no és de codi. En llegir el marc teòric, l'autora hi va
-trobar sis passatges que no entenia. Cinc es van reescriure o aclarir, i
-el sisè es va conservar explicant per què hi és. És el mateix problema
-que amb el codi: que la màquina hagi fet una cosa bé no vol dir que la
-persona l'hagi entesa. La Part IV hi torna.

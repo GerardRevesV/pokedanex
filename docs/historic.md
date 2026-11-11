@@ -1032,3 +1032,15 @@ això queda apuntat a `docs/pendents.md`.
 De passada es veu que el treball escrit no ha arribat a la versió
 principal del projecte: els PR es van fusionar en un ordre que els ha
 deixat en branques intermèdies. També queda a pendents.
+
+## 56. Quatre passatges fora de la Part II
+
+*11 de novembre del 2026*
+
+S'apliquen els quatre comentaris de l'Edanna que quedaven al PR 21. Surten
+de la Part II quatre passatges que no parlaven de la web sinó del text del
+treball: la revisió del marc teòric (capítol 10), el cas del 10 de
+novembre (capítol 11), els comentaris marcats com a resolts (capítol 13) i
+els passatges del marc teòric que no s'entenien (capítol 15). La Part II
+queda centrada en com s'ha fet la web. El capítol 11 passa de tres casos a
+dos.

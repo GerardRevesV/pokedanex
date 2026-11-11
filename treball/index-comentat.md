@@ -76,12 +76,11 @@ dotze expansions de cop.
 **10. Repartir la feina: agents i subagents**
 Com es reparteix una feina gran entre diversos ajudants que treballen alhora.
 El cas d'estudi és la revisió de la web al mòbil: tres rondes d'ajudants
-que van trobar 89 problemes. El mateix mètode es va fer servir per revisar
-el marc teòric.
+que van trobar 89 problemes.
 
 **11. Dues converses alhora**
 Què passa quan hi ha dues converses obertes treballant en el mateix projecte:
-cap de les dues sap què fa l'altra. Tres casos del projecte, i què s'hi va
+cap de les dues sap què fa l'altra. Dos casos del projecte, i què s'hi va
 aprendre.
 
 **12. La revisió per capes**
@@ -92,8 +91,7 @@ seguretat. El límit: tots els revisors són la mateixa màquina.
 
 **13. Guardar-ho tot: l'historial de canvis**
 Com es desa cada versió del projecte per poder tornar enrere, i per què cada
-canvi es fa a part i es revisa abans d'ajuntar-lo amb la resta. I per què
-una marca de «resolt» no és cap prova.
+canvi es fa a part i es revisa abans d'ajuntar-lo amb la resta.
 
 **14. Com es comprova que funciona**
 Com s'ha provat la web: fent-la servir en un navegador, a l'ordinador i en

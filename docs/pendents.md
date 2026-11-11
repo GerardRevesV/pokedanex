@@ -35,9 +35,12 @@ constància per al treball.
   ha el marc teòric; els preliminars i la Part III són a la branca
   `usabilitat-textos`. Cal un PR que ho porti tot a `main` (té conflictes
   per resoldre).
-- [ ] **Qui escriu el text, i com es diu al treball.** Decisió pendent de
-  l'Edanna i el tutor. Mentrestant queden sense aplicar quatre comentaris
-  del PR 21 que demanen treure passatges (capítols 10, 11, 13 i 15).
+- [ ] **L'ús d'IA en el text del treball.** El treball no diu com s'ha
+  escrit el text. Mirar què demana la normativa del centre sobre declarar
+  l'ús d'intel·ligència artificial i parlar-ho amb el tutor.
+- [ ] Preliminars, presentació: la frase «el primer esborrany de la part
+  teòrica tenia passatges que no entenia [...] es van tornar a escriure».
+  L'Edanna ha de decidir si la deixa.
 - [ ] **L'inici del treball de recerca: 24 de març del 2026.** Apuntat a la
   Part II. Falta explicar aquella primera etapa (seguiment amb els
   professors, tria del tema, hipòtesi) a la introducció; només ho pot
@@ -47,17 +50,10 @@ constància per al treball.
 - [ ] Part II, capítol 6: diu que l'eina llegeix `CLAUDE.md` tota sola a
   cada conversa. Cal citar-ho amb la documentació oficial de l'eina a
   `treball/fonts.md`.
-- [ ] Part II, capítol 10: la revisió del marc teòric hi surt amb 96
-  observacions, que és la suma de la taula de
-  `treball/revisio-marc-teoric.md`. El diari del 4 de novembre en diu 79
-  (no hi compta les 17 errades «mitjanes» de llengua). Decidir quina
-  xifra es dona.
 - [ ] Part II, capítol 12: diu que no consta cap revisió del codi feta per
   una persona. Si algú l'ha mirat, cal dir-ho i apuntar qui i quan.
 - [ ] Part II, capítol 14: diu que no consta cap prova en un telèfon de
   debò. Si l'Edanna ha obert la web al seu mòbil, cal apuntar-ho.
-- [ ] El treball no explica enlloc qui escriu el text del treball i com
-  (l'autora, la màquina, o totes dues). Cal decidir on es diu.
 - [ ] Part IV, resultats i conclusions: per escriure.
 - [ ] Proves amb usuaris: sense fer. En depenen la frase de resultats de
   l'abstract («PENDENT») i les conclusions.
