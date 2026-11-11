@@ -104,8 +104,8 @@ s'ha començat amb la Fase 3 encara oberta, perquè falten les proves amb
 usuaris.
 
 **Mirant abans què hi ha.** Abans de construir es va consultar un
-projecte anterior, d'un altre joc de cartes, per veure com resolia
-problemes semblants. I quan calia triar un disseny, es demanaven tres
+projecte anterior del pare de l'autora, d'un altre joc de cartes, per
+veure com resolia problemes semblants. I quan calia triar un disseny, es demanaven tres
 propostes per escrit i se'n triava una.
 
 **Amb un pla escrit per a cada tasca.** Abans de tocar res, la màquina
@@ -239,7 +239,8 @@ Si la màquina espatlla una cosa que funcionava, cal poder tornar enrere.
 Per a això serveix **git**, un programa que guarda una fotografia del
 projecte cada vegada que es fa un canvi, amb una nota que diu què s'ha
 canviat. Aquestes fotografies es desen també a internet, a **GitHub**,
-on es guarda el projecte des que es va començar la web.
+on es guarda el projecte des que es va començar la web. El compte de
+GitHub és del pare de l'autora.
 
 En tancar la Fase 1 es va decidir treballar sempre de la mateixa manera:
 

@@ -28,16 +28,9 @@ novembre del 2026.
   trobar ell, i per això el text no n'hi atribueix cap. Si l'Edanna o el
   seu pare en recorden algun de concret, es pot afegir.
 
-- [ ] **Tres coses que el tribunal pot preguntar**, i que l'Edanna ha de
-  saber respondre:
-  - L'adreça de la web (capítol 21) porta el nom d'usuari `gerardrevesv`,
-    que no és el seu. Si el compte de GitHub és del seu pare, es pot dir en
-    una frase al capítol 13 o al 21.
-  - El capítol 8 parla d'«un projecte anterior, d'un altre joc de cartes».
-    Si és el joc del seu pare, el que surt a la presentació, convé dir-ho
-    amb aquestes paraules perquè les dues parts lliguin.
-  - Les taules d'errors diuen dues vegades «ho va veure l'autora fent
-    servir la web». Ha de poder explicar què va veure i quan.
+- [ ] Les taules d'errors de la Part II diuen dues vegades «ho va veure
+  l'autora fent servir la web» (el cost de 0,00 € i els sis controls de
+  l'àlbum). L'Edanna ha de poder explicar què va veure i quan.
 
 ## El treball escrit
 
@@ -85,6 +78,8 @@ novembre del 2026.
 
 ## Fet
 
+- [x] *11-11-2026.* El text diu que el compte de GitHub i el projecte
+  anterior de cartes són del pare de l'autora (capítols 8, 13 i 21).
 - [x] *11-11-2026.* Portada, motivació personal, agraïments i inici del
   treball, omplerts amb les respostes de l'Edanna i la seva proposta
   inicial. Altres costos: no n'hi ha cap.

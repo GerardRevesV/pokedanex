@@ -1221,3 +1221,14 @@ Tres canvis petits als textos, a partir de més respostes de l'Edanna:
   presentació i una frase del capítol 12, que parlaven de com s'ha escrit i
   revisat el text del treball. La presentació passa d'avançar tres
   dificultats a dues.
+
+## 65. El compte de GitHub i el projecte anterior, amb nom
+
+*11 de novembre del 2026*
+
+Dues coses del text podien fer dubtar qui el llegís. L'adreça de la web
+porta un nom d'usuari que no és el de l'autora, i el capítol 8 parlava
+d'«un projecte anterior, d'un altre joc de cartes» sense dir de qui era.
+L'Edanna confirma que totes dues coses són del seu pare, i el text ara ho
+diu als capítols 8, 13 i 21. Així lliga amb la presentació, on explica que
+la idea li va venir de veure'l fer un joc amb intel·ligència artificial.
