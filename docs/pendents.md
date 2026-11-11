@@ -78,8 +78,9 @@ novembre del 2026.
 
 ## Fet
 
-- [x] *11-11-2026.* El text diu que el compte de GitHub i el projecte
-  anterior de cartes són del pare de l'autora (capítols 8, 13 i 21).
+- [x] *11-11-2026.* El text diu que el compte de GitHub és del pare de
+  l'autora (capítols 13 i 21). La referència al projecte anterior de
+  cartes s'ha tret del capítol 8, a petició de l'Edanna.
 - [x] *11-11-2026.* Portada, motivació personal, agraïments i inici del
   treball, omplerts amb les respostes de l'Edanna i la seva proposta
   inicial. Altres costos: no n'hi ha cap.

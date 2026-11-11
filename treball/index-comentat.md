@@ -65,8 +65,8 @@ la web. I el límit de demanar les coses peça a peça.
 
 **8. Pensar abans de fer: els plans**
 Per què es fa escriure un pla a la màquina i es llegeix abans de deixar-li
-tocar res, com el projecte es va repartir en fases, i per què abans de
-construir es mira què hi ha fet.
+tocar res, com el projecte es va repartir en fases, i per què es demanen
+diverses propostes abans de triar-ne una.
 
 **9. Quan la feina es repeteix: les receptes guardades**
 Afegir una expansió de cartes nova eren sempre els mateixos passos. Es van

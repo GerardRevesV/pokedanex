@@ -103,9 +103,7 @@ norma no s'ha complert del tot: la Fase 4, que és aquest treball escrit,
 s'ha començat amb la Fase 3 encara oberta, perquè falten les proves amb
 usuaris.
 
-**Mirant abans què hi ha.** Abans de construir es va consultar un
-projecte anterior del pare de l'autora, d'un altre joc de cartes, per
-veure com resolia problemes semblants. I quan calia triar un disseny, es demanaven tres
+**Comparant propostes.** Quan calia triar un disseny, es demanaven tres
 propostes per escrit i se'n triava una.
 
 **Amb un pla escrit per a cada tasca.** Abans de tocar res, la màquina

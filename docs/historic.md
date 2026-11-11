@@ -1232,3 +1232,8 @@ d'«un projecte anterior, d'un altre joc de cartes» sense dir de qui era.
 L'Edanna confirma que totes dues coses són del seu pare, i el text ara ho
 diu als capítols 8, 13 i 21. Així lliga amb la presentació, on explica que
 la idea li va venir de veure'l fer un joc amb intel·ligència artificial.
+
+Després l'Edanna demana treure del tot la referència al projecte anterior.
+El capítol 8 ja no en parla: l'apartat passa a dir-se «Comparant
+propostes» i explica només que es demanaven tres dissenys abans de
+triar-ne un.
