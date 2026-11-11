@@ -4,7 +4,7 @@ Llista viva del que queda per fer, per decidir o per apuntar. Quan una cosa
 es resol no s'esborra: es passa a «Fet», amb la data, perquè en quedi
 constància per al treball.
 
-*Última actualització: 10 de novembre del 2026.*
+*Última actualització: 11 de novembre del 2026.*
 
 ## Costos per documentar
 
@@ -29,7 +29,31 @@ constància per al treball.
 
 ## El treball escrit
 
-- [ ] Part II, metodologia (capítols 6 a 15): per escriure.
+- [ ] **El treball escrit no és a la versió principal (`main`).** Els PR
+  14, 15, 17 i 19 es van fusionar, però cadascun dins de la branca de
+  l'anterior i en un ordre que els ha deixat a mig camí. A `main` només hi
+  ha el marc teòric; els preliminars i la Part III són a la branca
+  `usabilitat-textos`. Cal un PR que ho porti tot a `main` (té conflictes
+  per resoldre).
+- [ ] **L'ús d'IA en el text del treball.** El treball no diu com s'ha
+  escrit el text. Mirar què demana la normativa del centre sobre declarar
+  l'ús d'intel·ligència artificial i parlar-ho amb el tutor.
+- [ ] Preliminars, presentació: la frase «el primer esborrany de la part
+  teòrica tenia passatges que no entenia [...] es van tornar a escriure».
+  L'Edanna ha de decidir si la deixa.
+- [ ] **L'inici del treball de recerca: 24 de març del 2026.** Apuntat a la
+  Part II. Falta explicar aquella primera etapa (seguiment amb els
+  professors, tria del tema, hipòtesi) a la introducció; només ho pot
+  explicar l'Edanna.
+- [ ] Una lectura de la Part II feta per algú que no l'hagi escrit. Les
+  dues revisions (fets i claredat) les han fet ajudants de la mateixa IA.
+- [ ] Part II, capítol 6: diu que l'eina llegeix `CLAUDE.md` tota sola a
+  cada conversa. Cal citar-ho amb la documentació oficial de l'eina a
+  `treball/fonts.md`.
+- [ ] Part II, capítol 12: diu que no consta cap revisió del codi feta per
+  una persona. Si algú l'ha mirat, cal dir-ho i apuntar qui i quan.
+- [ ] Part II, capítol 14: diu que no consta cap prova en un telèfon de
+  debò. Si l'Edanna ha obert la web al seu mòbil, cal apuntar-ho.
 - [ ] Part IV, resultats i conclusions: per escriure.
 - [ ] Proves amb usuaris: sense fer. En depenen la frase de resultats de
   l'abstract («PENDENT») i les conclusions.
@@ -56,6 +80,8 @@ constància per al treball.
 
 ## Fet
 
+- [x] *11-11-2026.* Part II, metodologia (capítols 6 a 15): esborrany
+  escrit i revisat dues vegades.
 - [x] *10-11-2026.* Preus antics i erronis: segona font i regla de quatre
   passos (decisió D-013).
 - [x] *10-11-2026.* El capítol 19 i les captures de la Part III, posats al

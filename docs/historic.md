@@ -985,3 +985,62 @@ A petició, es crea també `docs/pendents.md`, una llista viva del que queda
 per fer o per apuntar. La primera cosa que hi entra és el cost de la
 subscripció de l'eina d'intel·ligència artificial, que és l'única despesa
 del projecte i encara no està documentada enlloc.
+
+## 54. La Part II en esborrany: la metodologia
+
+*11 de novembre del 2026*
+
+S'escriu `treball/part-2-metodologia.md`, la part del treball que explica
+com s'ha treballat: capítols 6 a 15, unes 3.400 paraules i tres taules.
+
+Abans d'escriure es va mirar si sobrava o faltava cap capítol. Es
+mantenen els deu que hi havia a l'índex, amb la mateixa numeració. Tres
+temes que no tenien capítol s'han posat dins dels que ja hi havia: la
+documentació com a mètode (capítol 6), mirar què hi ha fet abans de
+construir (capítol 8) i el mètode aplicat al text del treball (capítols 12
+i 15).
+
+El text es va revisar dues vegades, cada vegada amb un ajudant que no
+l'havia escrit. La primera revisió comparava cada afirmació amb els
+documents del projecte i va trobar sis errors de fet. El més clar: el
+text deia que l'eina havia marcat com a «resolts» uns comentaris, i qui ho
+havia fet era l'autora. La segona revisió mirava si s'entenia: es van
+definir paraules, es va canviar «col·lecció» per «expansió» quan es parla
+d'una tanda de cartes, i es van treure frases massa rotundes.
+
+El que el text no pot afirmar perquè no consta als documents s'ha apuntat
+a `docs/pendents.md`.
+
+## 55. Els primers comentaris de l'Edanna a la Part II
+
+*11 de novembre del 2026*
+
+L'Edanna comenta la Part II al PR 21 i deixa una correcció al PR 19. Se
+n'apliquen cinc:
+
+- El treball de recerca va començar el **24 de març del 2026**, amb el
+  seguiment dels professors i la hipòtesi; el 9 d'agost és el dia que es
+  va començar la web. Els textos deien «el primer dia» sense distingir-ho.
+- Tres passatges que no s'entenien s'han reescrit: el del pla que tenia un
+  error, el dels forats de seguretat i el dels «serveis d'altri».
+- Una frase del capítol 13 que no deixava clar de què parlava.
+
+Queden quatre comentaris sense aplicar, que demanen treure passatges.
+Depenen de decidir com s'explica al treball qui n'ha escrit el text, i
+això queda apuntat a `docs/pendents.md`.
+
+De passada es veu que el treball escrit no ha arribat a la versió
+principal del projecte: els PR es van fusionar en un ordre que els ha
+deixat en branques intermèdies. També queda a pendents.
+
+## 56. Quatre passatges fora de la Part II
+
+*11 de novembre del 2026*
+
+S'apliquen els quatre comentaris de l'Edanna que quedaven al PR 21. Surten
+de la Part II quatre passatges que no parlaven de la web sinó del text del
+treball: la revisió del marc teòric (capítol 10), el cas del 10 de
+novembre (capítol 11), els comentaris marcats com a resolts (capítol 13) i
+els passatges del marc teòric que no s'entenien (capítol 15). La Part II
+queda centrada en com s'ha fet la web. El capítol 11 passa de tres casos a
+dos.
