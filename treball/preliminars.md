@@ -126,7 +126,7 @@ is wrong.
 Em dic Edanna Reves Blanco, tinc 16 anys i soc alumna de 2n de batxillerat
 de Maristes Anna Ravell. Aquest és el meu treball de recerca, que he fet amb
 la tutoria de Rosa Martínez. El vaig començar el març del 2026, quan feia
-1r.
+1r, amb Josep Carbonell de tutor fins al final d'aquell curs.
 
 El treball parteix d'una pregunta que es pot dir en una línia: **es pot crear
 una pàgina web útil sense saber programar?** Per respondre-la no n'hi havia
@@ -172,8 +172,8 @@ part pràctica del treball, i van als annexos.
 
 ### Les dificultats
 
-N'hi ha hagut unes quantes, i el treball en dedica un capítol sencer, el 15. N'avanço
-tres, perquè són de tres menes diferents.
+N'hi ha hagut unes quantes, i el treball en dedica un capítol sencer, el
+15. N'avanço dues, perquè són de dues menes diferents.
 
 La primera va ser tècnica. La web treu les dades de les cartes d'un servei
 d'internet gratuït, i aquest servei fallava quan volia: de vegades responia i
@@ -186,10 +186,6 @@ funció que semblava acabada no es podia activar de cap manera. Un altre dia
 van aparèixer dos forats de seguretat que jo no hauria vist mai. Cap d'aquests
 errors es va trobar mirant la web: es van trobar perquè hi havia revisions
 fetes expressament per buscar-los.
-
-La tercera va ser la que menys m'esperava: entendre el meu propi treball. El
-primer esborrany de la part teòrica tenia passatges que no entenia. Els vaig
-marcar un per un i es van tornar a escriure amb exemples del projecte.
 
 ### Agraïments
 

@@ -228,10 +228,6 @@ preparava un fitxer fals amb mala intenció i un usuari el carregava, la
 web d'aquell usuari es podia espatllar. Amb fitxers normals tot
 funcionava: fent servir la web, el problema no es veia.
 
-El mètode s'ha aplicat també al text d'aquest treball: les parts escrites
-s'han revisat dues vegades, una per comprovar els fets contra els
-documents i una per comprovar que s'entenen.
-
 Totes les capes les fa la mateixa màquina. Que una còpia revisi la feina
 d'una altra redueix els errors, i els resultats ho mostren, però no és el
 mateix que la revisió d'un programador expert. Als documents del projecte
@@ -271,6 +267,9 @@ error i que els números siguin els que han de ser. En una de les
 revisions, per exemple, un revisor va tornar a fer a part tots els
 càlculs de valor i de cost, cèntim a cèntim, i els va comparar amb els de
 la web.
+
+La web també l'ha provat el pare de l'autora, que l'ha fet servir i hi ha
+donat consells.
 
 Algunes coses es comproven per càlcul. Que les lletres es llegeixin bé
 sobre cada color de fons es va mesurar amb una fórmula de contrast

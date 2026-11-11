@@ -1204,3 +1204,20 @@ intel·ligència artificial en la redacció. No s'hi escriu res en lloc seu.
 
 Queda una dada per confirmar abans d'escriure-la: el cost de la
 subscripció. És a `docs/pendents.md`.
+
+## 64. Més dades de l'Edanna: el primer tutor i el paper del pare
+
+*11 de novembre del 2026*
+
+Tres canvis petits als textos, a partir de més respostes de l'Edanna:
+
+- **El primer tutor.** Del 24 de març fins al final del curs anterior, el
+  tutor va ser Josep Carbonell. La presentació ho diu.
+- **El pare.** L'Edanna explica que el seu pare ha provat la pàgina. El
+  capítol 14 ara ho diu, en una frase. No s'ha atribuït cap error concret
+  a les seves proves, perquè els documents del projecte no apunten qui va
+  trobar cada cosa.
+- **Dos passatges fora**, a petició seva: la tercera dificultat de la
+  presentació i una frase del capítol 12, que parlaven de com s'ha escrit i
+  revisat el text del treball. La presentació passa d'avançar tres
+  dificultats a dues.

@@ -1097,7 +1097,9 @@ textos a Word directament, i s'ha hagut de fer la conversió a mida.
   les seves respostes: portada, motivació, agraïments, objectius i inici
   del treball.
 - Actualitzada la pàgina de guia del document d'entrega.
-- Entrada **63** de l'històric.
+- Amb més respostes: el primer tutor a la presentació, el pare al
+  capítol 14 i dos passatges fora.
+- Entrades **63** i **64** de l'històric.
 
 **Eines usades:** Claude Code.
 

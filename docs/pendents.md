@@ -23,15 +23,10 @@ novembre del 2026.
   i d'altres no; cal veure si quadra abans de posar-ho al capítol 22.
 ## Dades que només pot donar l'Edanna
 
-- [ ] El paper del pare: va inspirar el tema, va explicar què era el *vibe
-  coding*, ha provat la pàgina i ha donat consells. Surt als agraïments.
-  Falta decidir si la Part II l'ha d'esmentar quan parla de qui prova la
-  web.
-- [ ] «Vaig tenir dos tutors»: falta saber qui va ser el primer i fins
-  quan, per si cal dir-ho a la presentació.
-- [ ] La presentació encara diu que el primer esborrany de la part teòrica
-  tenia passatges que l'autora no entenia i que «es van tornar a escriure».
-  L'Edanna ha de decidir si ho deixa.
+- [ ] El pare de l'autora ha provat la web. La Part II ho diu en general
+  (capítol 14). Els documents del projecte no apunten quins errors va
+  trobar ell, i per això el text no n'hi atribueix cap. Si l'Edanna o el
+  seu pare en recorden algun de concret, es pot afegir.
 
 ## El treball escrit
 
