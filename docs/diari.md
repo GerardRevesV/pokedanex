@@ -948,3 +948,71 @@ pàgina vella, de manera que la correcció semblava no funcionar tot i ser
 bona. Es va descobrir comparant el full d'estils que rebia el navegador amb
 el del disc, i es va resoldre fent servir un port lliure. Queda explicat a
 `docs/reptes.md`.
+
+## 2026-11-11 — La Part II: la metodologia
+
+**Què s'ha fet:**
+- Recollits en una fitxa els fets de la Part II (dates, xifres, casos),
+  trets del diari, l'històric, les decisions i els reptes.
+- Decidit que es mantenen els deu capítols de l'índex (6 a 15), sense
+  treure'n ni afegir-ne cap.
+- Escrit l'esborrany de `treball/part-2-metodologia.md`: unes 3.400
+  paraules i tres taules.
+- Dues revisions amb ajudants que no havien escrit el text: fets (sis
+  errors corregits i una quinzena de frases ajustades) i claredat.
+- Posats al dia l'índex comentat, la llista de pendents i el lector de
+  documents.
+- Entrada **54** de l'històric.
+
+**Eines usades:** Claude Code, amb tres ajudants: un per a la fitxa de
+fets i dos per a les revisions.
+
+**Costos:** 0 € (de subscripció a part, pendent de documentar).
+
+**Problemes:** l'esborrany deia coses que sonaven bé i no eren exactes:
+qui havia marcat uns comentaris com a resolts, quines normes s'havien
+afegit i quan, o que cada conversa té carpeta pròpia «des de llavors».
+Totes es van trobar comparant el text amb els documents. A més, dues
+fonts del projecte donen xifres diferents de la revisió del marc teòric
+(79 i 96 observacions); queda apuntat a pendents.
+
+## 2026-11-11 (2a sessió) — Comentaris de l'Edanna a la Part II
+
+**Què s'ha fet:**
+- Llegits els vuit comentaris del PR 21 i el del PR 19.
+- Aplicats cinc: la data d'inici del treball (24 de març del 2026) i
+  quatre passatges que no s'entenien.
+- Aplicats després els altres quatre: surten de la Part II quatre passatges
+  que parlaven del text del treball i no de la web (entrada **56**).
+- Comprovat l'estat de les branques després de les fusions: el treball
+  escrit no és a `main`.
+- Entrada **55** de l'històric.
+
+**Eines usades:** Claude Code.
+
+**Costos:** 0 € (de subscripció a part, pendent de documentar).
+
+**Problemes:** els PR encadenats es van fusionar en un ordre que no porta
+la feina fins a la versió principal.
+
+## 2026-11-11 (3a sessió) — El treball escrit, a la versió principal
+
+**Què s'ha fet:**
+- Vist que els PR 14 a 21 estaven fusionats però no havien arribat a
+  `main`, perquè anaven en cadena i es van fusionar en un altre ordre.
+- PR 22: preliminars, Part III i els canvis pendents de la web, a `main`.
+- PR 23: la Part II, a `main`.
+- Resolts els conflictes del diari, l'històric i els reptes conservant
+  totes les entrades.
+- Comprovada la web després d'ajuntar-ho: sense errors, i el panell
+  d'estadístiques es veu bé a 390 píxels.
+- Entrada **58** de l'històric.
+
+**Eines usades:** Claude Code i el seu navegador integrat.
+
+**Costos:** 0 € (de subscripció a part, pendent de documentar).
+
+**Problemes:** un PR pot sortir com a «fusionat» sense que la feina sigui
+a la versió principal, si demanava ajuntar-se amb una altra branca. En la
+primera comprovació, a més, el navegador ensenyava un full d'estils antic
+que tenia desat, i semblava que l'arreglada del mòbil s'havia perdut.

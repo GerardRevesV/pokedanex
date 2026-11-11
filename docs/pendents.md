@@ -4,7 +4,7 @@ Llista viva del que queda per fer, per decidir o per apuntar. Quan una cosa
 es resol no s'esborra: es passa a «Fet», amb la data, perquè en quedi
 constància per al treball.
 
-*Última actualització: 10 de novembre del 2026.*
+*Última actualització: 11 de novembre del 2026.*
 
 ## Costos per documentar
 
@@ -29,7 +29,25 @@ constància per al treball.
 
 ## El treball escrit
 
-- [ ] Part II, metodologia (capítols 6 a 15): per escriure.
+- [ ] **L'ús d'IA en el text del treball.** El treball no diu com s'ha
+  escrit el text. Mirar què demana la normativa del centre sobre declarar
+  l'ús d'intel·ligència artificial i parlar-ho amb el tutor.
+- [ ] Preliminars, presentació: la frase «el primer esborrany de la part
+  teòrica tenia passatges que no entenia [...] es van tornar a escriure».
+  L'Edanna ha de decidir si la deixa.
+- [ ] **L'inici del treball de recerca: 24 de març del 2026.** Apuntat a la
+  Part II. Falta explicar aquella primera etapa (seguiment amb els
+  professors, tria del tema, hipòtesi) a la introducció; només ho pot
+  explicar l'Edanna.
+- [ ] Una lectura de la Part II feta per algú que no l'hagi escrit. Les
+  dues revisions (fets i claredat) les han fet ajudants de la mateixa IA.
+- [ ] Part II, capítol 6: diu que l'eina llegeix `CLAUDE.md` tota sola a
+  cada conversa. Cal citar-ho amb la documentació oficial de l'eina a
+  `treball/fonts.md`.
+- [ ] Part II, capítol 12: diu que no consta cap revisió del codi feta per
+  una persona. Si algú l'ha mirat, cal dir-ho i apuntar qui i quan.
+- [ ] Part II, capítol 14: diu que no consta cap prova en un telèfon de
+  debò. Si l'Edanna ha obert la web al seu mòbil, cal apuntar-ho.
 - [ ] Part IV, resultats i conclusions: per escriure.
 - [ ] Proves amb usuaris: sense fer. En depenen la frase de resultats de
   l'abstract («PENDENT») i les conclusions.
@@ -46,8 +64,6 @@ constància per al treball.
 
 ## La web
 
-- [ ] Panell d'estadístiques al mòbil: les barres es veuen aixafades i un
-  número surt tallat. S'està mirant en una altra sessió de treball.
 - [ ] Comprovar la web en un telèfon de debò. Fins ara només s'ha provat
   amb una pantalla simulada de 390 píxels.
 - [ ] Els dos números de la regla de preus (60 dies i cinc vegades) es van
@@ -56,6 +72,12 @@ constància per al treball.
 
 ## Fet
 
+- [x] *11-11-2026.* El treball escrit i els canvis pendents de la web, a
+  la versió principal (PR 22 i 23).
+- [x] *10-11-2026.* Panell d'estadístiques al mòbil: les barres ja ocupen
+  tota la fila (PR 20). Falta refer la captura de mòbil de la Part III.
+- [x] *11-11-2026.* Part II, metodologia (capítols 6 a 15): esborrany
+  escrit i revisat dues vegades.
 - [x] *10-11-2026.* Preus antics i erronis: segona font i regla de quatre
   passos (decisió D-013).
 - [x] *10-11-2026.* El capítol 19 i les captures de la Part III, posats al
