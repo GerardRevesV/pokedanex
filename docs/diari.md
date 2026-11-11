@@ -851,3 +851,65 @@ minuts de feina de la IA.
   no a la comprovació automàtica, i es va corregir.
 - En aquest repositori hi treballava alhora una altra sessió; aquesta feina
   s'ha fet en una còpia de treball a part per no trepitjar-la.
+
+## 2026-11-10 (4a sessió) — L'índex comentat
+
+**Què s'ha fet:**
+- Escrit `treball/index-comentat.md`: l'índex del treball amb una explicació
+  d'una a tres línies de cada capítol, per ensenyar-lo a la professora.
+- Revisat contra l'històric, els reptes i el marc teòric.
+- El document surt al lector de documents de la web.
+- Entrada **51** de l'històric.
+
+**Eines usades:** Claude Code.
+
+**Costos:** 0 € (de subscripció a part, pendent de documentar).
+
+**Problemes:** una altra sessió tenia canvis sense desar als mateixos dos
+documents (l'entrada 50 de l'històric i la seva del diari). S'ha desat només
+la part d'aquesta sessió, sense tocar la de l'altra.
+
+## 2026-11-10 (5a sessió) — La Part III i les captures
+
+**Què s'ha fet:**
+- Estudi previ de quines pantalles val la pena ensenyar
+  (`docs/estudi-captures-part3.md`).
+- Nou captures de la web fetes automàticament amb
+  `tools/captures_part3.mjs`, desades a `treball/figures/`.
+- Escrit l'esborrany de `treball/part-3-producte.md`: capítols 16 a 21,
+  unes 2.100 paraules i set figures.
+- El lector de documents de la web ara ensenya les imatges.
+- Dues revisions del text: fets (set correccions) i claredat.
+- Entrada **52** de l'històric i repte **12**.
+
+**Eines usades:** Claude Code, Chrome sense finestra (ja instal·lat) i
+Node.js (ja instal·lat).
+
+**Costos:** 0 € (de subscripció a part, pendent de documentar).
+
+**Problemes:** la primera captura de l'àlbum sortia amb la capçalera tapant
+la primera fila de cartes, i es va haver de refer. A les captures de mòbil
+s'ha vist un possible defecte del panell d'estadístiques, pendent de
+comprovar.
+
+## 2026-11-10 (6a sessió) — La Part III, al dia amb els preus nous
+
+**Què s'ha fet:**
+- Ajuntada la feina dels preus (3a sessió) amb la de la Part III.
+- Reescrit el capítol 19 amb les dues fonts i la regla de quatre passos.
+- Refetes les nou captures amb les dades del 10 de novembre; corregit un
+  error del programa de captures.
+- Corregides les xifres i descripcions que havien quedat velles a la Part
+  III, al guió, a l'índex comentat i a l'estudi de captures.
+- El repte de les captures passa a ser el **12** i es mou al final.
+- Creat `docs/pendents.md`, la llista de coses pendents.
+- Entrada **53** de l'històric.
+
+**Eines usades:** Claude Code; Chrome sense finestra per a les captures.
+
+**Costos:** 0 € (de subscripció a part, pendent de documentar; ara apuntat
+a `docs/pendents.md`).
+
+**Problemes:** dues sessions havien escrit alhora als mateixos documents i
+havien fet servir el mateix número de repte. La fusió es va haver de
+resoldre a mà.

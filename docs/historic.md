@@ -888,3 +888,100 @@ web baixen ara de totes dues fonts, i la tria del preu viu en un sol lloc
 (`app/js/variants.js`). Resultat, comprovat amb el codi real de la web
 sobre les 4.016 peces: 4.003 amb preu de Cardmarket al dia, 13 marcades amb
 «≈» i cap sense preu. Abans n'hi havia 1.068 sense preu.
+
+## 51. L'índex comentat: cada capítol en dues línies, per ensenyar-lo a la professora
+
+*2026-11-10*
+
+L'índex dels preliminars només porta els títols, i un títol com «Les regles
+del joc» no diu gaire a qui no ha seguit el projecte. Es fa un document a
+part, `treball/index-comentat.md`, que repeteix l'índex i hi afegeix, sota
+cada un dels 26 capítols, d'una a tres línies que diuen què explica. Serveix
+perquè la professora pugui opinar sobre l'estructura abans que s'escrigui la
+resta: de moment només la Part I està escrita, i de les altres tres el
+document diu què ha d'explicar cada capítol, no què explica ja.
+
+És una eina de treball i no s'entrega. Les explicacions surten del guió i dels
+documents del projecte, i cada dada que hi surt (les dotze col·leccions
+afegides de cop, els 89 problemes de la revisió al mòbil, els dos forats de
+seguretat, els 0 euros de publicació) s'ha comprovat contra l'històric i els
+reptes.
+
+## 52. La Part III en esborrany, amb les primeres captures de la web
+
+*2026-11-10*
+
+S'escriu la Part III del treball, la que explica el producte: sis capítols
+(del 16 al 21) a `treball/part-3-producte.md`, amb unes 2.100 paraules i
+set figures. És la primera part del treball que porta imatges.
+
+Abans d'escriure es va fer un estudi de quines pantalles calia ensenyar
+(`docs/estudi-captures-part3.md`). El criteri: una captura entra si
+demostra una cosa que el text afirma, si s'entén sense haver fet servir la
+web i si no repeteix el que ja ensenya una altra. Entren la graella, el
+panell d'estadístiques, l'àlbum, el zoom, el selector d'expansions, dues
+fitxes de carta (preu exacte i preu aproximat) i dues pantalles de mòbil.
+Queden fora el mode Catàleg, els desplegables i la barra d'adreces.
+
+Les captures no s'han fet a mà. Les fa `tools/captures_part3.mjs`, que obre
+la web en un navegador sense finestra, marca una col·lecció d'exemple de 30
+cartes i desa les imatges a `treball/figures/`. Si la web canvia abans del
+lliurament, tornar-lo a executar les refà totes iguals. No ha calgut
+instal·lar res.
+
+Perquè les imatges es vegin al lector de documents de la web s'han tocat
+dues coses: el script que hi copia els documents ara copia també la carpeta
+de figures, i el lector busca les imatges al costat del document.
+
+El text es va revisar dues vegades. La primera, fet per fet contra les
+especificacions, les decisions, l'històric i el codi: en van sortir set
+correccions. La més important: deia que la web no demana mai dades al
+servei extern, i sí que ho fa quan algú prem «Actualitza». La segona
+revisió va ser de claredat: paraules sense explicar («servidor», «ports») i
+una mateixa paraula amb dos sentits.
+
+Dues coses queden apuntades. El guió parlava de 5.632 línies de codi i avui
+se'n compten 6.035: la xifra s'haurà de tornar a comptar al final. I a les
+captures de mòbil, amb el panell d'estadístiques obert, les barres de
+progrés es veien aixafades i un número sortia tallat; no s'ha comprovat en
+un telèfon real ni s'ha arreglat aquí.
+
+## 53. La Part III es posa al dia amb els preus nous, i neix la llista de pendents
+
+*2026-11-10*
+
+El mateix dia que es va escriure la Part III, una altra sessió de treball va
+canviar la manera de triar els preus (entrada 50, decisió D-013). En ajuntar
+les dues feines, el capítol 19 explicava una regla que la web ja no feia
+servir. Es demana repassar-ho tot i arreglar les contradiccions i els errors
+que surtin. Se'n troben vuit:
+
+- **El capítol 19** parlava d'una sola font i d'una regla de tres passos. Ara
+  explica les dues fonts, la regla de quatre passos, el resultat (de 4.016
+  peces, 4.003 amb preu de Cardmarket recent, 13 marcades amb «≈» i cap
+  sense preu) i els límits de la regla.
+- **Les captures** duien preus de l'11 d'agost. S'han refet totes amb les
+  dades del 10 de novembre, i el peu de la figura 2 diu ara 4,91 € i 8,75 €.
+- **La figura 6** ensenyava una carta de Mega Evolution amb «≈», i aquella
+  carta ja té preu de Cardmarket. Ara el programa de captures busca tot sol
+  una carta que porti el signe: n'ha trobat una de Surging Sparks, marcada
+  perquè les fonts no es posaven d'acord.
+- **El programa de captures tenia un error**: retallava malament una carta
+  si la pàgina s'havia desplaçat, i en sortia un rectangle negre. Arreglat.
+- **Les línies de codi**: la Part III deia «unes 6.000» i amb el codi nou
+  són 6.346. Ara diu «unes 6.300», i el guió, que encara deia 5.632, porta
+  la xifra nova amb la data.
+- **Dos reptes amb el número 11**, un de cada sessió. El de les captures
+  passa a ser el 12. De passada es veu que s'havia desat al mig del
+  document, entre el repte 5 i el 6, i es mou al final.
+- **L'índex comentat** deia que la Part III estava «per escriure» i descrivia
+  el capítol 19 amb la regla antiga.
+- **El guió** descrivia el mateix capítol amb la cadena de preus antiga.
+
+Les entrades anteriors de l'històric i dels reptes no es toquen: expliquen
+què era veritat el dia que es van escriure.
+
+A petició, es crea també `docs/pendents.md`, una llista viva del que queda
+per fer o per apuntar. La primera cosa que hi entra és el cost de la
+subscripció de l'eina d'intel·ligència artificial, que és l'única despesa
+del projecte i encara no està documentada enlloc.
