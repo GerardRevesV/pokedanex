@@ -17,9 +17,11 @@ calcula el preu.
 
 ## 6. Les regles del joc
 
-Una de les primeres coses que es van fer, el 9 d'agost del 2026, no va
-ser cap pàgina web. Va ser un document curt amb les normes del projecte.
-Al principi n'hi havia quatre:
+El treball de recerca va començar el 24 de març del 2026, amb el
+seguiment dels professors, la tria del tema i la hipòtesi. La web es va
+començar el 9 d'agost del 2026, i una de les primeres coses que es van
+fer no va ser cap pàgina web. Va ser un document curt amb les normes del
+projecte. Al principi n'hi havia quatre:
 
 1. L'autora no escriu ni una línia de codi. Tot el codi el genera la
    màquina.
@@ -32,11 +34,11 @@ llegeix tota sola cada vegada que comença una conversa. Això és important
 perquè la màquina no recorda les converses anteriors. Sense el document,
 cada dia s'hauria de tornar a explicar què es pot fer i què no.
 
-Les normes van créixer amb el projecte, i avui n'hi ha vuit. El mateix
-primer dia se'n van afegir dues: explicar cada decisió en llenguatge
-planer i apuntar cada pas nou en un històric. L'11 d'agost, dues més:
-donar sempre l'adreça per veure la web acabada de canviar, i escriure en
-un document a part el que hagués costat d'entendre o de resoldre.
+Les normes van créixer amb el projecte, i avui n'hi ha vuit. El mateix 9
+d'agost se'n van afegir dues: explicar cada decisió en llenguatge planer
+i apuntar cada pas nou en un històric. L'11 d'agost, dues més: donar
+sempre l'adreça per veure la web acabada de canviar, i escriure en un
+document a part el que hagués costat d'entendre o de resoldre.
 
 La quarta norma, apuntar-ho tot, ha acabat sent un mètode de treball. El
 projecte té quatre documents que s'omplen a cada sessió:
@@ -91,13 +93,13 @@ persona, i no només la peça nova.
 Una màquina que escriu codi molt de pressa també s'equivoca molt de
 pressa. Per això abans de fer es planifica, de tres maneres.
 
-**Per fases.** El primer dia es va escriure una planificació amb sis
+**Per fases.** El 9 d'agost es va escriure una planificació amb sis
 fases, de la 0 a la 5, cadascuna amb un objectiu i un resultat per
 entregar. La norma diu que no se'n comença cap sense tancar l'anterior.
 Segons la planificació, les fases 0, 1 i 2 (decidir què havia de fer la
-web, triar les eines i construir-la) es van tancar el 9 d'agost. La norma
-no s'ha complert del tot: la Fase 4, que és aquest treball escrit, s'ha
-començat amb la Fase 3 encara oberta, perquè falten les proves amb
+web, triar les eines i construir-la) es van tancar el 9 d'agost. La
+norma no s'ha complert del tot: la Fase 4, que és aquest treball escrit,
+s'ha començat amb la Fase 3 encara oberta, perquè falten les proves amb
 usuaris.
 
 **Mirant abans què hi ha.** Abans de construir es va consultar un
@@ -110,10 +112,12 @@ escriu què farà i en quin ordre. El pla està escrit en paraules i es pot
 llegir sense saber programar. És el moment de dir «això no és el que
 volia»: corregir un pla costa molt menys que corregir el codi ja fet.
 
-Un pla tampoc no és cap garantia. Un dels plans del projecte incloïa un
-tros de codi que no es podia arribar a fer servir mai (capítol 15). El
-pla es va seguir al peu de la lletra, i l'error es va trobar més tard, a
-la revisió. Planificar redueix els errors, però no estalvia revisar.
+Tenir un pla no vol dir que el pla estigui bé. En un dels plans, la
+màquina hi va posar una part de codi que sobrava: estava ben escrita,
+però la web no la feia servir mai (capítol 15). Com que el codi es va
+escriure seguint el pla, l'error va passar del pla al codi, i no es va
+trobar fins a la revisió. Planificar redueix els errors, però després
+cal revisar igualment.
 
 ## 9. Quan la feina es repeteix: les receptes guardades
 
@@ -222,13 +226,14 @@ text propi: qui l'ha escrit llegeix el que volia dir, i no el que hi diu.
 Per això qui revisa no és qui ha escrit, i qui arregla no és qui ha
 trobat l'error.
 
-L'11 d'agost, quan es va fixar el mètode, ja s'havien trobat així prop de
-trenta problemes abans que arribessin a la versió bona de la web. Entre
-ells hi havia dos forats de seguretat. La web permet desar la col·lecció
-en un fitxer i tornar-la a carregar, i els revisors van veure que un
-fitxer preparat amb mala intenció podia espatllar la web per dins. El
-codi funcionava bé amb fitxers normals: fent servir la web, el problema
-no es veia.
+L'11 d'agost, quan es va fixar el mètode, ja s'havien trobat així prop
+de trenta problemes abans que arribessin a la versió bona de la web.
+Entre ells hi havia dos forats de seguretat, és a dir, dues maneres de
+fer malbé la web des de fora. La web permet desar la col·lecció en un
+fitxer i tornar-la a carregar. Els revisors van veure que, si algú
+preparava un fitxer fals amb mala intenció i un usuari el carregava, la
+web d'aquell usuari es podia espatllar. Amb fitxers normals tot
+funcionava: fent servir la web, el problema no es veia.
 
 El mètode s'ha aplicat també al text d'aquest treball: les parts escrites
 s'han revisat dues vegades, una per comprovar els fets contra els
@@ -244,8 +249,8 @@ no hi consta cap revisió del codi feta per una persona.
 Si la màquina espatlla una cosa que funcionava, cal poder tornar enrere.
 Per a això serveix **git**, un programa que guarda una fotografia del
 projecte cada vegada que es fa un canvi, amb una nota que diu què s'ha
-canviat. Aquestes fotografies es desen també a internet, a **GitHub**, on
-es guarda el projecte des del primer dia.
+canviat. Aquestes fotografies es desen també a internet, a **GitHub**,
+on es guarda el projecte des que es va començar la web.
 
 En tancar la Fase 1 es va decidir treballar sempre de la mateixa manera:
 
@@ -261,8 +266,8 @@ En tancar la Fase 1 es va decidir treballar sempre de la mateixa manera:
 Això dona tres coses. Es pot tornar enrere. Cap canvi del codi no arriba
 a la web publicada sense haver passat per una revisió. I en queda
 constància: cada *pull request* és una prova de què es va fer i quan.
-L'11 de novembre del 2026, en començar a escriure aquesta part, se
-n'havien obert 20, i 18 ja estaven fusionats.
+L'11 de novembre del 2026 se n'havien obert 20 en tot el projecte, i 18
+ja estaven fusionats.
 
 Una marca, però, no és una prova. GitHub permet escriure comentaris sobre
 un text i marcar-los com a «resolts». Al novembre, l'autora va fer nou
@@ -330,8 +335,9 @@ un preu de 42 euros en una carta de cèntims, no fan saltar cap avís. La
 màquina no pot avisar d'un error que no veu.
 
 **Alguns errors no eren de la màquina.** El servei que fallava i els
-preus que ningú no actualitzava venien de fora. Fer una web vol dir
-dependre de serveis d'altri, i això passa igual quan la programa una
+preus que ningú no actualitzava venien de fora. Una web com aquesta
+depèn de serveis que són d'altres empreses, com el que dona les dades i
+els preus de les cartes, i això passa igual quan la programa una
 persona.
 
 **Hi ha errors que només veu qui fa servir la web.** El zero i els

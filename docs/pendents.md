@@ -29,6 +29,19 @@ constància per al treball.
 
 ## El treball escrit
 
+- [ ] **El treball escrit no és a la versió principal (`main`).** Els PR
+  14, 15, 17 i 19 es van fusionar, però cadascun dins de la branca de
+  l'anterior i en un ordre que els ha deixat a mig camí. A `main` només hi
+  ha el marc teòric; els preliminars i la Part III són a la branca
+  `usabilitat-textos`. Cal un PR que ho porti tot a `main` (té conflictes
+  per resoldre).
+- [ ] **Qui escriu el text, i com es diu al treball.** Decisió pendent de
+  l'Edanna i el tutor. Mentrestant queden sense aplicar quatre comentaris
+  del PR 21 que demanen treure passatges (capítols 10, 11, 13 i 15).
+- [ ] **L'inici del treball de recerca: 24 de març del 2026.** Apuntat a la
+  Part II. Falta explicar aquella primera etapa (seguiment amb els
+  professors, tria del tema, hipòtesi) a la introducció; només ho pot
+  explicar l'Edanna.
 - [ ] Una lectura de la Part II feta per algú que no l'hagi escrit. Les
   dues revisions (fets i claredat) les han fet ajudants de la mateixa IA.
 - [ ] Part II, capítol 6: diu que l'eina llegeix `CLAUDE.md` tota sola a

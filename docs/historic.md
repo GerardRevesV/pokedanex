@@ -1010,3 +1010,25 @@ d'una tanda de cartes, i es van treure frases massa rotundes.
 
 El que el text no pot afirmar perquè no consta als documents s'ha apuntat
 a `docs/pendents.md`.
+
+## 55. Els primers comentaris de l'Edanna a la Part II
+
+*11 de novembre del 2026*
+
+L'Edanna comenta la Part II al PR 21 i deixa una correcció al PR 19. Se
+n'apliquen cinc:
+
+- El treball de recerca va començar el **24 de març del 2026**, amb el
+  seguiment dels professors i la hipòtesi; el 9 d'agost és el dia que es
+  va començar la web. Els textos deien «el primer dia» sense distingir-ho.
+- Tres passatges que no s'entenien s'han reescrit: el del pla que tenia un
+  error, el dels forats de seguretat i el dels «serveis d'altri».
+- Una frase del capítol 13 que no deixava clar de què parlava.
+
+Queden quatre comentaris sense aplicar, que demanen treure passatges.
+Depenen de decidir com s'explica al treball qui n'ha escrit el text, i
+això queda apuntat a `docs/pendents.md`.
+
+De passada es veu que el treball escrit no ha arribat a la versió
+principal del projecte: els PR es van fusionar en un ordre que els ha
+deixat en branques intermèdies. També queda a pendents.

@@ -940,3 +940,21 @@ afegit i quan, o que cada conversa té carpeta pròpia «des de llavors».
 Totes es van trobar comparant el text amb els documents. A més, dues
 fonts del projecte donen xifres diferents de la revisió del marc teòric
 (79 i 96 observacions); queda apuntat a pendents.
+
+## 2026-11-11 (2a sessió) — Comentaris de l'Edanna a la Part II
+
+**Què s'ha fet:**
+- Llegits els vuit comentaris del PR 21 i el del PR 19.
+- Aplicats cinc: la data d'inici del treball (24 de març del 2026) i
+  quatre passatges que no s'entenien.
+- Quatre comentaris queden pendents d'una decisió sobre l'autoria del text.
+- Comprovat l'estat de les branques després de les fusions: el treball
+  escrit no és a `main`.
+- Entrada **55** de l'històric.
+
+**Eines usades:** Claude Code.
+
+**Costos:** 0 € (de subscripció a part, pendent de documentar).
+
+**Problemes:** els PR encadenats es van fusionar en un ordre que no porta
+la feina fins a la versió principal.

@@ -153,12 +153,12 @@ normals. Si hagués corregit a mà encara que fos una coma, la pregunta del
 treball hauria quedat sense resposta, perquè ja no se sabria què hauria fet
 la màquina i què hauria fet jo.
 
-La segona norma era el pressupost: com a màxim 20 euros al mes. La tercera,
-apuntar-ho tot. Des del primer dia, el 9 d'agost del 2026, les sessions de
-feina han quedat escrites en un diari, les decisions en un registre de
-decisions i els problemes més difícils en un document a part. Aquests
-documents són la font principal de la part pràctica del treball, i van als
-annexos.
+La segona norma era el pressupost: com a màxim 20 euros al mes. La
+tercera, apuntar-ho tot. Des del primer dia de feina amb la web, el 9
+d'agost del 2026, les sessions de feina han quedat escrites en un diari,
+les decisions en un registre de decisions i els problemes més difícils
+en un document a part. Aquests documents són la font principal de la
+part pràctica del treball, i van als annexos.
 
 [PER OMPLIR, i convé parlar-ne amb el tutor/a: una frase que digui amb
 claredat quina ajuda de la intel·ligència artificial hi ha hagut en la
