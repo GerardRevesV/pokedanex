@@ -229,7 +229,7 @@ problemes. Els canvis més visibles (figura 7) són aquests:
 una pantalla simulada de 390 píxels d'amplada, no amb un telèfon.*
 
 Aquell mateix dia es va treballar l'**accessibilitat**, que vol dir que la
-web la pugui fer servir tothom, també qui hi veu malament. Cada expansió
+web la pugui fer servir tothom, també les persones amb problemes de vista. Cada expansió
 té el seu color, i un color bonic pot ser impossible de llegir. Les normes
 internacionals d'accessibilitat (WCAG) ho mesuren amb un número, el
 contrast entre el text i el fons, que ha de ser com a mínim de 4,5 a 1.

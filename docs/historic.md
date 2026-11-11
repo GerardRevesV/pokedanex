@@ -1266,3 +1266,22 @@ euros al mes si es paga mes a mes. La font queda apuntada a
 
 El que ha costat exactament aquest projecte queda per al capítol 22, i el
 que cal aclarir abans és a `docs/pendents.md`.
+
+## 68. Tres comentaris de l'Edanna al document unificat
+
+*11 de novembre del 2026*
+
+L'Edanna llegeix tot el treball en un sol document, al PR 25, i hi deixa
+tres comentaris. S'apliquen als textos d'origen i el document unificat es
+torna a generar.
+
+- **Agraïments, més llargs.** Demana que hi consti que el seu pare paga la
+  subscripció de l'eina, que li n'està agraïda, i que la va ajudar a
+  entendre els conceptes fonamentals de la intel·ligència artificial i dels
+  agents.
+- **«Menes» passa a «maneres»**, a la presentació.
+- **«També qui hi veu malament»** no s'entenia. Ara diu «també les
+  persones amb problemes de vista», al capítol 20 i al glossari.
+
+Abans n'havia deixat un altre al PR 24: treure la línia «Esborrany de l'11
+de novembre» del glossari. S'ha tret també de la Part II.

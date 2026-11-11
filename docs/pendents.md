@@ -14,7 +14,8 @@ novembre del 2026.
 - [ ] **La subscripció de l'eina d'intel·ligència artificial.** El capítol
   21 diu ara el preu del pla de pagament més barat (18 euros al mes,
   pàgina oficial, 11-11-2026). **Falta, per al capítol 22:** què ha costat
-  aquest projecte. S'ha fet amb una part d'una subscripció compartida. La
+  aquest projecte. S'ha fet amb una part d'una subscripció compartida, que
+  paga el pare de l'autora (ho diuen els agraïments). La
   família estima que l'ús del projecte hauria cabut en el pla més barat,
   però no s'ha escrit al treball perquè no s'ha pogut comprovar: la pàgina
   de preus diu que aquest pla no inclou un dels models amb què s'ha

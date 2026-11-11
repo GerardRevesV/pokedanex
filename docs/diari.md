@@ -1118,3 +1118,21 @@ textos a Word directament, i s'ha hagut de fer la conversió a mida.
 **Problemes:** el cost de la subscripció que diu l'Edanna (20 euros al
 mes) no quadra amb el nom del pla que informa l'eina, i no s'ha escrit al
 treball fins que es confirmi.
+
+## 2026-11-11 (9a sessió) — El document unificat i els comentaris de l'Edanna
+
+**Què s'ha fet:**
+- El programa que munta el Word fa ara també un sol fitxer de text amb tot
+  el treball (`treball/revisio-tot-junt.md`), per revisar-lo d'una tirada.
+- PR 25, contra `main`, amb aquest fitxer i els canvis que havien quedat
+  fora del PR 24.
+- Aplicats els quatre comentaris de l'Edanna (un al PR 24 i tres al 25).
+- Entrada **68** de l'històric.
+
+**Eines usades:** Claude Code i el seu navegador integrat.
+
+**Costos:** 0 € (de subscripció a part).
+
+**Problemes:** els comentaris de l'Edanna no es veien. A GitHub, un
+comentari fet dins d'una revisió queda com a esborrany fins que la revisió
+s'envia, i mentrestant només el veu qui l'ha escrit.

@@ -168,7 +168,7 @@ part pràctica del treball, i van als annexos.
 ### Les dificultats
 
 N'hi ha hagut unes quantes, i el treball en dedica un capítol sencer, el
-15. N'avanço dues, perquè són de dues menes diferents.
+15. N'avanço dues, perquè són de dues maneres diferents.
 
 La primera va ser tècnica. La web treu les dades de les cartes d'un servei
 d'internet gratuït, i aquest servei fallava quan volia: de vegades responia i
@@ -184,8 +184,17 @@ fetes expressament per buscar-los.
 
 ### Agraïments
 
-Vull donar les gràcies al meu pare. El projecte es desa al seu compte de
-GitHub, i m'ha ajudat a revisar la web: l'ha provat i m'ha donat consells.
+Vull donar les gràcies, sobretot, al meu pare. Sense ell aquest treball no
+hauria estat possible.
+
+Ell paga la subscripció de Claude perquè jo la pugui fer servir, i el
+projecte es desa al seu compte de GitHub. Li n'estic molt agraïda.
+
+També m'ha ajudat a entendre els conceptes fonamentals de la
+intel·ligència artificial i dels agents, que són la base d'aquest treball.
+I m'ha ajudat a revisar la web: l'ha provat i m'ha donat consells.
+
+Gràcies per haver-me acompanyat durant tot el camí.
 
 ---
 

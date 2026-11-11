@@ -385,7 +385,7 @@ part pràctica del treball, i van als annexos.
 ## Les dificultats
 
 N'hi ha hagut unes quantes, i el treball en dedica un capítol sencer, el
-15. N'avanço dues, perquè són de dues menes diferents.
+15. N'avanço dues, perquè són de dues maneres diferents.
 
 La primera va ser tècnica. La web treu les dades de les cartes d'un servei
 d'internet gratuït, i aquest servei fallava quan volia: de vegades responia i
@@ -401,8 +401,17 @@ fetes expressament per buscar-los.
 
 ## Agraïments
 
-Vull donar les gràcies al meu pare. El projecte es desa al seu compte de
-GitHub, i m'ha ajudat a revisar la web: l'ha provat i m'ha donat consells.
+Vull donar les gràcies, sobretot, al meu pare. Sense ell aquest treball no
+hauria estat possible.
+
+Ell paga la subscripció de Claude perquè jo la pugui fer servir, i el
+projecte es desa al seu compte de GitHub. Li n'estic molt agraïda.
+
+També m'ha ajudat a entendre els conceptes fonamentals de la
+intel·ligència artificial i dels agents, que són la base d'aquest treball.
+I m'ha ajudat a revisar la web: l'ha provat i m'ha donat consells.
+
+Gràcies per haver-me acompanyat durant tot el camí.
 
 ---
 
@@ -1472,7 +1481,7 @@ problemes. Els canvis més visibles (figura 7) són aquests:
 una pantalla simulada de 390 píxels d'amplada, no amb un telèfon.*
 
 Aquell mateix dia es va treballar l'**accessibilitat**, que vol dir que la
-web la pugui fer servir tothom, també qui hi veu malament. Cada expansió
+web la pugui fer servir tothom, també les persones amb problemes de vista. Cada expansió
 té el seu color, i un color bonic pot ser impossible de llegir. Les normes
 internacionals d'accessibilitat (WCAG) ho mesuren amb un número, el
 contrast entre el text i el fons, que ha de ser com a mínim de 4,5 a 1.
@@ -1526,8 +1535,8 @@ més barat costa 18 euros al mes si es paga mes a mes (Anthropic, 2026).
 Les paraules tècniques del treball, per ordre alfabètic. El número entre
 parèntesis és el capítol on s'expliquen amb més detall.
 
-**Accessibilitat.** Que una web la pugui fer servir tothom, també qui hi
-veu malament. (20)
+**Accessibilitat.** Que una web la pugui fer servir tothom, també les
+persones amb problemes de vista. (20)
 
 **Agent.** Un model de llenguatge que, a més de respondre, pot fer coses:
 llegir i escriure fitxers, executar ordres i obrir un navegador. Fa una
