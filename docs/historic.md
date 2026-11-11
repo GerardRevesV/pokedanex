@@ -1153,3 +1153,25 @@ van comparar automàticament la versió vella i la nova: hi ha les mateixes
 xifres, les mateixes cites, les mateixes fonts i els mateixos noms. L'únic
 afegit és una frase que explica què vol dir «en producció» a la cita de
 Simon Willison.
+
+## 62. El document d'entrega parcial, en Word
+
+*11 de novembre del 2026*
+
+Els textos del treball són fitxers separats, escrits en un format senzill
+de text. Per entregar-los a la professora calia un sol document de Word. Es
+fa un petit programa, `tools/munta_entrega.py`, que els ajunta en ordre:
+una pàgina de guia, la portada, l'abstract, l'índex, l'índex comentat, la
+presentació, la introducció, les parts I, II i III i el glossari. En surten
+44 pàgines.
+
+La pàgina de guia és nova. Diu, apartat per apartat, què està escrit i què
+hi falta, i avisa que l'índex comentat només hi és en aquesta entrega: al
+treball final hi haurà l'índex normal.
+
+El programa treu les notes internes de cada text (les que diuen «per
+esborrar abans del lliurament») i el pressupost de pàgines. Les marques
+«PER OMPLIR» i «PENDENT» es queden, en color, perquè es vegi què falta.
+
+El Word no es guarda al projecte: es torna a generar cada vegada, i així
+sempre surt dels textos tal com són aquell dia.

@@ -1069,3 +1069,22 @@ parlava de les altres tal com estaven aquell dia.
 **Costos:** 0 € (de subscripció a part, pendent de documentar).
 
 **Problemes:** cap.
+
+## 2026-11-11 (7a sessió) — El document d'entrega en Word
+
+**Què s'ha fet:**
+- Escrit `tools/munta_entrega.py`, que ajunta els textos en un sol Word i
+  en treu les notes internes.
+- Afegida una pàgina de guia al principi: què hi ha, en quin estat i què
+  falta.
+- Comprovat el resultat: s'ha buscat dins del Word qualsevol resta de notes
+  o de format, i s'ha obert amb Word per veure'n les pàgines (44).
+- Entrada **62** de l'històric.
+
+**Eines usades:** Claude Code, Python amb la biblioteca python-docx (ja
+instal·lada) i Microsoft Word (ja instal·lat).
+
+**Costos:** 0 € (de subscripció a part, pendent de documentar).
+
+**Problemes:** a l'ordinador no hi havia cap programa per convertir els
+textos a Word directament, i s'ha hagut de fer la conversió a mida.

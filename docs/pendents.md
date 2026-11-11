@@ -29,8 +29,10 @@ constància per al treball.
 
 ## El treball escrit
 
-- [ ] **Abans d'entregar:** treure de cada document la «Nota de treball»
-  del principi i el pressupost de pàgines dels preliminars.
+- [ ] **Entrega parcial a la professora.** El Word es genera amb
+  `python tools/munta_entrega.py` i surt a `treball/entrega/`. Abans
+  d'enviar-lo, l'Edanna l'ha de llegir sencer i omplir o treure les marques
+  «PER OMPLIR» que vulgui.
 - [ ] Introducció: no parla de la primera etapa del treball (del 24 de
   març al 9 d'agost del 2026). Només surt en una frase del capítol 6.
 - [ ] Part II, capítols 6 i 13: les xifres de l'històric, dels reptes i
@@ -79,6 +81,8 @@ constància per al treball.
 
 ## Fet
 
+- [x] *11-11-2026.* Document d'entrega parcial en Word, amb una pàgina de
+  guia al principi.
 - [x] *11-11-2026.* Part I: passada d'estil perquè soni com les parts II
   i III.
 - [x] *11-11-2026.* Glossari: esborrany amb 30 paraules.
