@@ -35,12 +35,12 @@ que no està feta.
 
 | Apartat | Estat | Què hi falta |
 |---|---|---|
-| Portada | Per completar | Les dades del centre, el grup i la tutoria, i el títol definitiu |
+| Portada | Feta | Res |
 | Abstract (en anglès) | Esborrany | La frase de resultats, que depèn de les proves amb usuaris |
 | Índex | Provisional | Els títols de la Part IV poden canviar. Els números de pàgina es posen al final |
 | Índex comentat | Només per a aquesta entrega | No anirà al treball final |
-| Presentació | Esborrany | La motivació personal i els agraïments |
-| Introducció | Esborrany | Explicar la primera etapa del treball, de març a agost |
+| Presentació | Esborrany | Res de gros |
+| Introducció | Esborrany | Res de gros |
 | Part I. Marc teòric (capítols 1 a 5) | Esborrany revisat | Res de gros |
 | Part II. Metodologia (capítols 6 a 15) | Esborrany | Posar-hi les xifres exactes del dia de l'entrega final |
 | Part III. El producte (capítols 16 a 21) | Esborrany | Refer les captures de pantalla amb les dades finals |
@@ -62,7 +62,6 @@ hi haurà l'índex normal, amb els títols i els números de pàgina.
 ## El que falta per acabar
 
 - Fer les proves amb usuaris i escriure la Part IV.
-- Completar la portada, la motivació personal i els agraïments.
 - Acabar l'abstract amb els resultats.
 - Preparar les fonts d'informació i els annexos.
 - Passar tot el text al format definitiu i comprovar que no passa de 50

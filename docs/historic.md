@@ -1175,3 +1175,32 @@ esborrar abans del lliurament») i el pressupost de pàgines. Les marques
 
 El Word no es guarda al projecte: es torna a generar cada vegada, i així
 sempre surt dels textos tal com són aquell dia.
+
+## 63. Les dades de l'Edanna: portada, motivació i agraïments
+
+*11 de novembre del 2026*
+
+Als preliminars hi havia buits marcats «PER OMPLIR» que només podia omplir
+l'Edanna. S'omplen amb dues fonts: la seva proposta inicial del treball, un
+document seu del març, i les respostes que ha donat a unes preguntes
+fetes una per una.
+
+- **Portada.** Títol nou, «*Vibe coding*: fer una web sense saber
+  programar», que ajunta el d'ella i el que hi havia. Autora, grup,
+  tutora, centre i data d'entrega (30 de novembre del 2026).
+- **Per què aquest tema.** La idea va sortir de veure el seu pare fent un
+  joc amb intel·ligència artificial. Hi consta també què esperava abans de
+  començar, que tot fos més autònom i gairebé sense errors, i que per això
+  la pregunta va passar de «es pot fer una web» a «es pot fer una web
+  útil».
+- **Agraïments**, al seu pare.
+- **Objectius.** N'hi havia quatre i ara són cinc: s'hi afegeix «donar a
+  conèixer el *vibe coding*», que era a la proposta inicial.
+- **L'inici del treball**, el 24 de març del 2026, ara surt també a la
+  introducció.
+
+A petició seva es treu el buit que demanava una frase sobre l'ajuda de la
+intel·ligència artificial en la redacció. No s'hi escriu res en lloc seu.
+
+Queda una dada per confirmar abans d'escriure-la: el cost de la
+subscripció. És a `docs/pendents.md`.

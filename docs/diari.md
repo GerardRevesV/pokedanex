@@ -1088,3 +1088,21 @@ instal·lada) i Microsoft Word (ja instal·lat).
 
 **Problemes:** a l'ordinador no hi havia cap programa per convertir els
 textos a Word directament, i s'ha hagut de fer la conversió a mida.
+
+## 2026-11-11 (8a sessió) — Les dades que només tenia l'Edanna
+
+**Què s'ha fet:**
+- Llegida la proposta inicial de l'Edanna (un document de Word del març).
+- Fetes les preguntes dels buits «PER OMPLIR», per tandes, i omplerts amb
+  les seves respostes: portada, motivació, agraïments, objectius i inici
+  del treball.
+- Actualitzada la pàgina de guia del document d'entrega.
+- Entrada **63** de l'històric.
+
+**Eines usades:** Claude Code.
+
+**Costos:** 0 € (de subscripció a part, pendent de confirmar).
+
+**Problemes:** el cost de la subscripció que diu l'Edanna (20 euros al
+mes) no quadra amb el nom del pla que informa l'eina, i no s'ha escrit al
+treball fins que es confirmi.

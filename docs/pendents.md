@@ -6,26 +6,32 @@ constància per al treball.
 
 *Última actualització: 11 de novembre del 2026.*
 
+**Dates:** esborrany el 13 de novembre del 2026; entrega final el 30 de
+novembre del 2026.
+
 ## Costos per documentar
 
-- [ ] **La subscripció de l'eina d'intel·ligència artificial.** És l'única
-  despesa del projecte i encara no està apuntada enlloc: al diari totes les
-  sessions diuen «0 € (de subscripció a part, pendent de documentar)». Cal
-  saber quin pla és, quant costa al mes, des de quin mes es paga i qui el
-  paga, i comprovar que entra dins del límit de 20 euros al mes.
+- [ ] **La subscripció de l'eina d'intel·ligència artificial.** L'Edanna
+  diu que són 20 euros al mes i que entra dins del pressupost. **Cal
+  confirmar-ho abans d'escriure-ho al treball:** l'eina informa que el
+  compte amb què es treballa té un pla que es diu «Ultra». Falta saber
+  quin pla és, quant costa de debò, des de quin mes es paga i qui el paga.
 - [ ] **El cost total del projecte**, mes a mes, en una taula per al
   treball (capítol de resultats).
-- [ ] **El temps dedicat.** El diari apunta el temps d'algunes sessions i
-  d'altres no. Cal decidir si se'n fa una suma aproximada.
-- [ ] **Altres costos, si n'hi ha** (domini, impressió del treball,
-  cartes comprades per fer proves...). De moment no n'hi ha cap d'apuntat.
-
+- [ ] **El temps dedicat.** Segons l'Edanna: unes 30 hores a la pàgina web
+  i unes 40 al treball escrit. El diari apunta el temps d'algunes sessions
+  i d'altres no; cal veure si quadra abans de posar-ho al capítol 22.
 ## Dades que només pot donar l'Edanna
 
-- [ ] Nom de l'institut i del tutor o tutora (portada, «PER OMPLIR»).
-- [ ] La motivació personal i els agraïments (presentació).
-- [ ] Donar per bona, o canviar, la definició de «útil» de la introducció
-  (tres condicions).
+- [ ] El paper del pare: va inspirar el tema, va explicar què era el *vibe
+  coding*, ha provat la pàgina i ha donat consells. Surt als agraïments.
+  Falta decidir si la Part II l'ha d'esmentar quan parla de qui prova la
+  web.
+- [ ] «Vaig tenir dos tutors»: falta saber qui va ser el primer i fins
+  quan, per si cal dir-ho a la presentació.
+- [ ] La presentació encara diu que el primer esborrany de la part teòrica
+  tenia passatges que l'autora no entenia i que «es van tornar a escriure».
+  L'Edanna ha de decidir si ho deixa.
 
 ## El treball escrit
 
@@ -33,21 +39,13 @@ constància per al treball.
   `python tools/munta_entrega.py` i surt a `treball/entrega/`. Abans
   d'enviar-lo, l'Edanna l'ha de llegir sencer i omplir o treure les marques
   «PER OMPLIR» que vulgui.
-- [ ] Introducció: no parla de la primera etapa del treball (del 24 de
-  març al 9 d'agost del 2026). Només surt en una frase del capítol 6.
 - [ ] Part II, capítols 6 i 13: les xifres de l'històric, dels reptes i
   dels pull requests ara són aproximades («més de cinquanta», «una
   vintena»). Posar-hi les exactes el dia de l'entrega final.
-- [ ] **L'ús d'IA en el text del treball.** El treball no diu com s'ha
-  escrit el text. Mirar què demana la normativa del centre sobre declarar
-  l'ús d'intel·ligència artificial i parlar-ho amb el tutor.
-- [ ] Preliminars, presentació: la frase «el primer esborrany de la part
-  teòrica tenia passatges que no entenia [...] es van tornar a escriure».
-  L'Edanna ha de decidir si la deixa.
-- [ ] **L'inici del treball de recerca: 24 de març del 2026.** Apuntat a la
-  Part II. Falta explicar aquella primera etapa (seguiment amb els
-  professors, tria del tema, hipòtesi) a la introducció; només ho pot
-  explicar l'Edanna.
+- [ ] **L'ús d'IA en el text del treball.** A petició de l'Edanna s'ha tret
+  de la presentació el buit que hi havia per explicar-ho. El treball no
+  diu com s'ha escrit el text. Mirar què demana la normativa del centre i
+  parlar-ho amb la tutora.
 - [ ] Una lectura de la Part II feta per algú que no l'hagi escrit. Les
   dues revisions (fets i claredat) les han fet ajudants de la mateixa IA.
 - [ ] Part II, capítol 6: diu que l'eina llegeix `CLAUDE.md` tota sola a
@@ -81,6 +79,10 @@ constància per al treball.
 
 ## Fet
 
+- [x] *11-11-2026.* Portada, motivació personal, agraïments i inici del
+  treball, omplerts amb les respostes de l'Edanna i la seva proposta
+  inicial. Altres costos: no n'hi ha cap.
+- [x] *11-11-2026.* La definició de «útil», donada per bona per l'Edanna.
 - [x] *11-11-2026.* Document d'entrega parcial en Word, amb una pàgina de
   guia al principi.
 - [x] *11-11-2026.* Part I: passada d'estil perquè soni com les parts II
