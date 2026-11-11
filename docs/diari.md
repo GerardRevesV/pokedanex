@@ -1016,3 +1016,22 @@ la feina fins a la versió principal.
 a la versió principal, si demanava ajuntar-se amb una altra branca. En la
 primera comprovació, a més, el navegador ensenyava un full d'estils antic
 que tenia desat, i semblava que l'arreglada del mòbil s'havia perdut.
+
+## 2026-11-11 (4a sessió) — El glossari
+
+**Què s'ha fet:**
+- Escrit `treball/glossari.md`, amb 27 paraules i unes 500 paraules de
+  text, a partir de les definicions que ja hi havia a les parts I, II i
+  III.
+- Comprovat que cada definició i cada número de capítol quadren amb el
+  text.
+- Posades al dia la taula d'estat dels preliminars i la nota de l'índex
+  comentat.
+- Entrada **59** de l'històric.
+
+**Eines usades:** Claude Code.
+
+**Costos:** 0 € (de subscripció a part, pendent de documentar).
+
+**Problemes:** cap. El glossari surt una mica més llarg que la pàgina que
+tenia assignada.

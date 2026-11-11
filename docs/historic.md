@@ -1092,3 +1092,17 @@ En ajuntar-ho, l'entrada de les barres del mòbil, que portava el número
 53, passa a ser la 57.
 
 D'ara endavant, cada PR nou es fa directament contra `main`.
+
+## 59. El glossari
+
+*11 de novembre del 2026*
+
+S'escriu `treball/glossari.md`: 27 paraules tècniques del treball, per
+ordre alfabètic, cadascuna explicada en una o dues línies i amb el número
+del capítol on surt amb més detall. Les definicions no són noves: són les
+mateixes que ja donen el marc teòric i les parts II i III, escurçades. Es
+fa ara perquè la professora ha demanat el que hi ha fins al moment.
+
+De passada es posen al dia dues dades que havien quedat velles: la taula
+d'estat dels preliminars i la nota de l'índex comentat, que encara deien
+que les parts II i III estaven per escriure.

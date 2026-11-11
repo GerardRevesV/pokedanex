@@ -3,9 +3,9 @@
 > **Document de treball, no s'entrega.** És l'índex de
 > `treball/preliminars.md` amb una explicació d'una a tres línies de cada
 > capítol, pensat per ensenyar-lo a la professora i comentar-lo amb ella. De
-> moment només la Part I està escrita; de la resta, el que hi ha aquí és el
-> que cada capítol **ha d'explicar**. Els títols de les parts II, III i IV
-> són provisionals.
+> moment estan escrites les parts I, II i III; de la Part IV, el que hi ha
+> aquí és el que cada capítol **ha d'explicar**, i els títols són
+> provisionals.
 
 ## Abans del cos del treball
 
@@ -162,7 +162,7 @@ Si la hipòtesi es confirma, amb quins matisos, i quins dubtes queden oberts.
 
 ## Després del cos del treball
 
-**Glossari** *(per fer)*
+**Glossari** *(en esborrany)*
 Les paraules tècniques del treball, explicades en una o dues línies cadascuna.
 
 **Fonts d'informació** *(fetes per a la Part I)*
