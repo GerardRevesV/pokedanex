@@ -1158,3 +1158,25 @@ s'envia, i mentrestant només el veu qui l'ha escrit.
 **Costos:** 0 € (de subscripció a part).
 
 **Problemes:** cap.
+
+## 2026-11-11 (11a sessió) — Com s'explica que el Word ve d'un .md
+
+**Què s'ha fet:**
+- Dubte: si el Word es genera de cop, el professor pot veure a les
+  propietats del fitxer que no té historial d'edició. Es decideix
+  explicar-ho al treball en lloc d'amagar-ho.
+- Paràgraf nou al final del capítol 13, amb el text proposat per
+  l'Edanna, i document unificat regenerat (entrada **72** de l'històric).
+- Word regenerat amb el paràgraf nou, i pull request 27 obert.
+- Les propietats del Word ara porten el nom de l'autora i el títol del
+  treball, i no el nom de l'eina (entrada **73**).
+- L'Edanna retoca el Word a mà. Es compara amb el generat i es passa el
+  canvi al repositori: a la taula de la guia, el marc teòric passa
+  d'«Esborrany revisat» a «Esborrany», i es treu la frase que explicava la
+  marca [PENDENT].
+
+**Eines usades:** Claude Code.
+
+**Costos:** 0 € (de subscripció a part).
+
+**Problemes:** cap.

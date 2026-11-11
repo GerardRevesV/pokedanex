@@ -8,9 +8,6 @@ Aquest document recull el que hi ha escrit del treball de recerca fins a
 l'11 de novembre del 2026. És una entrega parcial: tot el que hi ha és en
 esborrany i encara es pot canviar.
 
-Dins del text, la marca **[PENDENT]** assenyala una frase que depèn de
-feina que encara no està feta.
-
 | Apartat | Estat | Què hi falta |
 |---|---|---|
 | Portada | Feta | Res |
@@ -19,7 +16,7 @@ feina que encara no està feta.
 | Índex comentat | Només per a aquesta entrega | No anirà al treball final |
 | Presentació | Esborrany | Res de gros |
 | Introducció | Esborrany | Res de gros |
-| Part I. Marc teòric (capítols 1 a 5) | Esborrany revisat | Res de gros |
+| Part I. Marc teòric (capítols 1 a 5) | Esborrany | Res de gros |
 | Part II. Metodologia (capítols 6 a 15) | Esborrany | Posar-hi les xifres exactes del dia de l'entrega final |
 | Part III. El producte (capítols 16 a 21) | Esborrany | Refer les captures de pantalla amb les dades finals |
 | Part IV. Resultats i conclusions (capítols 22 a 26) | Per escriure | Tot. Depèn de les proves amb usuaris, que encara no s'han fet |
@@ -1184,6 +1181,14 @@ codi no arriba a la web publicada sense haver passat per una revisió. I en
 queda constància: cada *pull request* és una prova de què es va fer i
 quan. A principis de novembre del 2026 se n'havien obert una vintena en
 tot el projecte.
+
+Aquesta memòria s'ha desenvolupat de la següent manera. S'ha redactat en
+format Markdown (.md), un format de text senzill, dins del mateix
+repositori del projecte, on queda registrat l'historial complet de canvis.
+La IA ha ajudat l'autora a revisar-ne l'ortografia, l'estil i el format, a
+trobar errors conceptuals en el seu redactat i a convertir el text a Word
+cada vegada que ha calgut fer una entrega. Per això el document Word és
+una exportació final.
 
 ## 14. Com es comprova que funciona
 

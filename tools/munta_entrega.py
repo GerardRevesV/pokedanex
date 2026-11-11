@@ -32,9 +32,6 @@ Aquest document recull el que hi ha escrit del treball de recerca fins a
 l'11 de novembre del 2026. És una entrega parcial: tot el que hi ha és en
 esborrany i encara es pot canviar.
 
-Dins del text, la marca **[PENDENT]** assenyala una frase que depèn de
-feina que encara no està feta.
-
 | Apartat | Estat | Què hi falta |
 |---|---|---|
 | Portada | Feta | Res |
@@ -43,7 +40,7 @@ feina que encara no està feta.
 | Índex comentat | Només per a aquesta entrega | No anirà al treball final |
 | Presentació | Esborrany | Res de gros |
 | Introducció | Esborrany | Res de gros |
-| Part I. Marc teòric (capítols 1 a 5) | Esborrany revisat | Res de gros |
+| Part I. Marc teòric (capítols 1 a 5) | Esborrany | Res de gros |
 | Part II. Metodologia (capítols 6 a 15) | Esborrany | Posar-hi les xifres exactes del dia de l'entrega final |
 | Part III. El producte (capítols 16 a 21) | Esborrany | Refer les captures de pantalla amb les dades finals |
 | Part IV. Resultats i conclusions (capítols 22 a 26) | Per escriure | Tot. Depèn de les proves amb usuaris, que encara no s'han fet |
@@ -410,6 +407,21 @@ def actualitza_index(desti):
         print("Avís: no s'ha pogut omplir l'índex. Obriu el Word i actualitzeu-lo a mà.")
 
 
+def posa_propietats(doc):
+    """Omple les propietats del fitxer (autora i títol) amb les dades de la portada.
+
+    Sense això hi surt el nom de l'eina que fa el Word, i no el de l'autora.
+    """
+    dades = dict(re.findall(r"\*\*(.+?):\*\* (.+)", llegeix("preliminars.md")))
+    autora = dades.get("Autora", "").strip()
+    titol = dades.get("Títol", "").replace("*", "").strip()
+    cp = doc.core_properties
+    cp.author = cp.last_modified_by = autora
+    cp.title = titol
+    cp.subject = "Treball de recerca"
+    cp.comments = ""
+
+
 def main():
     if "--md" in sys.argv:
         munta_md()
@@ -437,8 +449,13 @@ def main():
 
     SORTIDA.mkdir(exist_ok=True)
     desti = SORTIDA / f"Pokedanex-entrega-parcial-{date.today().isoformat()}.docx"
+    posa_propietats(doc)
     doc.save(desti)
     actualitza_index(desti)
+    # El Word, en omplir l'índex, hi apunta l'usuari de l'ordinador: es torna a posar.
+    final = Document(desti)
+    posa_propietats(final)
+    final.save(desti)
     paraules = sum(len(p.text.split()) for p in doc.paragraphs)
     print(f"{desti.relative_to(ARREL)}  ({paraules} paraules, {len(doc.inline_shapes)} imatges)")
 

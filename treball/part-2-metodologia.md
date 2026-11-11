@@ -270,6 +270,14 @@ queda constància: cada *pull request* és una prova de què es va fer i
 quan. A principis de novembre del 2026 se n'havien obert una vintena en
 tot el projecte.
 
+Aquesta memòria s'ha desenvolupat de la següent manera. S'ha redactat en
+format Markdown (.md), un format de text senzill, dins del mateix
+repositori del projecte, on queda registrat l'historial complet de canvis.
+La IA ha ajudat l'autora a revisar-ne l'ortografia, l'estil i el format, a
+trobar errors conceptuals en el seu redactat i a convertir el text a Word
+cada vegada que ha calgut fer una entrega. Per això el document Word és
+una exportació final.
+
 ## 14. Com es comprova que funciona
 
 En aquest projecte, comprovar vol dir obrir la web i fer-la servir.
