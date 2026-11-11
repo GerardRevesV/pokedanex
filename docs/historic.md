@@ -1285,3 +1285,62 @@ torna a generar.
 
 Abans n'havia deixat un altre al PR 24: treure la línia «Esborrany de l'11
 de novembre» del glossari. S'ha tret també de la Part II.
+
+## 69. Revisió de llegibilitat del document unificat
+
+*11 de novembre del 2026*
+
+Es repassa tot el treball (`treball/revisio-tot-junt.md`) buscant paràgrafs
+massa tècnics o complexos per a un lector de 17 anys. Surten 15 punts,
+ordenats per prioritat, a `treball/revisio-llegibilitat.md`. Els més greus
+són la regla dels preus del capítol 19, la precaució sobre l'estudi de METR
+del capítol 5 i el vocabulari de git del capítol 13. Encara no s'ha canviat
+cap text.
+
+Després es prepara `treball/proposta-llegibilitat.md`: per a cada punt, el
+text d'ara i una proposta més senzilla, amb una casella per acceptar-la.
+
+L'Edanna les accepta totes. S'apliquen als textos d'origen (`marc-teoric.md`,
+`part-2-metodologia.md`, `part-3-producte.md` i `glossari.md`) i es torna a
+generar el document unificat. Com que la regla dels preus passa de quatre
+passos a tres, també es corregeix la frase de més avall que parlava del
+«pas 4».
+
+## 70. Passada d'estil: fora les frases fetes de les correccions
+
+*11 de novembre del 2026*
+
+Les correccions fetes amb la intel·ligència artificial havien deixat al text
+uns quants girs repetits que sonen a text generat: «No és X: és Y», «la
+clau de tot», «és revelador», «la idea de fons», «l'ordre no és casual»,
+moltes negretes i «de debò» a cada pàgina. Es reescriuen 49 frases del
+marc teòric, la introducció i les parts II i III amb un to més planer i
+directe. El contingut i les dades no canvien. La Presentació, que és en
+primera persona, no es toca.
+
+Després es revisen tots els canvis frase per frase. Es corregeixen sis
+coses: el primer pas de la regla dels preus, que en simplificar-lo havia
+quedat amb l'ordre de les fonts canviat; la taula de les fases, que no
+tenia número (ara és la taula 2 de la Part II, i les altres passen a ser
+la 3 i la 4); la data en què es van tancar les tres primeres fases, que
+s'havia perdut; i tres frases que repetien paraules o encara sonaven a
+frase feta.
+
+## 71. Revisió del format del Word
+
+*11 de novembre del 2026*
+
+Es revisa dues vegades el Word de l'entrega: primer l'estructura interna
+(títols, taules, imatges, restes de símbols) i després pàgina per pàgina,
+convertit a PDF. Es troben quatre errors del programa que el munta
+(`tools/munta_entrega.py`) i s'arreglen: un títol de l'índex comentat sortia
+amb asteriscs; a l'índex, els capítols de cada part tornaven a començar per
+l'1; dues taules quedaven partides entre dues pàgines i una figura separada
+del seu peu; i no hi havia número de pàgina. A més, a l'índex comentat el
+títol de cada capítol i la seva explicació ara van en línies separades.
+
+Després s'hi afegeixen tres millores de format que demana la rúbrica: una
+**portada** de debò (títol gran i centrat, i les dades de l'autora a sota),
+el **text justificat** i l'**índex automàtic** del Word, amb el número de
+pàgina de cada apartat. La guia de l'entrega i l'índex comentat no surten a
+l'índex, perquè no formen part del treball final.

@@ -38,9 +38,11 @@ següents expliquen com.
 
 ## 17. Com està feta per dins
 
-Pokedanex és el que s'anomena una **web estàtica**. Vol dir que no hi ha
-cap programa funcionant en un altre ordinador ni cap base de dades: la web
-són fitxers, i el navegador de qui la visita els llegeix i ho fa tot. És la
+Pokedanex és el que s'anomena una **web estàtica**. Moltes webs, com una
+xarxa social, tenen un ordinador a l'altra banda que guarda els comptes i
+les dades de tothom i que respon cada vegada que algú fa alguna cosa.
+Pokedanex no en té: la web són només fitxers, i el navegador de qui la
+visita els llegeix i ho fa tot. És la
 manera més senzilla i més barata de fer una web, i per a aquest projecte
 n'hi ha prou.
 
@@ -142,7 +144,7 @@ botó «Actualitza», i llavors es crea una còpia nova sense esborrar les
 anteriors. Si un servei cau, la web continua funcionant amb l'última
 còpia, i a més es poden tornar a consultar els preus d'un altre dia.
 
-Els preus van donar dos problemes, i tots dos tenien la mateixa forma: un
+Els preus van donar dos problemes. En tots dos casos, la web ensenyava un
 número que semblava bo i no ho era.
 
 El primer va arribar amb les expansions noves. La web deia que
@@ -159,23 +161,25 @@ pokemontcg.io, i aquest servei havia deixat d'actualitzar els de
 Cardmarket sense avisar: la majoria tenien entre nou mesos i un any. A
 més, una desena de cartes de pocs cèntims comptaven com si en valguessin
 7, 27 o 42 euros. Per això es va afegir TCGdex com a segona font i es va
-escriure una regla nova, en quatre passos:
+escriure una regla
+nova. La idea és senzilla: **de tots els preus que hi ha d'una carta, es
+tria el més fiable que sigui recent, i si dos preus no quadren gens, es
+desconfia del més alt.** En concret:
 
-1. Hi ha quatre preus possibles, ordenats de més a menys fiable: el de
-   Cardmarket i el de TCGplayer segons TCGdex, i els mateixos dos segons
-   pokemontcg.io. Els preus en dòlars es passen a euros amb un canvi fix
-   (un dòlar, 0,90 euros).
-2. Un preu només val si és recent, és a dir, si té menys de 60 dies quan
-   es baixen les dades. Es fa servir el primer de la llista que ho
-   compleixi.
-3. Si no n'hi ha cap de recent, es fa servir el menys antic.
-4. Si el preu en euros i el preu en dòlars d'una mateixa carta són molt
-   diferents (l'un cinc vegades l'altre, o més), es tria el més baix.
+1. Primer es busca a TCGdex, que és la font més fiable: el preu europeu,
+   de Cardmarket, i si no n'hi ha, el nord-americà, de TCGplayer, passat
+   de dòlars a euros (un dòlar es compta com 0,90 euros). Si TCGdex no en
+   té cap, es fa el mateix amb pokemontcg.io.
+2. Només es fa servir un preu recent, que vol dir que té menys de dos
+   mesos. Si no n'hi ha cap de recent, es fa servir el menys antic.
+3. Si el preu europeu i el nord-americà d'una carta són molt diferents
+   (l'un cinc vegades més alt que l'altre, o més), es tria el més baix.
 
-Tot preu que no sigui de Cardmarket, recent i sense dubtes surt marcat amb
-«≈» (figura 6), i en passar-hi el ratolí per sobre la web en diu el motiu:
-és convertit de dòlars, és antic o és dubtós. Si cap font no té preu, la
-web hi posa un guió i compta a part quantes cartes s'han quedat sense.
+Només els preus de Cardmarket recents i sense dubtes surten tal com són.
+Tots els altres porten el signe «≈» (figura 6), i si s'hi passa el ratolí
+per sobre, la web n'explica el motiu: que s'ha passat de dòlars, que és
+antic o que no és segur. Si no hi ha cap preu, la web hi posa un guió i
+compta a part quantes cartes n'han quedat sense.
 
 | Preu de Cardmarket | Preu marcat amb «≈» |
 |---|---|
@@ -186,28 +190,29 @@ amb preu de Cardmarket recent. A la dreta, una de Surging Sparks amb el
 preu marcat amb «≈»: les fonts no es posaven d'acord i la web ha triat el
 preu més baix.*
 
-Amb la regla nova, de les 4.016 peces que hi ha a les catorze expansions
-(cada variant d'una carta compta com una peça), 4.003 tenen preu de
-Cardmarket recent, 13 surten marcades amb «≈» i cap es queda sense preu.
-Abans de la revisió n'hi havia 1.068 sense preu.
+Amb la regla nova, gairebé totes les cartes tenen un preu de Cardmarket
+recent. De les 4.016 peces de les catorze expansions (cada variant d'una
+carta compta com una peça), només 13 surten marcades amb «≈», i cap es
+queda sense preu. Abans de la revisió, n'hi havia més de mil sense preu.
 
-La regla té límits, i s'han de dir. El pas 4 només funciona si la carta té
-preu en tots dos mercats: si només n'hi ha un i és erroni, no es detecta.
-I els dos números de la regla, els 60 dies i les cinc vegades, es van
-triar mirant les dades, no amb cap càlcul.
+La regla també té límits. El pas 3 només funciona si la carta té preu en
+tots dos mercats: si només n'hi ha un i és erroni, no es detecta. I els
+dos números de la regla, els dos mesos i les cinc vegades, es van triar
+mirant les dades, no amb cap càlcul.
 
-La idea de fons val per a qualsevol web que treballi amb dades que són
+Tot això serveix per a qualsevol web que treballi amb dades que són
 d'altres: és millor una aproximació que avisa que ho és, o un buit que es
 veu, que no pas un número que sembla exacte i no ho és. I les dades d'un
-servei extern s'han de tornar a revisar de tant en tant, perquè poden deixar
-de ser bones sense que res ho indiqui.
+servei extern s'han de tornar a revisar de tant en tant, perquè poden
+deixar de ser bones sense que res ho indiqui.
 
 ## 20. Ordinador i mòbil
 
 La web es va pensar per a ordinador, i en un mòbil no n'hi ha prou de
 fer-ho tot més petit. Canvien tres coses. La pantalla és estreta. No hi ha
 ratolí, i per tant no hi ha clic dret ni es pot passar per sobre d'un botó
-per veure'n l'explicació. I el dit és molt menys precís que la fletxa del ratolí.
+per veure'n l'explicació. I el dit és molt menys precís que la fletxa del
+ratolí.
 
 L'adaptació es va fer l'11 d'agost del 2026 en tres rondes de revisió,
 totes fetes per la intel·ligència artificial, que van trobar i arreglar 89
@@ -229,18 +234,18 @@ problemes. Els canvis més visibles (figura 7) són aquests:
 una pantalla simulada de 390 píxels d'amplada, no amb un telèfon.*
 
 Aquell mateix dia es va treballar l'**accessibilitat**, que vol dir que la
-web la pugui fer servir tothom, també les persones amb problemes de vista. Cada expansió
-té el seu color, i un color bonic pot ser impossible de llegir. Les normes
-internacionals d'accessibilitat (WCAG) ho mesuren amb un número, el
-contrast entre el text i el fons, que ha de ser com a mínim de 4,5 a 1.
-Els colors no es van triar a ull: els de 13 de les 14 expansions es van
-ajustar per càlcul, i van quedar amb contrastos d'entre 6,2 i 12,5 a 1,
-força per sobre del mínim. A més, la web redueix les animacions a qui ha
-demanat al seu aparell que ho faci.
+web la pugui fer servir tothom, també les persones amb problemes de vista.
+Cada expansió té el seu color, i un color bonic pot fer que el text no es
+llegeixi. Unes normes internacionals, les WCAG, ho mesuren amb un número,
+el **contrast**: com més alt, més es distingeix el text del fons. El mínim
+que demanen és 4,5. Els colors no es van triar a ull: els de 13 de les 14
+expansions es van ajustar per càlcul, i tots van quedar força per sobre
+del mínim, entre 6,2 i 12,5. A més, si algú ha configurat el mòbil o
+l'ordinador perquè es moguin menys coses a la pantalla, la web en fa cas i
+redueix les animacions.
 
-Que tot això funcioni per a persones de debò, amb telèfons de debò, no ho
-pot dir aquest capítol: ho han de dir les proves amb usuaris de la Part
-IV.
+Si tot això funciona bé per a persones reals i en telèfons reals, ho
+hauran de dir les proves amb usuaris de la Part IV.
 
 ## 21. Publicar-la a internet
 
@@ -254,9 +259,8 @@ el codi del projecte, i ofereix allotjament gratuït amb una condició: que el
 codi sigui públic, a la vista de tothom. Abans d'acceptar es va comprovar
 que no s'hi hagués desat mai cap contrasenya ni cap altra dada secreta. Que
 el codi sigui públic, a més, va bé al treball: qui el vulgui revisar, pot
-fer-ho. Es van mirar dues alternatives, Netlify i Cloudflare Pages, i es van
-descartar perquè obligaven a obrir un compte en un altre servei sense donar
-res a canvi.
+fer-ho. Es van mirar dos serveis semblants, Netlify i Cloudflare Pages, i es van
+descartar perquè calia obrir-hi un compte nou i no donaven res més.
 
 La web és pública des del 10 d'agost del 2026 en aquesta adreça:
 

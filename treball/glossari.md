@@ -90,8 +90,8 @@ que s'anomenen *reverse* i *holo*. Poden tenir preus diferents. (18)
 deixant que una intel·ligència artificial n'escrigui el codi. En sentit
 estricte, vol dir acceptar aquest codi sense llegir-lo. (1)
 
-**Web estàtica.** Una web feta només de fitxers, sense cap programa
-funcionant en un altre ordinador ni cap base de dades. (17)
+**Web estàtica.** Una web feta només de fitxers, sense cap ordinador a
+l'altra banda que guardi dades o respongui a qui la visita. (17)
 
 **Xat.** Una conversa amb un model de llenguatge que només respon amb
 text. Si dona codi, la persona l'ha de copiar i provar ella mateixa. (3)
