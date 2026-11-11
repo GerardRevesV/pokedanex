@@ -947,7 +947,8 @@ fonts del projecte donen xifres diferents de la revisió del marc teòric
 - Llegits els vuit comentaris del PR 21 i el del PR 19.
 - Aplicats cinc: la data d'inici del treball (24 de març del 2026) i
   quatre passatges que no s'entenien.
-- Quatre comentaris queden pendents d'una decisió sobre l'autoria del text.
+- Aplicats després els altres quatre: surten de la Part II quatre passatges
+  que parlaven del text del treball i no de la web (entrada **56**).
 - Comprovat l'estat de les branques després de les fusions: el treball
   escrit no és a `main`.
 - Entrada **55** de l'històric.
