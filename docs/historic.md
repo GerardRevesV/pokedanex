@@ -1344,3 +1344,14 @@ Després s'hi afegeixen tres millores de format que demana la rúbrica: una
 el **text justificat** i l'**índex automàtic** del Word, amb el número de
 pàgina de cada apartat. La guia de l'entrega i l'índex comentat no surten a
 l'índex, perquè no formen part del treball final.
+
+## 72. La memòria explica com s'ha escrit
+
+El Word que s'entrega es genera de cop a partir dels fitxers Markdown, i
+per això les seves propietats (temps d'edició, número de revisió) no
+mostren cap procés d'escriptura. Perquè un professor que ho miri no s'ho
+trobi sense explicació, s'afegeix un paràgraf al final del capítol 13
+(`treball/part-2-metodologia.md`): diu que la memòria s'ha redactat en
+Markdown dins del repositori, en què ha ajudat la IA, i que l'historial de
+canvis és a GitHub i no al Word. El text el proposa l'Edanna; la IA
+l'adapta a la tercera persona de la resta del capítol.

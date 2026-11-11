@@ -1158,3 +1158,18 @@ s'envia, i mentrestant només el veu qui l'ha escrit.
 **Costos:** 0 € (de subscripció a part).
 
 **Problemes:** cap.
+
+## 2026-11-11 (11a sessió) — Com s'explica que el Word ve d'un .md
+
+**Què s'ha fet:**
+- Dubte: si el Word es genera de cop, el professor pot veure a les
+  propietats del fitxer que no té historial d'edició. Es decideix
+  explicar-ho al treball en lloc d'amagar-ho.
+- Paràgraf nou al final del capítol 13, amb el text proposat per
+  l'Edanna, i document unificat regenerat (entrada **72** de l'històric).
+
+**Eines usades:** Claude Code.
+
+**Costos:** 0 € (de subscripció a part).
+
+**Problemes:** cap.
