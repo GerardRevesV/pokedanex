@@ -244,6 +244,122 @@ que no saben animar: l'efecte és una capa posada a sobre, i si no es pot
 fer, la pàgina canvia igualment. La lliçó per al treball és que un
 adorn mai no pot ser la condició perquè una cosa funcioni.
 
+## 9. Tot funciona i res no s'entén: el forat que deixen les peces ben fetes
+
+*2026-11-03*
+
+La web ja tenia filtres de raresa, de tipus d'energia i de categoria, una
+vista de graella, una vista d'àlbum, un panell d'estadístiques i un mode de
+marcatge per variants. Cada peça s'havia demanat per separat, s'havia provat
+per separat i funcionava. El dubte va arribar de l'ús real: «hi ha filtres
+com raresa, tipus o energia que no s'apliquen». En comprovar-ho, la
+intuïció era exacta i la causa era més profunda que un error: la graella es
+construeix cada vegada fent passar les cartes pel sedàs dels filtres, mentre
+que l'àlbum agafa la llista sencera i la reparteix per butxaques. Són dos
+camins diferents dins del programa, i els filtres només estaven connectats
+al primer. A la vista Àlbum, sis controls de la capçalera es queden
+visibles, actius i amb el mateix aspecte que quan funcionen, esperant que
+algú els toqui per no fer res. L'estudi que en va sortir
+(`docs/estudi-usabilitat.md`) va trobar vuit problemes més del mateix
+estil, i cap d'ells era un error de programació: eren forats entre peces i
+paraules mal triades, com la paraula «col·lecció», que a la mateixa
+pantalla designa un mode de colors, un filtre i les cartes que tens — unes
+vegades d'una sola expansió i altres de totes.
+
+La lliçó és la que més ha costat d'entendre de tot el projecte, perquè no
+és tècnica. Quan demanes «fes-me un filtre de raresa», la IA et fa un
+filtre de raresa excel·lent: no pregunta si també l'ha de connectar a la
+vista d'àlbum que vas fer la setmana passada, ni t'avisa que la paraula que
+has triat per a l'etiqueta ja estava ocupada dues vegades. Ningú no té la
+pantalla sencera al cap: la IA perquè només veu la petició que té davant, i
+la persona perquè no sap que dins del programa hi ha dos camins diferents.
+Provant les funcionalitats d'una en una no es detecta mai, perquè d'una en
+una totes passen la prova; només apareix quan recorres tasques completes
+—«vull veure quines cartes de foc em falten»— i descobreixes que es
+trenquen pel mig. D'aquí va sortir una manera de treballar nova per al
+projecte: cada cert temps, deixar de demanar funcionalitats i demanar un
+estudi de casos d'ús, que és l'única manera que la persona que no programa
+pugui veure els forats que la IA, peça a peça, no té com veure.
+
+## 10. Quan l'autora no entén el seu propi treball
+
+*2026-11-07*
+
+El marc teòric el va escriure la intel·ligència artificial de cap a peus: va
+buscar les fonts, les va llegir, en va treure les dades i en va redactar el
+text, i després quatre revisors —també de la mateixa família d'eines— el van
+escurçar i el van corregir. El resultat era un capítol correcte, ben citat i
+més madur del que s'espera de 1r de batxillerat, i precisament per això va
+aparèixer una dificultat que no té res de tècnic: en llegir-lo, l'autora va
+marcar sis passatges amb la mateixa frase, «no ho entenc, canvia-ho o
+explica-ho millor». Eren, un per un, els passatges on el text havia estat més
+eficient: una idea densa dita en tres línies, com que la màquina no contesta
+mai dues vegades igual, o que el que de debò aporta un agent és que li has
+passat la feina de comprovar. Dites així, són certes i impecables; dites
+així, tampoc no les pot defensar qui no ha fet la lectura d'on surten. La
+sortida no va ser abaixar el nivell, sinó allargar: cada idea densa es va
+tornar a escriure amb un exemple del mateix projecte al costat, i el capítol
+va créixer més de dues-centes paraules. El canvi val la pena, perquè en un
+treball de recerca el que no pots explicar amb les teves paraules no és teu
+encara, per ben escrit que estigui.
+
+El mateix dia va aparèixer una segona dificultat, menys profunda però més
+perillosa. L'autora havia deixat els comentaris a la pàgina del pull request
+de GitHub i, tot seguit, havia clicat «Resolve conversation» a cada un, perquè
+havia entès el botó com un «ja t'ho he enviat». Set dels nou comentaris
+constaven, doncs, com a resolts sense que ningú no hagués tocat el text. El
+parany és fàcil de caure-hi: GitHub els mostra plegats i en gris, i qualsevol
+que hi passés —persona o màquina— entendria que allò ja està fet. Es va
+descobrir de casualitat, comparant la data de l'últim canvi del fitxer amb la
+dels comentaris, i és la mena d'error que no deixa rastre: no falla res, només
+que la feina no s'ha fet. D'aquí surt una norma de treball petita i útil per a
+tot el projecte: la prova que una cosa està feta és el text, no cap marca de
+cap plafó.
+
+## 11. Quan la font menteix sense avisar: els preus que no eren de la carta
+
+*2026-11-10*
+
+Durant mesos la web havia donat preus que semblaven bons. No fallava res:
+cada carta tenia la seva xifra, les sumes quadraven i a sota hi deia «preus
+de l'11 d'agost». La dificultat va ser adonar-se que aquella data era la del
+dia que s'havien baixat les dades, no la dels preus. Cada preu duia amagada
+la seva pròpia data, i la majoria eren de gairebé un any abans. A més, unes
+quantes cartes de cèntims comptaven com si en valguessin quaranta euros,
+perquè la font hi posava el preu d'una altra versió de la mateixa carta, la
+que porta un segell de torneig. Cap d'aquestes coses es veu mirant la
+pantalla. Només van sortir en comparar dues fonts entre elles, carta per
+carta, i preguntar-se per què discrepaven tant.
+
+El segon pas difícil va ser acceptar que no hi ha cap font que tingui raó
+sempre. La font nova és molt millor, però també s'equivoca en quatre cartes.
+Per això la solució no ha estat canviar una font per una altra, sinó
+escriure unes regles que no es refien de cap: es mira si el preu és recent,
+es compara amb el de l'altre mercat i, quan dues fonts discrepen moltíssim,
+es tria la xifra prudent i es marca amb un «≈» perquè qui mira la web sàpiga
+que aquell preu no és segur. Per al treball, la lliçó és que una dada pot
+ser falsa sense que res no s'espatlli, i que l'única defensa és contrastar-la
+amb una altra i dir obertament quan no se n'està segur.
+
+## 12. Una captura també és una afirmació
+
+*2026-11-10*
+
+Posar captures de pantalla al treball semblava la part fàcil: s'obre la
+web, es fa la foto i s'enganxa. No ho és, perquè una captura diu coses
+encara que ningú les escrigui. Si s'hi veu una col·lecció de 30 cartes, qui
+la mira entén que és la col·lecció d'algú. Si s'hi veu un preu, entén que
+és el preu d'avui. Si la pantalla és estreta, entén que és un telèfon. Cap
+de les tres coses era veritat: la col·lecció es va marcar expressament per
+a la foto, els preus eren de l'11 d'agost i el «mòbil» era una pantalla
+simulada en un ordinador.
+
+La solució no va ser amagar-ho sinó escriure-ho. Cada peu de figura diu què
+s'hi veu de debò: que la col·lecció és un exemple, de quin dia són els
+preus i que la pantalla de mòbil és simulada. La lliçó és la mateixa que
+amb els preus aproximats de la web: una dada que no és exactament el que
+sembla s'ha de marcar, i una imatge és una dada com qualsevol altra.
+
 ## 13. Dos servidors al mateix port: quan la correcció és bona i no es veu
 
 *2026-11-10*

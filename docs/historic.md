@@ -703,7 +703,290 @@ lateral, filtre de cerca i els documents agrupats, i un script
 es genera a cada publicació, de manera que la web sempre serveix l'última
 versió dels documents sense mantenir res a mà.
 
-## 53. Les barres d'estadístiques, aixafades al mòbil: una línia de CSS
+## 45. Els filtres arriben a l'àlbum: ressaltar en comptes de filtrar
+
+*2026-11-04*
+
+S'implementen els dos primers punts de la recomanació de l'estudi
+d'usabilitat. **Punt 1:** la cerca i els quatre filtres ja no són decoratius
+a la vista d'Àlbum. Com que un àlbum amb forats és justament el que un
+col·leccionista vol veure, no amaguen butxaques: encenen les cartes que
+coincideixen amb un anell del color d'accent, apaguen la resta, i afegeixen
+una barra que diu «4 cartes coincideixen · pàgines 1, 8» amb dues fletxes
+per saltar de pàgina en pàgina amb coincidències. Si la pàgina oberta no en
+té cap, l'àlbum hi salta tot sol: és la idea original de «porta'm a la
+pàgina» feta de la manera que les dades permeten, perquè no existeix «la
+pàgina» d'un tipus (D-011). El control «Ordena per» s'amaga a l'àlbum,
+perquè l'ordre d'un àlbum és físic. **Punt 2:** els tres desplegables
+desactiven les opcions que, amb els altres dos tal com estan, no deixarien
+passar cap carta —l'exemple clar és qualsevol tipus d'energia amb la
+categoria «Entrenador»—, cosa que tanca el 58,4 % de combinacions buides que
+havia mesurat l'estudi; i el missatge de graella buida ha deixat de culpar
+sempre «la cerca»: ara enumera els criteris que han deixat fora les cartes
+(«Cap carta no coincideix amb la cerca «zzzz» · Raresa: Rare.») i porta un
+botó «Treure els filtres». Tècnicament, el canvi de fons és que la cerca i
+els filtres viuen ara en un sol lloc (`predicatActual()` a `main.js`) que
+alimenta els dos camins que pinten cartes, la graella i l'àlbum: era la
+separació entre aquests dos camins la que havia creat el problema.
+
+## 46. Les paraules de la interfície: «Colors», «Què mostro» i quatre paranys menys
+
+*2026-11-04*
+
+S'acaben els punts 3 a 8 de la recomanació de l'estudi d'usabilitat, els que
+no són de funcionament sinó de **comprensió**. «Visualització» passa a
+«Colors»; el filtre «Col·lecció» passa a «Què mostro»; el panell
+d'estadístiques, que sempre havia calculat només l'expansió oberta mentre es
+titulava «de la col·lecció», ara ho diu —«Estadístiques d'aquesta
+expansió»—, i el comptador del peu també; el botó «Buidar», que esborra
+totes les expansions, passa a «Buidar-ho tot»; i «Consulta» passa a «Només
+mirar». Amb això, la paraula «col·lecció» deixa de voler dir tres coses
+diferents a la mateixa pantalla. Es tanquen també quatre paranys: al mòbil
+el botó «Filtres i opcions» porta un distintiu amb el nombre de filtres
+actius (amb el bloc plegat no hi havia cap pista que n'hi hagués); Importar
+demana confirmació abans de substituir la col·lecció sencera, com ja feia
+Buidar; canviar d'expansió treu la cerca i els filtres, que abans hi
+viatjaven i obrien l'expansió nova amb vuit cartes i cap explicació; i la
+pista del Ctrl+clic per veure una carta en gran mentre marques, que a
+escriptori només es descobria per sort, ara surt com a missatge en entrar en
+un mode de marcatge. Finalment, «Versió de les dades» i «Actualitza» s'ajunten
+sota un sol títol, «Dades». Tot són canvis de text i de detall —cap
+funcionalitat nova— i queden registrats a la decisió D-012.
+
+## 47. Els comentaris de l'Edanna al marc teòric, aplicats
+
+*2026-11-07*
+
+L'Edanna va deixar nou comentaris sobre `treball/marc-teoric.md` a la pàgina
+del pull request #13. Dos demanaven treure text, sis deien alguna variant de
+«no ho entenc, canvia-ho o explica-ho millor» i un era la prova de
+verificació del canal, de la setmana passada. En anar a aplicar-los va
+aparèixer una sorpresa: set dels nou fils constaven com a **resolts** i, en
+canvi, el fitxer no s'havia tocat des del 4 de novembre. Els havia resolt
+ella mateixa just després d'escriure'ls, entenent «Resolve conversation» com
+«ja t'ho he enviat» i no com «ja està arreglat». No s'havia perdut cap
+petició, però tampoc no se n'havia aplicat cap. En aquesta sessió s'han
+aplicat totes vuit.
+
+**El que s'ha tret.** L'avís entre parèntesis que deia que la piulada de
+Karpathy no s'havia pogut consultar directament; la frase sobre la paga dels
+participants de l'estudi de METR, que allargava el raonament sense
+sostenir-lo; i el paràgraf sencer «Un cas concret i una veu crítica», que
+portava el cas de les aplicacions de Lovable amb dades exposades i la frase
+de Simon Willison.
+
+**El que s'ha reescrit, perquè no s'entenia.** Que la mateixa pregunta no
+dona mai la mateixa resposta —ara amb el que això vol dir per a una recerca,
+que el mètode es pot repetir i el resultat no—; el bucle de l'agent —ara amb
+les quatre feines de programar, escriure, provar, trobar l'error i
+esmenar-lo, i qui en fa cadascuna—; el fet que dues converses obertes alhora
+no comparteixen res —ara amb el cas real de les dues entrades amb el mateix
+número—; i la citació del Departament d'Educació, dita planerament. De
+l'enquesta de Stack Overflow l'Edanna preguntava si realment feia falta: s'ha
+conservat i se li ha afegit un paràgraf que diu per què hi és, perquè les
+seves dues xifres (tothom ho fa servir, cada vegada se'n refien menys) són el
+retrat del problema que el projecte es troba a la part pràctica.
+
+**El que cal tenir present.** Amb el paràgraf de Lovable i Willison fora, el
+capítol 5 es queda sense l'única veu crítica citada i sense l'únic cas
+concret d'una web feta amb aquestes eines que va acabar ensenyant dades dels
+usuaris. L'argument no queda despenjat, perquè la dada de Veracode —el 45 %
+del codi generat amb vulnerabilitats— continua al text i és la que sosté la
+conclusió del capítol. Però si algun professor pregunta per la part crítica
+de la bibliografia, la resposta ha de sortir d'aquella dada i no de la frase
+de Willison, que ara només consta a `treball/fonts.md`.
+
+Les dues fonts que han quedat sense citar —Semafor i Willison— han baixat a
+la secció de fonts reservades per a les parts següents, amb el motiu escrit
+al costat: una bibliografia no pot dir «citada a la Part I» d'una cosa que ja
+no s'hi cita. El capítol passa de 3.454 a 3.691 paraules: explicar-se bé
+costa paraules.
+
+## 48. La veu crítica torna al capítol 5, en una sola línia
+
+*2026-11-10*
+
+En aplicar els comentaris de l'Edanna (entrada 47) es va treure el paràgraf
+«Un cas concret i una veu crítica», i va quedar apuntat que el capítol 5 es
+quedava sense cap veu crítica citada. Tres dies després es decideix
+recuperar-ne la meitat: la frase de Simon Willison —«arribar a un codi en
+producció a base de *vibe coding* és clarament una idea terrible»— torna al
+text, però no com a paràgraf propi sinó com a tancament del primer paràgraf
+de «Què se'n deriva per a aquest treball», que és on fa més servei: just
+després de dir que la màquina no escriu codi fiable tota sola. El cas de
+Lovable no es recupera.
+
+A la bibliografia, la fitxa de Willison torna a les fonts citades a la Part I
+amb l'historial escrit (treta el dia 7, recuperada el dia 10), i Semafor es
+queda sola a les reservades.
+
+## 49. Els preliminars i la introducció, en esborrany, amb el pressupost de pàgines
+
+*2026-11-10*
+
+Es comença a escriure el que va davant del cos del treball. El document nou,
+`treball/preliminars.md`, porta la portada, l'abstract en anglès, l'esquema
+de l'índex, la presentació i la introducció. Abans d'escriure es van decidir
+tres coses.
+
+**Quins capítols fan falta.** L'índex queda en quatre parts i 26 capítols
+numerats de corrido: 5 de marc teòric (els que ja hi ha escrits), 10 de
+metodologia, 6 del producte i 5 de resultats i conclusions. La numeració és
+nova: la del guió repetia el número 7 i encara no s'ha tocat, de manera que
+els números dels dos documents no coincideixen fins que el guió s'actualitzi.
+
+**Quantes pàgines té cada part.** El pressupost suma 47 pàgines, dins de les
+40-50 que es volen: 9 de preliminars i introducció, 10 de marc teòric, 11 de
+metodologia, 8 del producte, 6 de resultats i conclusions i 3 de glossari i
+fonts. Els annexos no hi compten. Queden tres pàgines de marge per a taules i
+figures.
+
+**Què vol dir «útil».** La hipòtesi parla d'una web útil i el guió ja avisava
+que aquesta paraula s'havia de definir abans de treure conclusions. La
+introducció proposa tres condicions: que la web faci bé el que promet, que la
+pugui fer servir algú que no ha participat en el projecte, i que estigui a
+l'abast (publicada, per a ordinador i mòbil, i per menys de 20 euros al mes).
+És una proposta: l'Edanna l'ha de donar per bona.
+
+El text es va revisar dues vegades. La primera, fet per fet contra els
+documents del projecte i contra el marc teòric, i en van sortir vuit
+correccions: per exemple, deia que els programadors de l'estudi de METR eren
+dos grups diferents, quan eren els mateixos fent feines amb l'eina i sense, i
+deia que l'Edanna ja podia explicar amb les seves paraules els passatges
+reescrits, cosa que encara no s'ha comprovat. La segona revisió va ser de
+claredat i de llargada.
+
+El que no s'ha escrit, expressament: el nom de l'institut, el del tutor o
+tutora, la motivació personal i els agraïments. Són dades i paraules que
+només pot donar l'Edanna i al text queden marcades amb «PER OMPLIR». La frase
+de resultats de l'abstract queda com a «PENDENT» fins que es facin les proves
+amb usuaris.
+
+## 50. Els preus: revisió, una segona font i un sistema de quatre regles
+
+*2026-11-10*
+
+Es revisen els preus de les catorze expansions amb un programet que aplica
+la mateixa regla que la web i compara les dues fonts entre elles. En surten
+quatre expansions sense cap preu, preus de Cardmarket de fa gairebé un any i
+una desena de cartes amb preus erronis (cartes de cèntims que comptaven com
+si en valguessin 7, 27 i 42 euros). Es tornen a baixar totes les dades i no
+canvia gairebé res: el problema és a la font, pokemontcg.io, que ha deixat
+d'actualitzar els preus europeus.
+
+La solució té dues parts. La primera és una **segona font**, TCGdex,
+gratuïta i sense clau, que porta els preus de Cardmarket del dia abans i
+separa les cartes corrents de les que duen segell de torneig. La segona és
+un **sistema de quatre regles** (decisió D-013) que tria el preu de cada
+carta: quatre fonts per ordre de confiança, només valen els preus de menys
+de 60 dies, si no n'hi ha cap es fa servir el menys vell, i si euros i
+dòlars discrepen moltíssim es tria el més baix. Tot el que no sigui un preu
+de Cardmarket al dia surt marcat amb «≈» i la web en diu el motiu.
+
+El programa de baixada (`tools/fetch_data.py`) i el botó «Actualitza» de la
+web baixen ara de totes dues fonts, i la tria del preu viu en un sol lloc
+(`app/js/variants.js`). Resultat, comprovat amb el codi real de la web
+sobre les 4.016 peces: 4.003 amb preu de Cardmarket al dia, 13 marcades amb
+«≈» i cap sense preu. Abans n'hi havia 1.068 sense preu.
+
+## 51. L'índex comentat: cada capítol en dues línies, per ensenyar-lo a la professora
+
+*2026-11-10*
+
+L'índex dels preliminars només porta els títols, i un títol com «Les regles
+del joc» no diu gaire a qui no ha seguit el projecte. Es fa un document a
+part, `treball/index-comentat.md`, que repeteix l'índex i hi afegeix, sota
+cada un dels 26 capítols, d'una a tres línies que diuen què explica. Serveix
+perquè la professora pugui opinar sobre l'estructura abans que s'escrigui la
+resta: de moment només la Part I està escrita, i de les altres tres el
+document diu què ha d'explicar cada capítol, no què explica ja.
+
+És una eina de treball i no s'entrega. Les explicacions surten del guió i dels
+documents del projecte, i cada dada que hi surt (les dotze col·leccions
+afegides de cop, els 89 problemes de la revisió al mòbil, els dos forats de
+seguretat, els 0 euros de publicació) s'ha comprovat contra l'històric i els
+reptes.
+
+## 52. La Part III en esborrany, amb les primeres captures de la web
+
+*2026-11-10*
+
+S'escriu la Part III del treball, la que explica el producte: sis capítols
+(del 16 al 21) a `treball/part-3-producte.md`, amb unes 2.100 paraules i
+set figures. És la primera part del treball que porta imatges.
+
+Abans d'escriure es va fer un estudi de quines pantalles calia ensenyar
+(`docs/estudi-captures-part3.md`). El criteri: una captura entra si
+demostra una cosa que el text afirma, si s'entén sense haver fet servir la
+web i si no repeteix el que ja ensenya una altra. Entren la graella, el
+panell d'estadístiques, l'àlbum, el zoom, el selector d'expansions, dues
+fitxes de carta (preu exacte i preu aproximat) i dues pantalles de mòbil.
+Queden fora el mode Catàleg, els desplegables i la barra d'adreces.
+
+Les captures no s'han fet a mà. Les fa `tools/captures_part3.mjs`, que obre
+la web en un navegador sense finestra, marca una col·lecció d'exemple de 30
+cartes i desa les imatges a `treball/figures/`. Si la web canvia abans del
+lliurament, tornar-lo a executar les refà totes iguals. No ha calgut
+instal·lar res.
+
+Perquè les imatges es vegin al lector de documents de la web s'han tocat
+dues coses: el script que hi copia els documents ara copia també la carpeta
+de figures, i el lector busca les imatges al costat del document.
+
+El text es va revisar dues vegades. La primera, fet per fet contra les
+especificacions, les decisions, l'històric i el codi: en van sortir set
+correccions. La més important: deia que la web no demana mai dades al
+servei extern, i sí que ho fa quan algú prem «Actualitza». La segona
+revisió va ser de claredat: paraules sense explicar («servidor», «ports») i
+una mateixa paraula amb dos sentits.
+
+Dues coses queden apuntades. El guió parlava de 5.632 línies de codi i avui
+se'n compten 6.035: la xifra s'haurà de tornar a comptar al final. I a les
+captures de mòbil, amb el panell d'estadístiques obert, les barres de
+progrés es veien aixafades i un número sortia tallat; no s'ha comprovat en
+un telèfon real ni s'ha arreglat aquí.
+
+## 53. La Part III es posa al dia amb els preus nous, i neix la llista de pendents
+
+*2026-11-10*
+
+El mateix dia que es va escriure la Part III, una altra sessió de treball va
+canviar la manera de triar els preus (entrada 50, decisió D-013). En ajuntar
+les dues feines, el capítol 19 explicava una regla que la web ja no feia
+servir. Es demana repassar-ho tot i arreglar les contradiccions i els errors
+que surtin. Se'n troben vuit:
+
+- **El capítol 19** parlava d'una sola font i d'una regla de tres passos. Ara
+  explica les dues fonts, la regla de quatre passos, el resultat (de 4.016
+  peces, 4.003 amb preu de Cardmarket recent, 13 marcades amb «≈» i cap
+  sense preu) i els límits de la regla.
+- **Les captures** duien preus de l'11 d'agost. S'han refet totes amb les
+  dades del 10 de novembre, i el peu de la figura 2 diu ara 4,91 € i 8,75 €.
+- **La figura 6** ensenyava una carta de Mega Evolution amb «≈», i aquella
+  carta ja té preu de Cardmarket. Ara el programa de captures busca tot sol
+  una carta que porti el signe: n'ha trobat una de Surging Sparks, marcada
+  perquè les fonts no es posaven d'acord.
+- **El programa de captures tenia un error**: retallava malament una carta
+  si la pàgina s'havia desplaçat, i en sortia un rectangle negre. Arreglat.
+- **Les línies de codi**: la Part III deia «unes 6.000» i amb el codi nou
+  són 6.346. Ara diu «unes 6.300», i el guió, que encara deia 5.632, porta
+  la xifra nova amb la data.
+- **Dos reptes amb el número 11**, un de cada sessió. El de les captures
+  passa a ser el 12. De passada es veu que s'havia desat al mig del
+  document, entre el repte 5 i el 6, i es mou al final.
+- **L'índex comentat** deia que la Part III estava «per escriure» i descrivia
+  el capítol 19 amb la regla antiga.
+- **El guió** descrivia el mateix capítol amb la cadena de preus antiga.
+
+Les entrades anteriors de l'històric i dels reptes no es toquen: expliquen
+què era veritat el dia que es van escriure.
+
+A petició, es crea també `docs/pendents.md`, una llista viva del que queda
+per fer o per apuntar. La primera cosa que hi entra és el cost de la
+subscripció de l'eina d'intel·ligència artificial, que és l'única despesa
+del projecte i encara no està documentada enlloc.
+
+## 57. Les barres d'estadístiques, aixafades al mòbil: una línia de CSS
 
 *2026-11-10*
 
@@ -728,5 +1011,7 @@ píxels la barra passa de 2 a 165 píxels i el recompte es llegeix sencer; a
 320 píxels també hi cap. L'escriptori no canvia, perquè la regla només
 s'aplica a pantalles estretes.
 
-La numeració d'aquesta entrada salta del 44 al 53 expressament: les
-entrades 45 a 52 són en branques que encara no s'han fusionat a `main`.
+Aquesta entrada es va escriure el 10 de novembre amb el número 53, en una
+branca a part. En ajuntar-la amb la resta ja hi havia una altra entrada 53
+i les 54 a 56 eren a la branca de la Part II, de manera que passa a ser la
+57 encara que sigui anterior.

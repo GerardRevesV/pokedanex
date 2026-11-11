@@ -32,11 +32,15 @@ ORDRE = {
     "treball": [
         "requisits-i-rubrica.md",
         "guio-continguts.md",
+        "preliminars.md",
+        "index-comentat.md",
         "marc-teoric.md",
+        "part-3-producte.md",
         "fonts.md",
     ],
     "docs": [
         "planificacio.md",
+        "pendents.md",
         "especificacions.md",
         "historic.md",
         "diari.md",
@@ -110,6 +114,12 @@ def main() -> None:
                 }
             )
             print(f"  copiat  {carpeta}/{fitxer.name}")
+
+        # Les figures dels documents (captures de pantalla) viatgen amb ells.
+        figures = origen / "figures"
+        if figures.is_dir():
+            shutil.copytree(figures, DESTI / carpeta / "figures")
+            print(f"  copiat  {carpeta}/figures/")
 
         index["grups"].append({"carpeta": carpeta, "nom": nom_grup, "documents": documents})
 

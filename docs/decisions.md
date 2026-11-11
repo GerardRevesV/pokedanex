@@ -239,3 +239,159 @@ molt més senzill però no explica res (podria ser qualsevol web, no un
 àlbum de cromos); i deixar-ho tal com estava.
 
 **Cost:** 0 €.
+
+## D-011 · A l'àlbum els filtres ressalten, no filtren
+
+**Data:** 2026-11-04
+
+**Decisió:** la cerca i els filtres (Totes/Les tinc/Em falten, Raresa,
+Tipus d'energia, Categoria) ara també tenen efecte a la vista d'Àlbum, però
+**d'una altra manera que a la graella**: a la graella amaguen les cartes que
+no coincideixen; a l'àlbum no amaguen res. Les cartes que coincideixen
+queden enceses i amb un anell del color d'accent, les altres s'apaguen, i
+apareix una barra que diu quantes coincidències hi ha i a quines pàgines,
+amb dues fletxes per saltar d'una pàgina amb coincidències a la següent.
+Si la pàgina oberta no en té cap, l'àlbum salta tot sol a la primera que en
+tingui. El control «Ordena per» s'amaga a l'àlbum.
+
+Alhora, els tres desplegables **desactiven les opcions que no donarien cap
+carta** tenint en compte els altres dos, i el missatge de graella buida diu
+quins criteris han deixat fora les cartes i ofereix un botó per treure'ls
+tots.
+
+**Per què:** l'estudi d'usabilitat (`docs/estudi-usabilitat.md`) va trobar
+que sis controls de la capçalera no feien res a la vista d'Àlbum, perquè la
+graella es construeix passant les cartes pel sedàs dels filtres i l'àlbum
+agafava la llista sencera. Es van considerar tres sortides. Amagar els
+controls a l'àlbum hauria fet saltar la interfície i hauria tret una
+funcionalitat útil. Fer-los filtrar de debò hauria buidat butxaques: un
+àlbum amb nou cartes de foc enganxades a les tres primeres butxaques ja no
+és un àlbum, i els forats són justament el que un col·leccionista hi vol
+veure. La idea inicial —«que el filtre et porti a la pàgina de l'energia
+corresponent»— es va mesurar sobre les 14 expansions i no es pot fer
+literalment: **no existeix «la pàgina» d'un tipus**, perquè cada tipus surt
+al bloc del set base i una segona vegada a les cartes especials del final
+(només el 3 % dels tipus ocupa pàgines seguides, i cada tipus toca el 35,8 %
+de les pàgines de l'àlbum). El ressaltat amb navegació compleix la mateixa
+intenció —«porta'm on són»— amb la informació que les dades permeten dir de
+debò.
+
+La desactivació d'opcions ataca un número mesurat: el **58,4 %** de les
+combinacions possibles dels tres desplegables no retornava cap carta (per
+exemple, qualsevol tipus d'energia amb la categoria «Entrenador», perquè els
+entrenadors no en tenen). Es desactiven en comptes d'amagar-les perquè la
+llista no balli: així es veu que l'opció existeix però que ara no porta
+enlloc. L'opció «Tots» i el valor ja triat no es desactiven mai, perquè el
+desplegable sempre ha de poder tornar enrere.
+
+## D-012 · Les paraules de la interfície, i quatre paranys tancats
+
+**Data:** 2026-11-04
+
+**Decisió:** s'apliquen els punts 3 a 8 de la recomanació de l'estudi
+d'usabilitat. Són canvis petits un per un, però tots ataquen el mateix:
+que la pantalla digui la veritat sense que calgui endevinar-la.
+
+*Noms (punt 3).* «Visualització» passa a dir-se **«Colors»**, que és el que
+fa de debò. El filtre que es deia «Col·lecció» passa a **«Què mostro»**. El
+panell, que calculava només l'expansió oberta però es titulava «de la
+col·lecció», ara diu **«Estadístiques d'aquesta expansió»**, i amb ell «Les
+cartes que en tens valen» i «Completar l'expansió costaria». El comptador
+del peu diu **«X de N cartes d'aquesta expansió»** i, al seu costat, el botó
+que esborra de debò tota la col·lecció passa de «Buidar» a **«Buidar-ho
+tot»**. «Consulta» passa a **«Només mirar»** (punt 7).
+
+*Paranys (punts 4, 5, 6).* Al mòbil, el botó «Filtres i opcions» porta un
+**distintiu amb el nombre de filtres actius**, perquè amb el bloc plegat no
+hi havia cap manera de saber que n'hi havia. **Importar demana confirmació**
+abans de substituir la col·lecció, com ja feia Buidar. I **canviar
+d'expansió treu la cerca i els filtres**.
+
+*Agrupació (punt 8).* «Versió de les dades» i «Actualitza» viuen ara en un
+sol bloc titulat **«Dades»**, i el botó només diu «Actualitza», perquè el
+títol del grup ja diu de què.
+
+**Per què:** l'estudi va comptar que la paraula «col·lecció» designava tres
+coses diferents a la mateixa pantalla, i que dues paraules gairebé iguals
+—«Vista» i «Visualització»— manaven coses que no tenen res a veure. Una
+interfície pot ser correcta i ser il·legible: aquests canvis no arreglen cap
+error de programació, arreglen el que la pantalla fa entendre. Els tres
+paranys (filtres invisibles al mòbil, importar que esborra sense avisar,
+filtres que viatgen d'una expansió a l'altra) eren casos en què la web feia
+exactament el que li havien programat i l'usuari no tenia com saber-ho.
+
+La xifra del distintiu **no compta la cerca**: el cercador es veu sempre,
+fins i tot amb el bloc plegat, i comptar-lo hauria fet sortir un «1» que no
+assenyala res amagat. I el missatge de confirmació d'Importar no diu quantes
+cartes es perdran, sinó que es perd **tot**: era més curt i més honest que
+una xifra que obligava a triar entre «1 cartes» i una frase doble.
+
+## D-013 · Dues fonts de preus i quatre regles per triar-ne un
+
+**Data:** 2026-11-10
+
+**Decisió:** la web deixa de dependre d'una sola font de preus. S'hi afegeix
+**TCGdex** (tcgdex.net), una base de dades oberta i gratuïta que actualitza
+cada dia els preus de Cardmarket (euros) i de TCGplayer (dòlars), i el preu
+de cada variant de cada carta es tria sempre amb les mateixes quatre regles:
+
+1. **Quatre fonts, per ordre de confiança:** Cardmarket segons TCGdex,
+   TCGplayer segons TCGdex, Cardmarket segons pokemontcg.io i TCGplayer
+   segons pokemontcg.io. Els preus en dòlars es converteixen a euros amb la
+   taxa fixa de D-009 (0,90).
+2. **Un preu només val si és fresc:** com a màxim 60 dies més vell que el
+   dia que es van baixar les dades. Guanya la primera font de la llista que
+   tingui un preu fresc.
+3. **Si cap font té un preu fresc,** es fa servir el menys vell i es marca
+   com a antic.
+4. **Si el preu en euros i el preu en dòlars discrepen moltíssim** (un
+   multiplica l'altre per 5 o més, i la diferència passa d'1 €), un dels dos
+   és d'una altra carta: ens quedem el més baix i es marca com a dubtós.
+
+Tot preu que no sigui «Cardmarket, fresc i sense discrepància» surt amb el
+símbol «≈», i en passar-hi el ratolí la web en diu el motiu: convertit de
+dòlars, antic o dubtós. Si cap font té preu, es manté el guió i el recompte
+de «cartes sense preu» (D-009): no se n'inventa cap.
+
+Tres detalls que fan que el sistema encerti:
+
+- **Les cartes amb segell no compten.** Una mateixa carta pot existir amb
+  un segell de torneig o de botiga, que val molt més. Barrejar-les era
+  l'origen dels preus disbarat (un Raging Bolt de 14 cèntims surt a 42 € a
+  pokemontcg.io perquè hi porta el preu de la versió amb segell). TCGdex les
+  separa i la web les descarta, tant per al preu com per saber quines
+  variants té una carta.
+- **El valor del mig de tres.** De Cardmarket no s'agafa una sola xifra sinó
+  la del mig entre la tendència, la mitjana de 7 dies i la de 30: si una de
+  les tres s'ha tornat boja, no ens enganya.
+- **Patrons de reverse.** Als sets on el reverse existeix en diversos
+  patrons (Poké Ball, energia...), el preu del reverse és el del patró
+  corrent o, si tots són especials, el més barat.
+
+**Per què:** la revisió del 10-11 (`docs/revisio-preus-2026-11-10.md`) va
+trobar que pokemontcg.io ja no actualitza Cardmarket (la majoria de preus
+eren d'entre novembre de 2025 i febrer de 2026), que quatre expansions no
+tenien cap preu i que una desena de cartes tenien preus erronis. Tornar a
+baixar les dades no arreglava res: el problema era a la font. Amb el
+sistema nou, de les 4.016 peces de les 14 expansions, 4.003 tenen preu de
+Cardmarket al dia, 8 un preu convertit de dòlars, 1 un preu antic, 4 un preu
+dubtós (resolt cap a la xifra prudent) i **cap** es queda sense preu.
+
+El criteri de «quedar-se el més baix» quan dues fonts discrepen és una
+tria de prudència: en tots els casos trobats, el preu alt era el d'una
+altra carta, i una web que calcula el valor d'una col·lecció fa menys mal
+quedant-se curta que inflant-lo.
+
+**Límits que cal conèixer:** la regla 4 necessita dues fonts per comparar;
+si una carta només té preu a Cardmarket i aquest és erroni, no es detecta.
+I 60 dies i 5 vegades són llindars triats a ull mirant les dades, no
+mesures exactes.
+
+**Alternatives considerades:** canviar del tot a TCGdex i abandonar
+pokemontcg.io (es perdria la xarxa de seguretat i les versions antigues
+deixarien de tenir preu); CardTrader (`docs/recerca-cardtrader.md`), que
+demana registre i clau; i preferir simplement TCGplayer quan Cardmarket és
+vell, que no donava preu a les quatre expansions buides.
+
+**Cost:** 0 €. TCGdex és gratuït i no demana clau. Baixar una expansió
+passa de 2 peticions a unes 200 (una per carta), uns 15 segons.

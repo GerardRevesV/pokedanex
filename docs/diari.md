@@ -544,7 +544,7 @@ consultar la Neoloteca abans d'afirmar-ho al treball.
   de vuit punts, i s'han analitzat les dues idees que proposava l'Edanna
   (mostrar els filtres només quan tinguin sentit; que el filtre porti a la
   pàgina de l'energia corresponent).
-- Afegida l'entrada 8 a `docs/reptes.md` amb la lliçó de mètode.
+- Afegida l'entrada 9 a `docs/reptes.md` amb la lliçó de mètode.
 
 **Eines usades:** Claude Code (lectura del codi de `app/js/` i tres scripts
 de mesura sobre els fitxers de dades de les 14 expansions).
@@ -683,6 +683,236 @@ aquesta mateixa carpeta (l'estudi d'usabilitat i el seu repte), que no entra
 en aquest canvi. Hi ha una triple col·lisió de numeració a l'històric i als
 reptes que cal resoldre conservant-ho tot i renumerant en ordre cronològic,
 tal com es va fer a l'entrada 27.
+
+## 2026-11-04 — Punts 1 i 2 de l'estudi d'usabilitat, implementats
+
+**Què s'ha fet:**
+- **Punt 1 (àlbum):** la cerca i els filtres ja funcionen a la vista
+  d'Àlbum, en forma de ressaltat: les cartes que coincideixen s'encenen amb
+  un anell, la resta s'apaguen, i una barra nova diu quantes n'hi ha i a
+  quines pàgines, amb fletxes per saltar-hi. «Ordena per» s'amaga a l'àlbum.
+- **Punt 2 (desplegables):** les opcions que no donarien cap carta queden
+  desactivades, i el missatge de graella buida diu els criteris reals i
+  ofereix el botó «Treure els filtres».
+- Decisió D-011 registrada a `docs/decisions.md` amb les tres alternatives
+  que es van considerar i per què es va triar aquesta.
+- Fitxers tocats: `app/index.html`, `app/js/main.js`, `app/js/album.js`,
+  `app/js/i18n.js` (textos nous en català, castellà i anglès) i
+  `app/css/style.css`.
+
+**Eines usades:** Claude Code i el navegador integrat per provar-ho.
+
+**Costos:** 0 €.
+
+**Problemes:** dos, tots dos de procés. El primer: el navegador servia la
+versió antiga dels fitxers (la memòria cau), i durant una estona semblava
+que el codi nou no funcionés quan el que passava és que no s'estava
+executant; es va resoldre forçant la recàrrega de cada fitxer. El segon,
+més interessant, és que la primera idea —«que el filtre et porti a la
+pàgina de l'energia»— no es podia fer tal com estava pensada, i es va haver
+de mesurar sobre les dades reals per poder-ho dir amb arguments i proposar
+l'alternativa.
+
+**Pendent:** els canvis estan al disc però **sense cap commit**, perquè la
+còpia de treball tenia alhora feina d'una altra sessió (el workflow de
+Pages, `tools/prepara_documents.py` i `app/documents/`). Cal decidir on van.
+També ha quedat detectat, de passada, un desbordament horitzontal al mòbil
+que ve del panell d'estadístiques (`estad-barra-xifres`), anterior a aquests
+canvis i no tocat.
+
+## 2026-11-04 (2a sessió) — Punts 3 a 8 de l'estudi: el vocabulari
+
+**Què s'ha fet:**
+- **Punt 3 (noms):** «Visualització» → «Colors», el filtre «Col·lecció» →
+  «Què mostro», el panell i el peu diuen «d'aquesta expansió», i «Buidar» →
+  «Buidar-ho tot». En català, castellà i anglès.
+- **Punt 4:** distintiu amb el nombre de filtres actius al botó «Filtres i
+  opcions» del mòbil (la cerca no hi compta: el cercador es veu sempre).
+- **Punt 5:** Importar demana confirmació abans de substituir la col·lecció.
+- **Punt 6:** canviar d'expansió treu la cerca i els filtres.
+- **Punt 7:** «Consulta» → «Només mirar», i la pista del Ctrl+clic surt com
+  a missatge en entrar en un mode de marcatge (a escriptori no es veia).
+- **Punt 8:** «Versió de les dades» i «Actualitza» agrupats sota «Dades».
+- Decisió **D-012** i entrada **46** de l'històric.
+
+**Eines usades:** Claude Code i el navegador integrat.
+
+**Costos:** 0 €.
+
+**Problemes:** dos, tots dos trobats provant-ho i no llegint-ho. El primer:
+l'script que fa els canvis tenia un error en el cas d'una línia repetida
+—«Consulta» s'escriu igual en català i en castellà— i va enganxar un tros
+de text al final del fitxer de traduccions, que el va deixar trencat. Es va
+veure de seguida perquè la comprovació de sintaxi va fallar, i a partir
+d'aquí s'ha afegit una comprovació nova: que els tres idiomes tinguin
+exactament les mateixes claus (ara en són 110 cadascun). El segon: el
+missatge de confirmació d'Importar deia «1 cartes». En comptes d'afegir una
+frase per al singular, s'ha tret el número: el que importa no és quantes
+cartes es perden, sinó que es perden **totes**.
+
+## 2026-11-07 — Els comentaris del marc teòric, llegits i aplicats
+
+**Què s'ha fet:**
+- Lectura dels nou comentaris de l'Edanna al pull request #13 sobre
+  `treball/marc-teoric.md`.
+- Aplicats els vuit que demanaven alguna cosa: tres retallades i cinc
+  passatges reescrits o aclarits.
+- `treball/fonts.md`: Semafor i Willison baixen a les fonts reservades per a
+  les parts següents, perquè el paràgraf que les citava ja no hi és; la
+  rebaixa de la paga de l'estudi de METR passa de «dada citada» a «dada
+  disponible i no citada»; i la reserva sobre la piulada de Karpathy, que
+  abans anava al cos del text, queda documentada a la fitxa de la font.
+- Contestat cada fil a GitHub explicant què s'ha fet, i marcats com a
+  resolts.
+- Entrada **47** de l'històric i repte **10**.
+
+**Eines usades:** Claude Code i l'API de GitHub (`gh`).
+
+**Costos:** 0 € (de subscripció a part, pendent de documentar).
+
+**Problemes:** el gros va ser descobrir que set dels nou fils constaven com a
+resolts sense que el text s'hagués canviat: l'Edanna havia entès «Resolve
+conversation» com «ja t'ho he enviat». Si la sessió s'hagués fiat de la
+marca, s'haurien perdut sis peticions seves. Es va veure comparant la data de
+l'últim canvi del fitxer amb la dels comentaris. El segon problema va ser
+d'eina i es va resoldre de seguida: el primer intent d'escriure l'script de
+substitucions des del terminal va petar per les cometes del text català, i es
+va haver de crear el fitxer d'una altra manera.
+
+## 2026-11-10 — La frase de Willison, recuperada
+
+**Què s'ha fet:**
+- L'Edanna ha rellegit aquí mateix, al xat, els cinc passatges reescrits del
+  marc teòric per comprovar si ara s'entenen.
+- Recuperada la frase de Simon Willison al capítol 5, en una sola línia, dins
+  de «Què se'n deriva per a aquest treball».
+- `treball/fonts.md`: la fitxa de Willison torna a les fonts citades; Semafor
+  es queda a les reservades.
+- Entrada **48** de l'històric.
+
+**Eines usades:** Claude Code.
+
+**Costos:** 0 € (de subscripció a part, pendent de documentar).
+
+**Problemes:** cap.
+
+## 2026-11-10 (2a sessió) — Els preliminars i la introducció
+
+**Què s'ha fet:**
+- Decidit l'índex definitiu (26 capítols en quatre parts) i el pressupost de
+  pàgines de tot el treball: 47, dins de les 40-50 previstes.
+- Escrit l'esborrany de `treball/preliminars.md`: portada, abstract en
+  anglès, esquema de l'índex, presentació i introducció.
+- Proposada una definició de «útil» amb tres condicions, que faltava.
+- Dues revisions del text: una de fets i referències (vuit correccions) i una
+  de claredat i llargada.
+- El document nou surt al lector de documents de la web.
+- Entrada **49** de l'històric.
+
+**Eines usades:** Claude Code.
+
+**Costos:** 0 € (de subscripció a part, pendent de documentar).
+
+**Problemes:** falten dades que no són al projecte i que no es podien
+inventar: l'institut, el tutor o tutora, la motivació personal i els
+agraïments. Han quedat marcades al text perquè l'Edanna les doni.
+
+## 2026-11-10 (3a sessió) — Els preus: revisió, segona font i sistema nou
+
+**Què s'ha fet:**
+- Revisats els preus de les 14 expansions comparant Cardmarket i TCGplayer
+  (`docs/revisio-preus-2026-11-10.md`).
+- Tornades a baixar les dades: no arreglava res, el problema era a la font.
+- Buscada i provada una segona font, TCGdex (gratuïta, sense clau).
+- Definit i programat el sistema de preus de quatre regles (D-013) a
+  `app/js/variants.js`; el programa de baixada i el botó «Actualitza» baixen
+  ara de les dues fonts.
+- Baixada una versió nova de cada expansió amb les dues fonts (les de
+  l'agost es conserven).
+- Comprovat amb el codi real de la web sobre totes les expansions i al
+  navegador, inclòs el botó «Actualitza».
+- Entrada **50** de l'històric, decisió **D-013** i repte **11**.
+
+**Eines usades:** Claude Code, `tools/fetch_data.py`, les API de
+pokemontcg.io i de TCGdex, Node per a la comprovació.
+
+**Costos:** 0 € (de subscripció a part, pendent de documentar). Uns 40
+minuts de feina de la IA.
+
+**Problemes:**
+- La primera baixada va ser inútil: pokemontcg.io ja no actualitza
+  Cardmarket i quatre expansions hi seguien sense preu.
+- La font nova tampoc no és perfecta: en quatre cartes de Surging Sparks
+  també porta un preu de Cardmarket erroni. La regla de contrast entre euros
+  i dòlars les detecta.
+- A la primera prova al navegador, les cartes que només existeixen en holo
+  sortien totes com a «preu antic»: la graella demanava el preu d'una
+  variant «normal» que aquelles cartes no tenen. Es va veure a la pantalla,
+  no a la comprovació automàtica, i es va corregir.
+- En aquest repositori hi treballava alhora una altra sessió; aquesta feina
+  s'ha fet en una còpia de treball a part per no trepitjar-la.
+
+## 2026-11-10 (4a sessió) — L'índex comentat
+
+**Què s'ha fet:**
+- Escrit `treball/index-comentat.md`: l'índex del treball amb una explicació
+  d'una a tres línies de cada capítol, per ensenyar-lo a la professora.
+- Revisat contra l'històric, els reptes i el marc teòric.
+- El document surt al lector de documents de la web.
+- Entrada **51** de l'històric.
+
+**Eines usades:** Claude Code.
+
+**Costos:** 0 € (de subscripció a part, pendent de documentar).
+
+**Problemes:** una altra sessió tenia canvis sense desar als mateixos dos
+documents (l'entrada 50 de l'històric i la seva del diari). S'ha desat només
+la part d'aquesta sessió, sense tocar la de l'altra.
+
+## 2026-11-10 (5a sessió) — La Part III i les captures
+
+**Què s'ha fet:**
+- Estudi previ de quines pantalles val la pena ensenyar
+  (`docs/estudi-captures-part3.md`).
+- Nou captures de la web fetes automàticament amb
+  `tools/captures_part3.mjs`, desades a `treball/figures/`.
+- Escrit l'esborrany de `treball/part-3-producte.md`: capítols 16 a 21,
+  unes 2.100 paraules i set figures.
+- El lector de documents de la web ara ensenya les imatges.
+- Dues revisions del text: fets (set correccions) i claredat.
+- Entrada **52** de l'històric i repte **12**.
+
+**Eines usades:** Claude Code, Chrome sense finestra (ja instal·lat) i
+Node.js (ja instal·lat).
+
+**Costos:** 0 € (de subscripció a part, pendent de documentar).
+
+**Problemes:** la primera captura de l'àlbum sortia amb la capçalera tapant
+la primera fila de cartes, i es va haver de refer. A les captures de mòbil
+s'ha vist un possible defecte del panell d'estadístiques, pendent de
+comprovar.
+
+## 2026-11-10 (6a sessió) — La Part III, al dia amb els preus nous
+
+**Què s'ha fet:**
+- Ajuntada la feina dels preus (3a sessió) amb la de la Part III.
+- Reescrit el capítol 19 amb les dues fonts i la regla de quatre passos.
+- Refetes les nou captures amb les dades del 10 de novembre; corregit un
+  error del programa de captures.
+- Corregides les xifres i descripcions que havien quedat velles a la Part
+  III, al guió, a l'índex comentat i a l'estudi de captures.
+- El repte de les captures passa a ser el **12** i es mou al final.
+- Creat `docs/pendents.md`, la llista de coses pendents.
+- Entrada **53** de l'històric.
+
+**Eines usades:** Claude Code; Chrome sense finestra per a les captures.
+
+**Costos:** 0 € (de subscripció a part, pendent de documentar; ara apuntat
+a `docs/pendents.md`).
+
+**Problemes:** dues sessions havien escrit alhora als mateixos documents i
+havien fet servir el mateix número de repte. La fusió es va haver de
+resoldre a mà.
 
 ## 2026-11-10 — Les barres d'estadístiques aixafades al mòbil
 

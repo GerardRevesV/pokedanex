@@ -5,13 +5,14 @@ import {
   carregarSets, setActiu, setActiuDesat, canviarSetActiu,
   carregarLlistaVersions, carregarVersio, actualitzarDades,
 } from "./data.js";
-import { variantsDisponibles, preuVariant, preuEsAproximat } from "./variants.js";
+import { variantsDisponibles, preuVariant, motiuPreuAproximat } from "./variants.js";
 import {
-  comptadors, ajustar, enTeCap, subscriure,
+  comptadors, ajustar, enTeCap, subscriure, totals,
   exportarJson, importarJson, buidar,
 } from "./collection.js";
 import {
   iniciarAlbum, carregarAlbum, mostrarAlbum, refrescarAlbum, actualitzarButxaques,
+  ressaltarAlbum,
 } from "./album.js";
 import { iniciarSelectorExpansions } from "./selector-expansions.js";
 import { aplicarTema } from "./temes.js";
@@ -132,6 +133,7 @@ async function triarVersio(entrada) {
     pintarPeu();
     pintarBarraColleccio();
     carregarAlbum(dades); // l'àlbum també canvia de versió de dades
+    refrescarRessaltatAlbum(); // amb cartes noves, les coincidències canvien
     carregarEstadistiques(dades); // i el panell d'estadístiques es recalcula
     return true;
   } catch {
@@ -165,30 +167,41 @@ function formatarNumero(carta) {
   return `${carta.number.padStart(3, "0")}/${total}`;
 }
 
-// Preu orientatiu d'una carta i si és l'aproximat de TCGplayer, triats
-// d'una sola passada: el de la variant normal o, si no en té, el de la
-// primera variant amb preu conegut; preu null si cap en té. La graella
+// Preu orientatiu d'una carta i, si porta la marca "≈", el motiu
+// ("aproximat", "antic" o "dubtos"; null si no en porta), triats
+// d'una sola passada: el de la primera variant de la carta amb preu
+// conegut (normal, holo, reverse); preu null si cap en té. La graella
 // ho fa servir per no repetir la tria de variant a cada fitxa (el
 // repintat és sensible en mòbil).
+// Les variants que la carta té de debò, en l'ordre en què donen el preu
+// orientatiu: primer la versió base (la normal o, si no n'hi ha, l'holo)
+// i al final el reverse. Demanar el preu d'una variant inexistent podria
+// tornar el d'una font antiga que no distingeix variants.
+function variantsPerPreu(carta) {
+  const disponibles = variantsDisponibles(carta);
+  return ["normal", "holo", "reverse"].filter((v) => disponibles.includes(v));
+}
+
 function infoPreuCarta(carta) {
-  const normal = preuVariant(carta, "normal");
-  if (normal !== null) {
-    return { preu: normal, aproximat: preuEsAproximat(carta, "normal") };
-  }
-  for (const variant of variantsDisponibles(carta)) {
+  for (const variant of variantsPerPreu(carta)) {
     const preu = preuVariant(carta, variant);
     if (preu !== null) {
-      return { preu, aproximat: preuEsAproximat(carta, variant) };
+      return { preu, motiu: motiuPreuAproximat(carta, variant) };
     }
   }
-  return { preu: null, aproximat: false };
+  return { preu: null, motiu: null };
 }
+
+// La clau de text que explica cada motiu del "≈"
+const TEXT_MOTIU_PREU = {
+  aproximat: "carta.preuAproximat",
+  antic: "carta.preuAntic",
+  dubtos: "carta.preuDubtos",
+};
 
 // Només el preu (per ordenar per preu sense calcular la marca "≈")
 function preuCarta(carta) {
-  const normal = preuVariant(carta, "normal");
-  if (normal !== null) return normal;
-  for (const variant of variantsDisponibles(carta)) {
+  for (const variant of variantsPerPreu(carta)) {
     const preu = preuVariant(carta, variant);
     if (preu !== null) return preu;
   }
@@ -318,6 +331,8 @@ function construirFiltresDesplegables() {
       .map((nom) => ({ valor: nom, text: traduirNomDada("categoria.", nom) })),
     filtreCategoria,
   );
+  actualitzarOpcionsPossibles(); // opcions noves: tornem a mirar què és possible
+  pintarCompteFiltres();         // i el distintiu es retradueix amb l'idioma
 }
 
 // Una carta passa els tres desplegables alhora ("" sempre passa)
@@ -336,6 +351,149 @@ function netejarFiltresDesplegables() {
   for (const id of ["filtre-raresa", "filtre-tipus", "filtre-categoria"]) {
     element(id).value = "";
   }
+  actualitzarOpcionsPossibles(); // sense cap filtre, tot torna a ser possible
+}
+
+// Desactiva les opcions que, amb els altres dos desplegables tal com
+// estan ara, no deixarien passar cap carta. Sense això, el 58% de les
+// combinacions possibles dels tres filtres donava una graella buida
+// (per exemple, qualsevol tipus d'energia amb la categoria "Entrenador",
+// perquè els entrenadors no tenen tipus). El valor ja triat i l'opció
+// "Tots" no es desactiven mai: el desplegable sempre ha de poder tornar
+// enrere.
+function actualitzarOpcionsPossibles() {
+  const possibles = { raresa: new Set(), tipus: new Set(), categoria: new Set() };
+  for (const carta of versioActiva?.cards ?? []) {
+    const passaRaresa = !filtreRaresa || carta.rarity === filtreRaresa;
+    const passaTipus = !filtreTipus || (carta.types ?? []).includes(filtreTipus);
+    const passaCategoria = !filtreCategoria || carta.supertype === filtreCategoria;
+    if (passaTipus && passaCategoria && carta.rarity) {
+      possibles.raresa.add(carta.rarity);
+    }
+    if (passaRaresa && passaCategoria) {
+      for (const tipus of carta.types ?? []) possibles.tipus.add(tipus);
+    }
+    if (passaRaresa && passaTipus && carta.supertype) {
+      possibles.categoria.add(carta.supertype);
+    }
+  }
+  for (const [id, valors] of [
+    ["filtre-raresa", possibles.raresa],
+    ["filtre-tipus", possibles.tipus],
+    ["filtre-categoria", possibles.categoria],
+  ]) {
+    for (const opcio of element(id).querySelectorAll("option")) {
+      opcio.disabled = opcio.value !== "" && !opcio.selected && !valors.has(opcio.value);
+    }
+  }
+}
+
+// ---------- La cerca i els filtres, en un sol lloc ----------
+
+// El sedàs complet ("passa la cerca i tots els filtres actius"), amb la
+// consulta calculada un sol cop. El fan servir els DOS camins que pinten
+// cartes: la graella i el ressaltat de l'àlbum (D-011).
+function predicatActual() {
+  const consulta = element("cercador").value.trim().toLowerCase();
+  return (carta) =>
+    coincideix(carta, consulta) &&
+    passaFiltreColleccio(carta) &&
+    passaFiltresDesplegables(carta);
+}
+
+// Hi ha alguna cerca o algun filtre actiu ara mateix?
+function hiHaFiltreActiu() {
+  return (
+    element("cercador").value.trim() !== "" ||
+    filtreColleccio !== "totes" ||
+    filtreRaresa !== "" ||
+    filtreTipus !== "" ||
+    filtreCategoria !== ""
+  );
+}
+
+// A l'àlbum els filtres no treuen butxaques: ressalten. Sense cap filtre
+// actiu es passa null i l'àlbum torna a l'aspecte de sempre.
+function refrescarRessaltatAlbum() {
+  ressaltarAlbum(hiHaFiltreActiu() ? predicatActual() : null);
+}
+
+// Qualsevol canvi de cerca o de filtre ha de passar per aquí: abans
+// només es repintava la graella i els controls no feien res a l'àlbum
+function aplicarFiltres() {
+  pintarGraella();
+  refrescarRessaltatAlbum();
+  pintarCompteFiltres();
+}
+
+// Els criteris actius en text llegible ("la cerca «pika»", "Raresa: Rare"),
+// per poder dir al missatge de graella buida qui ha deixat fora les cartes
+function criterisActius() {
+  const criteris = [];
+  const consulta = element("cercador").value.trim();
+  if (consulta) criteris.push(t("graella.criteriCerca", { text: consulta }));
+  if (filtreColleccio !== "totes") criteris.push(t("filtre." + filtreColleccio));
+  if (filtreRaresa) criteris.push(`${t("filtre.raresa")}: ${filtreRaresa}`);
+  if (filtreTipus) {
+    criteris.push(`${t("filtre.tipus")}: ${traduirNomDada("tipus.", filtreTipus)}`);
+  }
+  if (filtreCategoria) {
+    criteris.push(`${t("filtre.categoria")}: ${traduirNomDada("categoria.", filtreCategoria)}`);
+  }
+  return criteris;
+}
+
+// Deixa la cerca i tots els filtres a zero, sense repintar res
+function netejarCercaIFiltres() {
+  element("cercador").value = "";
+  triarFiltreColleccio("totes");
+  netejarFiltresDesplegables();
+}
+
+// Treu la cerca i tots els filtres d'un cop (botó del missatge de buit)
+function treureElsFiltres() {
+  netejarCercaIFiltres();
+  aplicarFiltres();
+}
+
+// Quants filtres hi ha actius. La cerca no hi compta: el cercador es
+// veu sempre. Al mòbil, en canvi, la resta de controls van plegats
+// darrere "Filtres i opcions", i sense aquest distintiu es podien tenir
+// filtres actius -i mitja expansió sense sortir- sense cap pista a la vista.
+function pintarCompteFiltres() {
+  const actius = [
+    filtreColleccio !== "totes",
+    filtreRaresa !== "",
+    filtreTipus !== "",
+    filtreCategoria !== "",
+  ].filter(Boolean).length;
+  const distintiu = element("filtres-compte");
+  distintiu.hidden = actius === 0;
+  distintiu.textContent = actius;
+  distintiu.title = t("filtres.actius", { n: actius });
+}
+
+// El missatge de graella buida: diu quins criteris no han deixat passar
+// cap carta (abans deia sempre "la cerca", encara que la culpa fos d'un
+// desplegable) i ofereix treure'ls tots
+function crearGraellaBuida() {
+  const bloc = document.createElement("div");
+  bloc.className = "graella-buida";
+  const criteris = criterisActius();
+  const text = document.createElement("p");
+  text.textContent = criteris.length === 0
+    ? t("graella.buida")
+    : t("graella.buidaAmb", { criteris: criteris.join(" · ") });
+  bloc.append(text);
+  if (criteris.length > 0) {
+    const boto = document.createElement("button");
+    boto.type = "button";
+    boto.className = "boto-suau";
+    boto.textContent = t("graella.treureFiltres");
+    boto.addEventListener("click", treureElsFiltres);
+    bloc.append(boto);
+  }
+  return bloc;
 }
 
 // ---------- Ordenació de la graella ----------
@@ -404,21 +562,14 @@ function pintarGraella() {
   graella.innerHTML = "";
   if (!versioActiva) return;
 
-  const consulta = element("cercador").value.trim().toLowerCase();
   // filter retorna un array nou, així el sort no toca l'ordre original de
   // versioActiva.cards (l'àlbum i les estadístiques en depenen)
-  const visibles = versioActiva.cards.filter(
-    (carta) =>
-      coincideix(carta, consulta) &&
-      passaFiltreColleccio(carta) &&
-      passaFiltresDesplegables(carta),
-  ).sort(COMPARADORS[ordreGraella]);
+  const visibles = versioActiva.cards
+    .filter(predicatActual())
+    .sort(COMPARADORS[ordreGraella]);
 
   if (visibles.length === 0) {
-    const buida = document.createElement("p");
-    buida.className = "graella-buida";
-    buida.textContent = t("graella.buida");
-    graella.append(buida);
+    graella.append(crearGraellaBuida());
     return;
   }
 
@@ -460,16 +611,17 @@ function pintarGraella() {
       info.append(linia);
     }
 
-    // Preu orientatiu de Cardmarket; si no se'n coneix cap, un guió
-    // amb l'explicació en passar-hi el ratolí per sobre
-    const { preu, aproximat } = infoPreuCarta(carta);
+    // Preu orientatiu (el sistema de fonts és a variants.js); si no se'n
+    // coneix cap, un guió amb l'explicació en passar-hi el ratolí per sobre
+    const { preu, motiu } = infoPreuCarta(carta);
     const espaiPreu = document.createElement("span");
     espaiPreu.className = "carta-preu";
     if (preu !== null) {
-      // El "≈" marca els preus de reserva (TCGplayer convertit de dòlars)
-      if (aproximat) {
+      // El "≈" marca tot preu que no sigui de Cardmarket i al dia; el
+      // títol en diu el motiu (convertit de dòlars, antic o dubtós)
+      if (motiu) {
         espaiPreu.textContent = "≈ " + formatarPreu(preu);
-        espaiPreu.title = t("carta.preuAproximat");
+        espaiPreu.title = t(TEXT_MOTIU_PREU[motiu]);
       } else {
         espaiPreu.textContent = formatarPreu(preu);
       }
@@ -723,6 +875,10 @@ function aplicarModeMarcatge(mode) {
   // (mostrarMissatge l'amaga sol al cap d'un moment)
   if (esModeVariant() && esTactil.matches) {
     mostrarMissatge("marcar.ajudaTocLlarg");
+  } else if (esModeVariant()) {
+    // A escriptori, el Ctrl+clic només es descobria passant el ratolí
+    // per sobre d'una carta i esperant el rectàngul groc del navegador
+    mostrarMissatge("marcar.ajudaZoomMissatge");
   }
   refrescarAlbum(); // el distintiu de les butxaques depèn del mode actiu
 }
@@ -741,6 +897,7 @@ function refrescarColleccio() {
   } else {
     // Amb un filtre actiu, el canvi pot fer entrar o sortir cartes
     pintarGraella();
+    refrescarRessaltatAlbum(); // i el filtre depèn de la col·lecció: el ressaltat també
   }
   // Si el zoom és obert, els seus comptadors també s'actualitzen en viu
   if (!element("zoom").hidden && cartaZoom) {
@@ -839,6 +996,8 @@ function canviarVista(vista, desar = true) {
   vistaActiva = vista;
   element("graella").hidden = vista === "album";
   mostrarAlbum(vista === "album");
+  // "Ordena per" no té sentit a l'àlbum: l'ordre d'un àlbum és físic
+  element("control-ordre").hidden = vista === "album";
   for (const boto of element("commutador-vista").querySelectorAll("button")) {
     boto.classList.toggle("actiu", boto.dataset.vista === vista);
   }
@@ -886,7 +1045,7 @@ function anarACartaDeLaGraella(id) {
   triarFiltreColleccio("totes");   // i sense cap filtre de col·lecció
   netejarFiltresDesplegables();    // ni cap filtre desplegable
   canviarVista("graella");
-  pintarGraella();
+  aplicarFiltres();
   const fitxa = element("graella").querySelector(`.carta[data-id="${CSS.escape(id)}"]`);
   if (!fitxa) return;
   fitxa.scrollIntoView({ behavior: "smooth", block: "center" });
@@ -924,6 +1083,9 @@ async function importarColleccio(esdeveniment) {
   const fitxer = esdeveniment.target.files[0];
   esdeveniment.target.value = ""; // permet tornar a triar el mateix fitxer
   if (!fitxer) return;
+  // Importar SUBSTITUEIX la col·lecció sencera (de totes les expansions),
+  // no la fusiona. Si hi ha res a perdre es demana abans, com fa "Buidar"
+  if (totals() > 0 && !confirm(t("colleccio.importarConfirma"))) return;
   try {
     const desada = importarJson(await fitxer.text());
     mostrarMissatge(desada ? "colleccio.importada" : "colleccio.senseEspai", !desada);
@@ -988,6 +1150,10 @@ async function ferActualitzacio() {
 // La crida el selector d'expansions (el panell del logotip de la capçalera).
 export async function canviarExpansio(setId) {
   const efectiu = canviarSetActiu(setId); // valida l'id (desconegut → defecte)
+  // Els filtres no viatgen d'una expansió a l'altra: abans s'hi quedaven
+  // (les rareses i els tipus es repeteixen a gairebé tots els sets) i
+  // s'obria l'expansió nova amb vuit cartes i cap explicació
+  netejarCercaIFiltres();
   aplicarTema(efectiu); // els colors de la web segueixen l'expansió
   const peticio = ++peticioLlista;
   mostrarMissatge("graella.carregant");
@@ -1049,11 +1215,11 @@ async function iniciar() {
   let temporitzadorCerca = null;
   element("cercador").addEventListener("input", () => {
     if (!esTactil.matches) {
-      pintarGraella();
+      aplicarFiltres();
       return;
     }
     clearTimeout(temporitzadorCerca);
-    temporitzadorCerca = setTimeout(pintarGraella, 150);
+    temporitzadorCerca = setTimeout(aplicarFiltres, 150);
   });
 
   // En tàctil, el missatge flotant es pot tancar amb un toc (els estats
@@ -1077,7 +1243,7 @@ async function iniciar() {
     const boto = esdeveniment.target.closest("button[data-filtre]");
     if (!boto) return;
     triarFiltreColleccio(boto.dataset.filtre);
-    pintarGraella();
+    aplicarFiltres();
   });
 
   // Filtres desplegables: cada canvi desa la tria i repinta la graella
@@ -1088,7 +1254,8 @@ async function iniciar() {
   ]) {
     element(id).addEventListener("change", (esdeveniment) => {
       desar(esdeveniment.target.value);
-      pintarGraella();
+      actualitzarOpcionsPossibles(); // el que ara és possible depèn dels altres dos
+      aplicarFiltres();
     });
   }
 

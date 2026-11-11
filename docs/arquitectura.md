@@ -35,7 +35,7 @@ Pokedanex/
 │   │   ├── collection.js← l'estat de la col·lecció (comptadors per variant)
 │   │   ├── album.js     ← la vista d'àlbum 3×3 de dues pàgines
 │   │   ├── stats.js     ← el panell de valor, cost i objectiu de compleció
-│   │   ├── markmode.js  ← el mode de marcatge (Consulta/Normal/Reverse/Holo)
+│   │   ├── markmode.js  ← el mode de marcatge (Només mirar/Normal/Reverse/Holo)
 │   │   ├── temes.js     ← el tema visual de cada expansió (i el per defecte)
 │   │   ├── selector-expansions.js ← el panell "Compendi" per triar expansió
 │   │   └── main.js      ← la interfície: pinta i lliga-ho tot
@@ -116,7 +116,10 @@ Els noms de les cartes no es tradueixen mai: són les cartes reals, en anglès.
   Em falten combinables amb el cercador.
 - **Àlbum (`album.js`):** vista de carpesà real — dues pàgines obertes de
   3×3 butxaques, navegació amb botons i fletxes de teclat, secretes
-  incloses; un clic a una carta salta a la graella.
+  incloses; un clic a una carta salta a la graella. La cerca i els filtres
+  hi **ressalten** en comptes de filtrar (D-011): cap butxaca no desapareix,
+  les cartes que coincideixen porten anell i la barra de coincidències diu
+  a quines pàgines són.
 - **Estadístiques (`stats.js`):** panell plegable amb barres de progrés,
   "la teva col·lecció val X €" (totes les còpies i variants) i "completar-la
   costaria Y €" (suma simple del que falta), amb **objectiu de compleció
@@ -135,7 +138,7 @@ Els noms de les cartes no es tradueixen mai: són les cartes reals, en anglès.
 | `pokedanex.statsOpen` | Si el panell d'estadístiques és obert o plegat |
 | `pokedanex.completionTarget` | L'objectiu de compleció triat |
 | `pokedanex.markMode` | Mode de marcatge (consulta / normal / reverse / holo) |
-| `pokedanex.displayMode` | Visualització (col·lecció / catàleg) |
+| `pokedanex.displayMode` | Colors (col·lecció / catàleg) |
 | `pokedanex.activeSet` | L'expansió activa |
 | `pokedanex.temaPerSet` | Si l'estètica segueix l'expansió o no |
 

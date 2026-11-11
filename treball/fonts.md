@@ -59,9 +59,13 @@ https://x.com/karpathy/status/1886192184808149383
 En anglès. ⚠️
 > Font primària del terme. **No s'ha pogut obrir des d'aquest entorn**, de
 > manera que el treball cita la transcripció que en fan la Viquipèdia i Ars
-> Technica —i ho diu explícitament al text—, en traducció pròpia. Tres fonts
-> independents la reprodueixen igual, així que el risc és baix, però convé
-> obrir-la i transcriure-la de l'original.
+> Technica, en traducció pròpia. Tres fonts independents la reprodueixen
+> igual, així que el risc és baix, però convé obrir-la i transcriure-la de
+> l'original.
+> **Canvi del 7 de novembre del 2026:** el cos del text duia aquesta reserva
+> entre parèntesis i s'ha tret a petició de l'autora. La reserva queda
+> documentada aquí, que és on l'Annex II demana que consti; si el tribunal
+> pregunta per la citació de Karpathy, la resposta és aquesta fitxa.
 
 **COLLINS DICTIONARY.** *Word of the Year 2025*. Novembre del 2025.
 https://www.collinsdictionary.com/woty
@@ -133,26 +137,17 @@ https://metr.org/blog/2026-02-24-uplift-update/
 En anglès. ✅ **(METR, 2026)**
 > **Font clau per argumentar que l'estudi del 2025 ha quedat
 > desactualitzat.** Dades citades: segon estudi iniciat l'agost del 2025,
-> resultats que ja no permeten afirmar ni frenada ni acceleració, la rebaixa
-> de la paga de 150 a 50 dòlars l'hora, el 30-50 % de participants que
-> renuncien a enviar tasques perquè no les volen fer sense IA, i el
-> programador que no va completar cap tasca sense l'eina.
-> Dades disponibles i no citades: 57 programadors (10 repetidors i 47 de
+> resultats que ja no permeten afirmar ni frenada ni acceleració, el 30-50 %
+> de participants que renuncien a enviar tasques perquè no les volen fer
+> sense IA, i el programador que no va completar cap tasca sense l'eina.
+> Dades disponibles i no citades: la rebaixa de la paga dels participants de
+> 150 a 50 dòlars l'hora (es citava al cos i se'n va treure el 7 de novembre
+> del 2026, a petició de l'autora: allargava la frase i desviava l'atenció del
+> motiu que de debò importa), 57 programadors (10 repetidors i 47 de
 > nous), 143 projectes, més de 800 tasques, mediana de 10 anys d'experiència,
 > estimacions de −18 % (interval de −38 % a +9 %) per als repetidors i −4 %
 > (interval de −15 % a +9 %) per als nous. METR diu que el biaix va en contra
 > seu: «likely biases the speedup estimate downward».
-
-**Semafor.** «The AI coding platform Lovable left user data exposed», 29 de
-maig del 2025. En anglès. ⚠️ **(Semafor, 2025)**
-> Dada citada: l'escaneig de 1.645 aplicacions web fetes amb Lovable, de les
-> quals 170 permetien a qualsevol accedir a dades dels usuaris (noms, adreces
-> electròniques, informació financera i claus d'API). L'escaneig el va fer un
-> enginyer de Replit i el va revisar Semafor; el problema té identificador
-> CVE-2025-48757.
-> **No s'ha pogut obrir l'article original**; el recompte de 170 de 1.645 és
-> coincident en totes les fonts secundàries consultades. Cal localitzar
-> l'adreça exacta de Semafor i comprovar-hi el títol.
 
 **WILLISON, Simon.** «Quotes for Benj Edwards on vibe coding». *Simon
 Willison's Weblog*, 6 de març del 2025.
@@ -169,6 +164,10 @@ En anglès. ✅ **(Willison, 2025)**
 > settings» i, molt pertinent per a aquest projecte, «If an LLM wrote every
 > line of your code but you've reviewed, tested and understood it all [...]
 > that's using an LLM as a typing assistant».
+> **Historial:** la frase es va treure del cos el 7 de novembre del 2026,
+> amb el paràgraf «Un cas concret i una veu crítica», i es va recuperar el 10
+> de novembre en una sola línia, a l'apartat «Què se'n deriva per a aquest
+> treball», perquè el capítol no es quedés sense cap veu crítica citada.
 
 ---
 
@@ -176,6 +175,25 @@ En anglès. ✅ **(Willison, 2025)**
 
 No se citen a la Part I. Es deixen aquí amb les dades comprovades perquè la
 metodologia i els resultats les puguin fer servir.
+
+**Nota del 7 de novembre del 2026, actualitzada el dia 10.** L'entrada
+següent —Semafor— sí que es citava a la Part I. El paràgraf que la portava
+(«Un cas concret i una veu crítica») s'ha tret del marc teòric a petició de
+l'autora, i per això baixa aquí. La dada es pot recuperar en qualsevol
+moment, a la Part I o a les conclusions. La fitxa de Willison, que va baixar
+amb ella, ha tornat a les fonts citades el 10 de novembre, quan la seva frase
+es va recuperar al text.
+
+**Semafor.** «The AI coding platform Lovable left user data exposed», 29 de
+maig del 2025. En anglès. ⚠️ **(Semafor, 2025)**
+> Dada citada: l'escaneig de 1.645 aplicacions web fetes amb Lovable, de les
+> quals 170 permetien a qualsevol accedir a dades dels usuaris (noms, adreces
+> electròniques, informació financera i claus d'API). L'escaneig el va fer un
+> enginyer de Replit i el va revisar Semafor; el problema té identificador
+> CVE-2025-48757.
+> **No s'ha pogut obrir l'article original**; el recompte de 170 de 1.645 és
+> coincident en totes les fonts secundàries consultades. Cal localitzar
+> l'adreça exacta de Semafor i comprovar-hi el títol.
 
 **METR.** *Measuring the Self-Reported Impact of Early-2026 AI on Technical
 Worker Productivity*, de Joel Becker. 11 de maig del 2026.
@@ -239,13 +257,15 @@ https://en.wikipedia.org/wiki/Vibe_coding ✅
 > S'ha fet servir com a **font de referències**, no com a autoritat: és el
 > punt de partida que va permetre localitzar els estudis originals de
 > Veracode, GitClear, METR i Semafor. L'única cosa que el treball li atribueix
-> és la transcripció de la piulada de Karpathy, i ho diu explícitament.
+> és la transcripció de la piulada de Karpathy. Des del 7 de novembre del 2026
+> el cos del text ja no ho fa constar entre parèntesis: consta aquí i a la
+> fitxa de Karpathy.
 
 **Ars Technica.** EDWARDS, Benj. «Will the future of software development run
 on vibes?». Març del 2025.
 https://arstechnica.com/ai/2025/03/is-vibe-coding-with-ai-gnarly-or-reckless-maybe-some-of-both/ ⚠️
 > No s'ha pogut obrir des d'aquest entorn. És l'article per al qual Simon
-> Willison va escriure les frases que es citen, i una de les dues fonts de la
+> Willison va escriure la frase que es cita, i una de les dues fonts de la
 > transcripció de la piulada de Karpathy.
 
 ---
