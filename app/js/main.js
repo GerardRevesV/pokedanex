@@ -6,6 +6,7 @@ import {
   carregarLlistaVersions, carregarVersio, actualitzarDades,
 } from "./data.js";
 import { variantsDisponibles, preuVariant, motiuPreuAproximat } from "./variants.js";
+import { iniciarHolo, aplicarHolo } from "./holo.js";
 import {
   comptadors, ajustar, enTeCap, subscriure, totals,
   exportarJson, importarJson, buidar,
@@ -803,6 +804,7 @@ function refrescarColleccio() {
     for (const valor of element("zoom-variants").querySelectorAll(".comptador-valor")) {
       pintarComptador(valor, valors[valor.dataset.variant]);
     }
+    aplicarHolo(cartaZoom); // marcar una holo o una reverse la fa brillar al moment
   }
   pintarBarraColleccio();
   // Les butxaques de l'àlbum s'encenen o s'apaguen EN LLOC, sense
@@ -875,6 +877,7 @@ function mostrarCartaAlZoom(carta) {
   element("zoom-raresa").textContent = carta.rarity ?? "";
   // Les mateixes files de comptadors − N + que té la carta a la graella
   element("zoom-variants").replaceChildren(crearControlsVariants(carta));
+  aplicarHolo(carta); // brillantor si la carta és holo o reverse (holo.js)
   // L'explicació de què és una reverse holo, només si la carta en té
   element("zoom-ajuda-reverse").hidden = !variantsDisponibles(carta).includes("reverse");
 
@@ -928,6 +931,7 @@ function tancarZoom() {
   peticioZoom++; // descarta la imatge gran si encara estava carregant
   // Si la imatge gran encara carregava, netegem l'estat de càrrega
   element("zoom-imatge").classList.remove("zoom-imatge--carregant");
+  aplicarHolo(null); // sense brillantor ni animació amb el zoom tancat
   zoom.hidden = true;
   if (elementAmbFocus?.isConnected) elementAmbFocus.focus();
   elementAmbFocus = null;
@@ -1294,6 +1298,7 @@ async function iniciar() {
 
   // Zoom d'imatge gran: es tanca amb clic fora, botó × o tecla Escape
   traduirZoom();
+  iniciarHolo(); // capes de brillantor holo al voltant de la imatge del zoom
   element("zoom").addEventListener("click", (esdeveniment) => {
     if (esdeveniment.target === element("zoom")) tancarZoom();
   });

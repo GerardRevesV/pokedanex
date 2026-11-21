@@ -27,6 +27,7 @@ Pokedanex/
 ├── app/                 ← LA WEB (tot el que hi ha aquí es publicarà)
 │   ├── index.html       ← l'estructura de la pàgina
 │   ├── css/style.css    ← l'aspecte (tema fosc, graella de cartes)
+│   ├── css/holo.css     ← la brillantor holo/reverse del zoom
 │   ├── js/
 │   │   ├── i18n.js      ← textos en català, castellà i anglès
 │   │   ├── data.js      ← càrrega de dades: sets, versions i set actiu
@@ -39,6 +40,7 @@ Pokedanex/
 │   │   ├── selector-expansions.js ← el panell "Compendi" per triar expansió
 │   │   ├── cerca.js     ← la cerca per proximitat (tolera errors d'escriptura)
 │   │   ├── cerca-global.js ← la secció «A altres expansions» sota la graella
+│   │   ├── holo.js      ← la brillantor de les cartes holo i reverse al zoom
 │   │   └── main.js      ← la interfície: pinta i lliga-ho tot
 │   └── data/
 │       ├── sets.json    ← registre de les expansions disponibles
@@ -139,6 +141,13 @@ Els noms de les cartes no es tradueixen mai: són les cartes reals, en anglès.
   dit sobre la imatge). El recorregut són les cartes que es veien en obrir-lo:
   a la graella, amb els filtres i l'ordre actius; a l'àlbum, en ordre de
   col·lecció (només les ressaltades si hi ha filtres).
+- **Brillantor holo (`holo.js` + `holo.css`):** al zoom, si tens la carta
+  en holo (o en reverse), dues capes per sobre de la imatge (reflex de
+  colors i llum) segueixen el ratolí o el dit, i la carta s'inclina; al
+  mòbil es mouen soles. Holo: només la il·lustració; reverse: tot menys la
+  il·lustració; «ex» i rareses altes: la carta sencera. Només `transform` i
+  `opacity`, capes sense clics (el zoom funciona igual) i quieta amb
+  «reduir el moviment». No hi ha efecte a la graella ni a l'àlbum.
 - **Àlbum (`album.js`):** vista de carpesà real — dues pàgines obertes de
   3×3 butxaques, navegació amb botons i fletxes de teclat, secretes
   incloses; un clic a una carta l'obre en gran. En passar de graella a

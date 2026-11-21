@@ -1,0 +1,184 @@
+/* holo.css — la brillantor de les cartes holo i reverse al zoom (holo.js).
+ *
+ * El marc .holo embolcalla la imatge del zoom i porta dues capes a sobre:
+ *   .holo-reflex  l'arc de Sant Martí del paper holo (+ purpurina a les
+ *                 rareses d'art complet), barrejat amb la imatge
+ *   .holo-llum    un punt de llum blanca que segueix el punter
+ * holo.js només escriu dues variables, --holo-x i --holo-y (de −1 a 1),
+ * i els atributs data-holo ("holo" | "reverse"), data-holo-art (la carta
+ * brilla sencera) i data-holo-ric (rareses altes: purpurina).
+ * Tot el moviment és transform i opacity. Cap color depèn del tema:
+ * les capes només es barregen amb la imatge de la carta.
+ */
+
+.holo {
+  --holo-x: 0;
+  --holo-y: 0;
+  --holo-inclinacio: 9deg; /* inclinació màxima: es nota, però no mareja */
+  max-width: 100%;
+}
+
+/* El que s'inclina és el nivell de dins (el marc .holo es queda pla per
+   mesurar bé el punter). isolation: les capes només es barregen amb la
+   imatge de la carta, mai amb el fons de la pàgina. */
+.holo-inclinacio {
+  position: relative;
+  border-radius: 10px;
+  isolation: isolate;
+  transition: transform 0.25s ease-out;
+}
+
+/* Només les cartes que brillen s'inclinen */
+.holo[data-holo] .holo-inclinacio {
+  transform: perspective(1000px)
+    rotateX(calc(var(--holo-y) * -1 * var(--holo-inclinacio)))
+    rotateY(calc(var(--holo-x) * var(--holo-inclinacio)));
+}
+
+/* Les capes: no reben cap clic ni toc (el zoom segueix igual que abans) */
+.holo-capa {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: 10px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+/* En passar de carta, sense fosa (vegeu aplicarHolo) */
+.holo--canvi .holo-capa {
+  transition: none;
+}
+
+/* --- El reflex de colors --- */
+
+.holo-reflex {
+  mix-blend-mode: color-dodge;
+}
+
+.holo[data-holo] .holo-reflex {
+  opacity: 0.32;
+}
+
+/* La reverse brilla per tota la vora: una mica més intensa perquè es
+   noti sobre els colors clars del marc */
+.holo[data-holo="reverse"] .holo-reflex {
+  opacity: 0.5;
+}
+
+/* Les bandes de colors són més grans que la carta i es desplacen en
+   sentit contrari al punter: així «llisquen» per sobre del paper */
+.holo-colors,
+.holo-purpurina {
+  position: absolute;
+  inset: -50%;
+  transform: translate(calc(var(--holo-x) * -18%), calc(var(--holo-y) * -18%));
+  transition: transform 0.25s ease-out;
+}
+
+.holo-colors {
+  background: repeating-linear-gradient(
+    115deg,
+    hsl(0 100% 62%) 0%,
+    hsl(45 100% 60%) 3.5%,
+    hsl(110 90% 58%) 7%,
+    hsl(185 100% 58%) 10.5%,
+    hsl(250 100% 66%) 14%,
+    hsl(320 100% 64%) 17.5%,
+    hsl(360 100% 62%) 21%
+  );
+}
+
+/* Purpurina (només rareses altes): punts petits que es mouen al
+   revés que els colors, com el gra brillant d'aquestes cartes */
+.holo-purpurina {
+  display: none;
+  background:
+    radial-gradient(circle, rgb(255 255 255 / 0.9) 0 0.6px, transparent 1.2px) 0 0 / 9px 9px,
+    radial-gradient(circle, rgb(255 255 255 / 0.7) 0 0.5px, transparent 1px) 4px 5px / 13px 13px;
+  transform: translate(calc(var(--holo-x) * 10%), calc(var(--holo-y) * 10%));
+}
+
+.holo[data-holo-ric] .holo-purpurina {
+  display: block;
+}
+
+.holo[data-holo-ric] .holo-reflex {
+  opacity: 0.4;
+}
+
+/* On brilla. Mides de la finestra de la il·lustració d'una carta normal
+   de Scarlet & Violet i Mega Evolution, mesurades sobre la imatge:
+   de dalt 9,5 %, de baix fins al 47,5 %, i 7,5 % de marge a cada costat. */
+
+/* Holo: només la il·lustració */
+.holo[data-holo="holo"]:not([data-holo-art]) .holo-reflex {
+  clip-path: inset(9.5% 7.5% 52.5% 7.5% round 2px);
+}
+
+/* Reverse: tota la carta menys la il·lustració (un rectangle amb un forat) */
+.holo[data-holo="reverse"] .holo-reflex {
+  clip-path: polygon(evenodd,
+    0 0, 100% 0, 100% 100%, 0 100%, 0 0,
+    7.5% 9.5%, 92.5% 9.5%, 92.5% 47.5%, 7.5% 47.5%, 7.5% 9.5%);
+}
+
+/* --- La llum blanca --- */
+
+.holo-llum {
+  mix-blend-mode: soft-light;
+}
+
+.holo[data-holo] .holo-llum {
+  opacity: 0.75;
+}
+
+.holo-punt {
+  position: absolute;
+  inset: -25%;
+  background: radial-gradient(circle at center,
+    rgb(255 255 255 / 0.85) 0%, rgb(255 255 255 / 0) 42%);
+  transform: translate(calc(var(--holo-x) * 30%), calc(var(--holo-y) * 30%));
+  transition: transform 0.25s ease-out;
+}
+
+/* --- Mòbil i tauleta: si no la toques, la brillantor es mou sola --- */
+
+@media (hover: none) {
+  .holo[data-holo]:not(.holo--dit) .holo-colors {
+    animation: holo-deriva-colors 7s ease-in-out infinite alternate;
+  }
+
+  .holo[data-holo]:not(.holo--dit) .holo-punt {
+    animation: holo-deriva-llum 7s ease-in-out infinite alternate;
+  }
+}
+
+@keyframes holo-deriva-colors {
+  from { transform: translate(14%, 10%); }
+  to { transform: translate(-14%, -10%); }
+}
+
+@keyframes holo-deriva-llum {
+  from { transform: translate(-24%, -20%); }
+  to { transform: translate(24%, 20%); }
+}
+
+/* --- «Reduir el moviment» al sistema: brillantor quieta --- */
+
+@media (prefers-reduced-motion: reduce) {
+  .holo[data-holo] .holo-inclinacio,
+  .holo-colors,
+  .holo-purpurina,
+  .holo-punt {
+    transform: none;
+    transition: none;
+    animation: none !important;
+  }
+
+  /* Amb la llum quieta al mig, una mica desplaçada perquè es noti */
+  .holo-punt {
+    transform: translate(-15%, -15%);
+  }
+}
