@@ -8,6 +8,7 @@ import { t, idiomaActual } from "./i18n.js";
 import { comptarAmbPrefix } from "./collection.js";
 import { temaDe, temaPerSetActiu, canviarTemaPerSet, aplicarTema } from "./temes.js";
 import { magatzem } from "./storage.js";
+import { prepararConsulta, coincideixText } from "./cerca.js";
 
 // Sentit de l'ordenació per data de sortida; es recorda entre visites
 const CLAU_ORDRE = "pokedanex.ordreExpansions";
@@ -27,7 +28,7 @@ function crearFila(conjunt, idActiu) {
   fila.type = "button";
   fila.className = "expansio-fila";
   fila.setAttribute("role", "option");
-  fila.dataset.nom = conjunt.name.toLowerCase(); // per a la cerca
+  fila.dataset.nom = conjunt.name; // per a la cerca (cerca.js el normalitza)
   // El filet de color de l'esquerra porta el tema propi del set
   fila.style.setProperty("--tema-set", temaDe(conjunt.id).accent);
   const activa = conjunt.id === idActiu;
@@ -118,14 +119,15 @@ function construirLlista() {
 // ---------- Cerca ----------
 
 // Amaga les files que no coincideixen amb la cerca (i els grups buits);
-// si no en queda cap, mostra el missatge de "cap resultat"
+// si no en queda cap, mostra el missatge de "cap resultat". La cerca és
+// per proximitat (cerca.js): «shrouded fabel» troba Shrouded Fable.
 function filtrar() {
-  const consulta = element("expansions-cerca").value.trim().toLowerCase();
+  const consulta = prepararConsulta(element("expansions-cerca").value);
   let algunaVisible = false;
   for (const grup of element("expansions-llista").querySelectorAll(".expansions-grup")) {
     let visibles = 0;
     for (const fila of grup.querySelectorAll(".expansio-fila")) {
-      const passa = !consulta || fila.dataset.nom.includes(consulta);
+      const passa = !consulta || coincideixText(fila.dataset.nom, consulta);
       fila.hidden = !passa;
       if (passa) visibles++;
     }

@@ -12,14 +12,14 @@ import {
 } from "./collection.js";
 import {
   iniciarAlbum, carregarAlbum, mostrarAlbum, refrescarAlbum, actualitzarButxaques,
-  ressaltarAlbum,
+  ressaltarAlbum, situarAlbumACarta, cartaVisibleAlbum,
 } from "./album.js";
 import { iniciarSelectorExpansions } from "./selector-expansions.js";
 import { aplicarTema } from "./temes.js";
 import { iniciarEstadistiques, carregarEstadistiques, refrescarEstadistiques } from "./stats.js";
-import { modeActiu, canviarMode, esModeVariant } from "./markmode.js";
-import { afegirTocLlarg, clicDeTocLlarg } from "./tocllarg.js";
 import { magatzem } from "./storage.js";
+import { prepararConsulta, puntuar } from "./cerca.js";
+import { iniciarCercaGlobal, refrescarCercaGlobal } from "./cerca-global.js";
 
 // Estat de la pàgina
 let versions = [];       // llista d'entrades per al selector de versions
@@ -55,7 +55,6 @@ const element = (id) => document.getElementById(id);
 const CLAUS_MISSATGE_PUNTUAL = new Set([
   "actualitza.fet", "actualitza.senseEspai",
   "colleccio.importada", "colleccio.importError", "colleccio.senseEspai",
-  "marcar.senseVariant", "marcar.ajudaTocLlarg",
 ]);
 let temporitzadorMissatge = null;
 
@@ -225,14 +224,34 @@ function formatarPreu(valor) {
   return formatadorPreu.format(valor);
 }
 
-// Una carta coincideix si la cerca apareix al nom o al número
+// La cerca, ja preparada per a cerca.js: { text, aproximada }. El text
+// en minúscules serveix per al número (que continua sent exacte) i la
+// versió preparada per a la cerca per proximitat del nom
+function consultaActual() {
+  const text = element("cercador").value.trim().toLowerCase();
+  return { text, aproximada: prepararConsulta(text) };
+}
+
+// Fins a quin punt una carta coincideix amb la cerca: 0 (exacta) a 4
+// (aproximada, amb errors d'escriptura), o null si no hi coincideix.
+// El número de carta no admet errors: «25» és la 25 (o la 125, 250...),
+// mai la 24. Si la cerca són només xifres, el nom no es busca aproximat.
+function rellevancia(carta, consulta) {
+  if (!consulta.text) return 0;
+  const numero = String(carta.number).toLowerCase();
+  if (numero === consulta.text || numero.padStart(3, "0") === consulta.text) return 0;
+  if (numero.includes(consulta.text) || numero.padStart(3, "0").includes(consulta.text)) return 1;
+  if (/^\d+$/.test(consulta.text)) {
+    return carta.name.toLowerCase().includes(consulta.text) ? 2 : null;
+  }
+  // Una cerca feta només de signes («!», «-») no busca res al nom
+  if (!consulta.aproximada) return null;
+  return puntuar(carta.name, consulta.aproximada);
+}
+
+// Una carta coincideix si la cerca apareix al nom (o s'hi assembla) o al número
 function coincideix(carta, consulta) {
-  if (!consulta) return true;
-  return (
-    carta.name.toLowerCase().includes(consulta) ||
-    carta.number.includes(consulta) ||
-    carta.number.padStart(3, "0").includes(consulta)
-  );
+  return rellevancia(carta, consulta) !== null;
 }
 
 // Una carta passa el filtre de col·lecció segons si en tens alguna còpia
@@ -394,7 +413,7 @@ function actualitzarOpcionsPossibles() {
 // consulta calculada un sol cop. El fan servir els DOS camins que pinten
 // cartes: la graella i el ressaltat de l'àlbum (D-011).
 function predicatActual() {
-  const consulta = element("cercador").value.trim().toLowerCase();
+  const consulta = consultaActual();
   return (carta) =>
     coincideix(carta, consulta) &&
     passaFiltreColleccio(carta) &&
@@ -557,16 +576,39 @@ function actualitzarOpcioArtista() {
   }
 }
 
+// Les cartes que mostra la graella, ja filtrades i en l'ordre triat
+// (també el recorregut de les fletxes del zoom).
+// filter retorna un array nou, així el sort no toca l'ordre original de
+// versioActiva.cards (l'àlbum i les estadístiques en depenen).
+// Amb una cerca escrita, primer les coincidències exactes i de prefix
+// i al final les aproximades; dins de cada nivell, l'ordre triat.
+function cartesDeLaGraella() {
+  if (!versioActiva) return [];
+  const consulta = consultaActual();
+  const nivells = new Map();
+  return versioActiva.cards
+    .filter(predicatActual())
+    .sort((a, b) => {
+      if (consulta.text) {
+        if (!nivells.has(a)) nivells.set(a, rellevancia(a, consulta));
+        if (!nivells.has(b)) nivells.set(b, rellevancia(b, consulta));
+        const diferencia = nivells.get(a) - nivells.get(b);
+        if (diferencia !== 0) return diferencia;
+      }
+      return COMPARADORS[ordreGraella](a, b);
+    });
+}
+
 function pintarGraella() {
+  // La mateixa cerca, a les altres expansions (secció de sota la graella).
+  // Va aquí perquè tot el que repinta la graella (cerca, canvi d'expansió,
+  // d'idioma o de versió) també ha de refer o amagar aquesta secció
+  refrescarCercaGlobal(element("cercador").value, setActiu());
   const graella = element("graella");
   graella.innerHTML = "";
   if (!versioActiva) return;
 
-  // filter retorna un array nou, així el sort no toca l'ordre original de
-  // versioActiva.cards (l'àlbum i les estadístiques en depenen)
-  const visibles = versioActiva.cards
-    .filter(predicatActual())
-    .sort(COMPARADORS[ordreGraella]);
+  const visibles = cartesDeLaGraella();
 
   if (visibles.length === 0) {
     graella.append(crearGraellaBuida());
@@ -580,9 +622,6 @@ function pintarGraella() {
     fitxa.dataset.id = carta.id; // identificador estable (ex. sv6pt5-33)
     // Sense cap còpia, la carta es veu apagada; s'encén quan en tens alguna
     fitxa.classList.toggle("carta--pendent", !enTeCap(carta.id));
-    // En mode de marcatge, recordatori que amb Ctrl+clic es veu la carta
-    // (en tàctil no: no hi ha Ctrl, i el title tampoc no es veuria)
-    if (esModeVariant() && !esTactil.matches) fitxa.title = t("marcar.ajudaZoom");
 
     const imatge = document.createElement("img");
     imatge.className = "carta-imatge";
@@ -592,11 +631,6 @@ function pintarGraella() {
     imatge.decoding = "async";
     imatge.src = carta.images.small;
     imatge.alt = carta.name;
-    // Un clic a la imatge obre el zoom, però només en mode consulta:
-    // en mode variant el clic el gestiona la fitxa sencera (més avall)
-    imatge.addEventListener("click", () => {
-      if (!esModeVariant()) obrirZoom(carta);
-    });
 
     const info = document.createElement("div");
     info.className = "carta-info";
@@ -635,47 +669,13 @@ function pintarGraella() {
 
     fitxa.append(imatge, info, crearControlsVariants(carta));
 
-    // Mode de marcatge: clic esquerre suma i clic dret resta una còpia
-    // de la variant activa. Els botons +/− queden fora (van per si sols).
+    // Un clic (o toc) a la carta l'obre sempre en gran. Només el bloc de
+    // variants queda fora: s'hi marca amb els botons − i +, i un toc que
+    // els erri per poc (el nom, l'espai entre files) no ha d'obrir res.
+    // El clic dret es queda amb el menú normal del navegador.
     fitxa.addEventListener("click", (esdeveniment) => {
-      if (!esModeVariant()) return;
-      // Ctrl+clic (Cmd al Mac): obre el zoom en lloc de marcar.
-      // (Els botons +/− aturen la propagació, però fan el mateix guard.)
-      if (esdeveniment.ctrlKey || esdeveniment.metaKey) {
-        obrirZoom(carta);
-        return;
-      }
-      // En tàctil, un toc dins del bloc de variants que no encerta cap
-      // botó (el número, el nom, l'espai entre files) no fa res: si
-      // arribés a la fitxa sumaria una còpia de la variant del MODE
-      // actiu, que pot no ser la de la fila on s'apuntava
-      if (esTactil.matches && esdeveniment.target.closest(".variants")) return;
-      if (esdeveniment.target.closest(".boto-comptador")) return;
-      // El clic que arriba en aixecar el dit d'un toc llarg no ha de sumar
-      if (clicDeTocLlarg(fitxa)) return;
-      marcarCarta(carta, +1, fitxa);
-    });
-    // En tàctil, el toc llarg (mig segon quiet) obre el zoom en mode de
-    // marcatge: l'equivalent del Ctrl+clic, que amb el dit no existeix
-    if (esTactil.matches) afegirTocLlarg(fitxa, () => obrirZoom(carta));
-    fitxa.addEventListener("contextmenu", (esdeveniment) => {
-      if (!esModeVariant()) return; // en consulta, menú del navegador intacte
-      // En tàctil, el toc llarg dispara aquest esdeveniment (Android): no
-      // ha de restar per accident — per restar hi ha els botons − de sota
-      if (esTactil.matches) {
-        esdeveniment.preventDefault();
-        return;
-      }
-      // A macOS, Ctrl+clic no arriba com a "click" sinó com a clic dret:
-      // ha d'obrir el zoom (com el guard de Ctrl del clic esquerre), no restar
-      if (esdeveniment.ctrlKey) {
-        esdeveniment.preventDefault();
-        obrirZoom(carta);
-        return;
-      }
-      if (esdeveniment.target.closest(".boto-comptador")) return;
-      esdeveniment.preventDefault();
-      marcarCarta(carta, -1, fitxa);
+      if (esdeveniment.target.closest(".variants")) return;
+      obrirZoom(carta, visibles);
     });
 
     fragment.append(fitxa);
@@ -733,9 +733,7 @@ function pintarComptador(espai, valor) {
   espai.classList.toggle("comptador-valor--te", valor > 0);
 }
 
-// Botó − o + d'una variant: un sol clic ajusta el comptador.
-// Ctrl+clic (Cmd al Mac) no marca mai: fora del zoom obre la carta;
-// dins del zoom (que ja és obert) no fa res.
+// Botó − o + d'una variant: un sol clic ajusta el comptador
 function crearBotoComptador(carta, variant, delta, simbol) {
   const boto = document.createElement("button");
   boto.type = "button";
@@ -743,10 +741,6 @@ function crearBotoComptador(carta, variant, delta, simbol) {
   boto.textContent = simbol;
   boto.addEventListener("click", (esdeveniment) => {
     esdeveniment.stopPropagation(); // que el clic no arribi a la carta
-    if (esdeveniment.ctrlKey || esdeveniment.metaKey) {
-      if (!boto.closest("#zoom")) obrirZoom(carta);
-      return;
-    }
     // false = el canvi és viu però no s'ha pogut desar al navegador
     if (!ajustar(carta.id, variant, delta)) {
       mostrarMissatge("colleccio.senseEspai", true);
@@ -767,6 +761,9 @@ function crearControlsVariants(carta) {
     const nom = document.createElement("span");
     nom.className = "variant-nom";
     nom.textContent = t("variant." + variant);
+    // El 30% de l'enquesta no sabia què és una reverse holo: passant-hi
+    // el ratolí es llegeix l'explicació (al zoom es veu sempre escrita)
+    if (variant === "reverse") nom.title = t("variant.ajudaReverse");
 
     const valor = document.createElement("span");
     valor.className = "comptador-valor";
@@ -782,105 +779,6 @@ function crearControlsVariants(carta) {
     bloc.append(fila);
   }
   return bloc;
-}
-
-// ---------- Mode de marcatge amb clics ----------
-
-// Temps dels efectes de marcar (coordinat amb les animacions del CSS)
-const DURADA_EFECTE = 400;
-
-// Recorda el temporitzador del flaix de cada node: si es clica de pressa,
-// el cancel·lem perquè el clic anterior no retalli el flaix del nou
-const temporitzadorsFlaix = new WeakMap();
-
-// Suma (delta +1) o resta (−1) una còpia de la variant activa en clicar
-// una carta. "node" és la fitxa de la graella o la funda de l'àlbum.
-function marcarCarta(carta, delta, node) {
-  const variant = modeActiu();
-
-  // La carta no existeix en aquesta variant: sacseig subtil i cap canvi.
-  // El títol explica el perquè si l'usuari hi passa el ratolí per sobre.
-  if (!variantsDisponibles(carta).includes(variant)) {
-    if (node.classList.contains("carta--sacseig")) return;
-    node.title = t("marcar.senseVariant", { variant: t("variant." + variant) });
-    // En tàctil el title no es veu mai: el motiu es mostra també com a
-    // missatge d'estat (mostrarMissatge ja l'amaga sol al cap d'un moment)
-    if (esTactil.matches) {
-      mostrarMissatge("marcar.senseVariant", true, { variant: t("variant." + variant) });
-    }
-    node.classList.add("carta--sacseig");
-    setTimeout(() => {
-      node.classList.remove("carta--sacseig");
-      // No restaurem el títol antic a cegues: el mode pot haver canviat
-      // durant el sacseig. El recalculem segons l'estat d'ara.
-      if (esModeVariant() && !esTactil.matches) {
-        node.title = t("marcar.ajudaZoom");
-      } else if (node.classList.contains("butxaca-funda")) {
-        node.title = carta.name; // la funda sempre mostra el nom en consulta
-      } else {
-        node.removeAttribute("title"); // la fitxa no en porta en consulta
-      }
-    }, DURADA_EFECTE);
-    return;
-  }
-
-  // false = el canvi és viu però no s'ha pogut desar al navegador
-  if (!ajustar(carta.id, variant, delta)) {
-    mostrarMissatge("colleccio.senseEspai", true);
-  }
-
-  // Flaix de vora perquè es vegi que el clic ha entrat. L'àlbum es repinta
-  // sencer en canviar la col·lecció: si el node antic ja no és a la pàgina,
-  // busquem el nou pel seu identificador de carta.
-  let objectiu = node;
-  if (!node.isConnected) {
-    // Busquem un node del mateix tipus (funda o fitxa): la graella
-    // amagada també té la carta i no és la que s'ha de fer brillar.
-    // CSS.escape protegeix el selector si l'id portés caràcters especials
-    const selector = node.classList.contains("butxaca-funda")
-      ? `.butxaca-funda[data-id="${CSS.escape(carta.id)}"]`
-      : `.carta[data-id="${CSS.escape(carta.id)}"]`;
-    objectiu = document.querySelector(selector);
-    if (!objectiu) return; // la carta ha sortit de la vista (filtres)
-  }
-  const classe = delta > 0 ? "carta--marcada" : "carta--restada";
-  clearTimeout(temporitzadorsFlaix.get(objectiu));
-  objectiu.classList.remove("carta--marcada", "carta--restada");
-  void objectiu.offsetWidth; // reinicia l'efecte si es clica de pressa
-  objectiu.classList.add(classe);
-  temporitzadorsFlaix.set(
-    objectiu,
-    setTimeout(() => objectiu.classList.remove(classe), DURADA_EFECTE)
-  );
-}
-
-// Aplica un mode de marcatge: el desa, marca el botó actiu del menú i
-// informa el CSS (cursors i distintiu de l'àlbum) via l'atribut del body
-function aplicarModeMarcatge(mode) {
-  canviarMode(mode);
-  document.body.dataset.marcatge = modeActiu();
-  for (const boto of element("mode-marcatge").querySelectorAll("button")) {
-    boto.classList.toggle("actiu", boto.dataset.mode === modeActiu());
-  }
-  // La graella no es repinta en canviar de mode: posem o traiem en lloc
-  // el recordatori del Ctrl+clic de cada fitxa (l'àlbum sí que es repinta).
-  // En tàctil el recordatori seria fals (no hi ha Ctrl): no es posa mai.
-  const ajudaZoom = esModeVariant() && !esTactil.matches ? t("marcar.ajudaZoom") : "";
-  for (const fitxa of element("graella").querySelectorAll(".carta")) {
-    if (ajudaZoom) fitxa.title = ajudaZoom;
-    else fitxa.removeAttribute("title");
-  }
-  // En tàctil, el toc llarg (l'equivalent del Ctrl+clic) no es veu enlloc:
-  // en entrar en un mode de marcatge, una pista flotant l'anuncia
-  // (mostrarMissatge l'amaga sol al cap d'un moment)
-  if (esModeVariant() && esTactil.matches) {
-    mostrarMissatge("marcar.ajudaTocLlarg");
-  } else if (esModeVariant()) {
-    // A escriptori, el Ctrl+clic només es descobria passant el ratolí
-    // per sobre d'una carta i esperant el rectàngul groc del navegador
-    mostrarMissatge("marcar.ajudaZoomMissatge");
-  }
-  refrescarAlbum(); // el distintiu de les butxaques depèn del mode actiu
 }
 
 // Es crida (per subscripció) després de cada canvi de la col·lecció
@@ -927,24 +825,74 @@ function pintarPeu() {
 let elementAmbFocus = null; // element per retornar-hi el focus en tancar el zoom
 let peticioZoom = 0;        // comptador per descartar imatges grans que arriben tard
 let cartaZoom = null;       // carta oberta al zoom (per marcar-la des de la fitxa)
+// Les cartes per on es passa amb ‹ › dins del zoom: les que es veien
+// (amb els filtres i l'ordre actius) en el moment d'obrir-lo. És una
+// foto fixa: si marcar una carta la treu del filtre «Em falten», el
+// recorregut no salta ni es perd.
+let llistaZoom = [];
 
-// Textos del zoom que canvien amb l'idioma: l'aria-label del × i, si el
-// zoom és obert, les files de variants (es refan amb els noms traduïts)
+// Textos del zoom que canvien amb l'idioma: els aria-label del × i de les
+// fletxes i, si el zoom és obert, les files de variants (es refan amb els
+// noms traduïts)
 function traduirZoom() {
   element("zoom-tancar").setAttribute("aria-label", t("zoom.tancar"));
+  element("zoom-anterior").setAttribute("aria-label", t("zoom.anterior"));
+  element("zoom-seguent").setAttribute("aria-label", t("zoom.seguent"));
   if (!element("zoom").hidden && cartaZoom) {
     element("zoom-variants").replaceChildren(crearControlsVariants(cartaZoom));
   }
 }
 
-// Obre la finestra de zoom d'una carta: imatge gran + fitxa marcable
-function obrirZoom(carta) {
+// La posició de la carta del zoom dins del recorregut (−1 si no hi és)
+function posicioZoom() {
+  return cartaZoom ? llistaZoom.findIndex((carta) => carta.id === cartaZoom.id) : -1;
+}
+
+// Obre la finestra de zoom d'una carta: imatge gran + fitxa marcable.
+// "llista" són les cartes per on es podrà passar amb les fletxes.
+function obrirZoom(carta, llista = [carta]) {
+  llistaZoom = llista;
+  mostrarCartaAlZoom(carta);
+  // Recordem on era el focus per retornar-l'hi en tancar
+  elementAmbFocus = document.activeElement;
+  element("zoom").hidden = false;
+  element("zoom-tancar").focus();
+}
+
+// Passa a la carta anterior (delta −1) o següent (+1) sense tancar el zoom
+function passarCartaZoom(delta) {
+  const posicio = posicioZoom();
+  const desti = llistaZoom[posicio + delta];
+  if (posicio === -1 || !desti) return;
+  mostrarCartaAlZoom(desti);
+}
+
+// Omple el zoom amb una carta (en obrir-lo i en passar de carta)
+function mostrarCartaAlZoom(carta) {
   cartaZoom = carta;
   element("zoom-numero").textContent = formatarNumero(carta);
   element("zoom-nom").textContent = carta.name;
   element("zoom-raresa").textContent = carta.rarity ?? "";
   // Les mateixes files de comptadors − N + que té la carta a la graella
   element("zoom-variants").replaceChildren(crearControlsVariants(carta));
+  // L'explicació de què és una reverse holo, només si la carta en té
+  element("zoom-ajuda-reverse").hidden = !variantsDisponibles(carta).includes("reverse");
+
+  // Fletxes ‹ ›: apagades al principi i al final del recorregut, i
+  // amagades del tot si només hi ha una carta
+  const posicio = posicioZoom();
+  const anterior = element("zoom-anterior");
+  const seguent = element("zoom-seguent");
+  anterior.hidden = seguent.hidden = llistaZoom.length < 2;
+  anterior.disabled = posicio <= 0;
+  seguent.disabled = posicio === -1 || posicio >= llistaZoom.length - 1;
+  // Si el focus s'ha perdut (una fletxa que s'acaba d'apagar, o un botó
+  // − / + que s'ha refet amb la carta nova), torna al × del zoom
+  const focus = document.activeElement;
+  if (!element("zoom").hidden
+    && (focus?.disabled || !element("zoom").contains(focus))) {
+    element("zoom-tancar").focus();
+  }
 
   // Primer la miniatura ampliada (ja és a la memòria cau del navegador);
   // la imatge gran només es demana ara, en obrir el zoom
@@ -969,11 +917,6 @@ function obrirZoom(carta) {
     imatge.classList.remove("zoom-imatge--carregant");
   });
   carregadora.src = gran;
-
-  // Recordem on era el focus per retornar-l'hi en tancar
-  elementAmbFocus = document.activeElement;
-  element("zoom").hidden = false;
-  element("zoom-tancar").focus();
 }
 
 // Tanca el zoom (si és obert) i retorna el focus on era
@@ -981,6 +924,7 @@ function tancarZoom() {
   const zoom = element("zoom");
   if (zoom.hidden) return;
   cartaZoom = null;
+  llistaZoom = [];
   peticioZoom++; // descarta la imatge gran si encara estava carregant
   // Si la imatge gran encara carregava, netegem l'estat de càrrega
   element("zoom-imatge").classList.remove("zoom-imatge--carregant");
@@ -991,8 +935,56 @@ function tancarZoom() {
 
 // ---------- Commutador de vista (graella / àlbum) ----------
 
-// Canvia de vista, marca el botó actiu i ho recorda al navegador
-function canviarVista(vista, desar = true) {
+// On acaba la capçalera a la pantalla: a escriptori és enganxosa (sticky)
+// i tapa el començament de la pàgina; al mòbil es desplaça i no tapa res
+function altCapcaleraFixa() {
+  const capcalera = document.querySelector(".capcalera");
+  if (getComputedStyle(capcalera).position !== "sticky") return 0;
+  return Math.max(0, capcalera.getBoundingClientRect().bottom);
+}
+
+// La carta de la graella que s'està mirant: la primera fitxa que es veu
+// almenys mig sencera per sota de la capçalera (null si no n'hi ha cap)
+function cartaVisibleGraella() {
+  const dalt = altCapcaleraFixa();
+  for (const fitxa of element("graella").querySelectorAll(".carta")) {
+    const caixa = fitxa.getBoundingClientRect();
+    if (caixa.bottom - caixa.height / 2 > dalt) {
+      return caixa.top < window.innerHeight ? fitxa.dataset.id : null;
+    }
+  }
+  return null;
+}
+
+// Desplaça la graella perquè la carta "id" quedi a dalt de tot, just per
+// sota de la capçalera. Si els filtres l'han deixat fora, prova amb les
+// cartes que la segueixen a l'àlbum (en ordre de col·lecció).
+function situarGraellaACarta(id) {
+  const cartes = versioActiva?.cards ?? [];
+  const inici = cartes.findIndex((carta) => carta.id === id);
+  if (inici === -1) return;
+  for (const carta of cartes.slice(inici)) {
+    const fitxa = element("graella").querySelector(`.carta[data-id="${CSS.escape(carta.id)}"]`);
+    if (!fitxa) continue;
+    const marge = 12; // una mica d'aire entre la capçalera i la carta
+    window.scrollTo({
+      top: window.scrollY + fitxa.getBoundingClientRect().top - altCapcaleraFixa() - marge,
+      behavior: "instant",
+    });
+    return;
+  }
+}
+
+// Canvia de vista, marca el botó actiu i ho recorda al navegador.
+// Amb "mantenirPosicio", l'altra vista s'obre on és la carta que s'estava
+// mirant (abans tornava sempre al principi i calia buscar-la de nou).
+function canviarVista(vista, desar = true, mantenirPosicio = false) {
+  let cartaReferencia = null;
+  if (mantenirPosicio && vista !== vistaActiva) {
+    cartaReferencia = vistaActiva === "graella" ? cartaVisibleGraella() : cartaVisibleAlbum();
+  }
+  // A l'àlbum, abans de mostrar-lo: així es pinta de primer a la pàgina bona
+  if (cartaReferencia && vista === "album") situarAlbumACarta(cartaReferencia);
   vistaActiva = vista;
   element("graella").hidden = vista === "album";
   mostrarAlbum(vista === "album");
@@ -1000,6 +992,18 @@ function canviarVista(vista, desar = true) {
   element("control-ordre").hidden = vista === "album";
   for (const boto of element("commutador-vista").querySelectorAll("button")) {
     boto.classList.toggle("actiu", boto.dataset.vista === vista);
+  }
+  if (cartaReferencia && vista === "graella") situarGraellaACarta(cartaReferencia);
+  if (cartaReferencia && vista === "album") {
+    // La pàgina es fa més curta sense la graella: si l'àlbum ha quedat
+    // per sobre de la pantalla, el portem a la vista
+    const album = element("album");
+    if (album.getBoundingClientRect().top < altCapcaleraFixa()) {
+      window.scrollTo({
+        top: window.scrollY + album.getBoundingClientRect().top - altCapcaleraFixa() - 12,
+        behavior: "instant",
+      });
+    }
   }
   if (desar) {
     try {
@@ -1015,8 +1019,8 @@ function canviarVista(vista, desar = true) {
 // Aplica un mode de visualització: "colleccio" (les cartes pendents es
 // veuen apagades) o "cataleg" (totes a color, amb marc daurat a les
 // tingudes). Tot el canvi visual és CSS condicionat per l'atribut del
-// body (mateix patró que el mode de marcatge); aquí només es posa
-// l'atribut, es marca el botó actiu i es recorda la tria al navegador.
+// body; aquí només es posa l'atribut, es marca el botó actiu i es
+// recorda la tria al navegador.
 function aplicarModeVisual(mode, desar = true) {
   document.body.dataset.visualitzacio = mode;
   for (const boto of element("mode-visual").querySelectorAll("button")) {
@@ -1294,14 +1298,48 @@ async function iniciar() {
     if (esdeveniment.target === element("zoom")) tancarZoom();
   });
   element("zoom-tancar").addEventListener("click", tancarZoom);
+  // Fletxes ‹ › del zoom: passen de carta sense tancar-lo
+  element("zoom-anterior").addEventListener("click", () => passarCartaZoom(-1));
+  element("zoom-seguent").addEventListener("click", () => passarCartaZoom(1));
+  // En tàctil, lliscar el dit sobre la imatge també passa de carta (el
+  // mateix gest i el mateix llindar que per passar pàgina a l'àlbum:
+  // clarament horitzontal i de més de 48px)
+  let iniciLliscar = null;
+  element("zoom-imatge").addEventListener("pointerdown", (esdeveniment) => {
+    // Només el primer dit: un segon dit és un pessic (ampliar), no lliscar
+    if (!esdeveniment.isPrimary) {
+      iniciLliscar = null;
+      return;
+    }
+    iniciLliscar = { x: esdeveniment.clientX, y: esdeveniment.clientY };
+  });
+  element("zoom-imatge").addEventListener("pointerup", (esdeveniment) => {
+    if (!iniciLliscar || !esdeveniment.isPrimary) return;
+    const deltaX = esdeveniment.clientX - iniciLliscar.x;
+    const deltaY = esdeveniment.clientY - iniciLliscar.y;
+    iniciLliscar = null;
+    if (Math.abs(deltaX) > 48 && Math.abs(deltaX) > 2 * Math.abs(deltaY)) {
+      passarCartaZoom(deltaX < 0 ? 1 : -1); // dit cap a l'esquerra = següent
+    }
+  });
+  element("zoom-imatge").addEventListener("pointercancel", () => { iniciLliscar = null; });
   document.addEventListener("keydown", (esdeveniment) => {
     if (esdeveniment.key === "Escape") tancarZoom(); // no fa res si ja és tancat
+    // Fletxes del teclat amb el zoom obert: carta anterior o següent
+    // (sense Alt/Ctrl/Cmd: Alt+← és «enrere» del navegador)
+    const ambModificador = esdeveniment.altKey || esdeveniment.ctrlKey || esdeveniment.metaKey;
+    if (!element("zoom").hidden && !ambModificador) {
+      if (esdeveniment.key === "ArrowLeft") passarCartaZoom(-1);
+      if (esdeveniment.key === "ArrowRight") passarCartaZoom(1);
+    }
     // Amb el zoom obert, Tab no ha de sortir del diàleg (els controls de
     // darrere l'overlay no s'han de poder tocar): cicla entre els botons
-    // de la fitxa (×, − i + de cada variant, "Veure a la graella")
+    // de la fitxa (×, ‹ ›, − i + de cada variant, "Veure a la graella")
+    // que es poden fer servir ara mateix (ni amagats ni apagats)
     if (esdeveniment.key === "Tab" && !element("zoom").hidden) {
       esdeveniment.preventDefault();
-      const botons = [...element("zoom").querySelectorAll("button")];
+      const botons = [...element("zoom").querySelectorAll("button")]
+        .filter((boto) => !boto.disabled && !boto.hidden);
       const actual = botons.indexOf(document.activeElement);
       const pas = esdeveniment.shiftKey ? -1 : 1;
       // Si el focus s'ha perdut (actual = −1), tornem al primer botó
@@ -1310,9 +1348,8 @@ async function iniciar() {
     }
   });
 
-  // El zoom es pot obrir en qualsevol mode (en consulta amb un clic; en
-  // els modes de marcatge amb Ctrl+clic). Dins del zoom, el marcatge es
-  // fa sempre amb els botons − i + de cada variant, mai clicant la imatge
+  // Dins del zoom, el marcatge es fa sempre amb els botons − i + de cada
+  // variant, mai clicant la imatge
 
   // Botó "Veure a la graella": tanca el zoom i ensenya la carta ressaltada
   element("zoom-graella").addEventListener("click", () => {
@@ -1325,13 +1362,6 @@ async function iniciar() {
   // Panell d'estadístiques: plegat i objectiu de compleció
   iniciarEstadistiques();
 
-  // Mode de marcatge amb clics: consulta o variant (es recorda al navegador)
-  element("mode-marcatge").addEventListener("click", (esdeveniment) => {
-    const boto = esdeveniment.target.closest("button[data-mode]");
-    if (boto) aplicarModeMarcatge(boto.dataset.mode);
-  });
-  aplicarModeMarcatge(modeActiu());
-
   // Mode de visualització: col·lecció o catàleg (es recorda al navegador).
   // Només s'accepta el valor exacte "cataleg"; qualsevol altre (o cap)
   // cau al mode col·lecció per defecte.
@@ -1343,12 +1373,19 @@ async function iniciar() {
   aplicarModeVisual(visualDesada === "cataleg" ? "cataleg" : "colleccio", false);
 
   // Commutador de vista: graella o àlbum (es recorda al navegador).
-  // En mode consulta, clicar una butxaca obre el zoom de la carta
-  // (des del zoom, el botó "Veure a la graella" fa el salt d'abans).
-  iniciarAlbum(obrirZoom, marcarCarta);
+  // Clicar una butxaca obre el zoom de la carta (des del zoom, el botó
+  // "Veure a la graella" fa el salt d'abans). Les fletxes del zoom hi
+  // segueixen l'ordre de l'àlbum: només les cartes ressaltades si hi ha
+  // cap filtre actiu, i totes si no n'hi ha cap.
+  iniciarAlbum((carta) => {
+    const cartes = versioActiva?.cards ?? [carta];
+    obrirZoom(carta, hiHaFiltreActiu() && predicatActual()(carta)
+      ? cartes.filter(predicatActual())
+      : cartes);
+  });
   element("commutador-vista").addEventListener("click", (esdeveniment) => {
     const boto = esdeveniment.target.closest("button[data-vista]");
-    if (boto) canviarVista(boto.dataset.vista);
+    if (boto) canviarVista(boto.dataset.vista, true, true);
   });
   if (magatzem()?.getItem(CLAU_VISTA) === "album") canviarVista("album", false);
 
@@ -1383,6 +1420,13 @@ async function iniciar() {
     // tema de colors i arrenquem el selector d'expansions de la capçalera
     aplicarTema(setActiu());
     iniciarSelectorExpansions({ sets, setActiu, enTriar: canviarExpansio });
+    // Una carta trobada a una altra expansió: s'obre aquella expansió i
+    // es localitza la carta a la graella (com des de l'àlbum)
+    iniciarCercaGlobal({
+      enTriar: async (setId, cardId) => {
+        if (await canviarExpansio(setId)) anarACartaDeLaGraella(cardId);
+      },
+    });
     const llista = await carregarLlistaVersions(setActiu());
     // Si mentre esperàvem s'ha demanat una altra llista, descartem aquesta
     if (peticio !== peticioLlista) return;
