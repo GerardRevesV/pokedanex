@@ -105,6 +105,10 @@ Què fa exactament l'script (no cal fer res més a mà):
 4. Actualitza (o crea) l'índex del set: `app/data/versions/<setId>/index.json`.
 5. Dona d'alta o actualitza el set al registre `app/data/sets.json`
    (ordenat per data de sortida, del més antic al més nou).
+6. Regenera l'índex de cerca `app/data/index-cerca.json` (noms i números de
+   totes les cartes, per a la cerca «A altres expansions»). Cal pujar-lo
+   amb la resta de canvis d'`app/data/`. Si mai cal refer-lo sense baixar
+   res: `python toolsetch_data.py --index`.
 
 **Cas múltiple (diversos sets de cop):** llança'ls en **cua seqüencial**
 (mai en paral·lel: l'API ja va prou justa) dins d'una sola ordre en segon
