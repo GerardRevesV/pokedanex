@@ -992,6 +992,30 @@ body[data-visualitzacio="cataleg"] .carta--ressaltada {
   color: var(--text-suau);
 }
 
+/* D'on surten els preus (sota el valor de la col·lecció) i el
+   desplegable «Com es calculen?» amb la regla en dues frases */
+.estad-font {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  max-width: 30rem;
+  margin-top: 0.25rem;
+}
+
+.estad-com summary {
+  width: fit-content;
+  font-size: 0.78rem;
+  color: var(--accent);
+  cursor: pointer;
+}
+
+.estad-com p {
+  margin: 0.3rem 0 0;
+  font-size: 0.78rem;
+  line-height: 1.45;
+  color: var(--text-suau);
+}
+
 /* ---------- Peu ---------- */
 
 .peu {

@@ -218,6 +218,16 @@ def retallar_tcgdex(dades):
         if variant.get("pricing"):
             entrada["pricing"] = variant["pricing"]
         detall.append(entrada)
+    # A alguns sets (p. ex. sv01, Scarlet & Violet) TCGdex no posa els preus
+    # a cada variant sino a la carta sencera, en un sol bloc que ja separa
+    # la versio base (claus planes) de la brillant (claus "-holo"). Llavors
+    # es copia aquest bloc a cada variant sense segell: queden amb el mateix
+    # idProduct i la web ja sap repartir-lo (app/js/variants.js), sense
+    # canviar el format de les dades.
+    if dades.get("pricing") and not any("pricing" in e for e in detall):
+        for entrada in detall:
+            if not entrada.get("stamp"):
+                entrada["pricing"] = dades["pricing"]
     return {"variants": dades.get("variants"), "variants_detailed": detall}
 
 

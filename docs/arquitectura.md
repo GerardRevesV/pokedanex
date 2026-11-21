@@ -53,7 +53,8 @@ Pokedanex/
 ### 1. Dades (`data.js` + `app/data/` + `fetch_data.py`)
 
 La web és **multi-expansió**: `app/data/sets.json` és el registre de les
-expansions disponibles (ara Shrouded Fable i Prismatic Evolutions), i cada
+expansions disponibles (ara 22: tot el bloc Scarlet & Violet des de la
+primera, més les de Mega Evolution), i cada
 expansió té la seva carpeta de versions. Les dades de les cartes venen de
 l'API gratuïta **pokemontcg.io**, però la web **mai** en depèn en viu:
 sempre llegeix una còpia local — la **cau versionada per expansió**.
@@ -82,8 +83,15 @@ Detalls tècnics rellevants:
 - Identificador estable de carta: `id` de l'API (ex. `sv6pt5-33`).
 - Les cartes es guarden retallades als camps que la web usa (llista única
   compartida conceptualment entre `fetch_data.py` i `data.js`).
-- L'API falla sovint (502): totes les peticions porten **reintents amb
-  espera creixent**.
+- L'API falla sovint (500/502): totes les peticions porten **reintents amb
+  espera creixent**. Al botó "Actualitza" (`data.js`) són 6 intents en
+  aproximadament un minut (esperes de 2, 4, 8, 16 i 32 s), cada intent amb
+  un temps màxim d'espera; si tot falla, no es desa res, la web es queda amb
+  les dades d'abans i el missatge diu el motiu (sense xarxa, temps esgotat,
+  massa peticions, servidor caigut o TCGdex caigut).
+- A alguns sets (p. ex. `sv1`) TCGdex dona els preus per carta i no per
+  variant: el retall els copia a cada variant sense segell, amb el mateix
+  format de dades.
 - La clau de l'API es llegeix de `config.json` (arrel del repo, exclòs de
   GitHub). La web publicada no tindrà clau i funcionarà igualment amb els
   límits gratuïts.
@@ -142,7 +150,10 @@ Els noms de les cartes no es tradueixen mai: són les cartes reals, en anglès.
 - **Estadístiques (`stats.js`):** panell plegable amb barres de progrés,
   "la teva col·lecció val X €" (totes les còpies i variants) i "completar-la
   costaria Y €" (suma simple del que falta), amb **objectiu de compleció
-  triable** (set base / complet, amb o sense reverses) i data dels preus.
+  triable** (set base / complet, amb o sense reverses). Sota el valor diu
+  d'on surten els preus (Cardmarket i TCGplayer via TCGdex i pokemontcg.io),
+  de quin dia són i que són aproximats, amb un desplegable «Com es
+  calculen?» que resumeix la regla de D-013.
 - **`storage.js`:** tots els accessos a `localStorage` passen per aquí,
   perquè la web funcioni encara que el navegador el bloquegi.
 

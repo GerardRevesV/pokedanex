@@ -214,10 +214,41 @@ function pintarBarres() {
   }
 }
 
-// Una xifra estrella: etiqueta, import gros i notes petites (data dels preus
-// i, si cal, quantes peces entren amb preu aproximat de reserva
+// D'on surten els preus: una frase amb les fonts i el dia, i un desplegable
+// «Com es calculen?» que explica la regla (decisió D-013) en dues frases.
+// Es demana a l'enquesta: un col·leccionista volia saber d'on surten.
+// El panell es repinta a cada canvi de col·lecció: es recorda si el
+// desplegable era obert perquè no es tanqui sol.
+let explicacioOberta = false;
+
+function crearFontPreus() {
+  const bloc = document.createElement("div");
+  bloc.className = "estad-font";
+
+  const font = document.createElement("span");
+  font.className = "estad-xifra-nota";
+  font.textContent = t("estad.font", { data: formatarDataHora(versio.fetchedAt) });
+
+  const desplegable = document.createElement("details");
+  desplegable.className = "estad-com";
+  desplegable.open = explicacioOberta;
+  desplegable.addEventListener("toggle", () => {
+    explicacioOberta = desplegable.open;
+  });
+  const resum = document.createElement("summary");
+  resum.textContent = t("estad.comEsCalculen");
+  const explicacio = document.createElement("p");
+  explicacio.textContent = t("estad.explicacio");
+  desplegable.append(resum, explicacio);
+
+  bloc.append(font, desplegable);
+  return bloc;
+}
+
+// Una xifra estrella: etiqueta, import gros i notes petites (d'on surten
+// els preus i, si cal, quantes peces entren amb preu aproximat de reserva
 // i quantes no han pogut comptar per falta de preu)
-function crearXifra(clauNom, resultat, ambData) {
+function crearXifra(clauNom, resultat, ambFont) {
   const bloc = document.createElement("div");
   bloc.className = "estad-xifra";
 
@@ -232,7 +263,6 @@ function crearXifra(clauNom, resultat, ambData) {
   bloc.append(nom, valor);
 
   const notes = [];
-  if (ambData) notes.push(t("estad.preusData", { data: formatarDataHora(versio.fetchedAt) }));
   if (resultat.aproximats > 0) notes.push(t("estad.preusAproximats", { n: resultat.aproximats }));
   if (resultat.sensePreu > 0) notes.push(t("estad.sensePreu", { n: resultat.sensePreu }));
   if (notes.length > 0) {
@@ -241,6 +271,7 @@ function crearXifra(clauNom, resultat, ambData) {
     nota.textContent = notes.join(" · ");
     bloc.append(nota);
   }
+  if (ambFont) bloc.append(crearFontPreus());
   return bloc;
 }
 
