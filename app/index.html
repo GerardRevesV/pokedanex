@@ -18,11 +18,16 @@
       <div class="marca">
         <h1>Pokedanex</h1>
         <!-- El logotip del set (que omple el JavaScript) és alhora el botó
-             que obre el selector d'expansions (selector-expansions.js) -->
+             que obre el selector d'expansions (selector-expansions.js).
+             Porta el text «Canvia d'expansió» a la vista: a l'enquesta,
+             tres persones no van veure que el logotip es podia clicar -->
         <button type="button" id="boto-expansions" class="boto-expansions"
-                aria-haspopup="dialog" data-i18n-aria="expansions.obrir">
+                aria-haspopup="dialog">
           <img id="logo-set" class="logo-set" src="" alt="" decoding="async" hidden>
-          <span class="caret" aria-hidden="true">▾</span>
+          <span class="boto-expansions-text">
+            <span data-i18n="expansions.obrir">Canvia d'expansió</span>
+            <span class="caret" aria-hidden="true">▾</span>
+          </span>
         </button>
       </div>
       <div class="control">
@@ -60,9 +65,9 @@
       </button>
       <div id="bloc-filtres" class="bloc-filtres">
       <div class="control">
-        <span class="control-etiqueta" data-i18n="visual.etiqueta">Visualització</span>
+        <span class="control-etiqueta" data-i18n="visual.etiqueta">Cartes que no tinc</span>
         <!-- Mode de visualització: col·lecció (cartes pendents apagades)
-             o catàleg (totes a color, amb marc daurat a les tingudes) -->
+             o catàleg (totes en color, amb marc daurat a les tingudes) -->
         <div id="mode-visual" class="segmentat">
           <button type="button" class="actiu" data-visual="colleccio" data-i18n="visual.colleccio">Col·lecció</button>
           <button type="button" data-visual="cataleg" data-i18n="visual.cataleg">Catàleg</button>
@@ -115,6 +120,11 @@
           </button>
         </div>
       </div>
+      <!-- Torna la cerca i tots els filtres al valor per defecte (l'ordre
+           i la vista no són filtres: no es toquen). Només es veu si hi ha
+           alguna cerca o filtre actiu (main.js) -->
+      <button type="button" id="boto-treure-filtres" class="boto-suau boto-treure-filtres"
+              data-i18n="graella.treureFiltres" hidden>Treu tots els filtres</button>
       </div><!-- /bloc-filtres -->
     </div>
   </header>

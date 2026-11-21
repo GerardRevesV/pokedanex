@@ -469,7 +469,10 @@ function netejarCercaIFiltres() {
   netejarFiltresDesplegables();
 }
 
-// Treu la cerca i tots els filtres d'un cop (botó del missatge de buit)
+// Treu la cerca i tots els filtres d'un cop (botó «Treu tots els
+// filtres» del bloc de filtres i del missatge de graella buida). L'ordre
+// i la vista no són filtres: es queden com estan. En buidar el cercador,
+// la secció «A altres expansions» també s'amaga (es refà amb la graella).
 function treureElsFiltres() {
   netejarCercaIFiltres();
   aplicarFiltres();
@@ -490,6 +493,9 @@ function pintarCompteFiltres() {
   distintiu.hidden = actius === 0;
   distintiu.textContent = actius;
   distintiu.title = t("filtres.actius", { n: actius });
+  // El botó «Treu tots els filtres» només surt si hi ha res a treure
+  // (aquí sí que compta la cerca: també la buida)
+  element("boto-treure-filtres").hidden = !hiHaFiltreActiu();
 }
 
 // El missatge de graella buida: diu quins criteris no han deixat passar
@@ -1264,6 +1270,8 @@ async function iniciar() {
     const obert = element("bloc-filtres").classList.toggle("bloc-filtres--obert");
     element("boto-filtres").setAttribute("aria-expanded", obert ? "true" : "false");
   });
+
+  element("boto-treure-filtres").addEventListener("click", treureElsFiltres);
 
   // Filtre de col·lecció: Totes / Les tinc / Em falten
   element("filtre-colleccio").addEventListener("click", (esdeveniment) => {
