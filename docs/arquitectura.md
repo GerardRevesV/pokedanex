@@ -176,7 +176,7 @@ Els noms de les cartes no es tradueixen mai: són les cartes reals, en anglès.
 | `pokedanex.view` | Vista activa (graella / àlbum) |
 | `pokedanex.statsOpen` | Si el panell d'estadístiques és obert o plegat |
 | `pokedanex.completionTarget` | L'objectiu de compleció triat |
-| `pokedanex.displayMode` | Colors (col·lecció / catàleg) |
+| `pokedanex.displayMode` | «Cartes que no tinc»: apagades (`colleccio`) o en color (`cataleg`) |
 | `pokedanex.activeSet` | L'expansió activa |
 | `pokedanex.temaPerSet` | Si l'estètica segueix l'expansió o no |
 
