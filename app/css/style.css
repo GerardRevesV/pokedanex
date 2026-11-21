@@ -468,6 +468,77 @@ select:focus {
   padding: 3rem 1rem;
 }
 
+/* La mateixa cerca a les altres expansions (cerca-global.js): una franja
+   sota la graella amb cartes petites que porten a la seva expansió */
+.cerca-global {
+  margin-top: 2rem;
+  padding-top: 1.2rem;
+  border-top: 1px solid var(--vora);
+}
+
+.cerca-global-titol {
+  margin: 0 0 0.4rem;
+  font-size: 1.05rem;
+}
+
+.cerca-global-estat {
+  margin: 0 0 0.8rem;
+  color: var(--text-suau);
+  font-size: 0.9rem;
+}
+
+.cerca-global-llista {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 0.8rem;
+}
+
+/* Al mòbil, tres per fila: són cartes de consulta ràpida, no cal que
+   siguin tan grans com les de la graella */
+@media (max-width: 600px) {
+  .cerca-global-llista {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.5rem;
+  }
+}
+
+.global-carta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0.5rem;
+  background: var(--fons-carta);
+  border: 1px solid var(--vora);
+  border-radius: 10px;
+  color: var(--text);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  min-width: 0;
+}
+
+.global-carta:hover,
+.global-carta:focus-visible {
+  border-color: var(--accent);
+}
+
+.global-carta img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 63 / 88;
+  object-fit: contain;
+}
+
+.global-carta b {
+  font-size: 0.85rem;
+  overflow-wrap: anywhere;
+}
+
+.global-carta small {
+  font-size: 0.75rem;
+  color: var(--text-suau);
+}
+
 /* ---------- Mode de marcatge amb clics ---------- */
 
 /* Cursors segons el mode (l'atribut data-marcatge del body el posa main.js):
