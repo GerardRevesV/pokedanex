@@ -18,6 +18,8 @@ import { iniciarSelectorExpansions } from "./selector-expansions.js";
 import { aplicarTema } from "./temes.js";
 import { iniciarEstadistiques, carregarEstadistiques, refrescarEstadistiques } from "./stats.js";
 import { magatzem } from "./storage.js";
+import { prepararConsulta, puntuar } from "./cerca.js";
+import { iniciarCercaGlobal, refrescarCercaGlobal } from "./cerca-global.js";
 
 // Estat de la pàgina
 let versions = [];       // llista d'entrades per al selector de versions
@@ -222,14 +224,34 @@ function formatarPreu(valor) {
   return formatadorPreu.format(valor);
 }
 
-// Una carta coincideix si la cerca apareix al nom o al número
+// La cerca, ja preparada per a cerca.js: { text, aproximada }. El text
+// en minúscules serveix per al número (que continua sent exacte) i la
+// versió preparada per a la cerca per proximitat del nom
+function consultaActual() {
+  const text = element("cercador").value.trim().toLowerCase();
+  return { text, aproximada: prepararConsulta(text) };
+}
+
+// Fins a quin punt una carta coincideix amb la cerca: 0 (exacta) a 4
+// (aproximada, amb errors d'escriptura), o null si no hi coincideix.
+// El número de carta no admet errors: «25» és la 25 (o la 125, 250...),
+// mai la 24. Si la cerca són només xifres, el nom no es busca aproximat.
+function rellevancia(carta, consulta) {
+  if (!consulta.text) return 0;
+  const numero = String(carta.number).toLowerCase();
+  if (numero === consulta.text || numero.padStart(3, "0") === consulta.text) return 0;
+  if (numero.includes(consulta.text) || numero.padStart(3, "0").includes(consulta.text)) return 1;
+  if (/^\d+$/.test(consulta.text)) {
+    return carta.name.toLowerCase().includes(consulta.text) ? 2 : null;
+  }
+  // Una cerca feta només de signes («!», «-») no busca res al nom
+  if (!consulta.aproximada) return null;
+  return puntuar(carta.name, consulta.aproximada);
+}
+
+// Una carta coincideix si la cerca apareix al nom (o s'hi assembla) o al número
 function coincideix(carta, consulta) {
-  if (!consulta) return true;
-  return (
-    carta.name.toLowerCase().includes(consulta) ||
-    carta.number.includes(consulta) ||
-    carta.number.padStart(3, "0").includes(consulta)
-  );
+  return rellevancia(carta, consulta) !== null;
 }
 
 // Una carta passa el filtre de col·lecció segons si en tens alguna còpia
@@ -391,7 +413,7 @@ function actualitzarOpcionsPossibles() {
 // consulta calculada un sol cop. El fan servir els DOS camins que pinten
 // cartes: la graella i el ressaltat de l'àlbum (D-011).
 function predicatActual() {
-  const consulta = element("cercador").value.trim().toLowerCase();
+  const consulta = consultaActual();
   return (carta) =>
     coincideix(carta, consulta) &&
     passaFiltreColleccio(carta) &&
@@ -554,17 +576,34 @@ function actualitzarOpcioArtista() {
   }
 }
 
-// Les cartes que mostra la graella, ja filtrades i en l'ordre triat.
+// Les cartes que mostra la graella, ja filtrades i en l'ordre triat
+// (també el recorregut de les fletxes del zoom).
 // filter retorna un array nou, així el sort no toca l'ordre original de
-// versioActiva.cards (l'àlbum i les estadístiques en depenen)
+// versioActiva.cards (l'àlbum i les estadístiques en depenen).
+// Amb una cerca escrita, primer les coincidències exactes i de prefix
+// i al final les aproximades; dins de cada nivell, l'ordre triat.
 function cartesDeLaGraella() {
   if (!versioActiva) return [];
+  const consulta = consultaActual();
+  const nivells = new Map();
   return versioActiva.cards
     .filter(predicatActual())
-    .sort(COMPARADORS[ordreGraella]);
+    .sort((a, b) => {
+      if (consulta.text) {
+        if (!nivells.has(a)) nivells.set(a, rellevancia(a, consulta));
+        if (!nivells.has(b)) nivells.set(b, rellevancia(b, consulta));
+        const diferencia = nivells.get(a) - nivells.get(b);
+        if (diferencia !== 0) return diferencia;
+      }
+      return COMPARADORS[ordreGraella](a, b);
+    });
 }
 
 function pintarGraella() {
+  // La mateixa cerca, a les altres expansions (secció de sota la graella).
+  // Va aquí perquè tot el que repinta la graella (cerca, canvi d'expansió,
+  // d'idioma o de versió) també ha de refer o amagar aquesta secció
+  refrescarCercaGlobal(element("cercador").value, setActiu());
   const graella = element("graella");
   graella.innerHTML = "";
   if (!versioActiva) return;
@@ -1358,6 +1397,13 @@ async function iniciar() {
     // tema de colors i arrenquem el selector d'expansions de la capçalera
     aplicarTema(setActiu());
     iniciarSelectorExpansions({ sets, setActiu, enTriar: canviarExpansio });
+    // Una carta trobada a una altra expansió: s'obre aquella expansió i
+    // es localitza la carta a la graella (com des de l'àlbum)
+    iniciarCercaGlobal({
+      enTriar: async (setId, cardId) => {
+        if (await canviarExpansio(setId)) anarACartaDeLaGraella(cardId);
+      },
+    });
     const llista = await carregarLlistaVersions(setActiu());
     // Si mentre esperàvem s'ha demanat una altra llista, descartem aquesta
     if (peticio !== peticioLlista) return;
