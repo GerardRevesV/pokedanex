@@ -38,6 +38,8 @@ Pokedanex/
 │   │   ├── markmode.js  ← el mode de marcatge (Només mirar/Normal/Reverse/Holo)
 │   │   ├── temes.js     ← el tema visual de cada expansió (i el per defecte)
 │   │   ├── selector-expansions.js ← el panell "Compendi" per triar expansió
+│   │   ├── cerca.js     ← la cerca per proximitat (tolera errors d'escriptura)
+│   │   ├── cerca-global.js ← la secció «A altres expansions» sota la graella
 │   │   └── main.js      ← la interfície: pinta i lliga-ho tot
 │   └── data/
 │       ├── sets.json    ← registre de les expansions disponibles
@@ -100,7 +102,15 @@ Els noms de les cartes no es tradueixen mai: són les cartes reals, en anglès.
   selector de versió de dades i botó d'actualitzar.
 - **Graella:** les 99 cartes ordenades pel número de col·lecció, amb imatge
   petita (càrrega mandrosa), número tipus àlbum (033/064), nom i raresa.
-- **Cercador:** filtra per nom o número a mesura que s'escriu.
+- **Cercador:** filtra per nom o número a mesura que s'escriu. El nom es
+  busca **per proximitat** (`cerca.js`): sense majúscules ni accents i
+  tolerant errors d'escriptura («picachu» → Pikachu), amb les
+  coincidències exactes i de prefix primer; el número continua sent exacte.
+  El cercador d'expansions del Compendi fa servir la mateixa funció.
+- **A altres expansions (`cerca-global.js`):** sota la graella, la mateixa
+  cerca feta a totes les altres expansions; un clic obre aquella expansió
+  amb la carta localitzada. Les dades de les altres expansions es baixen
+  només la primera vegada que s'escriu una cerca de 3 lletres o més.
 - **Peu:** data de la versió de dades que s'està veient i el nombre de cartes.
 - Estètica heretada del projecte tcg: **tema fosc** amb accent verd-turquesa.
 
