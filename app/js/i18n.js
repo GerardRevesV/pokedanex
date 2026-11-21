@@ -9,6 +9,9 @@ const IDIOMA_DEFECTE = "ca";
 const TEXTOS = {
   ca: {
     "idioma.etiqueta": "Idioma",
+    "tema.etiqueta": "Tema",
+    "tema.clar": "Clar",
+    "tema.fosc": "Fosc",
     "cerca.placeholder": "Cerca per nom o número...",
     "versio.etiqueta": "Versió de les dades",
     "versio.navegador": "navegador",
@@ -131,6 +134,9 @@ const TEXTOS = {
   },
   es: {
     "idioma.etiqueta": "Idioma",
+    "tema.etiqueta": "Tema",
+    "tema.clar": "Claro",
+    "tema.fosc": "Oscuro",
     "cerca.placeholder": "Busca por nombre o número...",
     "versio.etiqueta": "Versión de los datos",
     "versio.navegador": "navegador",
@@ -253,6 +259,9 @@ const TEXTOS = {
   },
   en: {
     "idioma.etiqueta": "Language",
+    "tema.etiqueta": "Theme",
+    "tema.clar": "Light",
+    "tema.fosc": "Dark",
     "cerca.placeholder": "Search by name or number...",
     "versio.etiqueta": "Data version",
     "versio.navegador": "browser",

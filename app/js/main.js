@@ -15,7 +15,7 @@ import {
   ressaltarAlbum, situarAlbumACarta, cartaVisibleAlbum,
 } from "./album.js";
 import { iniciarSelectorExpansions } from "./selector-expansions.js";
-import { aplicarTema } from "./temes.js";
+import { aplicarTema, aplicarModeColor } from "./temes.js";
 import { iniciarEstadistiques, carregarEstadistiques, refrescarEstadistiques } from "./stats.js";
 import { magatzem } from "./storage.js";
 import { prepararConsulta, puntuar } from "./cerca.js";
@@ -40,6 +40,7 @@ let ordreGraella = "numero";
 
 const CLAU_VISTA = "pokedanex.view"; // la vista triada es recorda al navegador
 const CLAU_VISUAL = "pokedanex.displayMode"; // el mode de visualització també
+const CLAU_MODE_COLOR = "pokedanex.colorScheme"; // tema clar o fosc (index.html també la llegeix)
 
 // Pantalla tàctil (dit en lloc de ratolí): alguns comportaments canvien
 // una mica, sempre de manera additiva (l'escriptori no perd res)
@@ -1020,6 +1021,30 @@ function canviarVista(vista, desar = true, mantenirPosicio = false) {
   }
 }
 
+// ---------- Tema clar / fosc ----------
+
+// Marca el botó del tema actiu (el mode el posa l'script del <head>)
+function pintarCommutadorTema() {
+  const mode = document.documentElement.dataset.tema;
+  for (const boto of element("commutador-tema").querySelectorAll("button")) {
+    boto.classList.toggle("actiu", boto.dataset.tema === mode);
+    boto.setAttribute("aria-pressed", boto.dataset.tema === mode ? "true" : "false");
+  }
+}
+
+// Canvia de tema i, si l'ha triat l'usuari, ho recorda al navegador
+function triarModeColor(mode, desar = true) {
+  aplicarModeColor(mode);
+  pintarCommutadorTema();
+  if (desar) {
+    try {
+      magatzem()?.setItem(CLAU_MODE_COLOR, mode);
+    } catch {
+      // Sense espai: el tema canvia igualment, només no es recordarà
+    }
+  }
+}
+
 // ---------- Mode de visualització (col·lecció / catàleg) ----------
 
 // Aplica un mode de visualització: "colleccio" (les cartes pendents es
@@ -1370,6 +1395,24 @@ async function iniciar() {
 
   // Panell d'estadístiques: plegat i objectiu de compleció
   iniciarEstadistiques();
+
+  // Tema clar o fosc. Mentre l'usuari no n'hagi triat cap, segueix el
+  // del dispositiu també si canvia amb la pàgina oberta (mode nocturn
+  // automàtic, per exemple)
+  pintarCommutadorTema();
+  element("commutador-tema").addEventListener("click", (esdeveniment) => {
+    const boto = esdeveniment.target.closest("button[data-tema]");
+    if (boto) triarModeColor(boto.dataset.tema);
+  });
+  window.matchMedia("(prefers-color-scheme: light)").addEventListener("change", (canvi) => {
+    let desat = null;
+    try {
+      desat = magatzem()?.getItem(CLAU_MODE_COLOR);
+    } catch {
+      // Sense accés al navegador: es fa com si no n'hi hagués cap de desat
+    }
+    if (desat !== "clar" && desat !== "fosc") triarModeColor(canvi.matches ? "clar" : "fosc", false);
+  });
 
   // Mode de visualització: col·lecció o catàleg (es recorda al navegador).
   // Només s'accepta el valor exacte "cataleg"; qualsevol altre (o cap)

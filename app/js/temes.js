@@ -3,6 +3,10 @@
 // Cada expansió pot tenir el seu color d'accent (l'estètica del set);
 // un interruptor al selector d'expansions permet quedar-se sempre amb
 // el turquesa de la web. Un set sense tema propi cau al tema per defecte.
+//
+// Els colors de sota són els del tema FOSC. La versió per al tema clar
+// no s'escriu a mà: es calcula (versioClara) enfosquint cada accent, amb
+// el mateix to, fins que arriba al contrast mínim WCAG sobre els fons clars.
 
 import { magatzem } from "./storage.js";
 
@@ -199,10 +203,110 @@ const TEMES = {
   },
 };
 
-// Tema d'una expansió (per al filet de color de cada fila del selector);
-// si el set no en té de propi (o l'id és desconegut), el per defecte
+// ---------- Versió clara de cada tema ----------
+
+// Els tres fons del tema clar (han de coincidir amb --fons, --fons-suau i
+// --fons-carta de :root[data-tema="clar"] a style.css). L'accent es fa
+// servir com a text petit sobre tots tres, així que ha de complir sobre
+// el que contrasta menys.
+const FONS_CLARS = ["#f3f5f8", "#ffffff", "#ffffff"];
+const CONTRAST_MINIM = 4.5; // WCAG AA per a text normal
+
+// "#rrggbb" → [r, g, b] (0-255)
+function hexARgb(hex) {
+  const n = parseInt(hex.slice(1), 16);
+  return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
+}
+
+function rgbAHex([r, g, b]) {
+  return "#" + [r, g, b].map((v) => Math.round(v).toString(16).padStart(2, "0")).join("");
+}
+
+// Luminància relativa (fórmula WCAG 2.x)
+function luminancia(hex) {
+  const [r, g, b] = hexARgb(hex).map((v) => {
+    const c = v / 255;
+    return c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4;
+  });
+  return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+}
+
+// Contrast WCAG entre dos colors (d'1:1 a 21:1)
+export function contrast(a, b) {
+  const [clar, fosc] = [luminancia(a), luminancia(b)].sort((x, y) => y - x);
+  return (clar + 0.05) / (fosc + 0.05);
+}
+
+// RGB ↔ HSL, per poder enfosquir sense canviar el to
+function rgbAHsl([r, g, b]) {
+  r /= 255; g /= 255; b /= 255;
+  const max = Math.max(r, g, b);
+  const min = Math.min(r, g, b);
+  const l = (max + min) / 2;
+  if (max === min) return [0, 0, l];
+  const d = max - min;
+  const s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+  const h = max === r ? (g - b) / d + (g < b ? 6 : 0)
+    : max === g ? (b - r) / d + 2
+    : (r - g) / d + 4;
+  return [h / 6, s, l];
+}
+
+function hslARgb([h, s, l]) {
+  if (s === 0) return [l * 255, l * 255, l * 255];
+  const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+  const p = 2 * l - q;
+  const canal = (t) => {
+    if (t < 0) t += 1;
+    if (t > 1) t -= 1;
+    if (t < 1 / 6) return p + (q - p) * 6 * t;
+    if (t < 1 / 2) return q;
+    if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
+    return p;
+  };
+  return [canal(h + 1 / 3), canal(h), canal(h - 1 / 3)].map((v) => v * 255);
+}
+
+// La versió clara d'un tema: el mateix to i saturació, amb la lluminositat
+// baixant d'un punt en un punt fins que l'accent fa 4,5:1 sobre tots els
+// fons clars. Sobre un accent ja fosc, el text va en blanc (si l'accent fa
+// 4,5:1 amb el fons clar, també el fa amb el blanc, que és encara més clar).
+function versioClara(tema) {
+  const [h, s, l] = rgbAHsl(hexARgb(tema.accent));
+  let accent = tema.accent;
+  for (let lluminositat = l; lluminositat > 0; lluminositat -= 0.01) {
+    accent = rgbAHex(hslARgb([h, s, lluminositat]));
+    if (FONS_CLARS.every((fons) => contrast(accent, fons) >= CONTRAST_MINIM)) break;
+  }
+  const [r, g, b] = hexARgb(accent);
+  return {
+    accent,
+    accentText: "#ffffff",
+    resplendor: `rgba(${r}, ${g}, ${b}, 0.22)`,
+  };
+}
+
+// Les versions clares es calculen un sol cop i es guarden
+const clars = new Map();
+function temaClar(tema) {
+  if (!clars.has(tema)) clars.set(tema, versioClara(tema));
+  return clars.get(tema);
+}
+
+// ---------- Mode clar / fosc ----------
+
+// El mode actiu el decideix l'script del <head> (index.html) abans del
+// primer pintat, i l'interruptor de la capçalera el pot canviar (main.js)
+function modeClar() {
+  return document.documentElement.dataset.tema === "clar";
+}
+
+// Tema d'una expansió en el mode actiu (també per al filet de color de
+// cada fila del selector); si el set no en té de propi (o l'id és
+// desconegut), el per defecte
 export function temaDe(setId) {
-  return TEMES[setId] ?? DEFECTE;
+  const tema = TEMES[setId] ?? DEFECTE;
+  return modeClar() ? temaClar(tema) : tema;
 }
 
 // L'interruptor "tema segons l'expansió" és actiu? (per defecte, sí)
@@ -227,9 +331,20 @@ export function canviarTemaPerSet(valor) {
 // globals i el CSS fa la resta (amb una transició suau de 300 ms).
 // Amb l'interruptor apagat, sempre el tema per defecte.
 export function aplicarTema(setId) {
-  const tema = temaPerSetActiu() ? temaDe(setId) : DEFECTE;
+  setTemaAplicat = setId; // per refer-lo si es canvia de clar a fosc
+  const tema = temaPerSetActiu() ? temaDe(setId) : (modeClar() ? temaClar(DEFECTE) : DEFECTE);
   const arrel = document.documentElement.style;
   arrel.setProperty("--accent", tema.accent);
   arrel.setProperty("--accent-text", tema.accentText);
   arrel.setProperty("--resplendor", tema.resplendor);
+}
+
+// L'expansió del darrer aplicarTema: en passar de clar a fosc (o a
+// l'inrevés) l'accent s'ha de tornar a calcular per al mode nou
+let setTemaAplicat = null;
+
+// Canvia entre el tema clar i el fosc. Es crida amb "clar" o "fosc".
+export function aplicarModeColor(mode) {
+  document.documentElement.dataset.tema = mode;
+  aplicarTema(setTemaAplicat);
 }
