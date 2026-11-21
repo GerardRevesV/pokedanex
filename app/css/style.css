@@ -1393,10 +1393,6 @@ body,
   color: var(--text-suau);
 }
 
-.zoom-ajuda-reverse[hidden] {
-  display: none;
-}
-
 .zoom-ajuda-reverse-icona {
   flex: none;
   width: 1.05rem;

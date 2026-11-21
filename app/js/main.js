@@ -847,9 +847,13 @@ function mostrarCartaAlZoom(carta) {
   anterior.hidden = seguent.hidden = llistaZoom.length < 2;
   anterior.disabled = posicio <= 0;
   seguent.disabled = posicio === -1 || posicio >= llistaZoom.length - 1;
-  // Si el focus era en una fletxa que s'acaba d'apagar, passa al ×
-  // (un botó apagat perd el focus i el teclat quedaria sense lloc)
-  if (document.activeElement?.disabled) element("zoom-tancar").focus();
+  // Si el focus s'ha perdut (una fletxa que s'acaba d'apagar, o un botó
+  // − / + que s'ha refet amb la carta nova), torna al × del zoom
+  const focus = document.activeElement;
+  if (!element("zoom").hidden
+    && (focus?.disabled || !element("zoom").contains(focus))) {
+    element("zoom-tancar").focus();
+  }
 
   // Primer la miniatura ampliada (ja és a la memòria cau del navegador);
   // la imatge gran només es demana ara, en obrir el zoom
@@ -1240,10 +1244,15 @@ async function iniciar() {
   // clarament horitzontal i de més de 48px)
   let iniciLliscar = null;
   element("zoom-imatge").addEventListener("pointerdown", (esdeveniment) => {
+    // Només el primer dit: un segon dit és un pessic (ampliar), no lliscar
+    if (!esdeveniment.isPrimary) {
+      iniciLliscar = null;
+      return;
+    }
     iniciLliscar = { x: esdeveniment.clientX, y: esdeveniment.clientY };
   });
   element("zoom-imatge").addEventListener("pointerup", (esdeveniment) => {
-    if (!iniciLliscar) return;
+    if (!iniciLliscar || !esdeveniment.isPrimary) return;
     const deltaX = esdeveniment.clientX - iniciLliscar.x;
     const deltaY = esdeveniment.clientY - iniciLliscar.y;
     iniciLliscar = null;
@@ -1255,7 +1264,9 @@ async function iniciar() {
   document.addEventListener("keydown", (esdeveniment) => {
     if (esdeveniment.key === "Escape") tancarZoom(); // no fa res si ja és tancat
     // Fletxes del teclat amb el zoom obert: carta anterior o següent
-    if (!element("zoom").hidden) {
+    // (sense Alt/Ctrl/Cmd: Alt+← és «enrere» del navegador)
+    const ambModificador = esdeveniment.altKey || esdeveniment.ctrlKey || esdeveniment.metaKey;
+    if (!element("zoom").hidden && !ambModificador) {
       if (esdeveniment.key === "ArrowLeft") passarCartaZoom(-1);
       if (esdeveniment.key === "ArrowRight") passarCartaZoom(1);
     }
