@@ -13,6 +13,12 @@
   --error: #ff7a6e;
   --or-clar: #e8c877;       /* marc daurat del mode catàleg (to clar) */
   --or-fosc: #9a7a3a;       /* marc daurat del mode catàleg (to fosc) */
+  /* Cartes que encara no tens («Apagades»): en gris, però prou clares
+     per reconèixer el Pokémon i llegir-ne el nom. Abans eren gris a
+     opacitat 0.45, gairebé negres sobre el fons fosc («massa fosca»
+     a l'enquesta). La diferència amb les que tens és el color. */
+  --pendent-filtre: grayscale(1) brightness(1.1);
+  --pendent-opacitat: 0.7;
 
   /* Colors dels tipus d'energia (pastilles de la graella).
      Els tons foscos estan triats perquè la lletra blanca hi contrasti prou
@@ -96,15 +102,19 @@ body {
   width: auto;
 }
 
-/* El logotip del set és un botó: obre el selector d'expansions */
+/* El logotip del set és un botó: obre el selector d'expansions. Té
+   aspecte de botó de debò (fons, vora i el text «Canvia d'expansió»):
+   amb només el logotip, a l'enquesta no tothom va veure que es clicava */
 .boto-expansions {
   display: flex;
   align-items: center;
-  gap: 0.4rem;
-  background: none;
-  border: 1px solid transparent;
-  border-radius: 8px;
-  padding: 0.25rem 0.5rem;
+  gap: 0.6rem;
+  background: var(--fons-suau);
+  color: var(--text);
+  border: 1px solid var(--vora);
+  border-radius: 10px;
+  padding: 0.3rem 0.7rem 0.3rem 0.5rem;
+  font: inherit;
   cursor: pointer;
 }
 
@@ -115,13 +125,23 @@ body {
   outline: none;
 }
 
-.boto-expansions .caret {
-  color: var(--text-suau);
-  font-size: 0.8rem;
+/* «Canvia d'expansió ▾»: el text i la fletxa, junts */
+.boto-expansions-text {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  white-space: nowrap;
 }
 
-.boto-expansions:hover .caret,
-.boto-expansions:focus-visible .caret {
+.boto-expansions .caret {
+  color: var(--accent);
+  font-size: 0.9rem;
+}
+
+.boto-expansions:hover .boto-expansions-text,
+.boto-expansions:focus-visible .boto-expansions-text {
   color: var(--accent);
 }
 
@@ -145,6 +165,13 @@ body {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+}
+
+/* «Treu tots els filtres», al final del bloc de filtres (només surt si
+   n'hi ha algun d'actiu): alineat a baix amb els controls del costat */
+.boto-treure-filtres {
+  align-self: flex-end;
+  min-height: 2.2rem;
 }
 
 .filtres-compte {
@@ -324,8 +351,8 @@ select:focus {
 
 /* Carta sense cap còpia: apagada i grisosa; s'encén quan en tens alguna */
 .carta--pendent .carta-imatge {
-  filter: grayscale(1);
-  opacity: 0.45;
+  filter: var(--pendent-filtre);
+  opacity: var(--pendent-opacitat);
 }
 
 .carta-info {
@@ -783,8 +810,8 @@ select:focus {
 
 /* Mateix llenguatge que la graella: carta que no tens, apagada i grisosa */
 .butxaca-funda--pendent img {
-  filter: grayscale(1);
-  opacity: 0.45;
+  filter: var(--pendent-filtre);
+  opacity: var(--pendent-opacitat);
 }
 
 /* Butxaca sense carta: només el plàstic buit */
@@ -1739,6 +1766,18 @@ body,
   .logo-set {
     max-width: 34vw;
     object-fit: contain;
+  }
+
+  /* El botó d'expansions no hi cap amb el text al costat del logotip:
+     el text «Canvia d'expansió ▾» passa a sota, més petit */
+  .boto-expansions {
+    flex-direction: column;
+    gap: 0.15rem;
+    padding: 0.3rem 0.5rem;
+  }
+
+  .boto-expansions-text {
+    font-size: 0.75rem;
   }
 
   /* El placeholder de la cerca del Compendi no hi cap sencer a 320px:
