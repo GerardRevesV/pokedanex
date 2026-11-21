@@ -17,6 +17,72 @@ const DEFECTE = {
 
 // Temes propis per expansió (accent, text sobre l'accent i halo suau)
 const TEMES = {
+  // Scarlet & Violet: el vermell escarlata de la paraula "SCARLET" del logotip
+  // (el color de Koraidon, que obre tota l'era)
+  // Contrast WCAG: 5,88:1 sobre #0e1116 · 5,43:1 sobre #151a22 · 5,26:1 sobre #171d27;
+  // accentText 5,63:1 sobre l'accent (mínim 4,5:1 a tot arreu)
+  sv1: {
+    accent: "#ff4d6d",
+    accentText: "#2e0812",
+    resplendor: "rgba(255, 77, 109, 0.25)",
+  },
+  // Paldea Evolved: el terracota de la placa de pedra que sosté el logotip
+  // Contrast WCAG: 8,35:1 sobre #0e1116 · 7,71:1 sobre #151a22 · 7,47:1 sobre #171d27;
+  // accentText 7,62:1 sobre l'accent (mínim 4,5:1 a tot arreu)
+  sv2: {
+    accent: "#d9a07c",
+    accentText: "#2a1608",
+    resplendor: "rgba(217, 160, 124, 0.25)",
+  },
+  // Obsidian Flames: el taronja de foc de la paraula "FLAMES" (el Charizard
+  // tera de tipus fosc envoltat de flames)
+  // Contrast WCAG: 5,90:1 sobre #0e1116 · 5,45:1 sobre #151a22 · 5,28:1 sobre #171d27;
+  // accentText 5,64:1 sobre l'accent (mínim 4,5:1 a tot arreu)
+  sv3: {
+    accent: "#ff5500",
+    accentText: "#2a0e00",
+    resplendor: "rgba(255, 85, 0, 0.25)",
+  },
+  // 151: el rosa pàl·lid de Mew, el Pokémon que tanca la Pokédex original
+  // Contrast WCAG: 12,71:1 sobre #0e1116 · 11,73:1 sobre #151a22 · 11,37:1 sobre #171d27;
+  // accentText 11,95:1 sobre l'accent (mínim 4,5:1 a tot arreu)
+  sv3pt5: {
+    accent: "#ffc2e6",
+    accentText: "#2e0a20",
+    resplendor: "rgba(255, 194, 230, 0.25)",
+  },
+  // Paradox Rift: el blau elèctric dels llamps que esquerden el logotip
+  // Contrast WCAG: 6,02:1 sobre #0e1116 · 5,56:1 sobre #151a22 · 5,39:1 sobre #171d27;
+  // accentText 5,71:1 sobre l'accent (mínim 4,5:1 a tot arreu)
+  sv4: {
+    accent: "#5a8dff",
+    accentText: "#08143a",
+    resplendor: "rgba(90, 141, 255, 0.25)",
+  },
+  // Paldean Fates: el daurat rosat i lluent de les cartes shiny del set
+  // Contrast WCAG: 13,36:1 sobre #0e1116 · 12,34:1 sobre #151a22 · 11,95:1 sobre #171d27;
+  // accentText 11,71:1 sobre l'accent (mínim 4,5:1 a tot arreu)
+  sv4pt5: {
+    accent: "#ffd0a8",
+    accentText: "#2e1a08",
+    resplendor: "rgba(255, 208, 168, 0.25)",
+  },
+  // Temporal Forces: l'aiguamarina brillant de les lletres del logotip
+  // Contrast WCAG: 15,91:1 sobre #0e1116 · 14,69:1 sobre #151a22 · 14,23:1 sobre #171d27;
+  // accentText 12,07:1 sobre l'accent (mínim 4,5:1 a tot arreu)
+  sv5: {
+    accent: "#b0fae6",
+    accentText: "#06302a",
+    resplendor: "rgba(176, 250, 230, 0.25)",
+  },
+  // Twilight Masquerade: el verd fulla d'Ogerpon, la màscara estrella del set
+  // Contrast WCAG: 10,28:1 sobre #0e1116 · 9,49:1 sobre #151a22 · 9,20:1 sobre #171d27;
+  // accentText 8,46:1 sobre l'accent (mínim 4,5:1 a tot arreu)
+  sv6: {
+    accent: "#3fd97a",
+    accentText: "#062a14",
+    resplendor: "rgba(63, 217, 122, 0.25)",
+  },
   // Shrouded Fable: el lila de Pecharunt, el Pokémon estrella del set
   // (prou clar perquè el text petit contrasti bé sobre el fons de carta)
   sv6pt5: {

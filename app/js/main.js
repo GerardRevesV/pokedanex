@@ -1103,18 +1103,40 @@ function buidarColleccio() {
 
 // ---------- Botó "Actualitza dades" ----------
 
+// Els motius de fallada que data.js sap distingir; cadascun té el seu
+// missatge en llenguatge planer (claus "actualitza.error.<motiu>")
+const MOTIUS_ERROR_ACTUALITZA = new Set([
+  "senseXarxa", "temps", "limit", "servidor", "tcgdex", "permanent",
+]);
+
 async function ferActualitzacio() {
   const boto = element("boto-actualitza");
   const set = setActiu(); // capturat un cop: l'expansió podria canviar mentre baixem
   boto.disabled = true;
   mostrarMissatge("actualitza.enCurs");
 
-  // Primer pas: baixar les dades de l'API (l'única part que pot fallar per culpa de l'API)
+  // Primer pas: baixar les dades de l'API (l'única part que pot fallar per culpa de l'API).
+  // Si l'API falla, data.js ho torna a provar sol unes quantes vegades i
+  // ens avisa de cada reintent perquè l'usuari sàpiga que no s'ha penjat.
   let resultat = null;
   try {
-    resultat = await actualitzarDades(set);
-  } catch {
-    mostrarMissatge("actualitza.error", true);
+    resultat = await actualitzarDades(set, (intent, max) => {
+      // Si l'usuari ja mira una altra expansió, els avisos d'aquesta no li toquen
+      if (setActiu() !== set) return;
+      if (intent === null) mostrarMissatge("actualitza.enCurs"); // ja respon
+      else mostrarMissatge("actualitza.reintent", false, { intent, max });
+    });
+  } catch (error) {
+    // Si falla, no s'ha desat res: la web continua amb les dades que ja
+    // mostrava, i el missatge diu per què i de quin dia són. Si l'usuari
+    // ha canviat d'expansió mentrestant, no se li barreja l'avís amb les
+    // dades de l'altra (que no han canviat en absolut).
+    const motiu = MOTIUS_ERROR_ACTUALITZA.has(error?.motiu) ? error.motiu : "servidor";
+    if (setActiu() === set) {
+      mostrarMissatge("actualitza.error." + motiu, true, {
+        data: versioActiva ? formatarDataHora(versioActiva.fetchedAt) : "—",
+      });
+    }
   }
 
   // Segon pas: refrescar la llista i mostrar la versió nova (si falla, és un error local).
@@ -1227,6 +1249,7 @@ async function iniciar() {
   element("missatge").addEventListener("click", () => {
     if (!esTactil.matches || !missatgeActual) return;
     if (missatgeActual.clau === "actualitza.enCurs") return;
+    if (missatgeActual.clau === "actualitza.reintent") return;
     if (missatgeActual.clau === "graella.carregant") return;
     amagarMissatge();
   });
