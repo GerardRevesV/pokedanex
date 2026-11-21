@@ -69,17 +69,6 @@
         </div>
       </div>
       <div class="control">
-        <span class="control-etiqueta" data-i18n="marcar.etiqueta">Marcar</span>
-        <!-- Mode de marcatge: en mode variant, clic esquerre sobre una carta
-             suma una còpia d'aquesta variant i clic dret en resta una -->
-        <div id="mode-marcatge" class="segmentat">
-          <button type="button" class="actiu" data-mode="consulta" data-i18n="marcar.consulta">Consulta</button>
-          <button type="button" data-mode="normal" data-i18n="marcar.normal">Normal</button>
-          <button type="button" data-mode="reverse" data-i18n="marcar.reverse">Reverse</button>
-          <button type="button" data-mode="holo" data-i18n="marcar.holo">Holo</button>
-        </div>
-      </div>
-      <div class="control">
         <span class="control-etiqueta" data-i18n="filtre.etiqueta">Col·lecció</span>
         <!-- Filtre de col·lecció: es combina amb el cercador de text -->
         <div id="filtre-colleccio" class="segmentat">
@@ -199,18 +188,30 @@
         <!-- L'aria-label del botó el posa el JavaScript (canvia amb l'idioma) -->
         <button type="button" id="zoom-tancar" class="zoom-tancar">×</button>
         <img id="zoom-imatge" class="zoom-imatge" alt="" decoding="async">
-        <div class="zoom-info">
-          <span id="zoom-numero" class="zoom-numero"></span>
-          <span id="zoom-nom" class="zoom-nom"></span>
-          <span id="zoom-raresa" class="zoom-raresa"></span>
+        <!-- Les fletxes ‹ › passen a la carta anterior o següent sense tancar
+             el zoom (també amb les fletxes del teclat o lliscant el dit);
+             els aria-label els posa el JavaScript -->
+        <div class="zoom-capcal">
+          <button type="button" id="zoom-anterior" class="zoom-fletxa">&lsaquo;</button>
+          <div class="zoom-info">
+            <span id="zoom-numero" class="zoom-numero"></span>
+            <span id="zoom-nom" class="zoom-nom"></span>
+            <span id="zoom-raresa" class="zoom-raresa"></span>
+          </div>
+          <button type="button" id="zoom-seguent" class="zoom-fletxa">&rsaquo;</button>
         </div>
         <!-- Files de comptadors per variant: les omple el JavaScript en obrir el zoom -->
         <div id="zoom-variants" class="zoom-variants"></div>
+        <!-- Què és una reverse holo: només es veu si la carta en té -->
+        <p id="zoom-ajuda-reverse" class="zoom-ajuda-reverse" hidden>
+          <span class="zoom-ajuda-reverse-icona" aria-hidden="true">i</span>
+          <span data-i18n="variant.ajudaReverse">Reverse holo</span>
+        </p>
         <button type="button" id="zoom-graella" class="zoom-graella" data-i18n="zoom.veureGraella">
           Veure a la graella
         </button>
         <!-- En tàctil, main.js canvia la clau per la versió sense "Esc" -->
-        <p id="zoom-ajuda" class="zoom-ajuda" data-i18n="zoom.ajuda">Clic fora o tecla Esc per tancar</p>
+        <p id="zoom-ajuda" class="zoom-ajuda" data-i18n="zoom.ajuda">Toca fora o prem Esc per tancar</p>
       </div>
     </div>
 

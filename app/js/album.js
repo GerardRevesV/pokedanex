@@ -1,13 +1,10 @@
 // album.js — vista d'àlbum realista: un carpesà obert amb dues pàgines
 // de 3×3 butxaques (18 cartes per doble pàgina), en ordre de col·lecció.
-// En mode consulta un clic obre el zoom de la carta; en mode de marcatge
-// (markmode.js) el clic esquerre suma i el clic dret resta una còpia.
-// Ctrl+clic (Cmd al Mac) obre el zoom sigui quin sigui el mode.
+// Un clic (o toc) a una carta l'obre en gran; s'hi marca amb els botons
+// − i + del zoom.
 
 import { t } from "./i18n.js";
-import { enTeCap, comptadors } from "./collection.js";
-import { modeActiu, esModeVariant } from "./markmode.js";
-import { afegirTocLlarg, clicDeTocLlarg } from "./tocllarg.js";
+import { enTeCap } from "./collection.js";
 
 const CARTES_PER_PAGINA = 9;  // butxaques 3×3 (estàndard dels àlbums Pokémon)
 const CARTES_PER_DOBLE = 18;  // dues pàgines obertes costat a costat
@@ -17,7 +14,7 @@ const MAX_PAGINES_LLISTA = 6; // pàgines que es llisten a la barra abans dels p
 // (mòbil apaïsat: més de 767px d'amplada però poca alçada) tampoc: es
 // mostra UNA sola pàgina per vista (el CSS fa servir el mateix llindar)
 const vistaEstreta = window.matchMedia("(max-width: 767px), (max-height: 480px)");
-// En pantalles tàctils no hi ha clic dret: restar es fa amb un botonet −
+// En pantalles tàctils es pot passar pàgina lliscant el dit
 const esTactil = window.matchMedia("(pointer: coarse)");
 
 // Estat intern de la vista
@@ -26,8 +23,7 @@ let doble = 0;           // índex de la vista oberta (doble pàgina a
                          // escriptori, pàgina sola en pantalla estreta)
 let visible = false;     // si l'àlbum s'està veient ara mateix
 let contenidor = null;   // el bloc #album de la pàgina
-let alTriarCarta = null; // callback amb la carta clicada (mode consulta)
-let alMarcar = null;     // callback per marcar una carta (mode variant)
+let alTriarCarta = null; // callback amb la carta clicada (obre el zoom)
 let coincideixCarta = null; // predicat de la cerca i els filtres (null = cap actiu)
 
 const element = (id) => document.getElementById(id);
@@ -78,71 +74,13 @@ function crearButxaca(carta) {
     imatge.src = carta.images.small;
     imatge.alt = carta.name;
     funda.append(imatge);
-    // En mode de marcatge, recordatori que amb Ctrl+clic es veu la carta
-    // (en tàctil no hi ha Ctrl: el recordatori seria fals)
-    funda.title = esModeVariant() && !esTactil.matches
-      ? t("marcar.ajudaZoom") : carta.name;
+    funda.title = carta.name;
     funda.dataset.id = carta.id; // per retrobar la funda després de repintar
     numero.textContent = formatarNumero(carta);
 
-    // Distintiu amb el comptador de la variant activa: el CSS només
-    // el mostra en mode de marcatge (l'àlbum es repinta a cada canvi)
-    const distintiu = document.createElement("span");
-    distintiu.className = "butxaca-comptador";
-    if (esModeVariant()) distintiu.textContent = comptadors(carta.id)[modeActiu()];
-    funda.append(distintiu);
-
-    // Clic esquerre: en consulta obre el zoom; en mode variant suma.
-    // Ctrl+clic (Cmd al Mac) obre el zoom en qualsevol mode.
-    funda.addEventListener("click", (esdeveniment) => {
-      if (esdeveniment.ctrlKey || esdeveniment.metaKey) {
-        alTriarCarta?.(carta);
-        return;
-      }
-      // El clic que arriba en aixecar el dit d'un toc llarg no ha de sumar
-      if (esModeVariant() && clicDeTocLlarg(funda)) return;
-      if (esModeVariant()) alMarcar?.(carta, +1, funda);
-      else alTriarCarta?.(carta);
-    });
-    // En tàctil, un botonet − superposat resta una còpia (no hi ha clic
-    // dret amb el dit); el CSS només el mostra en mode de marcatge.
-    // I el toc llarg (mig segon quiet) obre el zoom: l'equivalent del
-    // Ctrl+clic, que amb el dit no existeix.
-    if (esTactil.matches) {
-      afegirTocLlarg(funda, () => alTriarCarta?.(carta));
-      const resta = document.createElement("button");
-      resta.type = "button";
-      resta.className = "butxaca-resta";
-      resta.textContent = "−";
-      resta.setAttribute("aria-label", t("album.restar"));
-      resta.addEventListener("click", (esdeveniment) => {
-        esdeveniment.stopPropagation(); // que el toc no sumi a la funda
-        alMarcar?.(carta, -1, funda);
-      });
-      funda.append(resta);
-    }
-
-    // Clic dret: només en mode variant resta una còpia (i s'evita el
-    // menú contextual); en consulta el menú del navegador queda intacte
-    funda.addEventListener("contextmenu", (esdeveniment) => {
-      if (!esModeVariant()) return;
-      // En tàctil, el toc llarg dispara aquest esdeveniment (Android):
-      // no ha de restar per accident ni obrir el menú de desar la
-      // imatge — per restar ja hi ha el botonet −
-      if (esTactil.matches) {
-        esdeveniment.preventDefault();
-        return;
-      }
-      // A macOS, Ctrl+clic no arriba com a "click" sinó com a clic dret:
-      // ha d'obrir el zoom (com el guard de Ctrl del clic esquerre), no restar
-      if (esdeveniment.ctrlKey) {
-        esdeveniment.preventDefault();
-        alTriarCarta?.(carta);
-        return;
-      }
-      esdeveniment.preventDefault();
-      alMarcar?.(carta, -1, funda);
-    });
+    // Un clic a la funda obre la carta en gran (el clic dret es queda
+    // amb el menú normal del navegador)
+    funda.addEventListener("click", () => alTriarCarta?.(carta));
   } else {
     funda.classList.add("butxaca-funda--buida");
   }
@@ -457,12 +395,10 @@ function tancarGir(descartar) {
 // ---------- Funcions públiques (les crida main.js) ----------
 
 // Lliga els botons ‹ › i les fletxes del teclat.
-// "callbackCarta" es crida amb la carta clicada en mode consulta;
-// "callbackMarcar" es crida amb (carta, delta, node) en mode de marcatge.
-export function iniciarAlbum(callbackCarta, callbackMarcar) {
+// "callbackCarta" es crida amb la carta clicada.
+export function iniciarAlbum(callbackCarta) {
   contenidor = element("album");
   alTriarCarta = callbackCarta;
-  alMarcar = callbackMarcar;
   element("album-anterior").addEventListener("click", () => passarPagina(-1));
   element("album-seguent").addEventListener("click", () => passarPagina(1));
   // Fletxes de la barra de coincidències (salten de coincidència en coincidència)
@@ -497,7 +433,7 @@ export function iniciarAlbum(callbackCarta, callbackMarcar) {
     });
     llibre.addEventListener("pointercancel", () => { iniciGest = null; });
     // El clic residual que el navegador pot disparar en acabar el gest
-    // no ha d'arribar a cap funda (en mode de marcatge sumaria una còpia)
+    // no ha d'arribar a cap funda (obriria el zoom d'una carta sense voler)
     llibre.addEventListener("click", (esdeveniment) => {
       if (Date.now() - momentSwipe < 400) {
         esdeveniment.stopPropagation();
@@ -535,7 +471,7 @@ export function mostrarAlbum(mostra) {
   if (mostra) pintar();
 }
 
-// Repinta l'àlbum si és visible (canvis de mode, d'idioma o de pàgina)
+// Repinta l'àlbum si és visible (canvis d'idioma o de pàgina)
 export function refrescarAlbum() {
   pintar();
 }
@@ -555,19 +491,34 @@ export function ressaltarAlbum(predicat) {
   pintar();
 }
 
-// Actualització EN LLOC quan només canvia la col·lecció: es refan l'estat
-// apagat i el distintiu de cada butxaca sense reconstruir la pàgina (el
-// mateix patró que la graella a main.js). Repintar-ho tot recreava 9-18
-// <img> a cada toc de marcar, amb layout i pintat sencers de l'àlbum.
+// Actualització EN LLOC quan només canvia la col·lecció: es refà l'estat
+// apagat de cada butxaca sense reconstruir la pàgina (el mateix patró
+// que la graella a main.js). Repintar-ho tot recreava 9-18 <img> a cada
+// toc de marcar, amb layout i pintat sencers de l'àlbum.
 export function actualitzarButxaques() {
   if (!versio || !visible) return;
-  const enModeVariant = esModeVariant();
   for (const funda of contenidor.querySelectorAll(".butxaca-funda[data-id]")) {
-    const id = funda.dataset.id;
-    funda.classList.toggle("butxaca-funda--pendent", !enTeCap(id));
-    if (enModeVariant) {
-      const distintiu = funda.querySelector(".butxaca-comptador");
-      if (distintiu) distintiu.textContent = comptadors(id)[modeActiu()];
-    }
+    funda.classList.toggle("butxaca-funda--pendent", !enTeCap(funda.dataset.id));
   }
+}
+
+// ---------- Mantenir la posició en canviar de vista ----------
+
+// Deixa l'àlbum obert a la vista (doble pàgina o pàgina sola) on hi ha
+// la carta "id". No pinta res: ho fa mostrarAlbum en ensenyar-lo.
+export function situarAlbumACarta(id) {
+  const posicio = versio?.cards.findIndex((carta) => carta.id === id) ?? -1;
+  if (posicio === -1) return;
+  doble = Math.floor(posicio / cartesPerVista());
+}
+
+// La carta de referència de la vista oberta, per obrir la graella al
+// mateix lloc: la primera ressaltada si hi ha filtres, si no la primera
+// de la vista (null si l'àlbum no té dades)
+export function cartaVisibleAlbum() {
+  if (!versio) return null;
+  const inici = doble * cartesPerVista();
+  const vista = versio.cards.slice(inici, inici + cartesPerVista());
+  const ressaltada = coincideixCarta ? vista.find((carta) => coincideixCarta(carta)) : null;
+  return (ressaltada ?? vista[0])?.id ?? null;
 }
