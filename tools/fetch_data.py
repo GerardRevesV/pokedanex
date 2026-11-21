@@ -5,9 +5,14 @@ actualitza l'index d'aquell set (index.json) i el registre de sets
 (app/data/sets.json). Mai se sobreescriu cap versio anterior.
 Nomes fa servir la llibreria estandard.
 
+Al final regenera tambe l'index de cerca (app/data/index-cerca.json), el
+fitxer petit amb els noms de totes les cartes que fa servir la cerca
+"A altres expansions" de la web.
+
 Us: python tools/fetch_data.py <id_del_set>
 Exemple: python tools/fetch_data.py sv6pt5
 Sense argument, baixa sv6pt5 (Shrouded Fable) i mostra un avis.
+Nomes regenerar l'index de cerca (sense baixar res): python tools/fetch_data.py --index
 """
 
 import json
@@ -27,6 +32,7 @@ ARREL = Path(__file__).resolve().parent.parent
 FITXER_CONFIG = ARREL / "config.json"
 CARPETA_DATA = ARREL / "app" / "data"
 FITXER_SETS = CARPETA_DATA / "sets.json"
+FITXER_INDEX_CERCA = CARPETA_DATA / "index-cerca.json"
 
 API_BASE = "https://api.pokemontcg.io/v2"
 SET_DEFECTE = "sv6pt5"
@@ -340,8 +346,71 @@ def actualitzar_sets(conjunt):
     print(f"Registre de sets actualitzat a {FITXER_SETS} ({len(registre['sets'])} sets).")
 
 
+def plantilles_imatge(set_id):
+    """Les adreces habituals de la imatge petita d'una carta, amb {n} al lloc
+    del numero. L'index de cerca nomes guarda la plantilla del set, i
+    l'adreca sencera nomes per a les cartes que no la segueixen."""
+    return [
+        f"https://images.pokemontcg.io/{set_id}/{{n}}.png",
+        f"https://images.scrydex.com/pokemon/{set_id}-{{n}}/small",
+    ]
+
+
+def generar_index_cerca():
+    """Escriu app/data/index-cerca.json: per a cada set de sets.json, la
+    versio mes nova de fitxer i, de cada carta, el numero i el nom. Es el
+    minim per buscar a totes les expansions i pintar la miniatura sense
+    baixar les dades senceres (decisio de la cerca global)."""
+    with open(FITXER_SETS, encoding="utf-8") as f:
+        sets = json.load(f)["sets"]
+    index = {"schemaVersion": 1, "sets": {}}
+    for conjunt in sets:
+        set_id = conjunt["id"]
+        try:
+            with open(CARPETA_DATA / "versions" / set_id / "index.json", encoding="utf-8") as f:
+                versio = json.load(f)["versions"][0]
+            with open(CARPETA_DATA / versio["file"], encoding="utf-8") as f:
+                cartes = json.load(f)["cards"]
+        except (FileNotFoundError, IndexError, KeyError):
+            print(f"  Avis: el set {set_id} no te cap versio; no surt a l'index de cerca.")
+            continue
+        # La plantilla d'imatge que segueixen mes cartes del set
+        plantilles = plantilles_imatge(set_id)
+        imatges = [(c.get("images") or {}).get("small", "") for c in cartes]
+        plantilla = max(plantilles, key=lambda p: sum(
+            img == p.format(n=c["number"]) for img, c in zip(imatges, cartes)))
+        files = []
+        for carta, imatge in zip(cartes, imatges):
+            fila = [str(carta["number"]), carta["name"]]
+            # Nomes les excepcions porten l'id o la imatge sencers
+            excepcio = {}
+            if carta["id"] != f"{set_id}-{carta['number']}":
+                excepcio["id"] = carta["id"]
+            if imatge != plantilla.format(n=carta["number"]):
+                excepcio["img"] = imatge
+            if excepcio:
+                fila.append(excepcio)
+            files.append(fila)
+        # fetchedAt: la web el compara amb les versions creades al navegador
+        # amb "Actualitza" per saber si l'index d'aquest set ha quedat vell
+        index["sets"][set_id] = {
+            "versio": versio["id"], "fetchedAt": versio["fetchedAt"],
+            "img": plantilla, "cartes": files,
+        }
+    # Sense sagnat ni espais: es baixa sencer a la primera cerca i ha de pesar poc
+    temporal = FITXER_INDEX_CERCA.with_name(FITXER_INDEX_CERCA.name + ".tmp")
+    with open(temporal, "w", encoding="utf-8") as f:
+        json.dump(index, f, ensure_ascii=False, separators=(",", ":"))
+    os.replace(temporal, FITXER_INDEX_CERCA)
+    total = sum(len(s["cartes"]) for s in index["sets"].values())
+    print(f"Index de cerca actualitzat a {FITXER_INDEX_CERCA} ({len(index['sets'])} sets, {total} cartes).")
+
+
 def main():
     print("=== Pokedanex: descarrega de dades ===")
+    if sys.argv[1:] == ["--index"]:
+        generar_index_cerca()
+        return
     if len(sys.argv) > 1:
         set_id = sys.argv[1]
     else:
@@ -357,6 +426,7 @@ def main():
     id_versio, fetched_at = escriure_versio(set_id, conjunt, cartes)
     actualitzar_index(set_id, id_versio, fetched_at, len(cartes))
     actualitzar_sets(conjunt)
+    generar_index_cerca()
     print(f"Fet! {len(cartes)} cartes guardades a la versio {id_versio} del set {set_id}.")
 
 

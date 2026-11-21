@@ -133,6 +133,26 @@ function llegirVersionsLocals(setId) {
   }
 }
 
+// La versió de navegador més nova d'una expansió (creada amb «Actualitza»,
+// desada o només en memòria), amb les dades senceres; null si no n'hi ha.
+// La cerca a totes les expansions (cerca-global.js) la fa servir perquè el
+// seu índex de noms no quedi per darrere del que l'usuari ha actualitzat.
+export function versioNavegadorMesNova(setId) {
+  const totes = [
+    ...llegirVersionsLocals(setId),
+    ...versionsEnMemoria.filter((v) => v.setId === setId),
+  ].filter((v) => Array.isArray(v.dades?.cards));
+  totes.sort((a, b) => b.fetchedAt.localeCompare(a.fetchedAt));
+  return totes[0] ?? null;
+}
+
+// Puja cada cop que «Actualitza» crea una versió nova: així qui guarda
+// dades derivades (l'índex de cerca) sap que les ha de tornar a mirar
+let revisioNavegador = 0;
+export function revisioVersionsNavegador() {
+  return revisioNavegador;
+}
+
 // Fusiona les versions de fitxer i les del navegador d'una expansió,
 // de més nova a més vella
 export async function carregarLlistaVersions(setId) {
@@ -446,5 +466,6 @@ export async function actualitzarDades(setId, enReintent) {
     // Almenys es podrà consultar avui; el setId diu de quina expansió és
     versionsEnMemoria.push({ ...entrada, setId });
   }
+  revisioNavegador++;
   return { id: entrada.id, desada };
 }

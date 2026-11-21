@@ -42,6 +42,7 @@ Pokedanex/
 │   │   └── main.js      ← la interfície: pinta i lliga-ho tot
 │   └── data/
 │       ├── sets.json    ← registre de les expansions disponibles
+│       ├── index-cerca.json ← noms i números de totes les cartes (cerca global)
 │       └── versions/
 │           ├── sv6pt5/  ← versions datades de Shrouded Fable + index.json
 │           └── sv8pt5/  ← versions datades de Prismatic Evolutions + index.json
@@ -116,8 +117,11 @@ Els noms de les cartes no es tradueixen mai: són les cartes reals, en anglès.
   El cercador d'expansions del Compendi fa servir la mateixa funció.
 - **A altres expansions (`cerca-global.js`):** sota la graella, la mateixa
   cerca feta a totes les altres expansions; un clic obre aquella expansió
-  amb la carta localitzada. Les dades de les altres expansions es baixen
-  només la primera vegada que s'escriu una cerca de 3 lletres o més.
+  amb la carta localitzada. A la primera cerca de 3 lletres o més es baixa
+  només `data/index-cerca.json` (~90 KB, ~27 KB comprimit), que genera
+  `tools/fetch_data.py`; l'expansió sencera es baixa en clicar un
+  resultat. Si l'usuari ha fet «Actualitza» d'una expansió, es busca a la
+  versió del navegador; si una expansió no és a l'índex, es baixa sencera.
 - **Peu:** data de la versió de dades que s'està veient i el nombre de cartes.
 - Estètica heretada del projecte tcg: **tema fosc** amb accent verd-turquesa.
 
