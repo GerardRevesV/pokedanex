@@ -1032,11 +1032,16 @@ function pintarCommutadorTema() {
   }
 }
 
+// Si l'usuari ha triat tema en aquesta visita (encara que el navegador
+// no l'hagi pogut desar): aleshores el canvi del dispositiu ja no mana
+let modeColorTriat = false;
+
 // Canvia de tema i, si l'ha triat l'usuari, ho recorda al navegador
 function triarModeColor(mode, desar = true) {
   aplicarModeColor(mode);
   pintarCommutadorTema();
   if (desar) {
+    modeColorTriat = true;
     try {
       magatzem()?.setItem(CLAU_MODE_COLOR, mode);
     } catch {
@@ -1404,15 +1409,20 @@ async function iniciar() {
     const boto = esdeveniment.target.closest("button[data-tema]");
     if (boto) triarModeColor(boto.dataset.tema);
   });
-  window.matchMedia("(prefers-color-scheme: light)").addEventListener("change", (canvi) => {
+  const sistemaClar = window.matchMedia("(prefers-color-scheme: light)");
+  const seguirSistema = (canvi) => {
     let desat = null;
     try {
       desat = magatzem()?.getItem(CLAU_MODE_COLOR);
     } catch {
       // Sense accés al navegador: es fa com si no n'hi hagués cap de desat
     }
-    if (desat !== "clar" && desat !== "fosc") triarModeColor(canvi.matches ? "clar" : "fosc", false);
-  });
+    if (modeColorTriat || desat === "clar" || desat === "fosc") return;
+    triarModeColor(canvi.matches ? "clar" : "fosc", false);
+  };
+  // Safari anterior a la 14 només coneix addListener
+  if (sistemaClar.addEventListener) sistemaClar.addEventListener("change", seguirSistema);
+  else sistemaClar.addListener?.(seguirSistema);
 
   // Mode de visualització: col·lecció o catàleg (es recorda al navegador).
   // Només s'accepta el valor exacte "cataleg"; qualsevol altre (o cap)

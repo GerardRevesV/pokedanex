@@ -74,10 +74,10 @@
   --vora: #d3d9e2;
   --text: #18202b;          /* 15,0:1 sobre --fons */
   --text-suau: #556274;     /* 5,7:1 sobre --fons (mínim 4,5:1) */
-  --accent: #197c69;        /* el turquesa, enfosquit (4,7:1 sobre --fons) */
+  --accent: #197c69;        /* el turquesa, enfosquit (4,66:1 sobre --fons) */
   --accent-text: #ffffff;
   --resplendor: rgba(25, 124, 105, 0.22);
-  --error: #c0392b;         /* 5,0:1 sobre --fons */
+  --error: #c0392b;         /* 4,98:1 sobre --fons */
   --or-clar: #e2b84f;
   --or-fosc: #a07a2a;
 
