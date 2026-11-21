@@ -1186,6 +1186,7 @@ export async function canviarExpansio(setId) {
   // (les rareses i els tipus es repeteixen a gairebé tots els sets) i
   // s'obria l'expansió nova amb vuit cartes i cap explicació
   netejarCercaIFiltres();
+  pintarCompteFiltres(); // distintiu i «Treu tots els filtres», ja sense filtres
   aplicarTema(efectiu); // els colors de la web segueixen l'expansió
   const peticio = ++peticioLlista;
   mostrarMissatge("graella.carregant");
