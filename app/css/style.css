@@ -1196,6 +1196,17 @@ body[data-visualitzacio="cataleg"] .carta--ressaltada {
   font-size: 0.85rem;
 }
 
+/* Al mòbil el peu deixa lloc a sota per als dos botons flotants (2 × 48px
+   + marges) i per a l'indicador d'inici de l'iPhone: en arribar al final,
+   la lupa tapava l'última línia. La condició és EXACTAMENT la mateixa que
+   fa servir mobil.js (esMobil) per mostrar els botons; abans només hi
+   havia el (pointer: coarse) i un mòbil sense tàctil en quedava fora. */
+@media (max-width: 767px), (pointer: coarse) {
+  .peu {
+    padding-bottom: calc(1.2rem + 7.5rem + env(safe-area-inset-bottom));
+  }
+}
+
 .peu-fila {
   display: flex;
   align-items: center;
@@ -2170,6 +2181,34 @@ body,
 
 /* ---------- Pantalles molt estretes (fins a 380px) ---------- */
 @media (max-width: 380px) {
+  /* Files del Compendi compactes: a 320px el nom i la data es partien en
+     quatre línies i cada fila feia 111px (se'n veien dues i mitja de 22).
+     Ara la línia de sèrie i data s'amaga i el nom fa com a molt dues
+     línies (amb punts suspensius si encara no hi cap), a l'alçada del
+     logotip: cada fila fa uns 53px. En una sola línia, la majoria de
+     noms quedaven a mitges («Scarlet & V…»). */
+  .expansio-info b {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    overflow: hidden;
+    font-size: 0.9rem;
+    line-height: 1.2;
+  }
+
+  .expansio-info small {
+    display: none;
+  }
+
+  .expansio-simbol {
+    width: 64px;
+  }
+
+  .expansio-progres {
+    width: 3.2rem;
+  }
+
   /* A les columnes d'aquesta amplada, el nom de variant quedava reduït
      a «r…»: passa a la seva pròpia línia, sobre els botons − N + (les
      files creixen una mica d'alçada, però «reverse» es llegeix sencer) */
@@ -2302,12 +2341,6 @@ body,
     z-index: 40;
     margin: 0;
     box-shadow: 0 6px 18px rgb(0 0 0 / calc(0.5 * var(--ombra-forca)));
-  }
-
-  /* El peu no queda sota l'indicador d'inici de l'iPhone, ni sota els
-     dos botons flotants (2 × 48px + marges) en arribar al final */
-  .peu {
-    padding-bottom: calc(1.2rem + 7.5rem + env(safe-area-inset-bottom));
   }
 
   /* «Com es calculen?» de les estadístiques: zona de toc de 44px */

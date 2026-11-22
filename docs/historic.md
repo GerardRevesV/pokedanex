@@ -1627,3 +1627,37 @@ Al peu de la pàgina, sota la data de les dades, hi ha ara una frase petita:
 navegador.»* Canvia amb l'idioma (català, castellà i anglès). La llei no
 l'exigeix (vegeu l'entrada 102), però explica a qui visita la web on queden
 les seves dades.
+
+## 104. El selector d'expansions, compacte en pantalles estretes
+
+En un mòbil de 320 píxels d'ample, cada fila del panell per canviar
+d'expansió feia 111 píxels: el nom i la data es partien en quatre línies i
+només se'n veien dues i mitja de les 22. En pantalles de fins a 380
+píxels, ara la línia de sèrie i data s'amaga i el nom ocupa com a molt dues
+línies: cada fila fa 53 píxels i se'n veuen cinc senceres. A partir de 390
+píxels i a l'ordinador el panell és igual que abans.
+
+## 105. El peu de pàgina, lliure dels botons flotants
+
+En arribar a baix de tot, la lupa flotant tapava el final de l'última línia
+del peu. L'espai que el peu deixa a sota per als botons només s'aplicava a
+les pantalles tàctils, però els botons també surten en una pantalla
+estreta sense tàctil. Ara l'espai i els botons segueixen exactament la
+mateixa condició.
+
+## 106. Els botons + i − tenen nom per als lectors de pantalla
+
+Les persones que no hi veuen fan servir un lector de pantalla, que llegeix
+la web en veu alta. Els botons + i − de cada carta només tenien el
+símbol, i el lector deia «més» sense dir de què. Ara cada botó porta un nom
+que només llegeix el lector: «Afegeix una Joltik normal» o «Treu una
+Joltik reverse», en l'idioma triat. En prémer-los, el lector diu el
+número nou.
+
+## 107. Els avisos de la web també s'anuncien
+
+El missatge que surt a dalt (o a baix, al mòbil) quan la web carrega o
+quan «Actualitza» falla ara està marcat com a missatge d'estat, i el
+lector de pantalla el llegeix sense que l'usuari hagi d'anar-lo a buscar.
+La resta de botons fets només amb una icona ja tenien nom, i s'ha
+comprovat que es tradueixen bé.
