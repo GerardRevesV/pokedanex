@@ -6,6 +6,19 @@
        la pantalla i el CSS hi afegeix els marges segurs amb env() -->
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Pokedanex</title>
+  <!-- Tema clar o fosc ABANS de carregar l'estil, perquè la pàgina no
+       parpellegi: la tria desada al navegador o, si no n'hi ha, la del
+       dispositiu (prefers-color-scheme). L'interruptor és a main.js. -->
+  <script>
+    (function () {
+      var desat = null;
+      try { desat = window.localStorage.getItem("pokedanex.colorScheme"); } catch (e) {}
+      var clar = desat === "clar" || desat === "fosc"
+        ? desat === "clar"
+        : window.matchMedia("(prefers-color-scheme: light)").matches;
+      document.documentElement.dataset.tema = clar ? "clar" : "fosc";
+    })();
+  </script>
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/holo.css">
   <!-- Les imatges de cartes venen d'aquest domini: obrir la connexió
@@ -31,13 +44,23 @@
           </span>
         </button>
       </div>
-      <div class="control">
-        <label for="selector-idioma" data-i18n="idioma.etiqueta">Idioma</label>
-        <select id="selector-idioma">
-          <option value="ca">Català</option>
-          <option value="es">Castellano</option>
-          <option value="en">English</option>
-        </select>
+      <div class="preferencies">
+        <div class="control">
+          <label for="selector-idioma" data-i18n="idioma.etiqueta">Idioma</label>
+          <select id="selector-idioma">
+            <option value="ca">Català</option>
+            <option value="es">Castellano</option>
+            <option value="en">English</option>
+          </select>
+        </div>
+        <!-- Tema clar o fosc (es recorda; per defecte, el del dispositiu) -->
+        <div class="control">
+          <span id="tema-etiqueta" class="control-etiqueta" data-i18n="tema.etiqueta">Tema</span>
+          <div id="commutador-tema" class="segmentat" role="group" aria-labelledby="tema-etiqueta">
+            <button type="button" data-tema="clar" data-i18n="tema.clar">Clar</button>
+            <button type="button" data-tema="fosc" data-i18n="tema.fosc">Fosc</button>
+          </div>
+        </div>
       </div>
     </div>
 

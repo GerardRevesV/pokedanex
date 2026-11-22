@@ -126,6 +126,12 @@ Els noms de les cartes no es tradueixen mai: són les cartes reals, en anglès.
   versió del navegador; si una expansió no és a l'índex, es baixa sencera.
 - **Peu:** data de la versió de dades que s'està veient i el nombre de cartes.
 - Estètica heretada del projecte tcg: **tema fosc** amb accent verd-turquesa.
+- **Tema clar / fosc:** tot el color passa per variables CSS (`:root` per al
+  fosc i `:root[data-tema="clar"]` per al clar). Un script curt al `<head>`
+  posa `data-tema` abans de pintar res (sense parpelleig): la tria desada o,
+  si no n'hi ha, la del dispositiu. L'interruptor és a la capçalera. L'accent
+  de cada expansió (`temes.js`) té una versió clara calculada: el mateix to,
+  enfosquit fins a 4,5:1 de contrast WCAG sobre els fons clars.
 
 ## Les capes de la Fase 2
 
@@ -181,6 +187,7 @@ Els noms de les cartes no es tradueixen mai: són les cartes reals, en anglès.
 | `pokedanex.statsOpen` | Si el panell d'estadístiques és obert o plegat |
 | `pokedanex.completionTarget` | L'objectiu de compleció triat |
 | `pokedanex.displayMode` | «Cartes que no tinc»: apagades (`colleccio`) o en color (`cataleg`) |
+| `pokedanex.colorScheme` | Tema clar o fosc (`clar` / `fosc`); sense valor, el del dispositiu |
 | `pokedanex.activeSet` | L'expansió activa |
 | `pokedanex.temaPerSet` | Si l'estètica segueix l'expansió o no |
 
