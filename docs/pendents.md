@@ -105,18 +105,6 @@ novembre del 2026.
   (decisió D-013).
 - [ ] Ningú ha tornat a provar la web després de les millores: les notes
   de l'enquesta són de la web d'abans.
-- [ ] **Propostes del mòbil no aplicades** (PR 35), perquè són decisions
-  de disseny:
-  - Àlbum de dues columnes al mòbil, o «toca per ampliar la pàgina»: amb
-    cartes de 110 píxels encara no es llegeix el text de la carta. El toc
-    ja obre el zoom, on sí que es llegeix.
-  - Ensenyar el motiu del preu «≈» també al mòbil. Ara només surt en
-    passar-hi el ratolí. Es podria posar al zoom.
-  - No fer cas dels lliscaments que comencen a tocar de la vora de la
-    pantalla (zoom i àlbum), perquè no xoquin amb el gest d'anar enrere
-    del telèfon.
-  - Alguns botons queden ressaltats després de tocar-los. És només
-    d'aspecte.
 - [ ] Les dades de les cartes ja pesen 26,5 MB. Si el repositori s'acosta
   al límit de GitHub Pages (1 GB), caldrà esborrar versions antigues.
 
@@ -138,6 +126,11 @@ No es faran abans de l'entrega. Van al capítol 24 del treball.
 
 - [x] *22-11-2026.* Proves amb usuaris: enquesta amb 33 respostes, del 15
   al 18 de novembre (entrada 74 de l'històric).
+- [x] *22-11-2026.* Les quatre propostes del mòbil que havien quedat sense
+  aplicar al PR 35: nom i número sota cada carta a l'àlbum del mòbil;
+  motiu del preu «≈» escrit al zoom; lliscaments des de la vora ignorats;
+  botons que ja no queden ressaltats després d'un toc (entrades 98 a 101
+  de l'històric).
 - [x] *22-11-2026.* Millores de la web arran de l'enquesta, PR 28 a 35:
   el clic sempre obre la carta i fora «Marcar»; explicació de reverse
   holo; fletxes al zoom; cerca tolerant i a totes les expansions; de 14 a

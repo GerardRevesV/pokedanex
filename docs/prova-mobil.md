@@ -21,16 +21,20 @@ marca cada punt:
 5. Toca la fletxa: torna a dalt. Torna a baixar i toca la lupa: torna a
    dalt amb el teclat obert.
 6. Marca una carta amb el + i desmarca-la amb el −: el dit encerta el botó
-   a la primera i no se selecciona cap text.
+   a la primera, no se selecciona cap text i el botó no queda ressaltat
+   després de tocar-lo.
 7. Mantén el dit sobre la imatge d'una carta: **no** ha de sortir el menú
    «Desa la imatge / Copia».
 8. Toca una carta: s'obre gran. Fes lliscar la imatge a l'esquerra i a la
    dreta per passar de carta, i tanca amb la ×. La × no queda tapada per
-   la barra de dalt del mòbil.
+   la barra de dalt del mòbil. Si el preu porta «≈», a sota s'explica per
+   què. Fes el gest d'anar enrere des de la vora de la pantalla: el
+   navegador torna enrere i la carta **no** canvia.
 9. Obre una carta holo o «ex»: mou el dit per sobre i la brillantor el
    segueix.
-10. Canvia a «Àlbum»: les cartes es veuen senceres sense moure el mòbil, i
-    lliscar de costat passa la pàgina (sense que el navegador torni enrere).
+10. Canvia a «Àlbum»: la pàgina sencera es veu sense moure el mòbil, sota
+    cada carta es llegeixen el número i el nom, i lliscar de costat passa
+    la pàgina (sense que el navegador torni enrere).
 11. Toca «Canvia d'expansió»: el panell surt centrat, la llista es mou amb
     el dit i la pàgina del darrere no es mou.
 12. Posa el mòbil apaïsat: la lletra no s'engrandeix sola i res no surt de

@@ -850,7 +850,20 @@ function traduirZoom() {
   element("zoom-seguent").setAttribute("aria-label", t("zoom.seguent"));
   if (!element("zoom").hidden && cartaZoom) {
     element("zoom-variants").replaceChildren(crearControlsVariants(cartaZoom));
+    pintarPreuZoom(cartaZoom); // el preu i el seu motiu també es tradueixen
   }
+}
+
+// El preu de la carta al zoom i, si porta «≈», el motiu escrit a sota:
+// a la graella el motiu només surt passant-hi el ratolí (title), i amb
+// el dit no hi havia manera de llegir-lo
+function pintarPreuZoom(carta) {
+  const { preu, motiu } = infoPreuCarta(carta);
+  element("zoom-preu").textContent = preu === null
+    ? t("carta.sensePreu")
+    : (motiu ? "≈ " : "") + formatarPreu(preu);
+  element("zoom-nota-preu").hidden = !motiu;
+  element("zoom-nota-preu-text").textContent = motiu ? t(TEXT_MOTIU_PREU[motiu]) : "";
 }
 
 // La posició de la carta del zoom dins del recorregut (−1 si no hi és)
@@ -877,12 +890,22 @@ function passarCartaZoom(delta) {
   mostrarCartaAlZoom(desti);
 }
 
+// Un gest que comença a menys de 24px de la vora esquerra o dreta de la
+// pantalla és del sistema (tornar enrere), no de la web. El fa servir
+// el lliscar del zoom; l'àlbum (album.js) té la mateixa regla.
+const MARGE_VORA = 24;
+function comencaALaVora(esdeveniment) {
+  return esdeveniment.clientX < MARGE_VORA
+    || esdeveniment.clientX > window.innerWidth - MARGE_VORA;
+}
+
 // Omple el zoom amb una carta (en obrir-lo i en passar de carta)
 function mostrarCartaAlZoom(carta) {
   cartaZoom = carta;
   element("zoom-numero").textContent = formatarNumero(carta);
   element("zoom-nom").textContent = carta.name;
   element("zoom-raresa").textContent = carta.rarity ?? "";
+  pintarPreuZoom(carta);
   // Les mateixes files de comptadors − N + que té la carta a la graella
   element("zoom-variants").replaceChildren(crearControlsVariants(carta));
   aplicarHolo(carta); // brillantor si la carta és holo o reverse (holo.js)
@@ -1093,10 +1116,23 @@ function anarACartaDeLaGraella(id) {
   aplicarFiltres();
   const fitxa = element("graella").querySelector(`.carta[data-id="${CSS.escape(id)}"]`);
   if (!fitxa) return;
-  fitxa.scrollIntoView({ behavior: "smooth", block: "center" });
-  // La ressaltem un moment perquè l'ull la trobi de seguida
+  if (window.matchMedia("(max-width: 767px)").matches) {
+    // Al mòbil, les fitxes fora de pantalla no es pinten i el navegador
+    // n'estima l'alçada (content-visibility: auto, al CSS): en un
+    // desplaçament suau llarg, l'estimació falla a mig camí i la carta
+    // quedava mig fora de la pantalla. Salt directe i, quan les fitxes
+    // del voltant ja s'han pintat amb la mida real, un segon ajust.
+    fitxa.scrollIntoView({ block: "center" });
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      fitxa.scrollIntoView({ block: "center" });
+    }));
+  } else {
+    fitxa.scrollIntoView({ behavior: "smooth", block: "center" });
+  }
+  // La ressaltem un moment perquè l'ull la trobi de seguida (prou estona
+  // perquè el desplaçament suau hi arribi abans que s'apagui)
   fitxa.classList.add("carta--ressaltada");
-  setTimeout(() => fitxa.classList.remove("carta--ressaltada"), 1500);
+  setTimeout(() => fitxa.classList.remove("carta--ressaltada"), 2500);
 }
 
 // ---------- Barra d'eines de la col·lecció ----------
@@ -1351,8 +1387,10 @@ async function iniciar() {
   // clarament horitzontal i de més de 48px)
   let iniciLliscar = null;
   element("zoom-imatge").addEventListener("pointerdown", (esdeveniment) => {
-    // Només el primer dit: un segon dit és un pessic (ampliar), no lliscar
-    if (!esdeveniment.isPrimary) {
+    // Només el primer dit: un segon dit és un pessic (ampliar), no lliscar.
+    // I no des de la vora de la pantalla: allà el dit fa el gest d'enrere
+    // del sistema (iOS i Android), i passar de carta alhora el confondria
+    if (!esdeveniment.isPrimary || comencaALaVora(esdeveniment)) {
       iniciLliscar = null;
       return;
     }

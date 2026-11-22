@@ -251,11 +251,19 @@
             <span id="zoom-numero" class="zoom-numero"></span>
             <span id="zoom-nom" class="zoom-nom"></span>
             <span id="zoom-raresa" class="zoom-raresa"></span>
+            <!-- Preu orientatiu de la carta (amb «≈» si és aproximat) -->
+            <span id="zoom-preu" class="zoom-preu"></span>
           </div>
           <button type="button" id="zoom-seguent" class="zoom-fletxa">&rsaquo;</button>
         </div>
         <!-- Files de comptadors per variant: les omple el JavaScript en obrir el zoom -->
         <div id="zoom-variants" class="zoom-variants"></div>
+        <!-- Per què el preu porta «≈»: a la graella només es veu passant-hi
+             el ratolí (title); aquí es llegeix també amb el dit -->
+        <p id="zoom-nota-preu" class="zoom-nota zoom-nota-preu" hidden>
+          <span class="zoom-ajuda-reverse-icona" aria-hidden="true">≈</span>
+          <span id="zoom-nota-preu-text"></span>
+        </p>
         <!-- Què és una reverse holo: només es veu si la carta en té -->
         <p id="zoom-ajuda-reverse" class="zoom-ajuda-reverse" hidden>
           <span class="zoom-ajuda-reverse-icona" aria-hidden="true">i</span>
