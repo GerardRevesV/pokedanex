@@ -395,3 +395,243 @@ vell, que no donava preu a les quatre expansions buides.
 
 **Cost:** 0 €. TCGdex és gratuït i no demana clau. Baixar una expansió
 passa de 2 peticions a unes 200 (una per carta), uns 15 segons.
+
+## D-014 · Treure el selector «Marcar»: el clic sempre obre la carta
+
+**Data:** 2026-11-21
+
+**Decisió:** es treu del tot el mode de marcar amb clics (Només mirar /
+Normal / Reverse / Holo). Clicar o tocar una carta sempre l'obre en gran,
+a la graella i a l'àlbum, i les còpies s'afegeixen i es treuen amb els
+botons + i − de cada carta i de la finestra gran. La decisió es va prendre
+abans de començar les millores, en repassar els resultats de l'enquesta.
+
+**Per què:** l'enquesta va mostrar que el mode de marcar era la principal
+font de confusió. Tres persones, sense conèixer-se, van descriure el
+mateix: la gent hi entrava, s'oblidava que hi era, i clicar una carta feia
+una cosa inesperada (afegir-la) o no feia res, si la carta no tenia aquella
+variant. La drecera per veure la carta amb el mode actiu (Ctrl+clic, o
+mantenir el dit al mòbil) no la va descobrir ningú.
+
+**Alternatives considerades:** explicar-ho millor amb avisos i ajudes. Es
+va descartar perquè ja hi havia avisos i no havien servit. Es prefereix
+una regla simple que no cal explicar: clicar una carta sempre la mostra;
+per afegir-la hi ha els botons + i −.
+
+**Cost:** 0 €. Es perd una drecera per marcar moltes cartes de pressa, però
+els botons + i − ja hi eren a cada carta i fan el mateix amb un sol clic.
+
+## D-015 · Com es tolera un error d'escriptura sense trobar-ho tot
+
+**Data:** 2026-11-21
+
+**Decisió:** el cercador busca per proximitat. Per saber si una paraula
+«s'assembla» a una altra, es fa servir la **distància d'edició**: el nombre
+mínim de lletres que cal canviar, afegir, treure o intercanviar per passar
+d'una a l'altra. «fabel» i «fable» estan a distància 1 (s'intercanvien dues
+lletres). El nombre d'errors permesos creix amb la llargada del que
+s'escriu: cap error fins a 3 lletres, un fins a 6, dos fins a 9 i tres a
+partir de 10. Les cartes es mostren ordenades de la coincidència més segura
+a la menys segura, perquè una semblança dubtosa (com «Pichu» quan es busca
+«picachu») no passi davant de la carta bona.
+
+**Per què:** a l'enquesta, una persona va buscar «el Picachu» i no el va
+trobar. Amb paraules curtes gairebé tot s'assembla («mew» està a una lletra
+de «dew» o de «hex»), i per això la tolerància no pot ser la mateixa per a
+totes les llargades.
+
+**Alternatives considerades:** fer servir una llibreria externa de cerca.
+S'ha descartat: hauria afegit dependències per a una funció que cap en un
+fitxer de 150 línies, i el projecte prefereix entendre el que fa.
+
+**Cost:** 0 €.
+
+## D-016 · On es busca la carta quan no saps l'expansió
+
+**Data:** 2026-11-21
+
+**Decisió:** quan s'escriu una cerca, la web busca també a les altres
+expansions i ensenya els resultats en una franja «A altres expansions».
+Per fer-ho, baixa les dades de les altres expansions la primera vegada que
+es fa una cerca, i no en obrir la pàgina. **Aquesta manera de baixar-les
+va durar poques hores: la D-017 la substitueix per un índex.**
+
+**Per què:** a l'enquesta, dues persones van dir que no trobaven una carta
+perquè no sabien de quina expansió era.
+
+**Alternatives considerades:** preparar un fitxer petit amb només els noms
+de totes les cartes (un «índex»). Es va descartar en un primer moment
+perquè obligava a mantenir un fitxer nou, mentre que baixant les dades la
+cerca incloïa sola qualsevol expansió nova. El preu era que la primera
+cerca baixava al voltant d'1 MB comprimit amb 22 expansions. Ja es va
+apuntar que, si les expansions creixien, caldria passar a l'índex.
+
+**Cost:** 0 €.
+
+## D-017 · Un índex lleuger per a la cerca, i què passa quan es prem «Actualitza»
+
+**Data:** 2026-11-22
+
+**Decisió:** la cerca a totes les expansions deixa de baixar les
+expansions senceres i baixa un sol fitxer, `app/data/index-cerca.json`,
+que només té el número i el nom de cada carta. La primera cerca passa de
+baixar uns 20,7 MB (1,44 MB comprimits, en 44 peticions) a 92 KB (27 KB
+comprimits, en una sola petició). L'expansió sencera només es baixa quan
+es clica un resultat. El programa que baixa les dades
+(`tools/fetch_data.py`) torna a fer l'índex cada cop que s'afegeix o
+s'actualitza una expansió.
+
+El botó «Actualitza» baixa dades noves d'una expansió i les desa al
+navegador, però l'índex és un fitxer de la web i no canvia. Si una carta
+canviés de nom o n'hi aparegués una de nova, la cerca podria mostrar una
+cosa i, en clicar-la, la web n'obriria una altra. Per evitar-ho, quan una
+expansió té al navegador una versió més nova que la de l'índex, la cerca
+fa servir els noms d'aquella versió, que ja és a l'ordinador i no cal
+baixar. I si mai hi ha una expansió que no surt a l'índex (per exemple, si
+algú l'afegeix i s'oblida de pujar-lo), la web la baixa sencera com feia
+abans: la cerca és una mica més lenta però mai incompleta.
+
+**Per què:** la D-016 es va decidir quan la web tenia 14 expansions. El
+mateix dia en van entrar 8 més (D-018), i baixar-les totes ja no era
+raonable en un mòbil amb dades.
+
+**Alternatives considerades:** no fer índex i mantenir la baixada
+completa, que era més simple.
+
+**Cost:** 0 €. Un fitxer més per mantenir, que es genera sol.
+
+## D-018 · Afegir tot el bloc Scarlet & Violet, i no només la 151
+
+**Data:** 2026-11-21
+
+**Decisió:** s'afegeixen les 8 expansions del bloc Scarlet & Violet que
+faltaven abans de Shrouded Fable: Scarlet & Violet, Paldea Evolved,
+Obsidian Flames, 151, Paradox Rift, Paldean Fates, Temporal Forces i
+Twilight Masquerade. La web passa de 14 a 22 expansions. La decisió es va
+prendre abans de començar les millores.
+
+**Per què:** a l'enquesta, dues persones demanaven més cartes, i una
+demanava expressament la 151. Afegint tot el bloc, la web el té sencer i
+no queda un forat entre expansions.
+
+**Alternatives considerades:** afegir només la 151, que era el que es
+demanava. Costava gairebé el mateix, perquè afegir una expansió és una
+recepta que la màquina segueix sola, i deixava el bloc a mitges.
+
+**Cost:** 0 €. Les dades creixen de 17,1 MB a 26,5 MB (uns 1,2 MB per
+expansió). La web no es fa més lenta, perquè només es baixa l'expansió que
+es mira, però el repositori sí que creix. I el treball escrit, que parla
+de 14 expansions en diversos llocs, s'ha de posar al dia.
+
+## D-019 · Què vol dir «treure els filtres»
+
+**Data:** 2026-11-22
+
+**Decisió:** el botó «Treu tots els filtres» torna a l'inici tot el que
+**amaga cartes**: la cerca, «Què mostro», la raresa, el tipus d'energia i
+la categoria. No toca l'ordre de la graella ni la vista (Graella o Àlbum).
+
+**Per què:** l'ordre i la vista no amaguen res: només canvien com es
+mostren les cartes. Si el botó els canviés, l'usuari perdria una
+preferència que ha triat a consciència, cosa que no espera d'un botó que
+es diu «treu els filtres».
+
+**Cost:** 0 €.
+
+## D-020 · Les cartes que no tens, en un gris més clar
+
+**Data:** 2026-11-21
+
+**Decisió:** les cartes que no es tenen continuen sortint en gris, però en
+un gris més clar: es reconeix el Pokémon i es llegeix el nom, també a les
+cartes fosques. La decisió es va prendre abans de començar les millores.
+
+**Per què:** a l'enquesta, sis persones del formulari català deien que la
+web no es veia bé a la pantalla i una altra la trobava «massa fosca». Les
+cartes apagades, gairebé negres sobre un fons fosc, n'eren el candidat més
+clar.
+
+**Alternatives considerades:** ensenyar-les en color. Es va descartar
+perquè el gris és el que permet saber d'un cop d'ull què es té i què no,
+que és per al que serveix la web. Qui les vulgui veure en color ja ho pot
+triar amb «Cartes que no tinc: En color».
+
+**Cost:** 0 €.
+
+## D-021 · Quines cartes brillen, i on
+
+**Data:** 2026-11-22
+
+**Decisió:** al zoom brilla el que tens. Si en tens alguna còpia holo, la
+carta brilla com a holo. Si no en tens cap d'holo però sí alguna reverse,
+brilla com a reverse. Si només la tens en normal, o no la tens (la carta
+es veu apagada), no brilla. Quan les cartes que no es tenen es veuen en
+color, també brillen les que existeixen en holo encara que no es tinguin.
+
+On brilla:
+- **Holo:** només la il·lustració.
+- **Reverse:** tota la carta menys la il·lustració, com al paper de veritat.
+- **Cartes d'art complet** (les «ex» i les Illustration, Ultra i Hyper Rare):
+  la carta sencera, i les més rares amb purpurina.
+
+**Per què:** la web és una eina de col·leccionista, i el que interessa és
+veure *la teva* carta. Si una carta comuna brillés sempre que existeix en
+reverse, brillarien gairebé totes i l'efecte deixaria de voler dir res. La
+zona de la il·lustració s'ha mesurat sobre les imatges de les cartes
+normals de Scarlet & Violet i Mega Evolution.
+
+**Alternatives considerades:** fer brillar també les cartes de la graella i
+de l'àlbum en passar-hi el ratolí. S'ha descartat per ara: amb 250 cartes
+a la pantalla podria alentir els mòbils, i el zoom és on es mira una carta
+de prop. Es va considerar també fer servir una llibreria d'efectes holo ja
+feta, però hauria afegit pes i una dependència externa per a un efecte que
+es pot fer amb unes poques línies de CSS.
+
+**Cost:** 0 €.
+
+## D-022 · Tema clar amb interruptor, i colors clars calculats
+
+**Data:** 2026-11-21 (el tema clar) i 2026-11-22 (com es calculen els colors)
+
+**Decisió:** la web es pot veure en tema clar, a més del fosc de sempre,
+amb un interruptor «Tema: Clar / Fosc» a la capçalera. La tria es recorda,
+i mentre no s'ha triat res la web fa servir el tema del dispositiu. La
+decisió de fer el tema clar es va prendre abans de començar les millores.
+
+La versió clara del color de cada expansió no s'escriu a mà: es calcula.
+Es conserva el to i es baixa la lluminositat fins que el text de color es
+llegeix bé sobre el fons clar (contrast 4,5:1, el mínim de la norma WCAG).
+El tema s'aplica abans de pintar la pàgina, amb un script molt curt a
+l'inici del document, perquè qui l'ha triat clar no vegi una pantalla negra
+uns instants.
+
+**Per què:** a l'enquesta, una persona va demanar poder canviar de fosc a
+clar i una altra trobava la web «massa fosca». I hi ha 22 expansions,
+cadascuna amb el seu color triat per al fons fosc: sobre blanc, un rosa
+pàl·lid o un groc no es llegirien.
+
+**Alternatives considerades:** escollir a mà 22 colors nous per al fons
+clar. És fàcil equivocar-se amb el contrast, i cada expansió nova en
+necessitaria dos. Amb la regla automàtica, el color de cada expansió es
+reconeix en tots dos temes i una expansió nova només necessita el seu color
+de sempre.
+
+**Cost:** 0 €.
+
+## D-023 · Al mòbil, botons flotants en lloc d'una capçalera fixa
+
+**Data:** 2026-11-22
+
+**Decisió:** al mòbil, quan s'ha baixat per la llista i la capçalera ja no
+es veu, surten dos botons rodons a baix a la dreta: la lupa porta al
+cercador i la fletxa torna a dalt de tot. A l'ordinador no surten.
+
+**Per què:** calia tenir el cercador sempre a mà. La capçalera, fins i tot
+compactada, fa uns 200 píxels: fixa, es menjaria una quarta part de la
+pantalla tota l'estona. Els botons flotants només ocupen un cantó i només
+surten quan fan falta.
+
+**Alternatives considerades:** deixar la capçalera fixa a dalt, com a
+l'ordinador.
+
+**Cost:** 0 €.

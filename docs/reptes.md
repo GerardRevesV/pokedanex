@@ -384,3 +384,121 @@ i va llistar els programes que escoltaven al port. N'hi havia dos. Amb un
 port lliure, la mateixa línia va funcionar a la primera. La lliçó per al
 treball és que, quan una prova contradiu el que hauria de passar, abans de
 dubtar de la solució cal comprovar que s'està provant el que un es pensa.
+
+## 14. Treure una funció sense deixar restes
+
+*2026-11-22*
+
+Afegir una funció a una web és relativament fàcil; treure-la bé costa més
+del que sembla. El selector «Marcar» no era només un grup de botons: canviava
+el que feia el clic a la graella i a l'àlbum, tenia un comptador petit a
+cada butxaca de l'àlbum, un botó de restar només per a mòbil, un gest de
+«mantenir el dit» per obrir la carta, missatges d'ajuda en tres idiomes i
+estils propis. Si se n'esborrava només una part, quedaven peces òrfenes que
+no feien res o, pitjor, que encara canviaven el comportament d'amagat.
+
+Per fer-ho amb garanties, la IA va buscar totes les referències al mode pel
+seu nom dins del codi, les va treure una per una i, al final, va tornar a
+buscar per comprovar que no en quedava cap. Després un segon agent, que no
+havia escrit el canvi, va revisar-lo amb ulls nous abans de publicar-lo.
+És una lliçó útil sobre el «vibe coding»: la IA pot fer aquesta neteja
+sistemàtica molt de pressa, però cal demanar-li explícitament que no deixi
+codi mort i comprovar-ho.
+
+## 15. Fer que l'ordinador entengui «picachu»
+
+*2026-11-22*
+
+Per a una persona és evident que qui escriu «picachu» busca el Pikachu, però
+un ordinador compara lletra per lletra i, si una no coincideix, diu que no
+hi és. Fer que la cerca toleri errors va obligar a explicar-li a la màquina
+què vol dir «s'assembla»: comptar quantes lletres caldria tocar per passar
+d'una paraula a l'altra. El més difícil no va ser aquest càlcul sinó trobar
+el punt just. Si es permeten massa errors, buscar «mew» treu cartes que no hi
+tenen res a veure; si se'n permeten massa pocs, «charizar» no troba el
+Charizard. La solució va ser fer que la tolerància depengui de la llargada
+del que s'escriu, i provar-la amb els 1.289 noms de cartes diferents que
+tenia la web fins que els exemples de l'enquesta funcionessin sense que
+apareguessin resultats estranys.
+
+## 16. Quan la font de dades falla més del que funciona
+
+*2026-11-22*
+
+Durant la baixada de les vuit expansions noves, el servidor de
+pokemontcg.io va respondre amb error moltíssimes vegades: gairebé a cada
+expansió calia tornar-ho a provar, i en una es va haver d'esperar uns
+minuts i començar de nou. Això explica una queixa de l'enquesta: el botó
+«Actualitza» de la web es rendia al cap d'uns nou segons, i amb un servidor
+així sovint no n'hi havia prou. La solució no és tenir un servidor millor
+(no depèn de nosaltres i no en podem pagar cap), sinó fer que la web sigui
+pacient i honesta: que ho torni a provar diverses vegades esperant cada cop
+una mica més, que avisi que ho està fent, i que, si al final no pot, ho
+digui clarament i no toqui les dades que ja tenia.
+
+Un segon problema va sortir comparant les dues fonts de preus: en una de
+les expansions, una font guardava els preus d'una manera diferent de la
+resta, i el programa no els trobava. Sense mirar les dades una per una no
+s'hauria vist, perquè la web no fallava: simplement mostrava preus menys
+fiables. És un exemple de per què cal revisar els resultats i no només
+comprovar que «funciona».
+
+## 17. Fer visible el que per a qui ha fet la web és obvi
+
+*2026-11-22*
+
+Per a qui va fer la web, era evident que el logotip de l'expansió es podia
+clicar: tenia una fletxeta al costat i s'il·luminava en passar-hi el ratolí.
+L'enquesta va demostrar que no era gens evident: tres persones no ho van
+descobrir, i una va pensar que la web només servia per a una expansió. Una
+cosa semblant passava amb les cartes apagades: el gris fosc semblava una
+bona idea per distingir les que tens de les que no tens, però sobre un fons
+fosc moltes cartes es tornaven gairebé invisibles.
+
+La lliçó és que les proves amb usuaris reals troben problemes que qui fa
+la web no veu, perquè ja sap com funciona. La solució no va ser gaire
+complicada (posar text al botó i aclarir el gris), però sense l'enquesta
+no s'hauria fet. És una bona mostra de per què val la pena preguntar als
+usuaris, tant si la web l'ha programada una persona com una IA.
+
+## 18. Un tema clar no és només canviar el negre per blanc
+
+*2026-11-22*
+
+Semblava que fer un tema clar seria girar els colors, però hi havia colors
+amagats per tot arreu. Les ombres eren negres i pensades per a un fons
+negre. El plàstic de les butxaques de l'àlbum era una vora blanca
+gairebé transparent, que sobre blanc desapareixia. Els colors de cada
+expansió, triats perquè lluïssin sobre fosc, sobre blanc no es llegien. Si
+se n'escapava un, quedava una taca fosca enmig de la pàgina clara.
+
+Per no deixar-se'n cap, la IA va encarregar primer a un altre agent un
+inventari complet de tots els colors escrits a mà. Després els va convertir
+un per un en variables i va comprovar, mesurant-los, que el tema fosc no
+havia canviat gens. Per als colors de les expansions va fer servir una
+fórmula d'accessibilitat (el contrast WCAG) per calcular-los en lloc de
+triar-los a ull. És un bon exemple de com la IA pot fer una feina pesada i
+sistemàtica, sempre que se li demani que la verifiqui.
+
+## 19. Provar un mòbil sense tenir-lo a la mà
+
+*2026-11-22*
+
+Tota la revisió del mòbil s'ha fet amb el navegador de l'ordinador fent
+veure que és un mòbil: se li diu la mida de la pantalla i que es toca amb
+el dit, i la web s'hi adapta. Però hi ha coses que la simulació no pot
+reproduir. El teclat de debò tapa mitja pantalla, la barra d'adreces
+apareix i desapareix en fer lliscar el dit, l'iPhone té una osca a dalt i
+un gest per tornar enrere des de la vora, i Safari fa zoom automàtic en
+tocar un camp de text si la lletra és petita. Alguns d'aquests problemes es
+poden preveure llegint el codi, i així s'ha fet; però l'única manera de
+saber que funcionen és provar-ho amb un telèfon de veritat. Per això la
+revisió acaba amb una llista de comprovació que l'autora pot seguir amb el
+seu mòbil en cinc minuts (`docs/prova-mobil.md`).
+
+Durant la revisió també es va trobar un error que no era del mòbil: el
+panell per canviar d'expansió sortia arraconat dalt a l'esquerra, també a
+l'ordinador. Una regla general que esborra els marges de tots els elements
+(per partir de zero) també esborrava el marge automàtic que el navegador
+fa servir per centrar els panells. És un bon exemple de com una regla
+pensada per simplificar pot tenir efectes en llocs inesperats.
