@@ -1609,6 +1609,23 @@ color fins que es tocava una altra cosa, com si encara hi hagués el dit.
 Tots aquests efectes ara només s'activen quan hi ha un ratolí de debò. A
 l'ordinador no canvia res.
 
+## 104. El selector d'expansions, compacte en pantalles estretes
+
+En un mòbil de 320 píxels d'ample, cada fila del panell per canviar
+d'expansió feia 111 píxels: el nom i la data es partien en quatre línies i
+només se'n veien dues i mitja de les 22. En pantalles de fins a 380
+píxels, ara la línia de sèrie i data s'amaga i el nom ocupa com a molt dues
+línies: cada fila fa 53 píxels i se'n veuen cinc senceres. A partir de 390
+píxels i a l'ordinador el panell és igual que abans.
+
+## 105. El peu de pàgina, lliure dels botons flotants
+
+En arribar a baix de tot, la lupa flotant tapava el final de l'última línia
+del peu. L'espai que el peu deixa a sota per als botons només s'aplicava a
+les pantalles tàctils, però els botons també surten en una pantalla
+estreta sense tàctil. Ara l'espai i els botons segueixen exactament la
+mateixa condició.
+
 ## 106. Els botons + i − tenen nom per als lectors de pantalla
 
 Les persones que no hi veuen fan servir un lector de pantalla, que llegeix
