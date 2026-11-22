@@ -36,9 +36,6 @@ novembre del 2026.
   provar la web, si les persones sabien que era per a un treball, i el
   text exacte de les preguntes dels dos formularis. Fa falta per al
   capítol 23 i per a l'annex.
-- [ ] **L'Excel de l'enquesta** i el programa que l'ha fet no són al
-  repositori, que és públic. L'Excel no té noms, però sí l'edat de cada
-  persona i tot el que va escriure. Cal decidir si es puja, i com.
 
 ## El treball escrit
 
@@ -124,6 +121,11 @@ No es faran abans de l'entrega. Van al capítol 24 del treball.
 
 ## Fet
 
+- [x] *22-11-2026.* L'Excel unificat de l'enquesta
+  (`docs/enquestes/enquesta-unificada.xlsx`) i el programa que el fa
+  (`tools/unifica_enquestes.py`) es pugen al repositori. L'enquesta és
+  anònima: el Forms no va recollir ni nom ni correu, i l'Excel només té
+  l'edat i les respostes.
 - [x] *22-11-2026.* Proves amb usuaris: enquesta amb 33 respostes, del 15
   al 18 de novembre (entrada 74 de l'històric).
 - [x] *22-11-2026.* Les quatre propostes del mòbil que havien quedat sense
