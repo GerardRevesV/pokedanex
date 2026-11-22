@@ -1658,3 +1658,26 @@ anunciar-los tots; ara només es reescriu el que canvia.
 **Problemes:** el navegador integrat no pot simular un mòbil apaïsat gran
 amb pantalla tàctil; s'ha fet amb mides més petites i forçant les regles
 del full d'estils. La prova amb un telèfon de debò continua pendent.
+
+## 2026-11-14 i 2026-11-22 — Galetes: en guarda? les pregunta?
+
+**Què s'ha fet:**
+- Pregunta: la web guarda galetes sense demanar-ho? Es revisa el codi.
+- Resultat: cap galeta ni analítica. Només `localStorage` (col·lecció i
+  preferències), que és exempt d'avís perquè és imprescindible. Apuntat a
+  `docs/arquitectura.md` (entrada **108** de l'històric).
+- L'Edanna demana posar una frase informativa al peu de la web, en tres
+  idiomes. Comprovada al navegador, també en mòbil (entrada **109**).
+- El 22 de novembre la branca es posa al dia amb `main`: es torna a
+  revisar el codi nou (continua sense galetes; s'afegeix TCGdex a la llista
+  de serveis de fora) i s'obre el pull request.
+
+**Eines usades:** Claude Code, GitHub.
+
+**Costos:** 0 € (de subscripció a part).
+
+**Problemes:** en provar-ho, la web sortia buida per culpa de la memòria
+cau del navegador (tenia guardada una versió vella d'un fitxer); es va
+arreglar forçant la recàrrega. En posar la branca al dia, tres fitxers
+tenien conflictes perquè `main` havia avançat; es van resoldre mantenint
+els dos canvis.

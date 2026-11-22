@@ -1642,3 +1642,20 @@ quan «Actualitza» falla ara està marcat com a missatge d'estat, i el
 lector de pantalla el llegeix sense que l'usuari hagi d'anar-lo a buscar.
 La resta de botons fets només amb una icona ja tenien nom, i s'ha
 comprovat que es tradueixen bé.
+
+## 108. Revisió de galetes i privacitat
+
+Es revisa el codi per saber si la web fa servir galetes (cookies) i si
+n'hauria de demanar permís. Conclusió: no en crea cap; només desa la
+col·lecció i les preferències al `localStorage` del navegador, que no
+s'envia enlloc. Com que això és imprescindible perquè la web funcioni, la
+llei no obliga a mostrar un avís de galetes. Queda escrit a
+`docs/arquitectura.md`, a l'apartat "Galetes i privacitat".
+
+## 109. Avís de "sense galetes" al peu de la web
+
+Al peu de la pàgina, sota la data de les dades, hi ha ara una frase petita:
+*"Aquesta web no fa servir galetes: la teva col·lecció només es desa al teu
+navegador."* Canvia amb l'idioma (català, castellà i anglès). La llei no
+l'exigeix (vegeu l'entrada 108), però explica a qui visita la web on queden
+les seves dades.
