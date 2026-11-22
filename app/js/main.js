@@ -21,6 +21,7 @@ import { iniciarEstadistiques, carregarEstadistiques, refrescarEstadistiques } f
 import { magatzem } from "./storage.js";
 import { prepararConsulta, puntuar } from "./cerca.js";
 import { iniciarCercaGlobal, refrescarCercaGlobal } from "./cerca-global.js";
+import { iniciarMobil } from "./mobil.js";
 
 // Estat de la pàgina
 let versions = [];       // llista d'entrades per al selector de versions
@@ -1405,6 +1406,7 @@ async function iniciar() {
 
   // Panell d'estadístiques: plegat i objectiu de compleció
   iniciarEstadistiques();
+  iniciarMobil(); // botons flotants de cerca i de tornar a dalt (només mòbil)
 
   // Tema clar o fosc. Mentre l'usuari no n'hagi triat cap, segueix el
   // del dispositiu també si canvia amb la pàgina oberta (mode nocturn

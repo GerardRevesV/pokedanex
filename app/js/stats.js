@@ -318,7 +318,14 @@ function aplicarPlegat(obert, desar = true) {
 // i recupera les tries desades (obert per defecte el primer cop)
 export function iniciarEstadistiques() {
   carregarObjectiu();
-  aplicarPlegat(magatzem()?.getItem(CLAU_OBERT) !== "0", false);
+  // Sense cap tria desada, al mòbil el panell comença plegat: obert
+  // ocupava més d'una pantalla i no es veia cap carta d'entrada (a
+  // l'enquesta, la majoria van provar la web amb el mòbil)
+  const desat = magatzem()?.getItem(CLAU_OBERT);
+  const obert = desat == null
+    ? !window.matchMedia("(max-width: 767px), (pointer: coarse) and (max-height: 480px)").matches
+    : desat !== "0";
+  aplicarPlegat(obert, false);
 
   element("estad-capcalera").addEventListener("click", () => {
     aplicarPlegat(element("estad-cos").hidden); // si està amagat, s'obre

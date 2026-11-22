@@ -40,6 +40,7 @@ Pokedanex/
 │   │   ├── selector-expansions.js ← el panell "Compendi" per triar expansió
 │   │   ├── cerca.js     ← la cerca per proximitat (tolera errors d'escriptura)
 │   │   ├── cerca-global.js ← la secció «A altres expansions» sota la graella
+│   │   ├── mobil.js     ← botons flotants del mòbil (cerca i tornar a dalt)
 │   │   ├── holo.js      ← la brillantor de les cartes holo i reverse al zoom
 │   │   └── main.js      ← la interfície: pinta i lliga-ho tot
 │   └── data/
