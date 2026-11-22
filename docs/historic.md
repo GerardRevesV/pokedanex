@@ -1365,3 +1365,20 @@ posa l'autora i el títol que hi ha a la portada del treball. Ho fa dues
 vegades, perquè el Word, quan omple l'índex, hi apunta l'usuari de
 l'ordinador com a darrer autor. El temps d'edició continua sent zero: és
 veritat que el fitxer es genera de cop, i el capítol 13 ja ho explica.
+
+## 74. Revisió de galetes i privacitat
+
+Es revisa el codi per saber si la web fa servir galetes (cookies) i si
+n'hauria de demanar permís. Conclusió: no en crea cap; només desa la
+col·lecció i les preferències al `localStorage` del navegador, que no
+s'envia enlloc. Com que això és imprescindible perquè la web funcioni, la
+llei no obliga a mostrar un avís de galetes. Queda escrit a
+`docs/arquitectura.md`, a l'apartat "Galetes i privacitat".
+
+## 75. Avís de "sense galetes" al peu de la web
+
+Al peu de la pàgina, sota la data de les dades, hi ha ara una frase petita:
+*"Aquesta web no fa servir galetes: la teva col·lecció només es desa al teu
+navegador."* Canvia amb l'idioma (català, castellà i anglès). La llei no
+l'exigeix (vegeu l'entrada 74), però explica a qui visita la web on queden
+les seves dades.

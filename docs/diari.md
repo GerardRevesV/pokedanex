@@ -1180,3 +1180,22 @@ s'envia, i mentrestant només el veu qui l'ha escrit.
 **Costos:** 0 € (de subscripció a part).
 
 **Problemes:** cap.
+
+## 2026-11-14 (12a sessió) — Galetes: en guarda? les pregunta?
+
+**Què s'ha fet:**
+- Pregunta: la web guarda galetes sense demanar-ho? Es revisa el codi.
+- Resultat: cap galeta ni analítica. Només `localStorage` (col·lecció i
+  preferències), que és exempt d'avís perquè és imprescindible.
+- Troballa i millora opcional (frase informativa al peu) apuntades a
+  `docs/arquitectura.md`. Entrada **74** de l'històric.
+- L'Edanna demana posar la frase informativa al peu de la web, en tres
+  idiomes. Comprovada al navegador (també en mòbil). Entrada **75**.
+
+**Eines usades:** Claude Code.
+
+**Costos:** 0 € (de subscripció a part).
+
+**Problemes:** en provar-ho, la web sortia buida per culpa de la memòria
+cau del navegador (tenia guardada una versió vella d'un fitxer). Es va
+arreglar forçant la recàrrega; no era un error del codi.
