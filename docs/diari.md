@@ -1596,3 +1596,33 @@ apuntades al pull request algunes coses menors i dubtoses que ha trobat el
 repàs (el selector d'expansions a 320 píxels, el zoom que necessita
 desplaçament en pantalles molt petites, els botons flotants que poden
 tapar un + de la columna dreta).
+
+## 2026-11-22 (12a sessió) — Tres detalls menors del mòbil
+
+**Què s'ha fet:**
+- Un panel de tres revisors va decidir quins dels punts menors que havia
+  deixat el repàs del mòbil es feien. Se n'han fet dos i se n'ha comprovat
+  un:
+  - **Selector d'expansions a 320 píxels:** les files passen de 111 a 53
+    píxels (s'amaga la línia de sèrie i data, i el nom ocupa com a molt
+    dues línies). Se'n veuen cinc senceres en lloc de dues i mitja. A 390
+    píxels i a l'ordinador no canvia res.
+  - **Peu tapat per la lupa:** l'espai de sota del peu ara surt amb la
+    mateixa condició que els botons flotants.
+  - **Mòbil apaïsat:** comprovat amb tàctil de debò a 740×360 i 667×375,
+    i a 844×390 forçant les regles de pantalla tàctil del full d'estils
+    (el navegador integrat no simula pantalla tàctil per sobre de 768
+    píxels d'ample). Els filtres queden plegats, els botons fan 44 píxels i
+    la primera carta surt a la primera pantalla. El zoom i l'àlbum es fan
+    servir bé, tot i que cal desplaçar per dins.
+- Els dos punts descartats pel panel, i la pàgina de l'àlbum en apaïsat,
+  queden a `docs/pendents.md` com a coneguts i acceptats.
+- Entrades **104** i **105** de l'històric.
+
+**Eines usades:** Claude Code, navegador integrat amb simulació de mòbil.
+
+**Costos:** 0 € (de subscripció a part).
+
+**Problemes:** el navegador integrat no pot simular un mòbil apaïsat gran
+amb pantalla tàctil; s'ha fet amb mides més petites i forçant les regles
+del full d'estils. La prova amb un telèfon de debò continua pendent.
