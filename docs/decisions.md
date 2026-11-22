@@ -635,3 +635,24 @@ surten quan fan falta.
 l'ordinador.
 
 **Cost:** 0 €.
+
+## D-024 · L'àlbum del mòbil, amb el nom sota cada carta
+
+**Data:** 2026-11-22
+
+**Decisió:** al mòbil, l'àlbum continua mostrant pàgines de 3×3 butxaques,
+i sota cada carta s'hi escriu el nom (al costat del número, que ja hi era).
+A l'ordinador l'àlbum no canvia.
+
+**Per què:** a 110 píxels d'ample, el nom imprès a la carta no es llegeix.
+Amb el nom escrit a sota, la pàgina sencera continua cabent a la pantalla
+i es llegeix sense obrir la carta. A més, es conserva la forma d'un àlbum
+de debò (nou cartes per pàgina) i no canvien els números de pàgina.
+
+**Alternatives considerades:** pàgines de dues columnes. Es van provar: les
+cartes es llegien, però cada pàgina feia una pantalla i mitja d'alçada i la
+novena carta quedava sola a l'última fila. També es va pensar en «toca per
+ampliar la pàgina», però la pàgina ja ocupa tota l'amplada del mòbil i no
+es pot fer més gran sense haver de moure-la de costat.
+
+**Cost:** 0 €.

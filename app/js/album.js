@@ -55,6 +55,13 @@ function crearButxaca(carta) {
 
   const numero = document.createElement("span");
   numero.className = "butxaca-numero";
+  // El nom escrit sota la carta: al mòbil (pàgina sola, cartes de ~110px)
+  // el de la imatge no es llegeix. El CSS només el mostra en pantalla
+  // estreta o baixa; a l'ordinador l'àlbum queda com sempre.
+  const nom = document.createElement("span");
+  nom.className = "butxaca-nom";
+  // El lector de pantalla ja llegeix el nom a l'alt de la imatge
+  nom.setAttribute("aria-hidden", "true");
 
   if (carta) {
     // Mateix llenguatge visual que la graella: sense cap còpia, apagada
@@ -77,6 +84,7 @@ function crearButxaca(carta) {
     funda.title = carta.name;
     funda.dataset.id = carta.id; // per retrobar la funda després de repintar
     numero.textContent = formatarNumero(carta);
+    nom.textContent = carta.name;
 
     // Un clic a la funda obre la carta en gran (el clic dret es queda
     // amb el menú normal del navegador)
@@ -85,7 +93,7 @@ function crearButxaca(carta) {
     funda.classList.add("butxaca-funda--buida");
   }
 
-  butxaca.append(funda, numero);
+  butxaca.append(funda, numero, nom);
   return butxaca;
 }
 
@@ -419,7 +427,14 @@ export function iniciarAlbum(callbackCarta) {
     let iniciGest = null;   // posició del dit en començar el gest
     let momentSwipe = 0;    // quan s'ha completat l'últim swipe
     llibre.addEventListener("pointerdown", (esdeveniment) => {
-      iniciGest = { x: esdeveniment.clientX, y: esdeveniment.clientY };
+      // Un gest que comença a menys de 24px de la vora de la pantalla és
+      // el d'enrere del sistema (iOS i Android): no passem pàgina alhora.
+      // Tampoc amb un segon dit (és un pessic per ampliar).
+      const aLaVora = esdeveniment.clientX < 24
+        || esdeveniment.clientX > window.innerWidth - 24;
+      iniciGest = aLaVora || !esdeveniment.isPrimary
+        ? null
+        : { x: esdeveniment.clientX, y: esdeveniment.clientY };
     });
     llibre.addEventListener("pointerup", (esdeveniment) => {
       if (!iniciGest) return;

@@ -1572,3 +1572,39 @@ l'històric (entrades 74 a 96), a les decisions (D-014 a D-023) i als reptes
 (14 a 19), amb la numeració que toca, i esborra la carpeta. La llista de
 passos per provar la web amb un telèfon de debò passa a
 `docs/prova-mobil.md`, i la llista de pendents es posa al dia.
+
+## 98. L'àlbum del mòbil, amb el nom de cada carta
+
+Al mòbil l'àlbum ensenya una sola pàgina de 3×3 butxaques, i cada carta fa
+uns 110 píxels d'ample: el nom i el número impresos a la carta no es
+llegeixen. Es van provar dues solucions. Amb dues columnes les cartes es
+llegien, però una pàgina feia una pantalla i mitja d'alçada i la novena
+carta quedava sola a l'última fila. La que s'ha triat conserva les tres
+columnes i escriu el nom sota cada carta, al costat del número que ja hi
+era, en lletra prou gran:
+la pàgina sencera cap a la pantalla i es pot llegir sense obrir la carta.
+A l'ordinador l'àlbum no canvia.
+
+## 99. Per què un preu porta «≈», també amb el dit
+
+Quan el preu d'una carta no és segur, porta el signe «≈» al davant. El
+motiu (convertit de dòlars, antic o dubtós) només es podia llegir passant
+el ratolí per sobre del preu, i amb el mòbil no hi havia manera de veure'l.
+Ara, en obrir una carta en gran, al costat de la raresa hi ha el preu i,
+si porta «≈», una nota que n'explica el motiu, en els tres idiomes.
+
+## 100. Els lliscaments que comencen a la vora són del telèfon
+
+Els telèfons fan servir el gest de lliscar des de la vora de la pantalla
+per tornar enrere. La web també fa servir el lliscament per passar de
+carta al zoom i de pàgina a l'àlbum, i els dos gestos podien coincidir.
+Ara la web no fa cas dels lliscaments que comencen a menys de 24 píxels de
+la vora: aquests són del telèfon.
+
+## 101. Botons que no queden ressaltats després d'un toc
+
+Molts botons canvien de color quan s'hi passa el ratolí per sobre. Al
+mòbil no hi ha ratolí, i el navegador deixava el botó tocat amb aquest
+color fins que es tocava una altra cosa, com si encara hi hagués el dit.
+Tots aquests efectes ara només s'activen quan hi ha un ratolí de debò. A
+l'ordinador no canvia res.

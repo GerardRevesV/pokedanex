@@ -1556,3 +1556,43 @@ disseny no s'han aplicat i són a `docs/pendents.md`.
 (14 expansions, el selector «Marcar», el control «Colors», sense tema
 clar). Les parts II i III i les captures s'han de posar al dia, i no s'ha
 fet en aquesta sessió: ho ha de decidir l'autora.
+
+## 2026-11-22 (10a sessió) — Les propostes del mòbil i un repàs sencer
+
+**Què s'ha fet:**
+- Les quatre propostes que havien quedat sense aplicar a la sessió del
+  mòbil, ara decidides:
+  - **Àlbum llegible al mòbil:** es van provar dues opcions. Amb pàgines
+    de dues columnes les cartes es llegien, però cada pàgina feia una
+    pantalla i mitja (1.304 píxels) i la novena carta quedava sola. Amb
+    tres columnes i el **nom escrit sota cada carta** (el número ja hi
+    era), la pàgina sencera cap a la pantalla (uns 650 píxels) i es
+    llegeix sense obrir la carta. S'ha triat aquesta (decisió D-024). A
+    l'ordinador l'àlbum no canvia.
+  - **El motiu del preu «≈» al zoom:** en obrir una carta en gran hi surt
+    el preu i, si porta «≈», una nota amb el motiu, en els tres idiomes.
+  - **Lliscaments des de la vora:** el zoom i l'àlbum no fan cas dels que
+    comencen a menys de 24 píxels de la vora, que són el gest d'anar
+    enrere del telèfon.
+  - **Botons ressaltats després d'un toc:** tots els efectes de passar el
+    ratolí per sobre ara només s'activen amb un ratolí de debò.
+- Repàs sencer de la web al mòbil (320, 360, 390 i 430 píxels, apaïsat,
+  tema clar i fosc) fet per un subagent amb el navegador. Se n'han arreglat
+  tres coses: en anar a una carta d'una altra expansió, la carta podia
+  quedar mig fora de la pantalla; els botons flotants tapaven el text del
+  peu; i «Com es calculen?» era massa petit per tocar-lo amb el dit.
+  El ressaltat de la carta on s'arriba dura una mica més.
+- `docs/prova-mobil.md` posat al dia (passos 6, 8 i 10).
+- Entrades **98** a **101** de l'històric i decisió **D-024**.
+
+**Eines usades:** Claude Code (subagents per al repàs i la revisió),
+navegador integrat amb simulació de mòbil.
+
+**Costos:** 0 € (de subscripció a part).
+
+**Problemes:** el mòbil apaïsat no es pot simular com a pantalla tàctil,
+així que la prova amb un telèfon de debò continua pendent. Queden
+apuntades al pull request algunes coses menors i dubtoses que ha trobat el
+repàs (el selector d'expansions a 320 píxels, el zoom que necessita
+desplaçament en pantalles molt petites, els botons flotants que poden
+tapar un + de la columna dreta).
