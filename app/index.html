@@ -67,7 +67,7 @@
     <div class="fila-controls">
       <input id="cercador" class="cercador" type="search" autocomplete="off"
              placeholder="" data-i18n-placeholder="cerca.placeholder">
-      <div class="control">
+      <div class="control control-vista">
         <span class="control-etiqueta" data-i18n="vista.etiqueta">Vista</span>
         <!-- Commutador de vista: graella clàssica o àlbum realista -->
         <div id="commutador-vista" class="segmentat">
@@ -208,6 +208,26 @@
       <div id="album-llibre" class="album-llibre"></div>
     </section>
 
+    <!-- Al mòbil la capçalera no es queda clavada a dalt: quan s'ha baixat
+         prou, aquests dos botons flotants porten al cercador (i als
+         filtres) o a dalt de tot (mobil.js). A l'ordinador no surten. -->
+    <div id="botons-flotants" class="botons-flotants" hidden>
+      <button type="button" id="boto-flotant-cerca" class="boto-flotant"
+              data-i18n-aria="mobil.cerca">
+        <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"
+             fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round">
+          <circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/>
+        </svg>
+      </button>
+      <button type="button" id="boto-flotant-amunt" class="boto-flotant"
+              data-i18n-aria="mobil.amunt">
+        <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"
+             fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 19V5M5 12l7-7 7 7"/>
+        </svg>
+      </button>
+    </div>
+
     <!-- La mateixa cerca a les altres expansions (cerca-global.js): surt
          només amb una cerca escrita, sota la graella o l'àlbum -->
     <section id="cerca-global" class="cerca-global" hidden>
@@ -284,7 +304,7 @@
     </div>
     <div class="peu-fila">
       <!-- El símbol del set l'omple el JavaScript amb la URL de les dades -->
-      <img id="simbol-set" class="simbol-set" src="" alt="" hidden>
+      <img id="simbol-set" class="simbol-set" src="" alt="" loading="lazy" decoding="async" hidden>
       <span id="peu-dades"></span>
     </div>
   </footer>

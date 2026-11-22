@@ -113,11 +113,20 @@
   display: none !important;
 }
 
+/* Safari d'iOS engrandeix la lletra pel seu compte en posar el mòbil
+   apaïsat; així es queda a la mida que diu el CSS */
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
 body {
   background: var(--fons);
   color: var(--text);
   font-family: "Segoe UI", system-ui, sans-serif;
   min-height: 100vh;
+  /* dvh: sense la barra d'adreces del mòbil (on no es coneix, val vh) */
+  min-height: 100dvh;
   display: flex;
   flex-direction: column;
 }
@@ -641,6 +650,51 @@ select:focus {
 .global-carta small {
   font-size: 0.75rem;
   color: var(--text-suau);
+}
+
+/* Botons flotants del mòbil (mobil.js): «cerca i filtres» i «torna a
+   dalt», a baix a la dreta quan la capçalera ja no es veu. 48px: mida
+   de dit amb marge. Per sota del missatge d'estat (40) i del zoom (50). */
+.botons-flotants {
+  position: fixed;
+  right: calc(1rem + env(safe-area-inset-right));
+  bottom: calc(1rem + env(safe-area-inset-bottom));
+  z-index: 30;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.botons-flotants[hidden] {
+  display: none;
+}
+
+.boto-flotant {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  background: var(--fons-suau);
+  color: var(--text);
+  border: 1px solid var(--vora);
+  border-radius: 50%;
+  box-shadow: 0 6px 18px rgb(0 0 0 / calc(0.5 * var(--ombra-forca)));
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+/* Amb el missatge d'estat flotant a baix de tot (en tàctil), els botons
+   pugen per sobre seu en lloc de quedar-hi tapats */
+body:has(.missatge:not([hidden])) .botons-flotants {
+  bottom: calc(5.5rem + env(safe-area-inset-bottom));
+}
+
+/* La cerca és l'acció principal: amb el color d'accent */
+#boto-flotant-cerca {
+  background: var(--accent);
+  color: var(--accent-text);
+  border-color: transparent;
 }
 
 /* ---------- Clic sobre una carta: obrir-la en gran ---------- */
@@ -1182,6 +1236,10 @@ body[data-visualitzacio="cataleg"] .carta--ressaltada {
 
 /* El <dialog> natiu: el navegador el centra i posa el teló tot sol */
 .selector-expansions {
+  /* El reinici «* { margin: 0 }» del principi treia el margin: auto que
+     el navegador posa als <dialog> modals, i el panell quedava enganxat
+     al cantó de dalt a l'esquerra en lloc de centrat */
+  margin: auto;
   width: min(34rem, 92vw);
   max-height: min(80vh, 42rem);
   /* En mòbil, dvh és l'alçada real amb la barra del navegador visible;
@@ -1203,7 +1261,9 @@ body[data-visualitzacio="cataleg"] .carta--ressaltada {
 }
 
 .selector-expansions::backdrop {
-  background: var(--tel-dialeg);
+  /* Safari < 17.4 i Chrome < 122 no fan arribar les variables al
+     ::backdrop: sense el valor de reserva, el teló hi quedava transparent */
+  background: var(--tel-dialeg, rgb(0 0 0 / 0.6));
 }
 
 /* La cerca i el botonet d'ordre comparteixen la primera fila del panell */
@@ -1758,12 +1818,24 @@ body,
   .bloc-filtres:not(.bloc-filtres--obert) {
     display: none;
   }
+
+  /* Capçalera compacta (enquesta: al mòbil no es veia cap carta a la
+     primera pantalla). Idioma i tema, que es toquen un cop, s'amaguen
+     amb «Filtres i opcions»: només surten (al seu lloc de sempre, a
+     sota del títol) quan aquest bloc és obert. Els
+     navegadors sense :has() els continuen mostrant com abans. */
+  .capcalera:not(:has(.bloc-filtres--obert)) .preferencies {
+    display: none;
+  }
 }
 
 /* ---------- Mòbil general (fins a 767px) ---------- */
 @media (max-width: 767px) {
   .capcalera {
     padding: 0.75rem;
+    /* Marges segurs també a dalt (barra d'estat si la web s'obre a
+       pantalla completa des de la pantalla d'inici) */
+    padding-top: calc(0.75rem + env(safe-area-inset-top));
     padding-left: calc(0.75rem + env(safe-area-inset-left));
     padding-right: calc(0.75rem + env(safe-area-inset-right));
   }
@@ -1771,6 +1843,42 @@ body,
   /* Menys aire entre controls: la capçalera sencera s'escurça ~80px */
   .fila-controls {
     gap: 0.5rem;
+  }
+
+  /* El cercador, sol a la seva fila */
+  .fila-controls .cercador {
+    flex: 1 1 100%;
+  }
+
+  /* Graella/Àlbum i «Filtres i opcions», a la mateixa fila: l'etiqueta
+     «Vista» queda només per als lectors de pantalla */
+  .fila-controls .control-vista {
+    width: auto;
+    flex: 1 1 0;
+  }
+
+  .control-vista .control-etiqueta {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  .fila-controls .boto-filtres {
+    width: auto;
+    flex: 1 1 0;
+    min-width: 0;
+    gap: 0.3rem;
+  }
+
+  .boto-filtres-text,
+  .boto-filtres-text > span:first-child {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   /* (Les regles del botó "Filtres i opcions" i del plegat són al bloc
@@ -1919,7 +2027,9 @@ body,
 @media (max-width: 480px), (max-height: 480px) {
   .zoom-tancar {
     position: fixed;
-    top: 0.75rem;
+    /* Sota la barra d'estat / l'illa dinàmica quan la web s'obre a
+       pantalla completa (env() val 0 a la resta de casos) */
+    top: calc(0.75rem + env(safe-area-inset-top));
     right: calc(0.75rem + env(safe-area-inset-right));
     z-index: 1;
   }
@@ -1948,6 +2058,17 @@ body,
        (amb 150px calien 309,6px i la graella queia a UNA columna) */
     grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
     gap: 0.6rem;
+  }
+
+  /* Àlbum: menys marge al carpesà i a la pàgina perquè les cartes
+     guanyin amplada (a 375px passen de ~95 a ~108px) */
+  .album-llibre {
+    padding: 0.3rem;
+  }
+
+  .album-pagina {
+    gap: 0.35rem;
+    padding: 0.4rem;
   }
 }
 
@@ -1983,6 +2104,27 @@ body,
   .carta,
   .butxaca-funda {
     touch-action: manipulation;
+    /* Sense el requadre gris que pinta el navegador a cada toc */
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Mantenir el dit sobre una carta no obre el menú d'iOS «Desa la
+     imatge / Copia» ni selecciona text: amb el dit, mantenir premut és
+     un gest de la web (marcar, obrir), no de la imatge */
+  .carta-imatge,
+  .butxaca-funda img,
+  .global-carta img,
+  .variants {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+  /* Lliscar de costat a l'àlbum passa pàgina (album.js): el navegador
+     només s'ocupa del desplaçament vertical i del pessic, i així el gest
+     horitzontal no es talla a mig camí */
+  .album-llibre {
+    touch-action: pan-y pinch-zoom;
   }
 
   /* Amb lletra per sota de 16px, Safari d'iOS fa zoom automàtic de tota
@@ -2099,12 +2241,26 @@ body,
      va al botó (que atura la propagació), no a la carta del voltant. */
   .boto-comptador {
     position: relative;
+    width: 2.5rem;
+    height: 2.5rem;
+    font-size: 1.15rem;
   }
 
+  /* 40px visibles i 44px que responen al dit */
   .boto-comptador::before {
     content: "";
     position: absolute;
-    inset: -2px -6px;
+    inset: -2px;
+  }
+
+  /* Amb botons de 40px, el nom de la variant ja no hi cap al costat
+     (quedava «nor…», «reve…»): va a la seva pròpia línia, a sobre */
+  .variant-fila {
+    flex-wrap: wrap;
+  }
+
+  .variant-nom {
+    flex: 1 1 100%;
   }
 
   /* Una mica més d'aire entre files de variants (menys tocs errats) */
@@ -2112,10 +2268,10 @@ body,
     gap: 0.5rem;
   }
 
-  /* Al zoom sí que hi ha lloc: botons +/− de 40px de veritat */
+  /* Al zoom sí que hi ha lloc: botons +/− de 44px de veritat */
   .zoom-variants .boto-comptador {
-    width: 2.5rem;
-    height: 2.5rem;
+    width: 2.75rem;
+    height: 2.75rem;
   }
 
   /* Caselles de verificació: quadret visible i zona de toc d'almenys
