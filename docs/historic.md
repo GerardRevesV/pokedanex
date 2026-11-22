@@ -1625,3 +1625,20 @@ del peu. L'espai que el peu deixa a sota per als botons només s'aplicava a
 les pantalles tàctils, però els botons també surten en una pantalla
 estreta sense tàctil. Ara l'espai i els botons segueixen exactament la
 mateixa condició.
+
+## 106. Els botons + i − tenen nom per als lectors de pantalla
+
+Les persones que no hi veuen fan servir un lector de pantalla, que llegeix
+la web en veu alta. Els botons + i − de cada carta només tenien el
+símbol, i el lector deia «més» sense dir de què. Ara cada botó porta un nom
+que només llegeix el lector: «Afegeix una Joltik normal» o «Treu una
+Joltik reverse», en l'idioma triat. En prémer-los, el lector diu el
+número nou.
+
+## 107. Els avisos de la web també s'anuncien
+
+El missatge que surt a dalt (o a baix, al mòbil) quan la web carrega o
+quan «Actualitza» falla ara està marcat com a missatge d'estat, i el
+lector de pantalla el llegeix sense que l'usuari hagi d'anar-lo a buscar.
+La resta de botons fets només amb una icona ja tenien nom, i s'ha
+comprovat que es tradueixen bé.
