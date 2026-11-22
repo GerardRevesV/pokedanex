@@ -1180,3 +1180,379 @@ s'envia, i mentrestant només el veu qui l'ha escrit.
 **Costos:** 0 € (de subscripció a part).
 
 **Problemes:** cap.
+
+## 2026-11-21 — L'enquesta d'usuaris: unificar les respostes
+
+**Què s'ha fet:**
+- L'Edanna va passar una enquesta sobre la web amb Microsoft Forms, en dos
+  formularis (català i castellà), del 15 al 18 de novembre. Hi han respost
+  33 persones: 25 en català i 8 en castellà.
+- S'han ajuntat els dos Excels que dona el Forms en un de sol, amb un
+  programa nou. El programa passa les respostes del castellà al català
+  perquè es puguin comptar juntes, i en treu quatre fulls: les respostes,
+  les estadístiques, les notes per perfil i les respostes escrites.
+- Primers números: valoració global de 8,7 sobre 10; facilitat d'ús de
+  4,64 sobre 5; disseny i filtres, 4,39; confiança per desar-hi la
+  col·lecció, 4,16. 29 de 33 entenen de seguida per a què serveix; ningú
+  ha perdut dades. 21 de 33 l'han provat només amb el mòbil.
+- Llista de millores demanades, per prioritat. La primera: el clic sobre
+  la carta i el selector «Marcar» confonen (tres persones ho descriuen).
+- Proposta de com entra l'enquesta al treball escrit: al capítol 23, amb
+  un annex. Encara no s'ha aplicat.
+- Entrada **74** de l'històric.
+
+**Eines usades:** Microsoft Forms (l'enquesta, feta per l'Edanna), Claude
+Code, Python amb la llibreria openpyxl (per llegir i escriure els Excels).
+
+**Costos:** 0 € (de subscripció a part).
+
+**Problemes:**
+- Els dos formularis no tenien les respostes escrites igual («Sí, de vez
+  en cuando» / «Sí, de tant en tant»): ha calgut una taula
+  d'equivalències.
+- Al formulari castellà, la pregunta de la pantalla fa dues preguntes de
+  sentit contrari en una, i un «no» s'hi pot entendre de dues maneres.
+  Aquelles 8 respostes no es fan servir per a aquesta pregunta.
+- L'Excel unificat i el programa no s'han pujat al repositori, que és
+  públic: té l'edat de cada persona i tot el que va escriure, i cal
+  decidir abans si es pot publicar.
+
+## 2026-11-21 (2a sessió) — Les millores de l'enquesta, en paral·lel
+
+**Què s'ha fet:**
+- Es decideix fer les millores que demana l'enquesta abans de l'entrega, i
+  fer-les alhora: una conversa coordinadora i una conversa per tema, cada
+  una en una còpia pròpia del projecte i en una branca pròpia.
+- Abans de començar es prenen quatre decisions: treure el selector
+  «Marcar» (D-014), afegir tot el bloc Scarlet & Violet i no només la 151
+  (D-018), posar les cartes que no es tenen en un gris més clar (D-020) i
+  fer un tema clar amb interruptor (D-022).
+- En surten vuit *pull requests*, del 28 al 35, tots fusionats a la versió
+  principal la nit del 21 al 22 de novembre. Les sessions següents
+  d'aquest diari expliquen què ha fet cadascun.
+- Cada conversa deixa el seu text per al diari, l'històric, les decisions
+  i els reptes en un fitxer a part, perquè les converses no comparteixen
+  memòria i no poden escriure totes alhora als mateixos documents.
+- Entrada **75** de l'històric.
+
+**Eines usades:** Claude Code, amb diverses converses alhora i subagents
+per revisar cada canvi.
+
+**Costos:** 0 € (de subscripció a part).
+
+**Problemes:**
+- El sistema de permisos de l'eina va bloquejar la fusió automàtica dels
+  *pull requests* a diverses converses. Les va fusionar la conversa
+  coordinadora.
+- El tema clar es va comprovar abans que entrés la brillantor holo, i per
+  tant no es va veure com quedaven juntes. Es va comprovar després, a la
+  sessió del mòbil.
+- Tot el que és del mòbil s'ha comprovat només amb una pantalla simulada.
+  Cap canvi s'ha provat en un telèfon de debò.
+
+## 2026-11-22 — El clic sobre una carta i el selector «Marcar» (PR 28)
+
+**Què s'ha fet:**
+- S'ha arreglat la queixa més repetida de l'enquesta: amb un mode de
+  marcar actiu, clicar una carta l'afegia a la col·lecció en lloc
+  d'ensenyar-la, i si la carta no tenia aquella variant semblava que no
+  passava res. La drecera per veure-la (Ctrl+clic, o mantenir el dit al
+  mòbil) no la va descobrir ningú.
+- S'ha tret del tot el selector «Marcar»: ara clicar (o tocar) una carta
+  sempre l'obre en gran, tant a la graella com a l'àlbum, i les còpies
+  s'afegeixen i es treuen amb els botons + i − de cada carta i de la
+  finestra gran.
+- Una frase que explica què és una carta **reverse holo**, perquè 10 dels
+  33 enquestats (8 dels 15 que no col·leccionen) no entenien la diferència
+  amb la normal. Surt a la finestra gran de les cartes que en tenen, amb
+  una icona d'informació, i també en passar el ratolí pel nom «reverse».
+- Fletxes ‹ › a la finestra gran per passar a la carta anterior o següent
+  sense tancar-la (també amb les fletxes del teclat o lliscant el dit al
+  mòbil). Segueixen l'ordre i els filtres que hi havia en obrir-la.
+- En canviar de Graella a Àlbum (o a l'inrevés) ja no es torna al
+  principi: l'altra vista s'obre on és la carta que s'estava mirant.
+- Entrades **76** a **79** de l'històric, decisió D-014 i repte 14.
+
+**Eines usades:** Claude Code (model Opus 5.5) en una conversa pròpia; un
+segon agent va revisar el canvi abans de publicar-lo. Comprovat al
+navegador integrat en mida d'ordinador i de mòbil (390 px).
+
+**Costos:** 0 € (de subscripció a part).
+
+**Problemes:** treure una peça que tocava molts llocs (graella, àlbum,
+estils, textos en tres idiomes, ajudes del Ctrl+clic i del toc llarg) sense
+deixar codi mort. I decidir quina és «la carta que miraves» en canviar de
+vista: s'ha triat la primera carta que es veu almenys mig sencera a dalt de
+la pantalla.
+
+## 2026-11-22 (2a sessió) — El cercador (PR 29)
+
+**Què s'ha fet:**
+- El cercador de cartes i el d'expansions ara busquen **per proximitat**:
+  troben el que busques encara que hi hagi errors d'escriptura, lletres
+  que falten o sobren, accents o majúscules diferents («picachu» →
+  Pikachu, «charizar» → Charizard, «shrouded fabel» → Shrouded Fable).
+  Els resultats exactes i els que comencen igual surten primer; el número
+  de carta es continua buscant exacte.
+- Sota la graella apareix una secció nova, **«A altres expansions»**, amb
+  les cartes que coincideixen amb la cerca a les altres expansions. Un clic
+  a una d'aquestes cartes obre la seva expansió i hi porta directament.
+  Respon a les dues persones de l'enquesta que no trobaven una carta
+  perquè no sabien de quina expansió era.
+- Entrades **80** i **81** de l'històric, decisions D-015 i D-016 i
+  repte 15.
+
+**Eines usades:** Claude Code (una conversa dedicada al cercador).
+
+**Costos:** 0 € (de subscripció a part).
+
+**Problemes:** cap de greu. Calia evitar que paraules curtes ho trobessin
+tot (decisió D-015) i que la web no es fes més pesada en obrir-la.
+
+## 2026-11-22 (3a sessió) — Les dades: 8 expansions més, d'on surten els preus i un «Actualitza» que falla bé (PR 30)
+
+**Què s'ha fet:**
+- **8 expansions noves**, totes les del bloc Scarlet & Violet que faltaven
+  abans de Shrouded Fable: Scarlet & Violet, Paldea Evolved, Obsidian
+  Flames, 151, Paradox Rift, Paldean Fates, Temporal Forces i Twilight
+  Masquerade. La web passa de 14 a 22 expansions. La 151 l'havia demanada
+  una persona a l'enquesta, i una altra demanava «més cartes». Cada
+  expansió nova té el seu color (tema) triat a partir del logotip, amb el
+  contrast comprovat per càlcul.
+- **D'on surten els preus.** Al panell d'estadístiques, just sota «Les
+  cartes que en tens valen», ara hi diu que els preus són aproximats, que
+  surten de Cardmarket i TCGplayer (a través de TCGdex i pokemontcg.io) i
+  de quin dia són. Un desplegable «Com es calculen?» ho explica en dues
+  frases. Ho demanava un col·leccionista actiu que no se'n refiava. El peu
+  de la pàgina ara també diu les dues fonts (abans només en deia una).
+- **El botó «Actualitza» falla bé.** Un usuari deia que «alguns cops falla
+  la connexió a la API». Ara la web ho torna a provar sola diverses
+  vegades durant un minut, avisa a cada intent, i si no se'n surt explica
+  el motiu en paraules planeres (no hi ha internet, el servidor triga
+  massa, massa actualitzacions seguides, el servidor està caigut...) i
+  recorda que continues veient les dades d'abans, que no s'han tocat.
+- Entrades **82** a **84** de l'històric, decisió D-018 i repte 16.
+
+**Eines usades:** Claude Code (Opus 5.5) com a orquestrador, amb subagents
+per triar els colors dels temes i per revisar el codi; el programa del
+projecte `tools/fetch_data.py` per baixar les dades; el navegador integrat
+per comprovar-ho tot en mida d'ordinador i de mòbil (390 px).
+
+**Costos:** 0 €. Les dues fonts de dades (pokemontcg.io i TCGdex) són
+gratuïtes.
+
+**Problemes:**
+- L'API de pokemontcg.io ha fallat contínuament durant la baixada (errors
+  500, 502 i 503). A Temporal Forces van caldre 5 intents seguits, i
+  Twilight Masquerade va esgotar els 6 intents dues vegades i es va haver
+  de tornar a provar al cap d'uns minuts. Aquest mateix comportament és el
+  que feia fallar el botó «Actualitza»: abans només esperava uns 9 segons
+  en total abans de rendir-se, i ara n'espera un minut.
+- A Scarlet & Violet (la primera expansió del bloc) tots els preus sortien
+  com a «aproximats». Investigant-ho es va veure que TCGdex, en aquesta
+  expansió, guarda els preus a la carta sencera i no a cada variant, i el
+  programa els perdia. Es va arreglar sense canviar el format de les dades
+  i ara 438 de les 444 peces tenen preu de Cardmarket al dia.
+- Les dades pesen: `app/data/` creix de 17,1 MB a 26,5 MB (+9,4 MB, uns
+  1,2 MB per expansió). No fa més lenta la web, perquè només es baixa
+  l'expansió que es mira, però el repositori sí que creix: si algun dia
+  s'acosta al límit recomanat de GitHub Pages (1 GB), caldrà esborrar
+  versions antigues.
+
+## 2026-11-22 (4a sessió) — L'índex lleuger de la cerca (PR 31)
+
+**Què s'ha fet:**
+- La cerca «A altres expansions» ja no baixa totes les expansions senceres
+  a la primera cerca. Ara baixa un sol fitxer petit,
+  `app/data/index-cerca.json`, que només té el número i el nom de cada
+  carta. Amb les 22 expansions, la primera cerca passa de baixar uns
+  20,7 MB (1,44 MB comprimits, en 44 peticions) a 92 KB (27 KB comprimits,
+  en una sola petició): unes 50 vegades menys.
+- L'expansió sencera només es baixa quan es clica un resultat, que és quan
+  de debò es necessita.
+- El programa que baixa les dades (`tools/fetch_data.py`) torna a fer
+  l'índex cada cop que s'afegeix o s'actualitza una expansió.
+- Entrada **85** de l'històric i decisió D-017.
+
+**Eines usades:** Claude Code.
+
+**Costos:** 0 € (de subscripció a part).
+
+**Problemes:** cap de greu. Calia que la cerca continués sent correcta
+quan l'usuari actualitza una expansió des del navegador (decisió D-017).
+La decisió anterior (D-016, baixar les expansions senceres) va quedar
+superada el mateix dia, quan les expansions van passar de 14 a 22.
+
+## 2026-11-22 (5a sessió) — La capçalera, els filtres i les cartes apagades (PR 32)
+
+**Què s'ha fet:**
+- **El botó per canviar d'expansió ara es veu.** Tres persones no van
+  descobrir que, per canviar d'expansió, calia clicar el logotip, i una va
+  pensar que la web només tenia Shrouded Fable. Ara el logotip va dins un
+  botó de debò, amb fons, vora i el text «Canvia d'expansió ▾». Al mòbil,
+  el text queda sota el logotip.
+- **Botó «Treu tots els filtres».** Surt només quan hi ha alguna cerca o
+  algun filtre actiu, i amb un clic ho torna tot a l'inici: el cercador,
+  «Què mostro», la raresa, el tipus d'energia i la categoria. L'ordre i la
+  vista no es toquen, perquè no amaguen cap carta. El mateix botó surt al
+  missatge de «cap carta no coincideix».
+- **«Colors» passa a dir-se «Cartes que no tinc».** Les dues opcions són
+  ara «Apagades» i «En color» (abans «Col·lecció» i «Catàleg», que no
+  s'entenien). Està en català, castellà i anglès.
+- **Les cartes que no tens es veuen més clares.** Segueixen en gris, perquè
+  es distingeixin d'un cop d'ull de les que tens (que són en color), però
+  ja no són gairebé negres: es reconeix el Pokémon i es llegeix el nom,
+  fins i tot a les cartes fosques.
+- Entrades **86** a **89** de l'històric, decisions D-019 i D-020 i
+  repte 17.
+
+**Eines usades:** Claude Code (Opus 5.5), en una conversa pròpia. Un segon
+agent va revisar el canvi abans de publicar-lo. Comprovat al navegador
+integrat en mida d'ordinador i de mòbil (390 px), a la graella i a l'àlbum,
+i amb dos temes d'expansió (Shrouded Fable i Prismatic Evolutions).
+
+**Costos:** 0 € (de subscripció a part).
+
+**Problemes:** al mòbil, el botó nou d'expansions, amb el text al costat
+del logotip, no hi cabia: sortia 17 píxels per fora de la pantalla. Es va
+resoldre posant el text sota el logotip en pantalles estretes.
+
+## 2026-11-22 (6a sessió) — Les cartes holo brillen al zoom (PR 33)
+
+**Què s'ha fet:**
+- Una persona de l'enquesta demanava «zooms de cartes holo amb efectes de
+  brillantor». Ara, quan obres una carta en gran i és holo o reverse holo,
+  la carta brilla. A l'ordinador s'inclina una mica i el reflex de colors
+  segueix el ratolí. Al mòbil segueix el dit i, si no la toques, la
+  brillantor es mou sola, a poc a poc.
+- Les cartes holo brillen només a la il·lustració i les reverse a tot el
+  marc menys la il·lustració, com les de veritat. Les cartes «ex» i les
+  rareses altes brillen senceres, i les més rares porten a més una mica de
+  purpurina.
+- Entrada **90** de l'històric i decisió D-021.
+
+**Eines usades:** Claude Code (Opus 5.5) com a orquestrador, amb un
+subagent per revisar el codi; el navegador integrat per provar-ho en mida
+d'ordinador i de mòbil. Tot està fet amb CSS i JavaScript propis: no s'hi
+ha afegit cap llibreria ni cap imatge.
+
+**Costos:** 0 €.
+
+**Problemes:** la primera versió de la reverse amb prou feines es veia
+sobre els marcs de colors clars, i se n'ha hagut d'apujar la intensitat.
+També es va veure que les cartes «ex» tenen la il·lustració a tota la
+carta, i limitar-ne la brillantor al requadre de dalt quedava estrany.
+
+## 2026-11-22 (7a sessió) — El tema clar (PR 34)
+
+**Què s'ha fet:**
+- La web ja es pot veure en **tema clar**, a més del fosc de sempre. A
+  l'enquesta, una persona va demanar poder canviar de fosc a clar i una
+  altra trobava la web «massa fosca». A la capçalera, al costat de
+  l'idioma, hi ha un interruptor nou, «Tema: Clar / Fosc». La tria es
+  recorda. Mentre l'usuari no tria res, la web fa servir el que tingui
+  posat el dispositiu, i hi canvia sola si el dispositiu canvia. En obrir
+  la pàgina no hi ha cap parpelleig: el tema es decideix abans que es
+  pinti res.
+- Per fer-ho, primer un agent va fer l'inventari de tots els colors
+  escrits directament dins dels estils (una trentena: ombres, l'àlbum, el
+  plàstic de les butxaques, la capçalera...). Tots van passar a ser
+  **variables de color** amb dos jocs de valors, un de fosc i un de clar.
+  El tema fosc ha quedat exactament igual que abans, i s'ha comprovat
+  valor per valor.
+- Cada expansió té el seu color propi, i aquests colors estan pensats per
+  a fons fosc: sobre blanc, un rosa pàl·lid o un groc no es llegirien. En
+  lloc d'escriure a mà 22 paletes noves, la web calcula la versió clara de
+  cada color: conserva el to i l'enfosqueix pas a pas fins que arriba al
+  contrast mínim que demana la norma d'accessibilitat (4,5:1). Les cartes
+  que no tens continuen sortint en gris, també sobre fons clar.
+- Entrades **91** a **93** de l'històric, decisió D-022 i repte 18.
+
+**Eines usades:** Claude Code (Opus 5.5) com a orquestrador. Un agent
+(Sonnet) va fer l'inventari de colors i un altre (Opus), que no havia
+escrit el codi, va revisar el canvi abans de publicar-lo. Comprovat al
+navegador integrat en mida d'ordinador i de mòbil (390 px), en clar i en
+fosc, amb dues expansions de to diferent (Shrouded Fable, lila, i
+Prismatic Evolutions, daurat).
+
+**Costos:** 0 € (de subscripció a part).
+
+**Problemes:**
+- Al mòbil, els botons Clar / Fosc quedaven esclafats perquè els botons
+  d'aquest tipus es reparteixen l'amplada. Es va arreglar donant-los una
+  mida pròpia.
+- Les cartes apagades sobre fons clar es fonien amb el blanc de la fitxa
+  i es va haver d'ajustar el gris.
+- El tema clar es va comprovar abans que entrés la brillantor holo
+  (PR 33). Com queden juntes es va mirar després, a la sessió del mòbil.
+
+## 2026-11-22 (8a sessió) — La web al mòbil (PR 35)
+
+**Què s'ha fet:**
+- Revisió de la web al mòbil, perquè a l'enquesta 21 de 33 persones la
+  van provar només amb el telèfon, hi posaven notes més baixes (8,5
+  contra 8,9) i sis deien que «no es veu bé a la pantalla». S'ha
+  recorregut la web en pantalles de 320, 360, 390 i 430 píxels d'ample, en
+  vertical i apaïsat, amb tema clar i fosc, i un subagent ha revisat el
+  codi buscant els problemes que un navegador d'ordinador no ensenya.
+- **Primera pantalla amb cartes:** abans la primera carta sortia a 911
+  píxels de dalt (més avall que tota la pantalla d'un mòbil); ara surt a
+  290. La capçalera s'ha compactat (l'idioma i el tema van a dins de
+  «Filtres i opcions», i «Graella/Àlbum» comparteix fila amb aquest botó) i
+  les estadístiques comencen plegades al mòbil.
+- **Accés ràpid des de qualsevol punt:** quan s'ha baixat i la capçalera ja
+  no es veu, surten dos botons rodons a baix a la dreta: la lupa porta al
+  cercador (amb el teclat obert) i la fletxa torna a dalt de tot.
+- **Botons per al dit:** els botons + i − de les cartes passen de 27 a 40
+  píxels (44 de zona tàctil) i els del zoom a 44.
+- **Àlbum:** les cartes de l'àlbum passen de 95 a 110 píxels d'ample i
+  l'àlbum comença just sota la capçalera.
+- **Detalls d'iPhone i Android:** el menú «Desa la imatge» ja no surt en
+  mantenir el dit sobre una carta, no apareix el requadre gris a cada toc,
+  la lletra no s'engrandeix sola en posar el mòbil apaïsat, i el botó de
+  tancar del zoom respecta la barra d'estat.
+- **Error trobat de passada:** el panell de canviar d'expansió sortia
+  enganxat al cantó de dalt a l'esquerra en lloc de centrat (també a
+  l'ordinador). Ara surt centrat.
+- Es comprova la brillantor holo sobre el tema clar, que no s'havia pogut
+  mirar abans: es veu bé.
+- Entrades **94** a **96** de l'històric, decisió D-023 i repte 19.
+
+**Eines usades:** Claude Code (amb subagents per a l'auditoria del codi i
+la revisió), navegador integrat amb simulació de mòbil.
+
+**Costos:** 0 € (de subscripció a part).
+
+**Problemes:** el navegador de l'ordinador només *simula* un mòbil. No pot
+provar el teclat de debò, la barra d'adreces que s'amaga, l'osca, els
+gestos del sistema ni el menú d'iOS. Per això queda una llista de
+comprovació de 14 passos per fer amb un telèfon de debò
+(`docs/prova-mobil.md`), que encara no s'ha fet. Quatre propostes de
+disseny no s'han aplicat i són a `docs/pendents.md`.
+
+## 2026-11-22 (9a sessió) — La documentació de les millores
+
+**Què s'ha fet:**
+- Els vuit fitxers que havien deixat les converses de millores
+  (`docs/canvis-enquesta/`) s'han passat a aquest diari, a l'històric
+  (entrades 74 a 96), a les decisions (D-014 a D-023) i als reptes (14 a
+  19), amb la numeració que toca. La carpeta s'ha esborrat.
+- En passar-los s'han corregit dues xifres contra les dades de
+  l'enquesta: la queixa del clic la descriuen tres persones (un fragment
+  en deia quatre), i la 151 la demana expressament una persona (una altra
+  demana «més cartes»).
+- La llista de 14 passos per provar la web amb un telèfon de debò passa a
+  `docs/prova-mobil.md`.
+- `docs/pendents.md`, al dia: les proves amb usuaris passen a «Fet», i hi
+  entren les propostes no aplicades del mòbil, les línies de futur de
+  l'enquesta i la feina de posar el treball escrit al dia amb la web nova.
+- Entrada **97** de l'històric.
+
+**Eines usades:** Claude Code.
+
+**Costos:** 0 € (de subscripció a part).
+
+**Problemes:** el treball escrit descriu la web d'abans de les millores
+(14 expansions, el selector «Marcar», el control «Colors», sense tema
+clar). Les parts II i III i les captures s'han de posar al dia, i no s'ha
+fet en aquesta sessió: ho ha de decidir l'autora.

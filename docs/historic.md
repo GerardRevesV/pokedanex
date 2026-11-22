@@ -1365,3 +1365,210 @@ posa l'autora i el títol que hi ha a la portada del treball. Ho fa dues
 vegades, perquè el Word, quan omple l'índex, hi apunta l'usuari de
 l'ordinador com a darrer autor. El temps d'edició continua sent zero: és
 veritat que el fitxer es genera de cop, i el capítol 13 ja ho explica.
+
+## 74. L'enquesta d'usuaris: 33 respostes en un sol full
+
+Del 15 al 18 de novembre l'Edanna passa una enquesta sobre la web, feta amb
+Microsoft Forms en dues llengües. Hi responen 33 persones, 25 en català i 8
+en castellà. El Forms dona un Excel per formulari, amb les mateixes
+preguntes però amb les respostes escrites en cada llengua, i així no es
+poden comptar juntes.
+
+El 21 de novembre es fa un programa que llegeix els dos Excels, posa totes
+les respostes tancades en català i escriu un sol Excel amb quatre fulls:
+totes les respostes, les estadístiques de cada pregunta, les notes per
+perfil (col·leccionista o no, aparell, edat, llengua) i les respostes
+escrites. Ni l'Excel ni el programa es pugen de moment al repositori, que
+és públic: abans s'ha de decidir si les respostes escrites es poden
+publicar.
+
+És la prova amb usuaris que faltava. La nota global és de 8,7 sobre 10 i la
+facilitat d'ús de 4,64 sobre 5. El problema que més es repeteix és que el
+clic sobre una carta fa coses diferents segons el selector «Marcar». Una
+pregunta del formulari castellà, la de la pantalla, va quedar mal feta (fa
+dues preguntes de sentit contrari en una) i les seves respostes no es
+compten.
+
+## 75. Les millores de l'enquesta, repartides en converses paral·leles
+
+De l'enquesta en surt una llista de millores, i es decideix fer-les abans
+de l'entrega. Per anar de pressa no es fan l'una darrere l'altra: una
+conversa fa de coordinadora i n'obre una per tema (el clic i «Marcar», el
+cercador, les dades, la capçalera i els filtres, la brillantor holo, el
+tema clar i el mòbil). Cada conversa treballa en una còpia pròpia del
+projecte i en una branca pròpia, i el seu canvi arriba a la versió
+principal amb un *pull request* (del 28 al 35). Com que les converses no
+comparteixen memòria, cada una deixa escrit en un fitxer el que ha fet, i
+al final una altra ho passa tot als documents del projecte (entrada 97).
+
+## 76. Fora el selector «Marcar»: el clic sempre obre la carta
+
+Es treu el mode de marcar amb clics (Només mirar / Normal / Reverse / Holo),
+que confonia els usuaris: el clic o toc sobre una carta l'obre sempre en
+gran, a la graella i a l'àlbum, i les còpies es marquen amb els botons + i −.
+Desapareixen també les ajudes del Ctrl+clic i del toc llarg, que ja no calen,
+i el clic dret torna a mostrar el menú normal del navegador. (PR 28;
+decisió D-014.)
+
+## 77. Explicació de les cartes reverse holo
+
+A la finestra gran de cada carta que té variant reverse surt una frase curta
+amb una icona d'informació: és la mateixa carta però amb la brillantor al
+fons i no al dibuix, i es compta a part perquè és una impressió diferent amb
+preu propi. En català, castellà i anglès. A l'enquesta, 10 de 33 persones no
+entenien la diferència. (PR 28.)
+
+## 78. Passar de carta dins la finestra gran
+
+La finestra gran té fletxes ‹ › (i funcionen les fletxes del teclat i
+lliscar el dit) per anar a la carta anterior o següent sense tancar-la,
+seguint l'ordre i els filtres de la graella, o l'ordre de l'àlbum. (PR 28.)
+
+## 79. Graella i àlbum mantenen la posició
+
+En canviar de vista, l'altra s'obre a l'alçada o a la pàgina on és la carta
+que s'estava mirant, en lloc de tornar al principi. (PR 28.)
+
+## 80. Cerca per proximitat
+
+El cercador abans només trobava una carta si s'escrivia un tros del nom
+exactament igual. Ara hi ha un fitxer nou, `app/js/cerca.js`, que compara
+els noms d'una manera més tolerant: passa tot a minúscules, treu els accents
+i compta quantes lletres caldria canviar, afegir, treure o intercanviar per
+passar del que s'ha escrit al nom de la carta. Si són poques, la carta surt.
+Les coincidències exactes van primer, després les que comencen igual, les
+que contenen el text i, al final, les que només s'hi assemblen. El mateix
+fitxer serveix per al cercador d'expansions. (PR 29; decisió D-015.)
+
+## 81. Cerca a totes les expansions
+
+Fins ara el cercador només mirava dins l'expansió oberta. Ara, quan
+s'escriu una cerca de 3 lletres o més, la web mira també totes les altres
+expansions i les mostra en una franja «A altres expansions» sota la graella,
+amb el nom de l'expansió de cada carta. En clicar-ne una, la web canvia a
+aquella expansió i fa lliscar la pàgina fins a la carta, que queda
+ressaltada un moment. Les dades de les altres expansions no es baixen en
+obrir la web, sinó la primera vegada que es fa una cerca. (PR 29; decisió
+D-016.)
+
+## 82. Vuit expansions més: tot el bloc Scarlet & Violet
+
+S'han afegit les 8 expansions de Scarlet & Violet anteriors a Shrouded
+Fable (Scarlet & Violet, Paldea Evolved, Obsidian Flames, 151, Paradox
+Rift, Paldean Fates, Temporal Forces i Twilight Masquerade), amb el mateix
+programa de sempre. Ara la web en té 22. Cada una té un color propi tret
+del logotip: vermell escarlata (Scarlet & Violet), terracota (Paldea
+Evolved), taronja de foc (Obsidian Flames), rosa de Mew (151), blau
+elèctric (Paradox Rift), rosa daurat «shiny» (Paldean Fates), aiguamarina
+(Temporal Forces) i verd d'Ogerpon (Twilight Masquerade). (PR 30; decisió
+D-018.)
+
+## 83. La web diu d'on surten els preus
+
+Al panell d'estadístiques, sota el valor de la col·lecció, hi ha una frase
+amb les fonts dels preus (Cardmarket i TCGplayer, via TCGdex i
+pokemontcg.io), el dia en què es van baixar i l'avís que són aproximats,
+més un desplegable «Com es calculen?» amb la regla resumida. Ve d'una
+petició de l'enquesta. (PR 30.)
+
+## 84. El botó «Actualitza» torna a provar-ho i explica per què falla
+
+El botó que baixa dades noves ara espera fins a un minut quan el servidor
+de les cartes falla, avisa de cada reintent i, si no se'n surt, diu el
+motiu en llenguatge planer sense perdre les dades que ja es veien. (PR 30.)
+
+## 85. Un índex lleuger per a la cerca a totes les expansions
+
+Quan es va crear la cerca a totes les expansions, la web baixava les dades
+completes de cada expansió (preus, atacs, il·lustradors...) només per
+llegir-ne els noms. Amb 22 expansions eren més de 20 MB, massa per a un
+mòbil amb dades. Ara el programa que baixa les dades genera també un
+fitxer d'índex amb només el número i el nom de cada carta (92 KB), i la web
+busca sobre aquest fitxer. Per estalviar encara més, de cada expansió es
+guarda una sola vegada l'adreça de les imatges, i cada carta només hi
+afegeix el seu número. (PR 31; decisió D-017.)
+
+## 86. El canvi d'expansió es veu com un botó
+
+El logotip de l'expansió de la capçalera va dins un botó amb el text
+«Canvia d'expansió», perquè a l'enquesta hi havia qui no sabia que es podia
+clicar. (PR 32.)
+
+## 87. Botó «Treu tots els filtres»
+
+Un botó que només apareix quan hi ha filtres o una cerca activa i que ho
+neteja tot d'un sol clic, tant al bloc de filtres com al missatge de «cap
+carta no coincideix». (PR 32; decisió D-019.)
+
+## 88. «Cartes que no tinc: Apagades / En color»
+
+El selector que abans es deia «Colors» (amb les opcions «Col·lecció» i
+«Catàleg») canvia de nom perquè s'entengui sense explicacions. (PR 32.)
+
+## 89. Cartes apagades més clares
+
+Les cartes que encara no tens continuen en gris, però més clares i
+llegibles. La intensitat es controla amb dues variables de color, de
+manera que el tema clar la pugui ajustar sense tocar res més. (PR 32;
+decisió D-020.)
+
+## 90. Brillantor holo al zoom de les cartes
+
+Al zoom, les cartes holo i reverse holo brillen amb un reflex de colors i
+una llum que segueixen el ratolí (la carta s'inclina) o el dit, i que al
+mòbil es mouen soles. Brilla el que tens: una carta que no tens, o que
+només tens en normal, no brilla; quan les cartes que no es tenen es veuen
+en color, brillen també les que existeixen en holo. Si l'ordinador o el
+mòbil té activat «reduir el moviment», la brillantor es queda quieta.
+(PR 33; decisió D-021.)
+
+## 91. Tema clar i interruptor Clar / Fosc
+
+Un selector nou a la capçalera canvia entre el tema clar i el fosc i ho
+recorda. Si no s'ha triat res, la web segueix el tema del dispositiu, sense
+parpelleig en carregar la pàgina. (PR 34; decisió D-022.)
+
+## 92. Tots els colors en variables
+
+Els colors que estaven escrits directament dins dels estils passen a ser
+variables amb un valor per al tema fosc i un altre per al clar. El tema fosc
+queda idèntic. (PR 34.)
+
+## 93. Colors d'expansió calculats per al tema clar
+
+La versió clara del color de cada expansió no s'escriu a mà: el programa
+l'enfosqueix, conservant el to, fins que arriba al contrast mínim de la
+norma d'accessibilitat WCAG. (PR 34; decisió D-022.)
+
+## 94. La web, pensada per al mòbil
+
+A l'enquesta, la majoria de persones van fer servir la web amb el mòbil, i
+la puntuaven més baix que les que la feien servir amb l'ordinador. En
+obrir-la al mòbil, tota la primera pantalla eren menús i estadístiques:
+no es veia cap carta. Ara la capçalera és més curta (l'idioma i el tema
+s'amaguen dins de «Filtres i opcions») i les estadístiques comencen
+plegades, de manera que les cartes surten de seguida. (PR 35.)
+
+## 95. Botons flotants per tornar a dalt
+
+Al mòbil la capçalera no es queda fixa a dalt, perquè ocuparia mitja
+pantalla. Per buscar una altra carta des de la meitat de la llista calia
+fer lliscar el dit fins a dalt de tot. Ara, quan la capçalera ja no es veu,
+apareixen dos botons rodons a baix a la dreta: un per anar al cercador i
+un per tornar a dalt. A l'ordinador no surten. (PR 35; decisió D-023.)
+
+## 96. Botons més grans per al dit
+
+Els botons + i − que serveixen per marcar les cartes que tens feien 27
+píxels, i la mida recomanada per tocar amb el dit és de 44. Ara fan 40
+píxels visibles i responen fins a 44. Perquè hi càpiguen, el nom de la
+variant (normal, reverse, holo) va a la seva pròpia línia, a sobre. (PR 35.)
+
+## 97. La documentació de les millores, en un sol lloc
+
+Cada conversa de millores havia deixat el seu text en un fitxer a part, a
+`docs/canvis-enquesta/`. Una darrera conversa els passa al diari, a
+l'històric (entrades 74 a 96), a les decisions (D-014 a D-023) i als reptes
+(14 a 19), amb la numeració que toca, i esborra la carpeta. La llista de
+passos per provar la web amb un telèfon de debò passa a
+`docs/prova-mobil.md`, i la llista de pendents es posa al dia.
