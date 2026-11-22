@@ -27,6 +27,7 @@ Pokedanex/
 ├── app/                 ← LA WEB (tot el que hi ha aquí es publicarà)
 │   ├── index.html       ← l'estructura de la pàgina
 │   ├── css/style.css    ← l'aspecte (tema fosc, graella de cartes)
+│   ├── css/holo.css     ← la brillantor holo/reverse del zoom
 │   ├── js/
 │   │   ├── i18n.js      ← textos en català, castellà i anglès
 │   │   ├── data.js      ← càrrega de dades: sets, versions i set actiu
@@ -35,12 +36,16 @@ Pokedanex/
 │   │   ├── collection.js← l'estat de la col·lecció (comptadors per variant)
 │   │   ├── album.js     ← la vista d'àlbum 3×3 de dues pàgines
 │   │   ├── stats.js     ← el panell de valor, cost i objectiu de compleció
-│   │   ├── markmode.js  ← el mode de marcatge (Només mirar/Normal/Reverse/Holo)
 │   │   ├── temes.js     ← el tema visual de cada expansió (i el per defecte)
 │   │   ├── selector-expansions.js ← el panell "Compendi" per triar expansió
+│   │   ├── cerca.js     ← la cerca per proximitat (tolera errors d'escriptura)
+│   │   ├── cerca-global.js ← la secció «A altres expansions» sota la graella
+│   │   ├── mobil.js     ← botons flotants del mòbil (cerca i tornar a dalt)
+│   │   ├── holo.js      ← la brillantor de les cartes holo i reverse al zoom
 │   │   └── main.js      ← la interfície: pinta i lliga-ho tot
 │   └── data/
 │       ├── sets.json    ← registre de les expansions disponibles
+│       ├── index-cerca.json ← noms i números de totes les cartes (cerca global)
 │       └── versions/
 │           ├── sv6pt5/  ← versions datades de Shrouded Fable + index.json
 │           └── sv8pt5/  ← versions datades de Prismatic Evolutions + index.json
@@ -52,7 +57,8 @@ Pokedanex/
 ### 1. Dades (`data.js` + `app/data/` + `fetch_data.py`)
 
 La web és **multi-expansió**: `app/data/sets.json` és el registre de les
-expansions disponibles (ara Shrouded Fable i Prismatic Evolutions), i cada
+expansions disponibles (ara 22: tot el bloc Scarlet & Violet des de la
+primera, més les de Mega Evolution), i cada
 expansió té la seva carpeta de versions. Les dades de les cartes venen de
 l'API gratuïta **pokemontcg.io**, però la web **mai** en depèn en viu:
 sempre llegeix una còpia local — la **cau versionada per expansió**.
@@ -81,8 +87,15 @@ Detalls tècnics rellevants:
 - Identificador estable de carta: `id` de l'API (ex. `sv6pt5-33`).
 - Les cartes es guarden retallades als camps que la web usa (llista única
   compartida conceptualment entre `fetch_data.py` i `data.js`).
-- L'API falla sovint (502): totes les peticions porten **reintents amb
-  espera creixent**.
+- L'API falla sovint (500/502): totes les peticions porten **reintents amb
+  espera creixent**. Al botó "Actualitza" (`data.js`) són 6 intents en
+  aproximadament un minut (esperes de 2, 4, 8, 16 i 32 s), cada intent amb
+  un temps màxim d'espera; si tot falla, no es desa res, la web es queda amb
+  les dades d'abans i el missatge diu el motiu (sense xarxa, temps esgotat,
+  massa peticions, servidor caigut o TCGdex caigut).
+- A alguns sets (p. ex. `sv1`) TCGdex dona els preus per carta i no per
+  variant: el retall els copia a cada variant sense segell, amb el mateix
+  format de dades.
 - La clau de l'API es llegeix de `config.json` (arrel del repo, exclòs de
   GitHub). La web publicada no tindrà clau i funcionarà igualment amb els
   límits gratuïts.
@@ -100,9 +113,26 @@ Els noms de les cartes no es tradueixen mai: són les cartes reals, en anglès.
   selector de versió de dades i botó d'actualitzar.
 - **Graella:** les 99 cartes ordenades pel número de col·lecció, amb imatge
   petita (càrrega mandrosa), número tipus àlbum (033/064), nom i raresa.
-- **Cercador:** filtra per nom o número a mesura que s'escriu.
+- **Cercador:** filtra per nom o número a mesura que s'escriu. El nom es
+  busca **per proximitat** (`cerca.js`): sense majúscules ni accents i
+  tolerant errors d'escriptura («picachu» → Pikachu), amb les
+  coincidències exactes i de prefix primer; el número continua sent exacte.
+  El cercador d'expansions del Compendi fa servir la mateixa funció.
+- **A altres expansions (`cerca-global.js`):** sota la graella, la mateixa
+  cerca feta a totes les altres expansions; un clic obre aquella expansió
+  amb la carta localitzada. A la primera cerca de 3 lletres o més es baixa
+  només `data/index-cerca.json` (~90 KB, ~27 KB comprimit), que genera
+  `tools/fetch_data.py`; l'expansió sencera es baixa en clicar un
+  resultat. Si l'usuari ha fet «Actualitza» d'una expansió, es busca a la
+  versió del navegador; si una expansió no és a l'índex, es baixa sencera.
 - **Peu:** data de la versió de dades que s'està veient i el nombre de cartes.
 - Estètica heretada del projecte tcg: **tema fosc** amb accent verd-turquesa.
+- **Tema clar / fosc:** tot el color passa per variables CSS (`:root` per al
+  fosc i `:root[data-tema="clar"]` per al clar). Un script curt al `<head>`
+  posa `data-tema` abans de pintar res (sense parpelleig): la tria desada o,
+  si no n'hi ha, la del dispositiu. L'interruptor és a la capçalera. L'accent
+  de cada expansió (`temes.js`) té una versió clara calculada: el mateix to,
+  enfosquit fins a 4,5:1 de contrast WCAG sobre els fons clars.
 
 ## Les capes de la Fase 2
 
@@ -111,19 +141,39 @@ Els noms de les cartes no es tradueixen mai: són les cartes reals, en anglès.
   té cada carta es dedueixen dels preus de l'API amb reserva per raresa).
   Es desa a l'instant al navegador; exportable/importable en JSON i amb
   buidat amb confirmació. Patró estat/interfície separats heretat del tcg.
-- **Marcar (`main.js`):** botons + / − a cada carta de la graella (un clic),
-  cartes apagades/grisoses quan no en tens cap, filtres Totes / Les tinc /
-  Em falten combinables amb el cercador.
+- **Marcar (`main.js`):** botons + / − a cada carta de la graella i al
+  zoom (un clic), cartes apagades/grisoses quan no en tens cap, filtres
+  Totes / Les tinc / Em falten combinables amb el cercador. Un clic (o toc)
+  sobre una carta, a la graella o a l'àlbum, l'obre sempre en gran (el zoom);
+  no hi ha cap mode que canviï el que fa el clic.
+- **Zoom (`main.js`):** imatge gran, comptadors de cada variant, una frase
+  que explica què és una reverse holo (si la carta en té) i fletxes ‹ › per
+  passar de carta sense tancar-lo (també amb ← → del teclat o lliscant el
+  dit sobre la imatge). El recorregut són les cartes que es veien en obrir-lo:
+  a la graella, amb els filtres i l'ordre actius; a l'àlbum, en ordre de
+  col·lecció (només les ressaltades si hi ha filtres).
+- **Brillantor holo (`holo.js` + `holo.css`):** al zoom, si tens la carta
+  en holo (o en reverse), dues capes per sobre de la imatge (reflex de
+  colors i llum) segueixen el ratolí o el dit, i la carta s'inclina; al
+  mòbil es mouen soles. Holo: només la il·lustració; reverse: tot menys la
+  il·lustració; «ex» i rareses altes: la carta sencera. Només `transform` i
+  `opacity`, capes sense clics (el zoom funciona igual) i quieta amb
+  «reduir el moviment». No hi ha efecte a la graella ni a l'àlbum.
 - **Àlbum (`album.js`):** vista de carpesà real — dues pàgines obertes de
   3×3 butxaques, navegació amb botons i fletxes de teclat, secretes
-  incloses; un clic a una carta salta a la graella. La cerca i els filtres
+  incloses; un clic a una carta l'obre en gran. En passar de graella a
+  àlbum (o a l'inrevés) l'altra vista s'obre on és la carta que s'estava
+  mirant. La cerca i els filtres
   hi **ressalten** en comptes de filtrar (D-011): cap butxaca no desapareix,
   les cartes que coincideixen porten anell i la barra de coincidències diu
   a quines pàgines són.
 - **Estadístiques (`stats.js`):** panell plegable amb barres de progrés,
   "la teva col·lecció val X €" (totes les còpies i variants) i "completar-la
   costaria Y €" (suma simple del que falta), amb **objectiu de compleció
-  triable** (set base / complet, amb o sense reverses) i data dels preus.
+  triable** (set base / complet, amb o sense reverses). Sota el valor diu
+  d'on surten els preus (Cardmarket i TCGplayer via TCGdex i pokemontcg.io),
+  de quin dia són i que són aproximats, amb un desplegable «Com es
+  calculen?» que resumeix la regla de D-013.
 - **`storage.js`:** tots els accessos a `localStorage` passen per aquí,
   perquè la web funcioni encara que el navegador el bloquegi.
 
@@ -137,8 +187,8 @@ Els noms de les cartes no es tradueixen mai: són les cartes reals, en anglès.
 | `pokedanex.view` | Vista activa (graella / àlbum) |
 | `pokedanex.statsOpen` | Si el panell d'estadístiques és obert o plegat |
 | `pokedanex.completionTarget` | L'objectiu de compleció triat |
-| `pokedanex.markMode` | Mode de marcatge (consulta / normal / reverse / holo) |
-| `pokedanex.displayMode` | Colors (col·lecció / catàleg) |
+| `pokedanex.displayMode` | «Cartes que no tinc»: apagades (`colleccio`) o en color (`cataleg`) |
+| `pokedanex.colorScheme` | Tema clar o fosc (`clar` / `fosc`); sense valor, el del dispositiu |
 | `pokedanex.activeSet` | L'expansió activa |
 | `pokedanex.temaPerSet` | Si l'estètica segueix l'expansió o no |
 
@@ -150,7 +200,7 @@ amb data visible (D-004). Límit conegut i acceptat: `localStorage` ronda els
 5 MB — unes 20 versions de navegador; si mai s'omple, la web avisa i la
 versió es pot consultar igualment durant la sessió.
 
-## Galetes i privacitat (revisió del 2026-11-14)
+## Galetes i privacitat (revisió del 2026-11-14, repassada el 2026-11-22)
 
 - **La web no crea cap galeta (cookie).** Al codi no hi ha cap
   `document.cookie`, ni Google Analytics ni cap altre comptador de visites.
@@ -165,8 +215,8 @@ versió es pot consultar igualment durant la sessió.
   demana, i per això queda exempt.
 - **Serveis de fora que veuen la visita:** les imatges venen de
   `images.pokemontcg.io`, la llibreria `marked` de `cdnjs.cloudflare.com`,
-  el botó "Actualitza dades" consulta `api.pokemontcg.io` i la web és a
-  GitHub Pages. Aquests servidors reben l'adreça IP de qui visita la web,
+  el botó "Actualitza dades" consulta `api.pokemontcg.io` i
+  `api.tcgdex.net` (per als preus), i la web és a GitHub Pages. Aquests servidors reben l'adreça IP de qui visita la web,
   com passa amb qualsevol pàgina. No s'ha comprovat amb el navegador si
   algun deixa galetes pròpies; per la seva funció (servir fitxers) no
   n'haurien de deixar.

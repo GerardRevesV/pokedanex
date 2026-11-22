@@ -6,7 +6,21 @@
        la pantalla i el CSS hi afegeix els marges segurs amb env() -->
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Pokedanex</title>
+  <!-- Tema clar o fosc ABANS de carregar l'estil, perquè la pàgina no
+       parpellegi: la tria desada al navegador o, si no n'hi ha, la del
+       dispositiu (prefers-color-scheme). L'interruptor és a main.js. -->
+  <script>
+    (function () {
+      var desat = null;
+      try { desat = window.localStorage.getItem("pokedanex.colorScheme"); } catch (e) {}
+      var clar = desat === "clar" || desat === "fosc"
+        ? desat === "clar"
+        : window.matchMedia("(prefers-color-scheme: light)").matches;
+      document.documentElement.dataset.tema = clar ? "clar" : "fosc";
+    })();
+  </script>
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/holo.css">
   <!-- Les imatges de cartes venen d'aquest domini: obrir la connexió
        abans d'hora estalvia temps a la primera imatge (sobretot en 4G) -->
   <link rel="preconnect" href="https://images.pokemontcg.io">
@@ -18,27 +32,42 @@
       <div class="marca">
         <h1>Pokedanex</h1>
         <!-- El logotip del set (que omple el JavaScript) és alhora el botó
-             que obre el selector d'expansions (selector-expansions.js) -->
+             que obre el selector d'expansions (selector-expansions.js).
+             Porta el text «Canvia d'expansió» a la vista: a l'enquesta,
+             tres persones no van veure que el logotip es podia clicar -->
         <button type="button" id="boto-expansions" class="boto-expansions"
-                aria-haspopup="dialog" data-i18n-aria="expansions.obrir">
+                aria-haspopup="dialog">
           <img id="logo-set" class="logo-set" src="" alt="" decoding="async" hidden>
-          <span class="caret" aria-hidden="true">▾</span>
+          <span class="boto-expansions-text">
+            <span data-i18n="expansions.obrir">Canvia d'expansió</span>
+            <span class="caret" aria-hidden="true">▾</span>
+          </span>
         </button>
       </div>
-      <div class="control">
-        <label for="selector-idioma" data-i18n="idioma.etiqueta">Idioma</label>
-        <select id="selector-idioma">
-          <option value="ca">Català</option>
-          <option value="es">Castellano</option>
-          <option value="en">English</option>
-        </select>
+      <div class="preferencies">
+        <div class="control">
+          <label for="selector-idioma" data-i18n="idioma.etiqueta">Idioma</label>
+          <select id="selector-idioma">
+            <option value="ca">Català</option>
+            <option value="es">Castellano</option>
+            <option value="en">English</option>
+          </select>
+        </div>
+        <!-- Tema clar o fosc (es recorda; per defecte, el del dispositiu) -->
+        <div class="control">
+          <span id="tema-etiqueta" class="control-etiqueta" data-i18n="tema.etiqueta">Tema</span>
+          <div id="commutador-tema" class="segmentat" role="group" aria-labelledby="tema-etiqueta">
+            <button type="button" data-tema="clar" data-i18n="tema.clar">Clar</button>
+            <button type="button" data-tema="fosc" data-i18n="tema.fosc">Fosc</button>
+          </div>
+        </div>
       </div>
     </div>
 
     <div class="fila-controls">
       <input id="cercador" class="cercador" type="search" autocomplete="off"
              placeholder="" data-i18n-placeholder="cerca.placeholder">
-      <div class="control">
+      <div class="control control-vista">
         <span class="control-etiqueta" data-i18n="vista.etiqueta">Vista</span>
         <!-- Commutador de vista: graella clàssica o àlbum realista -->
         <div id="commutador-vista" class="segmentat">
@@ -60,23 +89,12 @@
       </button>
       <div id="bloc-filtres" class="bloc-filtres">
       <div class="control">
-        <span class="control-etiqueta" data-i18n="visual.etiqueta">Visualització</span>
+        <span class="control-etiqueta" data-i18n="visual.etiqueta">Cartes que no tinc</span>
         <!-- Mode de visualització: col·lecció (cartes pendents apagades)
-             o catàleg (totes a color, amb marc daurat a les tingudes) -->
+             o catàleg (totes en color, amb marc daurat a les tingudes) -->
         <div id="mode-visual" class="segmentat">
-          <button type="button" class="actiu" data-visual="colleccio" data-i18n="visual.colleccio">Col·lecció</button>
-          <button type="button" data-visual="cataleg" data-i18n="visual.cataleg">Catàleg</button>
-        </div>
-      </div>
-      <div class="control">
-        <span class="control-etiqueta" data-i18n="marcar.etiqueta">Marcar</span>
-        <!-- Mode de marcatge: en mode variant, clic esquerre sobre una carta
-             suma una còpia d'aquesta variant i clic dret en resta una -->
-        <div id="mode-marcatge" class="segmentat">
-          <button type="button" class="actiu" data-mode="consulta" data-i18n="marcar.consulta">Consulta</button>
-          <button type="button" data-mode="normal" data-i18n="marcar.normal">Normal</button>
-          <button type="button" data-mode="reverse" data-i18n="marcar.reverse">Reverse</button>
-          <button type="button" data-mode="holo" data-i18n="marcar.holo">Holo</button>
+          <button type="button" class="actiu" data-visual="colleccio" data-i18n="visual.colleccio">Apagades</button>
+          <button type="button" data-visual="cataleg" data-i18n="visual.cataleg">En color</button>
         </div>
       </div>
       <div class="control">
@@ -126,6 +144,11 @@
           </button>
         </div>
       </div>
+      <!-- Torna la cerca i tots els filtres al valor per defecte (l'ordre
+           i la vista no són filtres: no es toquen). Només es veu si hi ha
+           alguna cerca o filtre actiu (main.js) -->
+      <button type="button" id="boto-treure-filtres" class="boto-suau boto-treure-filtres"
+              data-i18n="graella.treureFiltres" hidden>Treu tots els filtres</button>
       </div><!-- /bloc-filtres -->
     </div>
   </header>
@@ -158,7 +181,9 @@
       </div>
     </section>
 
-    <p id="missatge" class="missatge" hidden></p>
+    <!-- role="status": el lector de pantalla anuncia els avisos (carregant,
+         errors d'«Actualitza», col·lecció importada...) sense moure el focus -->
+    <p id="missatge" class="missatge" role="status" hidden></p>
     <div id="graella" class="graella"></div>
 
     <!-- Vista d'àlbum: dues pàgines obertes amb butxaques 3x3 (album.js) -->
@@ -185,24 +210,72 @@
       <div id="album-llibre" class="album-llibre"></div>
     </section>
 
+    <!-- Al mòbil la capçalera no es queda clavada a dalt: quan s'ha baixat
+         prou, aquests dos botons flotants porten al cercador (i als
+         filtres) o a dalt de tot (mobil.js). A l'ordinador no surten. -->
+    <div id="botons-flotants" class="botons-flotants" hidden>
+      <button type="button" id="boto-flotant-cerca" class="boto-flotant"
+              data-i18n-aria="mobil.cerca">
+        <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"
+             fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round">
+          <circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/>
+        </svg>
+      </button>
+      <button type="button" id="boto-flotant-amunt" class="boto-flotant"
+              data-i18n-aria="mobil.amunt">
+        <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"
+             fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 19V5M5 12l7-7 7 7"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- La mateixa cerca a les altres expansions (cerca-global.js): surt
+         només amb una cerca escrita, sota la graella o l'àlbum -->
+    <section id="cerca-global" class="cerca-global" hidden>
+      <h2 class="cerca-global-titol" data-i18n="global.titol">A altres expansions</h2>
+      <p id="cerca-global-estat" class="cerca-global-estat"></p>
+      <div id="cerca-global-llista" class="cerca-global-llista"></div>
+    </section>
+
     <!-- Zoom de carta: la imatge gran per sobre de tot (clic fora, × o Esc per tancar) -->
     <div id="zoom" class="zoom" hidden>
       <div class="zoom-fitxa" role="dialog" aria-modal="true" aria-labelledby="zoom-nom">
         <!-- L'aria-label del botó el posa el JavaScript (canvia amb l'idioma) -->
         <button type="button" id="zoom-tancar" class="zoom-tancar">×</button>
         <img id="zoom-imatge" class="zoom-imatge" alt="" decoding="async">
-        <div class="zoom-info">
-          <span id="zoom-numero" class="zoom-numero"></span>
-          <span id="zoom-nom" class="zoom-nom"></span>
-          <span id="zoom-raresa" class="zoom-raresa"></span>
+        <!-- Les fletxes ‹ › passen a la carta anterior o següent sense tancar
+             el zoom (també amb les fletxes del teclat o lliscant el dit);
+             els aria-label els posa el JavaScript -->
+        <div class="zoom-capcal">
+          <button type="button" id="zoom-anterior" class="zoom-fletxa">&lsaquo;</button>
+          <div class="zoom-info">
+            <span id="zoom-numero" class="zoom-numero"></span>
+            <span id="zoom-nom" class="zoom-nom"></span>
+            <span id="zoom-raresa" class="zoom-raresa"></span>
+            <!-- Preu orientatiu de la carta (amb «≈» si és aproximat) -->
+            <span id="zoom-preu" class="zoom-preu"></span>
+          </div>
+          <button type="button" id="zoom-seguent" class="zoom-fletxa">&rsaquo;</button>
         </div>
         <!-- Files de comptadors per variant: les omple el JavaScript en obrir el zoom -->
         <div id="zoom-variants" class="zoom-variants"></div>
+        <!-- Per què el preu porta «≈»: a la graella només es veu passant-hi
+             el ratolí (title); aquí es llegeix també amb el dit -->
+        <p id="zoom-nota-preu" class="zoom-nota zoom-nota-preu" hidden>
+          <span class="zoom-ajuda-reverse-icona" aria-hidden="true">≈</span>
+          <span id="zoom-nota-preu-text"></span>
+        </p>
+        <!-- Què és una reverse holo: només es veu si la carta en té -->
+        <p id="zoom-ajuda-reverse" class="zoom-ajuda-reverse" hidden>
+          <span class="zoom-ajuda-reverse-icona" aria-hidden="true">i</span>
+          <span data-i18n="variant.ajudaReverse">Reverse holo</span>
+        </p>
         <button type="button" id="zoom-graella" class="zoom-graella" data-i18n="zoom.veureGraella">
           Veure a la graella
         </button>
         <!-- En tàctil, main.js canvia la clau per la versió sense "Esc" -->
-        <p id="zoom-ajuda" class="zoom-ajuda" data-i18n="zoom.ajuda">Clic fora o tecla Esc per tancar</p>
+        <p id="zoom-ajuda" class="zoom-ajuda" data-i18n="zoom.ajuda">Toca fora o prem Esc per tancar</p>
       </div>
     </div>
 
@@ -241,7 +314,7 @@
     </div>
     <div class="peu-fila">
       <!-- El símbol del set l'omple el JavaScript amb la URL de les dades -->
-      <img id="simbol-set" class="simbol-set" src="" alt="" hidden>
+      <img id="simbol-set" class="simbol-set" src="" alt="" loading="lazy" decoding="async" hidden>
       <span id="peu-dades"></span>
     </div>
     <p class="peu-privacitat" data-i18n="peu.privacitat">Aquesta web no fa servir galetes: la teva col·lecció només es desa al teu navegador.</p>

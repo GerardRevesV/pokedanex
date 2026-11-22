@@ -13,6 +13,32 @@
   --error: #ff7a6e;
   --or-clar: #e8c877;       /* marc daurat del mode catàleg (to clar) */
   --or-fosc: #9a7a3a;       /* marc daurat del mode catàleg (to fosc) */
+  /* Cartes que encara no tens («Apagades»): en gris, però prou clares
+     per reconèixer el Pokémon i llegir-ne el nom. Abans eren gris a
+     opacitat 0.45, gairebé negres sobre el fons fosc («massa fosca»
+     a l'enquesta). La diferència amb les que tens és el color. */
+  --pendent-filtre: grayscale(1) brightness(1.1);
+  --pendent-opacitat: 0.7;
+
+  /* Colors de peces concretes (abans escrits a mà dins de cada regla):
+     així el tema clar només ha de canviar aquests valors */
+  --capcalera-fons: rgba(14, 17, 22, 0.92);   /* capçalera enganxosa, amb desenfocament */
+  --capcalera-fons-opac: rgba(14, 17, 22, 0.98); /* la mateixa, sense desenfocament (tàctil) */
+  --pastilla-text: #fff;          /* text de les pastilles de tipus fosques */
+  --pastilla-text-fosc: #111;     /* text de les pastilles de tipus clares */
+  --album-tapa-clar: #232a36;     /* tapes del carpesà (degradat) */
+  --album-tapa-fosc: #10151d;
+  --album-pagina: #1a2029;        /* paper de les pàgines de l'àlbum */
+  --funda-vora: rgba(255, 255, 255, 0.08);  /* plàstic de les butxaques */
+  --funda-fons: rgba(255, 255, 255, 0.02);
+  --funda-reflex: rgba(255, 255, 255, 0.1); /* reflex de llum del plàstic */
+  --funda-opaca: #20252e;         /* el plàstic en versió opaca (marc daurat) */
+  --or-resplendor: rgba(232, 200, 119, 0.07); /* halo interior del marc daurat */
+  --tel-zoom: rgba(0, 0, 0, 0.75);   /* teló fosc darrere del zoom */
+  --tel-dialeg: rgba(0, 0, 0, 0.65); /* teló darrere del selector d'expansions */
+  /* Totes les ombres són negres; aquest factor en multiplica l'opacitat
+     (1 = tal com eren; el tema clar les fa més suaus) */
+  --ombra-forca: 1;
 
   /* Colors dels tipus d'energia (pastilles de la graella).
      Els tons foscos estan triats perquè la lletra blanca hi contrasti prou
@@ -34,6 +60,48 @@
   --tipus-neutre: #4a5670;
 }
 
+/* ---------- Tema clar ----------
+   Els mateixos noms amb valors per a fons clar. L'atribut data-tema de
+   <html> el posa l'script del <head> (index.html) abans del primer
+   pintat, i l'interruptor «Tema» de la capçalera el canvia. L'accent de
+   cada expansió el recalcula temes.js (enfosquit fins a 4,5:1 de
+   contrast); aquí només hi ha el del tema per defecte. */
+:root[data-tema="clar"] {
+  color-scheme: light;      /* controls natius (desplegables, barres) en clar */
+  --fons: #f3f5f8;
+  --fons-suau: #ffffff;
+  --fons-carta: #ffffff;
+  --vora: #d3d9e2;
+  --text: #18202b;          /* 15,0:1 sobre --fons */
+  --text-suau: #556274;     /* 5,7:1 sobre --fons (mínim 4,5:1) */
+  --accent: #197c69;        /* el turquesa, enfosquit (4,66:1 sobre --fons) */
+  --accent-text: #ffffff;
+  --resplendor: rgba(25, 124, 105, 0.22);
+  --error: #c0392b;         /* 4,98:1 sobre --fons */
+  --or-clar: #e2b84f;
+  --or-fosc: #a07a2a;
+
+  /* Cartes que no tens: sobre fons clar n'hi ha prou amb el gris (sense
+     aclarir) i una mica de transparència; més transparent, les cartes
+     de fons blanc es fonien amb la fitxa */
+  --pendent-filtre: grayscale(1);
+  --pendent-opacitat: 0.75;
+
+  --capcalera-fons: rgba(243, 245, 248, 0.92);
+  --capcalera-fons-opac: rgba(243, 245, 248, 0.98);
+  --album-tapa-clar: #cfd6e0;
+  --album-tapa-fosc: #aab4c2;
+  --album-pagina: #fbfcfd;
+  --funda-vora: rgba(24, 32, 43, 0.12);
+  --funda-fons: rgba(24, 32, 43, 0.02);
+  --funda-reflex: rgba(255, 255, 255, 0.45);
+  --funda-opaca: #f6f7f9;
+  --or-resplendor: rgba(226, 184, 79, 0.12);
+  --tel-zoom: rgba(24, 32, 43, 0.6);
+  --tel-dialeg: rgba(24, 32, 43, 0.5);
+  --ombra-forca: 0.35;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -45,11 +113,20 @@
   display: none !important;
 }
 
+/* Safari d'iOS engrandeix la lletra pel seu compte en posar el mòbil
+   apaïsat; així es queda a la mida que diu el CSS */
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
 body {
   background: var(--fons);
   color: var(--text);
   font-family: "Segoe UI", system-ui, sans-serif;
   min-height: 100vh;
+  /* dvh: sense la barra d'adreces del mòbil (on no es coneix, val vh) */
+  min-height: 100dvh;
   display: flex;
   flex-direction: column;
 }
@@ -60,7 +137,7 @@ body {
   position: sticky;
   top: 0;
   z-index: 10;
-  background: rgba(14, 17, 22, 0.92);
+  background: var(--capcalera-fons);
   /* Safari (iOS/Mac) encara demana el prefix -webkit- per al desenfocament */
   -webkit-backdrop-filter: blur(6px);
   backdrop-filter: blur(6px);
@@ -74,6 +151,22 @@ body {
   justify-content: space-between;
   gap: 1rem;
   flex-wrap: wrap;
+}
+
+/* Idioma i tema, junts a la dreta de la fila de la marca */
+.preferencies {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+}
+
+/* Els dos botons Clar / Fosc fan la seva mida (al mòbil, els botons
+   segmentats es reparteixen l'ample i aquí quedaven esclafats) */
+#commutador-tema button {
+  flex: none;
+  padding-left: 0.8rem;
+  padding-right: 0.8rem;
 }
 
 .marca {
@@ -96,32 +189,44 @@ body {
   width: auto;
 }
 
-/* El logotip del set és un botó: obre el selector d'expansions */
+/* El logotip del set és un botó: obre el selector d'expansions. Té
+   aspecte de botó de debò (fons, vora i el text «Canvia d'expansió»):
+   amb només el logotip, a l'enquesta no tothom va veure que es clicava */
 .boto-expansions {
   display: flex;
   align-items: center;
-  gap: 0.4rem;
-  background: none;
-  border: 1px solid transparent;
-  border-radius: 8px;
-  padding: 0.25rem 0.5rem;
+  gap: 0.6rem;
+  background: var(--fons-suau);
+  color: var(--text);
+  border: 1px solid var(--vora);
+  border-radius: 10px;
+  padding: 0.3rem 0.7rem 0.3rem 0.5rem;
+  font: inherit;
   cursor: pointer;
 }
 
-.boto-expansions:hover,
 .boto-expansions:focus-visible {
   border-color: var(--accent);
   box-shadow: 0 0 12px var(--resplendor);
   outline: none;
 }
 
-.boto-expansions .caret {
-  color: var(--text-suau);
-  font-size: 0.8rem;
+/* «Canvia d'expansió ▾»: el text i la fletxa, junts */
+.boto-expansions-text {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  white-space: nowrap;
 }
 
-.boto-expansions:hover .caret,
-.boto-expansions:focus-visible .caret {
+.boto-expansions .caret {
+  color: var(--accent);
+  font-size: 0.9rem;
+}
+
+.boto-expansions:focus-visible .boto-expansions-text {
   color: var(--accent);
 }
 
@@ -145,6 +250,13 @@ body {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+}
+
+/* «Treu tots els filtres», al final del bloc de filtres (només surt si
+   n'hi ha algun d'actiu): alineat a baix amb els controls del costat */
+.boto-treure-filtres {
+  align-self: flex-end;
+  min-height: 2.2rem;
 }
 
 .filtres-compte {
@@ -227,9 +339,7 @@ select:focus {
   cursor: pointer;
 }
 
-.boto-accent:hover:not(:disabled) {
-  filter: brightness(1.15);
-}
+/* El :hover del botó és al bloc @media (hover: hover) del final */
 
 .boto-accent:disabled {
   opacity: 0.5;
@@ -320,13 +430,12 @@ select:focus {
   object-fit: contain;
   border-radius: 6px;
   transition: filter 0.3s ease, opacity 0.3s ease;
-  /* El cursor depèn del mode de marcatge (vegeu més avall) */
 }
 
 /* Carta sense cap còpia: apagada i grisosa; s'encén quan en tens alguna */
 .carta--pendent .carta-imatge {
-  filter: grayscale(1);
-  opacity: 0.45;
+  filter: var(--pendent-filtre);
+  opacity: var(--pendent-opacitat);
 }
 
 .carta-info {
@@ -372,13 +481,13 @@ select:focus {
   padding: 0.1rem 0.45rem;
   border-radius: 999px;
   font-weight: 600;
-  color: #fff;
+  color: var(--pastilla-text);
   background: var(--tipus-neutre);
 }
 
 /* Sobre fons clars, la lletra és fosca perquè es llegeixi bé */
 .pastilla-tipus--fosca-lletra {
-  color: #111;
+  color: var(--pastilla-text-fosc);
 }
 
 /* Fons molt foscos o neutres: una vora fina perquè no es perdin */
@@ -468,41 +577,131 @@ select:focus {
   padding: 3rem 1rem;
 }
 
-/* ---------- Mode de marcatge amb clics ---------- */
+/* La mateixa cerca a les altres expansions (cerca-global.js): una franja
+   sota la graella amb cartes petites que porten a la seva expansió */
+.cerca-global {
+  margin-top: 2rem;
+  padding-top: 1.2rem;
+  border-top: 1px solid var(--vora);
+}
 
-/* Cursors segons el mode (l'atribut data-marcatge del body el posa main.js):
-   lupa per al zoom en consulta; "copy" (acció) sobre cartes i fundes
-   plenes en mode variant, on cada clic afegeix o treu una còpia */
-body[data-marcatge="consulta"] .carta-imatge {
+.cerca-global-titol {
+  margin: 0 0 0.4rem;
+  font-size: 1.05rem;
+}
+
+.cerca-global-estat {
+  margin: 0 0 0.8rem;
+  color: var(--text-suau);
+  font-size: 0.9rem;
+}
+
+.cerca-global-llista {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 0.8rem;
+}
+
+/* Al mòbil, tres per fila: són cartes de consulta ràpida, no cal que
+   siguin tan grans com les de la graella */
+@media (max-width: 600px) {
+  .cerca-global-llista {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.5rem;
+  }
+}
+
+.global-carta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0.5rem;
+  background: var(--fons-carta);
+  border: 1px solid var(--vora);
+  border-radius: 10px;
+  color: var(--text);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  min-width: 0;
+}
+
+.global-carta:focus-visible {
+  border-color: var(--accent);
+}
+
+.global-carta img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 63 / 88;
+  object-fit: contain;
+}
+
+.global-carta b {
+  font-size: 0.85rem;
+  overflow-wrap: anywhere;
+}
+
+.global-carta small {
+  font-size: 0.75rem;
+  color: var(--text-suau);
+}
+
+/* Botons flotants del mòbil (mobil.js): «cerca i filtres» i «torna a
+   dalt», a baix a la dreta quan la capçalera ja no es veu. 48px: mida
+   de dit amb marge. Per sota del missatge d'estat (40) i del zoom (50). */
+.botons-flotants {
+  position: fixed;
+  right: calc(1rem + env(safe-area-inset-right));
+  bottom: calc(1rem + env(safe-area-inset-bottom));
+  z-index: 30;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.botons-flotants[hidden] {
+  display: none;
+}
+
+.boto-flotant {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  background: var(--fons-suau);
+  color: var(--text);
+  border: 1px solid var(--vora);
+  border-radius: 50%;
+  box-shadow: 0 6px 18px rgb(0 0 0 / calc(0.5 * var(--ombra-forca)));
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+/* Amb el missatge d'estat flotant a baix de tot (en tàctil), els botons
+   pugen per sobre seu en lloc de quedar-hi tapats */
+body:has(.missatge:not([hidden])) .botons-flotants {
+  bottom: calc(5.5rem + env(safe-area-inset-bottom));
+}
+
+/* La cerca és l'acció principal: amb el color d'accent */
+#boto-flotant-cerca {
+  background: var(--accent);
+  color: var(--accent-text);
+  border-color: transparent;
+}
+
+/* ---------- Clic sobre una carta: obrir-la en gran ---------- */
+
+/* Tota la fitxa obre el zoom (lupa), menys el bloc de variants, on
+   només hi responen els botons − i + */
+.carta {
   cursor: zoom-in;
 }
 
-body:not([data-marcatge="consulta"]) .carta,
-body:not([data-marcatge="consulta"]) .butxaca-funda:not(.butxaca-funda--buida) {
-  cursor: copy;
-}
-
-/* Sacseig subtil: la carta no existeix en la variant activa */
-@keyframes sacseig {
-  0%, 100% { transform: translateX(0); }
-  20%, 60% { transform: translateX(-4px); }
-  40%, 80% { transform: translateX(4px); }
-}
-
-.carta--sacseig {
-  animation: sacseig 0.35s ease;
-}
-
-/* Flaix de vora en marcar amb clic: verd en sumar, vermell en restar
-   (les classes valen tant per a la fitxa com per a la funda de l'àlbum) */
-.carta--marcada {
-  border-color: var(--accent);
-  box-shadow: 0 0 0 2px var(--accent);
-}
-
-.carta--restada {
-  border-color: var(--error);
-  box-shadow: 0 0 0 2px var(--error);
+.carta .variants {
+  cursor: default;
 }
 
 /* ---------- Vista d'àlbum (carpesà obert amb butxaques 3×3) ---------- */
@@ -532,10 +731,7 @@ body:not([data-marcatge="consulta"]) .butxaca-funda:not(.butxaca-funda--buida) {
   cursor: pointer;
 }
 
-.album-fletxa:hover:not(:disabled) {
-  border-color: var(--accent);
-  color: var(--accent);
-}
+/* El :hover de la fletxa és al bloc @media (hover: hover) del final */
 
 .album-fletxa:disabled {
   opacity: 0.35;
@@ -585,6 +781,12 @@ body:not([data-marcatge="consulta"]) .butxaca-funda:not(.butxaca-funda--buida) {
   opacity: 0.28;
 }
 
+/* Amb una cerca activa, el nom (mòbil) de les cartes que no hi
+   coincideixen també s'apaga: així es veuen d'un cop d'ull les que sí */
+.butxaca-funda--descartada ~ .butxaca-nom {
+  opacity: 0.4;
+}
+
 .butxaca-funda--coincident {
   box-shadow: 0 0 0 2px var(--accent), 0 0 14px var(--resplendor);
 }
@@ -597,10 +799,10 @@ body:not([data-marcatge="consulta"]) .butxaca-funda:not(.butxaca-funda--buida) {
   position: relative;
   gap: 0.4rem;
   padding: 1.1rem;
-  background: linear-gradient(145deg, #232a36, #10151d);
+  background: linear-gradient(145deg, var(--album-tapa-clar), var(--album-tapa-fosc));
   border: 1px solid var(--vora);
   border-radius: 14px;
-  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 14px 34px rgb(0 0 0 / calc(0.5 * var(--ombra-forca)));
 }
 
 .album-pagina {
@@ -608,19 +810,19 @@ body:not([data-marcatge="consulta"]) .butxaca-funda:not(.butxaca-funda--buida) {
   grid-template-columns: repeat(3, minmax(90px, 130px));
   gap: 0.55rem;
   padding: 0.8rem;
-  background: #1a2029;
+  background: var(--album-pagina);
   border: 1px solid var(--vora);
 }
 
 /* Ombra cap al llom central, com un llibre obert de veritat */
 .album-pagina:first-child {
   border-radius: 8px 3px 3px 8px;
-  box-shadow: inset -14px 0 18px -14px rgba(0, 0, 0, 0.8);
+  box-shadow: inset -14px 0 18px -14px rgb(0 0 0 / calc(0.8 * var(--ombra-forca)));
 }
 
 .album-pagina:last-child {
   border-radius: 3px 8px 8px 3px;
-  box-shadow: inset 14px 0 18px -14px rgba(0, 0, 0, 0.8);
+  box-shadow: inset 14px 0 18px -14px rgb(0 0 0 / calc(0.8 * var(--ombra-forca)));
 }
 
 /* ---------- El full que gira (efecte de llibre en passar pàgina) ----------
@@ -637,7 +839,7 @@ body:not([data-marcatge="consulta"]) .butxaca-funda:not(.butxaca-funda--buida) {
   position: absolute; /* album.js li posa mida i posició exactes */
   z-index: 2;         /* per sobre de les pàgines del carpesà */
   transform-style: preserve-3d;
-  /* A mig gir no s’hi pot clicar: un clic al full voltant marcaria una
+  /* A mig gir no s’hi pot clicar: un clic al full voltant obriria una
      carta sense voler */
   pointer-events: none;
   will-change: transform;
@@ -656,15 +858,15 @@ body:not([data-marcatge="consulta"]) .butxaca-funda:not(.butxaca-funda--buida) {
    reflectida, i per tant el seu costat del llom és el dret. */
 .album-full > .album-full-cara--davant {
   border-radius: 3px 8px 8px 3px;
-  box-shadow: inset 14px 0 18px -14px rgba(0, 0, 0, 0.8),
-              0 12px 30px rgba(0, 0, 0, 0.55);
+  box-shadow: inset 14px 0 18px -14px rgb(0 0 0 / calc(0.8 * var(--ombra-forca))),
+              0 12px 30px rgb(0 0 0 / calc(0.55 * var(--ombra-forca)));
 }
 
 .album-full > .album-full-cara--darrere {
   transform: rotateY(180deg);
   border-radius: 8px 3px 3px 8px;
-  box-shadow: inset -14px 0 18px -14px rgba(0, 0, 0, 0.8),
-              0 12px 30px rgba(0, 0, 0, 0.55);
+  box-shadow: inset -14px 0 18px -14px rgb(0 0 0 / calc(0.8 * var(--ombra-forca))),
+              0 12px 30px rgb(0 0 0 / calc(0.55 * var(--ombra-forca)));
 }
 
 /* El vel d’ombra: el paper s’enfosqueix mentre s’aixeca i torna a la
@@ -677,12 +879,12 @@ body:not([data-marcatge="consulta"]) .butxaca-funda:not(.butxaca-funda--buida) {
   pointer-events: none;
   border-radius: inherit;
   opacity: 0;
-  background: linear-gradient(90deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.05));
+  background: linear-gradient(90deg, rgb(0 0 0 / calc(0.6 * var(--ombra-forca))), rgb(0 0 0 / calc(0.05 * var(--ombra-forca))));
 }
 
 /* A la cara del darrere el llom queda a la dreta (es veu reflectida) */
 .album-full-cara--darrere > .album-full-ombra {
-  background: linear-gradient(90deg, rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.6));
+  background: linear-gradient(90deg, rgb(0 0 0 / calc(0.05 * var(--ombra-forca))), rgb(0 0 0 / calc(0.6 * var(--ombra-forca))));
 }
 
 /* Peu dret invisible: en vista d’una sola pàgina el full és l’única
@@ -703,11 +905,11 @@ body:not([data-marcatge="consulta"]) .butxaca-funda:not(.butxaca-funda--buida) {
 .butxaca-funda {
   position: relative;
   aspect-ratio: 63 / 88;   /* proporció real d'una carta Pokémon */
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--funda-vora);
   border-radius: 5px;
   overflow: hidden;
-  background: rgba(255, 255, 255, 0.02);
-  /* Mateix esvaïment del flaix de marcar que a les fitxes de la graella */
+  background: var(--funda-fons);
+  /* La vora del hover i del ressaltat entren i surten suaument */
   transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
@@ -718,7 +920,7 @@ body:not([data-marcatge="consulta"]) .butxaca-funda:not(.butxaca-funda--buida) {
   inset: 0;
   pointer-events: none;
   border-radius: inherit;
-  background: linear-gradient(120deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0) 45%);
+  background: linear-gradient(120deg, var(--funda-reflex), transparent 45%);
 }
 
 .butxaca-funda img {
@@ -729,44 +931,22 @@ body:not([data-marcatge="consulta"]) .butxaca-funda:not(.butxaca-funda--buida) {
   transition: filter 0.3s ease, opacity 0.3s ease;
 }
 
-/* Amb carta a dins, la funda és clicable (porta a la graella) */
+/* Amb carta a dins, la funda és clicable (obre la carta en gran) */
 .butxaca-funda:not(.butxaca-funda--buida) {
-  cursor: pointer;
+  cursor: zoom-in;
 }
 
 /* El :hover de la funda és al bloc @media (hover: hover) del final */
 
 /* Mateix llenguatge que la graella: carta que no tens, apagada i grisosa */
 .butxaca-funda--pendent img {
-  filter: grayscale(1);
-  opacity: 0.45;
+  filter: var(--pendent-filtre);
+  opacity: var(--pendent-opacitat);
 }
 
 /* Butxaca sense carta: només el plàstic buit */
 .butxaca-funda--buida {
   border-style: dashed;
-}
-
-/* Distintiu de la butxaca amb el comptador de la variant activa;
-   només es veu en mode de marcatge (data-marcatge diferent de consulta) */
-.butxaca-comptador {
-  position: absolute;
-  right: 0.25rem;
-  bottom: 0.25rem;
-  min-width: 1.3rem;
-  padding: 0.05rem 0.3rem;
-  text-align: center;
-  font-size: 0.72rem;
-  font-weight: 600;
-  color: var(--accent);
-  background: rgba(14, 17, 22, 0.85);
-  border: 1px solid var(--vora);
-  border-radius: 999px;
-  display: none;
-}
-
-body:not([data-marcatge="consulta"]) .butxaca-comptador {
-  display: block;
 }
 
 .butxaca-numero {
@@ -777,13 +957,25 @@ body:not([data-marcatge="consulta"]) .butxaca-comptador {
   letter-spacing: 0.06em;
 }
 
+/* El nom de la carta sota el número: només en pantalla estreta o baixa
+   (el bloc de l'àlbum d'una sola pàgina el fa visible), on la carta fa
+   ~110px i el nom de la imatge no es llegeix. Com a molt dues línies. */
+.butxaca-nom {
+  display: none;
+  font-size: 0.78rem;
+  line-height: 1.2;
+  text-align: center;
+  color: var(--text);
+  overflow-wrap: anywhere;
+}
+
 /* ---------- Mode Catàleg (totes les cartes a tot color) ---------- */
 
 /* El mode de visualització el posa main.js a l'atribut data-visualitzacio
-   del body (mateix patró que el mode de marcatge). En mode catàleg cap
+   del body. En mode catàleg cap
    carta no es veu apagada, i les que SÍ tens porten un marc daurat fi.
-   Nota: :where(...) no suma especificitat; així les regles del flaix de
-   marcar i del ressaltat (més avall) poden guanyar sense complicacions. */
+   Nota: :where(...) no suma especificitat; així la regla del ressaltat
+   (més avall) pot guanyar sense complicacions. */
 
 /* Es neutralitza l'apagat de les cartes pendents, a graella i àlbum */
 body[data-visualitzacio="cataleg"] .carta--pendent .carta-imatge,
@@ -800,43 +992,30 @@ body[data-visualitzacio="cataleg"] .carta:where(:not(.carta--pendent)) {
   background:
     linear-gradient(var(--fons-carta), var(--fons-carta)) padding-box,
     linear-gradient(135deg, var(--or-clar), var(--or-fosc)) border-box;
-  box-shadow: inset 0 0 10px rgba(232, 200, 119, 0.07);
+  box-shadow: inset 0 0 10px var(--or-resplendor);
 }
 
 /* El mateix fil d'or, d'1 px, a les fundes de l'àlbum amb carta tinguda.
-   La capa de dins és el color del plàstic en versió opaca (#20252e ≈ el
+   La capa de dins és el color del plàstic en versió opaca (--funda-opaca ≈ el
    blanc translúcid de la funda sobre la pàgina): amb una capa translúcida,
    l'or de sota es veuria per tota la funda i no només a la vora. */
 body[data-visualitzacio="cataleg"]
   .butxaca-funda:where(:not(.butxaca-funda--pendent):not(.butxaca-funda--buida)) {
   border: 1px solid transparent;
   background:
-    linear-gradient(#20252e, #20252e) padding-box,
+    linear-gradient(var(--funda-opaca), var(--funda-opaca)) padding-box,
     linear-gradient(135deg, var(--or-clar), var(--or-fosc)) border-box;
 }
 
 /* Els :hover del mode catàleg són al bloc @media (hover: hover) del final:
    en tàctil apagaven el marc daurat de la carta que s'acabava de tocar */
 
-/* El flaix de marcar (+ verd / − vermell) i el ressaltat d'anar a la
-   carta han de guanyar el marc daurat: fons pla i la vora del flaix */
-body[data-visualitzacio="cataleg"] .carta--marcada,
+/* El ressaltat d'anar a la carta ha de guanyar el marc daurat: fons
+   pla i la vora d'accent */
 body[data-visualitzacio="cataleg"] .carta--ressaltada {
   background: var(--fons-carta);
   border-color: var(--accent);
   box-shadow: 0 0 0 2px var(--accent);
-}
-
-body[data-visualitzacio="cataleg"] .carta--restada {
-  background: var(--fons-carta);
-  border-color: var(--error);
-  box-shadow: 0 0 0 2px var(--error);
-}
-
-/* A l'àlbum el flaix cau sobre la funda: fons del plàstic, no de fitxa */
-body[data-visualitzacio="cataleg"] .butxaca-funda.carta--marcada,
-body[data-visualitzacio="cataleg"] .butxaca-funda.carta--restada {
-  background: rgba(255, 255, 255, 0.02);
 }
 
 /* ---------- Panell d'estadístiques (plegable) ---------- */
@@ -864,9 +1043,7 @@ body[data-visualitzacio="cataleg"] .butxaca-funda.carta--restada {
   cursor: pointer;
 }
 
-.estad-capcalera:hover {
-  color: var(--accent);
-}
+/* El :hover de la capçalera del panell és al bloc @media (hover: hover) */
 
 /* La fletxa gira quan el panell està plegat */
 .estad-fletxa {
@@ -982,6 +1159,30 @@ body[data-visualitzacio="cataleg"] .butxaca-funda.carta--restada {
   color: var(--text-suau);
 }
 
+/* D'on surten els preus (sota el valor de la col·lecció) i el
+   desplegable «Com es calculen?» amb la regla en dues frases */
+.estad-font {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  max-width: 30rem;
+  margin-top: 0.25rem;
+}
+
+.estad-com summary {
+  width: fit-content;
+  font-size: 0.78rem;
+  color: var(--accent);
+  cursor: pointer;
+}
+
+.estad-com p {
+  margin: 0.3rem 0 0;
+  font-size: 0.78rem;
+  line-height: 1.45;
+  color: var(--text-suau);
+}
+
 /* ---------- Peu ---------- */
 
 .peu {
@@ -993,6 +1194,17 @@ body[data-visualitzacio="cataleg"] .butxaca-funda.carta--restada {
   border-top: 1px solid var(--vora);
   color: var(--text-suau);
   font-size: 0.85rem;
+}
+
+/* Al mòbil el peu deixa lloc a sota per als dos botons flotants (2 × 48px
+   + marges) i per a l'indicador d'inici de l'iPhone: en arribar al final,
+   la lupa tapava l'última línia. La condició és EXACTAMENT la mateixa que
+   fa servir mobil.js (esMobil) per mostrar els botons; abans només hi
+   havia el (pointer: coarse) i un mòbil sense tàctil en quedava fora. */
+@media (max-width: 767px), (pointer: coarse) {
+  .peu {
+    padding-bottom: calc(1.2rem + 7.5rem + env(safe-area-inset-bottom));
+  }
 }
 
 .peu-fila {
@@ -1032,14 +1244,7 @@ body[data-visualitzacio="cataleg"] .butxaca-funda.carta--restada {
   cursor: pointer;
 }
 
-.boto-suau:hover {
-  border-color: var(--accent);
-}
-
-.boto-suau--perill:hover {
-  border-color: var(--error);
-  color: var(--error);
-}
+/* Els :hover dels botons suaus són al bloc @media (hover: hover) del final */
 
 .simbol-set {
   height: 1.1rem;
@@ -1050,6 +1255,10 @@ body[data-visualitzacio="cataleg"] .butxaca-funda.carta--restada {
 
 /* El <dialog> natiu: el navegador el centra i posa el teló tot sol */
 .selector-expansions {
+  /* El reinici «* { margin: 0 }» del principi treia el margin: auto que
+     el navegador posa als <dialog> modals, i el panell quedava enganxat
+     al cantó de dalt a l'esquerra en lloc de centrat */
+  margin: auto;
   width: min(34rem, 92vw);
   max-height: min(80vh, 42rem);
   /* En mòbil, dvh és l'alçada real amb la barra del navegador visible;
@@ -1060,7 +1269,7 @@ body[data-visualitzacio="cataleg"] .butxaca-funda.carta--restada {
   color: var(--text);
   border: 1px solid var(--accent);
   border-radius: 12px;
-  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.6), 0 0 24px var(--resplendor);
+  box-shadow: 0 18px 48px rgb(0 0 0 / calc(0.6 * var(--ombra-forca))), 0 0 24px var(--resplendor);
 }
 
 /* Obert, s'organitza en columna: cerca a dalt, llista amb scroll, peu fix */
@@ -1071,7 +1280,9 @@ body[data-visualitzacio="cataleg"] .butxaca-funda.carta--restada {
 }
 
 .selector-expansions::backdrop {
-  background: rgba(0, 0, 0, 0.65);
+  /* Safari < 17.4 i Chrome < 122 no fan arribar les variables al
+     ::backdrop: sense el valor de reserva, el teló hi quedava transparent */
+  background: var(--tel-dialeg, rgb(0 0 0 / 0.6));
 }
 
 /* La cerca i el botonet d'ordre comparteixen la primera fila del panell */
@@ -1097,7 +1308,6 @@ body[data-visualitzacio="cataleg"] .butxaca-funda.carta--restada {
   cursor: pointer;
 }
 
-.expansions-ordre:hover,
 .expansions-ordre:focus-visible {
   border-color: var(--accent);
   color: var(--text);
@@ -1119,7 +1329,6 @@ body[data-visualitzacio="cataleg"] .butxaca-funda.carta--restada {
   cursor: pointer;
 }
 
-.expansions-tancar:hover,
 .expansions-tancar:focus-visible {
   border-color: var(--accent);
   color: var(--text);
@@ -1182,7 +1391,6 @@ body[data-visualitzacio="cataleg"] .butxaca-funda.carta--restada {
   margin-top: 0.4rem;
 }
 
-.expansio-fila:hover,
 .expansio-fila:focus-visible {
   border-color: var(--accent);
   border-left-color: var(--tema-set, var(--accent));
@@ -1309,7 +1517,7 @@ body,
   align-items: center;
   justify-content: center;
   padding: 1.5rem;
-  background: rgba(0, 0, 0, 0.75);
+  background: var(--tel-zoom);
 }
 
 /* La fitxa central: imatge gran + número, nom i raresa */
@@ -1331,7 +1539,7 @@ body,
   background: var(--fons-carta);
   border: 1px solid var(--accent);
   border-radius: 12px;
-  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 18px 48px rgb(0 0 0 / calc(0.6 * var(--ombra-forca)));
 }
 
 .zoom-imatge {
@@ -1363,13 +1571,47 @@ body,
   cursor: pointer;
 }
 
-.zoom-tancar:hover,
 .zoom-tancar:focus {
   border-color: var(--accent);
   color: var(--accent);
 }
 
+/* La fila del nom amb les fletxes ‹ › a banda i banda */
+.zoom-capcal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  width: 100%;
+}
+
+.zoom-fletxa {
+  flex: none;
+  width: 2.1rem;
+  height: 2.1rem;
+  background: var(--fons-suau);
+  color: var(--text);
+  border: 1px solid var(--vora);
+  border-radius: 50%;
+  font-size: 1.3rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.zoom-fletxa:focus-visible {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* Al principi o al final del recorregut la fletxa queda apagada */
+.zoom-fletxa:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
 .zoom-info {
+  flex: 0 1 auto;
+  min-width: 0;
   display: flex;
   align-items: baseline;
   justify-content: center;
@@ -1392,6 +1634,14 @@ body,
   font-size: 0.85rem;
 }
 
+/* El preu orientatiu al zoom, al costat de la raresa (o a sota, si no
+   hi cap a la mateixa línia) */
+.zoom-preu {
+  color: var(--text);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
 .zoom-ajuda {
   font-size: 0.75rem;
   color: var(--text-suau);
@@ -1412,6 +1662,35 @@ body,
   text-align: right;
 }
 
+/* Què és una reverse holo: frase curta sota els comptadors, amb una
+   icona d'informació (la «i» dins d'un cercle) */
+.zoom-ajuda-reverse,
+.zoom-nota {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.45rem;
+  max-width: 24rem;
+  margin: 0;
+  font-size: 0.78rem;
+  line-height: 1.35;
+  color: var(--text-suau);
+}
+
+.zoom-ajuda-reverse-icona {
+  flex: none;
+  width: 1.05rem;
+  height: 1.05rem;
+  margin-top: 0.05rem;
+  border: 1px solid var(--accent);
+  border-radius: 50%;
+  color: var(--accent);
+  font-size: 0.7rem;
+  font-weight: 700;
+  font-style: italic;
+  line-height: 1rem;
+  text-align: center;
+}
+
 /* Enllaç discret per saltar del zoom a la carta de la graella */
 .zoom-graella {
   background: none;
@@ -1423,7 +1702,6 @@ body,
   cursor: pointer;
 }
 
-.zoom-graella:hover,
 .zoom-graella:focus {
   color: var(--text);
 }
@@ -1442,7 +1720,7 @@ body,
   .carta:hover {
     transform: translateY(-3px);
     border-color: var(--accent);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.45);
+    box-shadow: 0 8px 20px rgb(0 0 0 / calc(0.45 * var(--ombra-forca)));
   }
 
   .boto-comptador:hover {
@@ -1459,13 +1737,84 @@ body,
   body[data-visualitzacio="cataleg"] .carta:where(:not(.carta--pendent)):hover {
     background: var(--fons-carta);
     border-color: var(--accent);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.45);
+    box-shadow: 0 8px 20px rgb(0 0 0 / calc(0.45 * var(--ombra-forca)));
   }
 
   body[data-visualitzacio="cataleg"]
     .butxaca-funda:where(:not(.butxaca-funda--pendent):not(.butxaca-funda--buida)):hover {
-    background: rgba(255, 255, 255, 0.02);
+    background: var(--funda-fons);
     border-color: var(--accent);
+  }
+
+  /* La resta de :hover de la web (abans eren fora d'aquest bloc i, al
+     mòbil, el botó tocat quedava ressaltat fins al toc següent). Van en
+     el mateix ordre que tenien al full; amb ratolí, tot és igual que abans */
+  .boto-expansions:hover {
+    border-color: var(--accent);
+    box-shadow: 0 0 12px var(--resplendor);
+    outline: none;
+  }
+
+  .boto-expansions:hover .boto-expansions-text {
+    color: var(--accent);
+  }
+
+  .boto-accent:hover:not(:disabled) {
+    filter: brightness(1.15);
+  }
+
+  .global-carta:hover {
+    border-color: var(--accent);
+  }
+
+  .album-fletxa:hover:not(:disabled) {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .estad-capcalera:hover {
+    color: var(--accent);
+  }
+
+  .boto-suau:hover {
+    border-color: var(--accent);
+  }
+
+  .boto-suau--perill:hover {
+    border-color: var(--error);
+    color: var(--error);
+  }
+
+  .expansions-ordre:hover {
+    border-color: var(--accent);
+    color: var(--text);
+    outline: none;
+  }
+
+  .expansions-tancar:hover {
+    border-color: var(--accent);
+    color: var(--text);
+    outline: none;
+  }
+
+  .expansio-fila:hover {
+    border-color: var(--accent);
+    border-left-color: var(--tema-set, var(--accent));
+    outline: none;
+  }
+
+  .zoom-tancar:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .zoom-fletxa:hover:not(:disabled) {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .zoom-graella:hover {
+    color: var(--text);
   }
 }
 
@@ -1507,6 +1856,20 @@ body,
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
+  /* El nom sota cada carta (vegeu .butxaca-nom): amb la pàgina sola les
+     cartes són massa petites per llegir-lo a la imatge */
+  .butxaca-nom {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    overflow: hidden;
+    /* Sempre l'espai de dues línies, encara que el nom en faci una (o la
+       butxaca sigui buida): així totes les pàgines fan la mateixa alçada
+       i el full que gira no salta en passar pàgina */
+    height: 2.4em;
+  }
+
   /* Amb una sola pàgina no hi ha llom central: cantonades iguals i
      sense l'ombra interior de llibre obert */
   .album-pagina:first-child,
@@ -1520,7 +1883,7 @@ body,
   .album-full > .album-full-cara--davant,
   .album-full > .album-full-cara--darrere {
     border-radius: 8px;
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.55);
+    box-shadow: 0 12px 30px rgb(0 0 0 / calc(0.55 * var(--ombra-forca)));
   }
 }
 
@@ -1562,12 +1925,24 @@ body,
   .bloc-filtres:not(.bloc-filtres--obert) {
     display: none;
   }
+
+  /* Capçalera compacta (enquesta: al mòbil no es veia cap carta a la
+     primera pantalla). Idioma i tema, que es toquen un cop, s'amaguen
+     amb «Filtres i opcions»: només surten (al seu lloc de sempre, a
+     sota del títol) quan aquest bloc és obert. Els
+     navegadors sense :has() els continuen mostrant com abans. */
+  .capcalera:not(:has(.bloc-filtres--obert)) .preferencies {
+    display: none;
+  }
 }
 
 /* ---------- Mòbil general (fins a 767px) ---------- */
 @media (max-width: 767px) {
   .capcalera {
     padding: 0.75rem;
+    /* Marges segurs també a dalt (barra d'estat si la web s'obre a
+       pantalla completa des de la pantalla d'inici) */
+    padding-top: calc(0.75rem + env(safe-area-inset-top));
     padding-left: calc(0.75rem + env(safe-area-inset-left));
     padding-right: calc(0.75rem + env(safe-area-inset-right));
   }
@@ -1575,6 +1950,42 @@ body,
   /* Menys aire entre controls: la capçalera sencera s'escurça ~80px */
   .fila-controls {
     gap: 0.5rem;
+  }
+
+  /* El cercador, sol a la seva fila */
+  .fila-controls .cercador {
+    flex: 1 1 100%;
+  }
+
+  /* Graella/Àlbum i «Filtres i opcions», a la mateixa fila: l'etiqueta
+     «Vista» queda només per als lectors de pantalla */
+  .fila-controls .control-vista {
+    width: auto;
+    flex: 1 1 0;
+  }
+
+  .control-vista .control-etiqueta {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  .fila-controls .boto-filtres {
+    width: auto;
+    flex: 1 1 0;
+    min-width: 0;
+    gap: 0.3rem;
+  }
+
+  .boto-filtres-text,
+  .boto-filtres-text > span:first-child {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   /* (Les regles del botó "Filtres i opcions" i del plegat són al bloc
@@ -1650,6 +2061,18 @@ body,
     object-fit: contain;
   }
 
+  /* El botó d'expansions no hi cap amb el text al costat del logotip:
+     el text «Canvia d'expansió ▾» passa a sota, més petit */
+  .boto-expansions {
+    flex-direction: column;
+    gap: 0.15rem;
+    padding: 0.3rem 0.5rem;
+  }
+
+  .boto-expansions-text {
+    font-size: 0.75rem;
+  }
+
   /* El placeholder de la cerca del Compendi no hi cap sencer a 320px:
      millor tallat amb punts suspensius que a mitja paraula */
   .selector-expansions input[type="search"]::placeholder {
@@ -1711,7 +2134,9 @@ body,
 @media (max-width: 480px), (max-height: 480px) {
   .zoom-tancar {
     position: fixed;
-    top: 0.75rem;
+    /* Sota la barra d'estat / l'illa dinàmica quan la web s'obre a
+       pantalla completa (env() val 0 a la resta de casos) */
+    top: calc(0.75rem + env(safe-area-inset-top));
     right: calc(0.75rem + env(safe-area-inset-right));
     z-index: 1;
   }
@@ -1741,10 +2166,49 @@ body,
     grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
     gap: 0.6rem;
   }
+
+  /* Àlbum: menys marge al carpesà i a la pàgina perquè les cartes
+     guanyin amplada (a 375px passen de ~95 a ~108px) */
+  .album-llibre {
+    padding: 0.3rem;
+  }
+
+  .album-pagina {
+    gap: 0.35rem;
+    padding: 0.4rem;
+  }
 }
 
 /* ---------- Pantalles molt estretes (fins a 380px) ---------- */
 @media (max-width: 380px) {
+  /* Files del Compendi compactes: a 320px el nom i la data es partien en
+     quatre línies i cada fila feia 111px (se'n veien dues i mitja de 22).
+     Ara la línia de sèrie i data s'amaga i el nom fa com a molt dues
+     línies (amb punts suspensius si encara no hi cap), a l'alçada del
+     logotip: cada fila fa uns 53px. En una sola línia, la majoria de
+     noms quedaven a mitges («Scarlet & V…»). */
+  .expansio-info b {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    overflow: hidden;
+    font-size: 0.9rem;
+    line-height: 1.2;
+  }
+
+  .expansio-info small {
+    display: none;
+  }
+
+  .expansio-simbol {
+    width: 64px;
+  }
+
+  .expansio-progres {
+    width: 3.2rem;
+  }
+
   /* A les columnes d'aquesta amplada, el nom de variant quedava reduït
      a «r…»: passa a la seva pròpia línia, sobre els botons − N + (les
      files creixen una mica d'alçada, però «reverse» es llegeix sencer) */
@@ -1766,7 +2230,7 @@ body,
   .capcalera {
     -webkit-backdrop-filter: none;
     backdrop-filter: none;
-    background: rgba(14, 17, 22, 0.98);
+    background: var(--capcalera-fons-opac);
   }
 
   /* El doble toc ràpid ja no fa zoom de pàgina (el pinch es conserva):
@@ -1775,6 +2239,27 @@ body,
   .carta,
   .butxaca-funda {
     touch-action: manipulation;
+    /* Sense el requadre gris que pinta el navegador a cada toc */
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Mantenir el dit sobre una carta no obre el menú d'iOS «Desa la
+     imatge / Copia» ni selecciona text: amb el dit, mantenir premut és
+     un gest de la web (marcar, obrir), no de la imatge */
+  .carta-imatge,
+  .butxaca-funda img,
+  .global-carta img,
+  .variants {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+  /* Lliscar de costat a l'àlbum passa pàgina (album.js): el navegador
+     només s'ocupa del desplaçament vertical i del pessic, i així el gest
+     horitzontal no es talla a mig camí */
+  .album-llibre {
+    touch-action: pan-y pinch-zoom;
   }
 
   /* Amb lletra per sota de 16px, Safari d'iOS fa zoom automàtic de tota
@@ -1855,21 +2340,14 @@ body,
     bottom: calc(0.75rem + env(safe-area-inset-bottom));
     z-index: 40;
     margin: 0;
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 6px 18px rgb(0 0 0 / calc(0.5 * var(--ombra-forca)));
   }
 
-  /* El peu no queda sota l'indicador d'inici de l'iPhone */
-  .peu {
-    padding-bottom: calc(1.2rem + env(safe-area-inset-bottom));
-  }
-
-  /* En mode de marcatge, el toc llarg obre el zoom (tocllarg.js): ni el
-     full "desar la imatge" d'iOS ni la selecció de text hi han de competir */
-  body:not([data-marcatge="consulta"]) .carta,
-  body:not([data-marcatge="consulta"]) .butxaca-funda {
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    user-select: none;
+  /* «Com es calculen?» de les estadístiques: zona de toc de 44px */
+  .estad-com summary {
+    /* Amb line-height i no amb display: flex, que en alguns navegadors
+       treu el triangle del desplegable */
+    line-height: 44px;
   }
 
   .boto-suau {
@@ -1878,7 +2356,8 @@ body,
   }
 
   .album-fletxa,
-  .zoom-tancar {
+  .zoom-tancar,
+  .zoom-fletxa {
     width: 2.75rem;
     height: 2.75rem;
   }
@@ -1899,12 +2378,26 @@ body,
      va al botó (que atura la propagació), no a la carta del voltant. */
   .boto-comptador {
     position: relative;
+    width: 2.5rem;
+    height: 2.5rem;
+    font-size: 1.15rem;
   }
 
+  /* 40px visibles i 44px que responen al dit */
   .boto-comptador::before {
     content: "";
     position: absolute;
-    inset: -2px -6px;
+    inset: -2px;
+  }
+
+  /* Amb botons de 40px, el nom de la variant ja no hi cap al costat
+     (quedava «nor…», «reve…»): va a la seva pròpia línia, a sobre */
+  .variant-fila {
+    flex-wrap: wrap;
+  }
+
+  .variant-nom {
+    flex: 1 1 100%;
   }
 
   /* Una mica més d'aire entre files de variants (menys tocs errats) */
@@ -1912,10 +2405,10 @@ body,
     gap: 0.5rem;
   }
 
-  /* Al zoom sí que hi ha lloc: botons +/− de 40px de veritat */
+  /* Al zoom sí que hi ha lloc: botons +/− de 44px de veritat */
   .zoom-variants .boto-comptador {
-    width: 2.5rem;
-    height: 2.5rem;
+    width: 2.75rem;
+    height: 2.75rem;
   }
 
   /* Caselles de verificació: quadret visible i zona de toc d'almenys
@@ -1932,48 +2425,12 @@ body,
     height: 1.25rem;
   }
 
-  /* Botonet − de les butxaques de l'àlbum: en tàctil no hi ha clic dret,
-     així que restar es fa amb aquest botó (el crea album.js només en
-     pantalles tàctils; només es veu en mode de marcatge) */
-  .butxaca-resta {
-    position: absolute;
-    left: 0.25rem;
-    bottom: 0.25rem;
-    width: 2rem;
-    height: 2rem;
-    display: none;
-    background: rgba(14, 17, 22, 0.85);
-    color: var(--text);
-    border: 1px solid var(--vora);
-    border-radius: 50%;
-    font-size: 1.1rem;
-    line-height: 1;
-    cursor: pointer;
-  }
-
-  body:not([data-marcatge="consulta"]) .butxaca-resta {
-    display: block;
-  }
-
-  /* El mateix truc que als +/− de la graella: el botó − es queda de
-     32px (44 reals taparien mitja funda) però la zona que respon al
-     dit s'amplia a 44×44 amb un pseudoelement invisible. L'ampliació
-     és asimètrica (cap amunt i cap a la dreta) perquè l'overflow:hidden
-     de la funda no la retalli: el botó és a 4px del cantó inferior
-     esquerre, i el pseudoelement cobreix just de (0,0) a (44,44). */
-  .butxaca-resta::before {
-    content: "";
-    position: absolute;
-    inset: -8px -8px -4px -4px;
-  }
-
   /* Micro-textos: una mica més grans a la distància de lectura del mòbil */
   .pastilla-tipus {
     font-size: 12px;
   }
 
-  .butxaca-numero,
-  .butxaca-comptador {
+  .butxaca-numero {
     font-size: 0.78rem;
   }
 

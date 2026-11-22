@@ -13,7 +13,9 @@ const CLAU_VERSIONS = "pokedanex.dataVersions";
 const CLAU_SET_ACTIU = "pokedanex.activeSet";
 const SET_DEFECTE = "sv6pt5";
 const API_BASE = "https://api.pokemontcg.io/v2";
-const MAX_REINTENTS = 4;
+// 1 intent + 5 reintents (esperes de 2, 4, 8, 16 i 32 s, com tools/fetch_data.py):
+// l'API torna errors 500/502 molt sovint i de vegades cal un minut perquè respongui
+const MAX_REINTENTS = 6;
 // Segona font de preus (decisió D-013): TCGdex, oberta, gratuïta i sense
 // clau, que actualitza cada dia els preus de Cardmarket i de TCGplayer
 const TCGDEX_BASE = "https://api.tcgdex.net/v2/en";
@@ -131,6 +133,26 @@ function llegirVersionsLocals(setId) {
   }
 }
 
+// La versió de navegador més nova d'una expansió (creada amb «Actualitza»,
+// desada o només en memòria), amb les dades senceres; null si no n'hi ha.
+// La cerca a totes les expansions (cerca-global.js) la fa servir perquè el
+// seu índex de noms no quedi per darrere del que l'usuari ha actualitzat.
+export function versioNavegadorMesNova(setId) {
+  const totes = [
+    ...llegirVersionsLocals(setId),
+    ...versionsEnMemoria.filter((v) => v.setId === setId),
+  ].filter((v) => Array.isArray(v.dades?.cards));
+  totes.sort((a, b) => b.fetchedAt.localeCompare(a.fetchedAt));
+  return totes[0] ?? null;
+}
+
+// Puja cada cop que «Actualitza» crea una versió nova: així qui guarda
+// dades derivades (l'índex de cerca) sap que les ha de tornar a mirar
+let revisioNavegador = 0;
+export function revisioVersionsNavegador() {
+  return revisioNavegador;
+}
+
 // Fusiona les versions de fitxer i les del navegador d'una expansió,
 // de més nova a més vella
 export async function carregarLlistaVersions(setId) {
@@ -207,25 +229,77 @@ function esperar(millisegons) {
   return new Promise((resol) => setTimeout(resol, millisegons));
 }
 
-// Petició a l'API amb reintents (l'API cau sovint). Només es reintenten els
-// errors transitoris: caigudes de xarxa, 429 (massa peticions) i 5xx (servidor).
-// Els altres 4xx (clau invàlida, adreça inexistent...) són permanents:
+// Error de l'actualització amb el motiu en paraules de la web, perquè
+// main.js pugui explicar a l'usuari què ha passat:
+//  "senseXarxa" (no hi ha connexió), "temps" (el servidor no contesta a
+//  temps), "limit" (massa peticions seguides), "servidor" (l'API ha caigut),
+//  "tcgdex" (la segona font de preus no respon) o "permanent" (altres).
+function errorActualitzacio(motiu, detall) {
+  const error = new Error(detall || motiu);
+  error.motiu = motiu;
+  return error;
+}
+
+// Espera abans del reintent número `intent`: 2, 4, 8 s... amb una mica
+// d'atzar perquè dos navegadors no tornin a picar alhora. Si l'API diu
+// quant cal esperar (capçalera Retry-After, amb els 429), se li fa cas
+// fins a un màxim de 30 s.
+function esperaReintent(intent, retryAfter) {
+  const segons = Number(retryAfter);
+  if (Number.isFinite(segons) && segons > 0) return Math.min(segons, 30) * 1000;
+  return 2000 * 2 ** (intent - 1) + Math.random() * 500;
+}
+
+// Petició a l'API amb temps màxim i reintents (l'API cau sovint i, sense
+// clau, té un límit de peticions per minut). Només es reintenten els errors
+// transitoris: caigudes de xarxa, temps esgotat, 429 (massa peticions) i
+// 5xx (servidor). Els altres 4xx (adreça inexistent...) són permanents:
 // reintentar només faria esperar l'usuari per res.
-async function peticioApi(url, clauApi) {
-  for (let intent = 1; intent <= MAX_REINTENTS; intent++) {
+//  - tempsMax: mil·lisegons que s'espera cada intent abans de donar-lo per
+//    perdut (60 s, com tools/fetch_data.py: una pàgina de 250 cartes pot trigar)
+//  - enReintent(intent, max): avís opcional abans de cada reintent; quan
+//    després d'algun reintent la petició surt bé, avisa amb enReintent(null)
+//    perquè la web torni a dir "actualitzant" i no es quedi el "reintentant"
+async function peticioApi(url, clauApi, { intents = MAX_REINTENTS, tempsMax = 60000, enReintent } = {}) {
+  for (let intent = 1; intent <= intents; intent++) {
+    // Sense connexió no té sentit esperar: es diu de seguida
+    if (navigator.onLine === false) throw errorActualitzacio("senseXarxa");
+    const control = new AbortController();
+    const rellotge = setTimeout(() => control.abort(), tempsMax);
+    let error;
+    let retryAfter = null;
     try {
-      const opcions = clauApi ? { headers: { "X-Api-Key": clauApi } } : {};
+      const opcions = { signal: control.signal };
+      if (clauApi) opcions.headers = { "X-Api-Key": clauApi };
       const resposta = await fetch(url, opcions);
-      if (!resposta.ok) {
-        const error = new Error("HTTP " + resposta.status);
-        error.permanent = resposta.status < 500 && resposta.status !== 429;
-        throw error;
+      if (resposta.ok) {
+        const dades = await resposta.json();
+        if (intent > 1) enReintent?.(null);
+        return dades;
       }
-      return await resposta.json();
-    } catch (error) {
-      if (error.permanent || intent === MAX_REINTENTS) throw error;
-      await esperar(1500 * intent); // esperem una mica més a cada reintent
+      retryAfter = resposta.headers.get("Retry-After");
+      if (resposta.status === 429) error = errorActualitzacio("limit", "HTTP 429");
+      else if (resposta.status >= 500) error = errorActualitzacio("servidor", "HTTP " + resposta.status);
+      else {
+        const permanent = errorActualitzacio("permanent", "HTTP " + resposta.status);
+        permanent.estat = resposta.status; // per distingir un 404 (no hi és) d'un bloqueig
+        throw permanent;
+      }
+    } catch (problema) {
+      if (problema.motiu === "permanent") throw problema;
+      if (problema.name === "AbortError") error = errorActualitzacio("temps");
+      // Un fetch que peta sense resposta: o no hi ha xarxa o el servidor
+      // ha caigut sense contestar (els errors 502 de l'API sovint arriben
+      // així, sense permisos CORS, i el navegador no en veu ni el codi)
+      else if (!problema.motiu) {
+        error = errorActualitzacio(navigator.onLine === false ? "senseXarxa" : "servidor", String(problema));
+      } else error = problema;
+    } finally {
+      clearTimeout(rellotge);
     }
+    if (intent === intents || error.motiu === "senseXarxa") throw error;
+    enReintent?.(intent, intents - 1);
+    await esperar(esperaReintent(intent, retryAfter));
   }
 }
 
@@ -239,16 +313,19 @@ function retallarCarta(carta) {
 }
 
 // Baixa totes les cartes d'un set, pàgina a pàgina
-async function baixarCartes(setId, clauApi) {
+async function baixarCartes(setId, clauApi, enReintent) {
   const cartes = [];
   let pagina = 1;
   while (true) {
     const url = `${API_BASE}/cards?q=set.id:${setId}&pageSize=250&page=${pagina}`;
-    const resposta = await peticioApi(url, clauApi);
+    const resposta = await peticioApi(url, clauApi, { enReintent });
     cartes.push(...resposta.data.map(retallarCarta));
     if (cartes.length >= resposta.totalCount || resposta.data.length === 0) break;
     pagina++;
   }
+  // Una resposta sense cap carta és una API que no va bé, no una expansió
+  // buida: millor no crear una versió nova que deixaria la web en blanc
+  if (cartes.length === 0) throw errorActualitzacio("servidor", "cap carta");
   cartes.sort((a, b) =>
     String(a.number).localeCompare(String(b.number), undefined, { numeric: true })
   );
@@ -266,38 +343,67 @@ function retallarTcgdex(dades) {
   const detall = (dades.variants_detailed ?? []).map((variant) => {
     const entrada = { type: variant.type };
     if (variant.foil) entrada.foil = variant.foil;
-    if (variant.stamp) entrada.stamp = variant.stamp;
+    if (variant.stamp?.length) entrada.stamp = variant.stamp;
     if (variant.pricing) entrada.pricing = variant.pricing;
     return entrada;
   });
+  // A alguns sets (p. ex. sv01) TCGdex posa els preus a la carta sencera i
+  // no a cada variant: es copien a les variants sense segell (com fa
+  // tools/fetch_data.py), i variants.js ja reparteix el bloc compartit
+  if (dades.pricing && !detall.some((e) => e.pricing)) {
+    for (const entrada of detall) {
+      if (!entrada.stamp?.length) entrada.pricing = dades.pricing;
+    }
+  }
   return { variants: dades.variants, variants_detailed: detall };
 }
 
 // Afegeix a cada carta el bloc "tcgdex" (variants i preus de TCGdex).
-// Si TCGdex falla o no coneix una carta, aquella carta es queda sense bloc
-// i el sistema de preus fa servir les altres fonts: mai s'atura l'actualització.
+// Si TCGdex no coneix una carta, o falla en alguna de soltes, aquella carta
+// es queda sense bloc i el sistema de preus fa servir les altres fonts.
+// Però si TCGdex falla per a la majoria de cartes (ha caigut), la versió
+// nova tindria pitjors preus que la que ja tenim: llavors s'atura tot
+// amb el motiu "tcgdex" i l'usuari es queda amb les dades d'abans.
 async function afegirPreusTcgdex(setId, cartes) {
   const tcgdexId = setsEnMemoria?.find((conjunt) => conjunt.id === setId)?.tcgdexId;
   if (!tcgdexId) return;
   let seguent = 0;
+  let encerts = 0;
+  let fallades = 0;
+  let absents = 0; // cartes que TCGdex diu que no té (404)
+  let senseXarxa = false;
+  // Massa fallades: més de la meitat, o 16 sense cap encert. També si
+  // TCGdex no té cap de les cartes (l'id del set deu haver canviat).
+  const massaFallades = () =>
+    fallades > cartes.length / 2 ||
+    (fallades >= 16 && encerts === 0) ||
+    (absents > cartes.length / 2 && encerts === 0);
   async function treballar() {
-    while (seguent < cartes.length) {
+    while (seguent < cartes.length && !massaFallades() && !senseXarxa) {
       const carta = cartes[seguent++];
       const numero = String(carta.number);
       const local = /^\d+$/.test(numero) ? numero.padStart(3, "0") : numero;
       try {
         const url = `${TCGDEX_BASE}/cards/${encodeURIComponent(tcgdexId + "-" + local)}`;
-        const dades = await peticioApi(url, null);
+        const dades = await peticioApi(url, null, { intents: 3, tempsMax: 15000 });
+        encerts += 1;
         // Comprovació de seguretat: és la mateixa carta a les dues fonts?
         if (normalitzarNom(dades.name) === normalitzarNom(carta.name)) {
           carta.tcgdex = retallarTcgdex(dades);
         }
-      } catch {
-        // Sense TCGdex per a aquesta carta: es queda amb les altres fonts
+      } catch (error) {
+        // Una carta que TCGdex no té (404) no és cap fallada: es queda
+        // amb les altres fonts. La resta (servidor caigut, bloqueig...) sí.
+        if (error.motiu === "senseXarxa") senseXarxa = true;
+        else if (error.estat === 404) absents += 1;
+        else fallades += 1;
       }
     }
   }
   await Promise.all(Array.from({ length: TCGDEX_SIMULTANIES }, treballar));
+  // Si s'ha tallat la connexió a mitges, el motiu és aquest, no TCGdex
+  if (senseXarxa) throw errorActualitzacio("senseXarxa");
+  if (massaFallades()) throw errorActualitzacio("tcgdex");
 }
 
 // Data en format ISO amb l'hora local (com fa tools/fetch_data.py)
@@ -330,11 +436,13 @@ function desarVersioLocal(setId, entrada) {
 
 // Baixa les dades fresques d'una expansió de l'API i crea una versió nova
 // amb la data d'ara. Retorna { id, desada }: desada és false si no ha
-// cabut al localStorage.
-export async function actualitzarDades(setId) {
+// cabut al localStorage. Si falla, llança un error amb `motiu` (vegeu
+// errorActualitzacio) i no es desa res: les dades d'abans no es toquen.
+// enReintent(intent, max) avisa cada cop que l'API falla i es torna a provar.
+export async function actualitzarDades(setId, enReintent) {
   const clauApi = await llegirClauApi();
-  const conjunt = (await peticioApi(`${API_BASE}/sets/${setId}`, clauApi)).data;
-  const cartes = await baixarCartes(setId, clauApi);
+  const conjunt = (await peticioApi(`${API_BASE}/sets/${setId}`, clauApi, { enReintent })).data;
+  const cartes = await baixarCartes(setId, clauApi, enReintent);
   await afegirPreusTcgdex(setId, cartes);
 
   const ara = new Date();
@@ -358,5 +466,6 @@ export async function actualitzarDades(setId) {
     // Almenys es podrà consultar avui; el setId diu de quina expansió és
     versionsEnMemoria.push({ ...entrada, setId });
   }
+  revisioNavegador++;
   return { id: entrada.id, desada };
 }
