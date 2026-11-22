@@ -1596,3 +1596,24 @@ apuntades al pull request algunes coses menors i dubtoses que ha trobat el
 repàs (el selector d'expansions a 320 píxels, el zoom que necessita
 desplaçament en pantalles molt petites, els botons flotants que poden
 tapar un + de la columna dreta).
+
+## 2026-11-22 (11a sessió) — Galetes: en guarda? les pregunta?
+
+**Què s'ha fet:**
+- Pregunta del 14 de novembre: la web guarda galetes sense demanar-ho? Es
+  va revisar el codi: cap galeta ni analítica, només `localStorage`
+  (col·lecció i preferències), que és exempt d'avís perquè és
+  imprescindible.
+- L'Edanna va demanar una frase informativa al peu de la web, en tres
+  idiomes. La feina va quedar feta però sense pujar.
+- Avui es torna a aplicar sobre la web d'ara (amb totes les millores de
+  l'enquesta) i es puja. Entrades **102** i **103** de l'històric.
+
+**Eines usades:** Claude Code.
+
+**Costos:** 0 € (de subscripció a part).
+
+**Problemes:** el 14 de novembre, en provar-ho, la web sortia buida per
+culpa de la memòria cau del navegador (tenia guardada una versió vella
+d'un fitxer). Es va arreglar forçant la recàrrega; no era un error del
+codi.

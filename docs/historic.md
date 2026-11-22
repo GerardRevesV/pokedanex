@@ -1608,3 +1608,22 @@ mòbil no hi ha ratolí, i el navegador deixava el botó tocat amb aquest
 color fins que es tocava una altra cosa, com si encara hi hagués el dit.
 Tots aquests efectes ara només s'activen quan hi ha un ratolí de debò. A
 l'ordinador no canvia res.
+
+## 102. Revisió de galetes i privacitat
+
+Es revisa el codi per saber si la web fa servir galetes (cookies) i si
+n'hauria de demanar permís. Conclusió: no en crea cap; només desa la
+col·lecció i les preferències al `localStorage` del navegador, que no
+s'envia enlloc. Com que això és imprescindible perquè la web funcioni, la
+llei no obliga a mostrar un avís de galetes. Queda escrit a
+`docs/arquitectura.md`, a l'apartat «Galetes i privacitat». La revisió es
+va fer el 14 de novembre i va quedar sense pujar; s'incorpora ara, amb la
+llista de serveis de fora posada al dia.
+
+## 103. Avís de «sense galetes» al peu de la web
+
+Al peu de la pàgina, sota la data de les dades, hi ha ara una frase petita:
+*«Aquesta web no fa servir galetes: la teva col·lecció només es desa al teu
+navegador.»* Canvia amb l'idioma (català, castellà i anglès). La llei no
+l'exigeix (vegeu l'entrada 102), però explica a qui visita la web on queden
+les seves dades.

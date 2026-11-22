@@ -199,3 +199,28 @@ versionada per no dependre d'una API inestable (D-003), preus de Cardmarket
 amb data visible (D-004). Límit conegut i acceptat: `localStorage` ronda els
 5 MB — unes 20 versions de navegador; si mai s'omple, la web avisa i la
 versió es pot consultar igualment durant la sessió.
+
+## Galetes i privacitat (revisió del 2026-11-14, posada al dia el 2026-11-22)
+
+- **La web no crea cap galeta (cookie).** Al codi no hi ha cap
+  `document.cookie`, ni Google Analytics ni cap altre comptador de visites.
+- **El que sí desa és `localStorage`** (les claus de la taula de dalt): la
+  col·lecció i preferències com l'idioma, la vista o el tema clar o fosc.
+  Es queda al dispositiu de l'usuari i la web no ho envia a cap servidor.
+- **No surt cap avís de galetes, i no cal.** La normativa europea (directiva
+  ePrivacy, i la guia de galetes de l'AEPD a Espanya) només demana
+  permís per a l'emmagatzematge que *no* és imprescindible: publicitat,
+  analítica, seguiment. Desar la col·lecció que l'usuari mateix marca, o
+  l'idioma que tria, és imprescindible perquè la web faci el que ell li
+  demana, i per això queda exempt.
+- **Serveis de fora que veuen la visita:** les imatges venen de
+  `images.pokemontcg.io`, el botó «Actualitza» consulta
+  `api.pokemontcg.io` i `api.tcgdex.net`, i la web és a GitHub Pages.
+  Aquests servidors reben l'adreça IP de qui visita la web, com passa amb
+  qualsevol pàgina. No s'ha comprovat amb el navegador si algun deixa
+  galetes pròpies; per la seva funció (servir fitxers) no n'haurien de
+  deixar.
+- **Avís informatiu al peu:** la web mostra *«Aquesta web no fa servir
+  galetes: la teva col·lecció només es desa al teu navegador»* (en català,
+  castellà i anglès, clau `peu.privacitat`). No és obligatori; s'hi posa
+  per transparència.

@@ -1202,6 +1202,13 @@ body[data-visualitzacio="cataleg"] .carta--ressaltada {
   gap: 0.6rem;
 }
 
+/* Avís de privacitat: informatiu, més discret que la resta del peu */
+.peu-privacitat {
+  margin: 0;
+  font-size: 0.75rem;
+  text-align: center;
+}
+
 /* Barra d'eines de la col·lecció (progrés + exportar/importar/buidar) */
 .eines-colleccio {
   display: flex;
