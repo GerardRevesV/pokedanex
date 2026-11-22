@@ -1608,3 +1608,20 @@ mòbil no hi ha ratolí, i el navegador deixava el botó tocat amb aquest
 color fins que es tocava una altra cosa, com si encara hi hagués el dit.
 Tots aquests efectes ara només s'activen quan hi ha un ratolí de debò. A
 l'ordinador no canvia res.
+
+## 106. Els botons + i − tenen nom per als lectors de pantalla
+
+Les persones que no hi veuen fan servir un lector de pantalla, que llegeix
+la web en veu alta. Els botons + i − de cada carta només tenien el
+símbol, i el lector deia «més» sense dir de què. Ara cada botó porta un nom
+que només llegeix el lector: «Afegeix una Joltik normal» o «Treu una
+Joltik reverse», en l'idioma triat. En prémer-los, el lector diu el
+número nou.
+
+## 107. Els avisos de la web també s'anuncien
+
+El missatge que surt a dalt (o a baix, al mòbil) quan la web carrega o
+quan «Actualitza» falla ara està marcat com a missatge d'estat, i el
+lector de pantalla el llegeix sense que l'usuari hagi d'anar-lo a buscar.
+La resta de botons fets només amb una icona ja tenien nom, i s'ha
+comprovat que es tradueixen bé.

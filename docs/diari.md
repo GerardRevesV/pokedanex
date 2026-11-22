@@ -1596,3 +1596,35 @@ apuntades al pull request algunes coses menors i dubtoses que ha trobat el
 repàs (el selector d'expansions a 320 píxels, el zoom que necessita
 desplaçament en pantalles molt petites, els botons flotants que poden
 tapar un + de la columna dreta).
+
+## 2026-11-22 — Els botons + i − diuen què fan (accessibilitat)
+
+**Què s'ha fet:**
+- Els botons **+** i **−** de cada carta (a la graella i a la carta en
+  gran) només mostraven el símbol, i un lector de pantalla (el programa
+  que llegeix la web en veu alta a les persones cegues) deia «més» o
+  «menys» sense dir de quina carta. Ara cada botó porta un nom amagat que
+  sí que es llegeix: «Afegeix una Joltik normal», «Treu una Joltik
+  reverse». És en els tres idiomes i canvia amb l'idioma i en passar de
+  carta. És un dels criteris de la norma d'accessibilitat WCAG (4.1.2:
+  tot control ha de tenir un nom).
+- En prémer + o −, el lector anuncia només el número nou, sense llegir
+  tota la fitxa.
+- Un subagent ha repassat tots els altres botons que només tenen una
+  icona (la creu de tancar, les fletxes, els botons flotants del mòbil,
+  l'ordre del selector d'expansions): ja tenien nom i es tradueixen bé.
+- El missatge d'estat («Carregant...», errors d'«Actualitza») ara també
+  s'anuncia al lector de pantalla.
+- No hi ha cap canvi visual.
+- Entrades **106** i **107** de l'històric.
+
+**Eines usades:** Claude Code (un subagent per a l'inventari de botons i
+un altre per a la revisió), navegador integrat llegint l'arbre
+d'accessibilitat (el que «veu» un lector de pantalla) en català i en
+anglès.
+
+**Costos:** 0 € (de subscripció a part).
+
+**Problemes:** cap de greu. Calia vigilar un detall: si el número de
+totes les cartes es tornés a escriure a cada canvi, el lector podria
+anunciar-los tots; ara només es reescriu el que canvia.
