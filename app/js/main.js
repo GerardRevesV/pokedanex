@@ -736,18 +736,29 @@ function crearPastillesTipus(carta) {
 
 // ---------- Comptadors de la col·lecció a cada carta ----------
 
-// Escriu el valor d'un comptador i el ressalta si és més gran que zero
+// Escriu el valor d'un comptador i el ressalta si és més gran que zero.
+// Només toca el text si canvia: el comptador és una regió aria-live i,
+// si es reescrivís igual a cada canvi de la col·lecció, el lector de
+// pantalla podria anunciar els números de totes les cartes de la graella.
 function pintarComptador(espai, valor) {
-  espai.textContent = valor;
+  if (espai.textContent !== String(valor)) espai.textContent = valor;
   espai.classList.toggle("comptador-valor--te", valor > 0);
 }
 
-// Botó − o + d'una variant: un sol clic ajusta el comptador
+// Botó − o + d'una variant: un sol clic ajusta el comptador.
+// Com que només porta el símbol, el nom per al lector de pantalla diu
+// l'acció, la carta i la variant («Afegeix una Joltik normal»). Les
+// fitxes i el zoom es refan en canviar d'idioma o de carta, i amb elles
+// aquest nom.
 function crearBotoComptador(carta, variant, delta, simbol) {
   const boto = document.createElement("button");
   boto.type = "button";
   boto.className = "boto-comptador";
   boto.textContent = simbol;
+  boto.setAttribute("aria-label", t(delta > 0 ? "variant.afegir" : "variant.treure", {
+    carta: carta.name,
+    variant: t("variant." + variant),
+  }));
   boto.addEventListener("click", (esdeveniment) => {
     esdeveniment.stopPropagation(); // que el clic no arribi a la carta
     // false = el canvi és viu però no s'ha pogut desar al navegador
@@ -777,6 +788,8 @@ function crearControlsVariants(carta) {
     const valor = document.createElement("span");
     valor.className = "comptador-valor";
     valor.dataset.variant = variant;
+    // En prémer − o +, el lector anuncia només el número nou (no la fitxa)
+    valor.setAttribute("aria-live", "polite");
     pintarComptador(valor, valors[variant]);
 
     fila.append(

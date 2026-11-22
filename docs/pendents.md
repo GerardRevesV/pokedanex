@@ -102,6 +102,18 @@ novembre del 2026.
   (decisió D-013).
 - [ ] Ningú ha tornat a provar la web després de les millores: les notes
   de l'enquesta són de la web d'abans.
+- **Coneguts i acceptats al mòbil** (revisats el 22-11-2026; no es
+  faran):
+  - Al zoom, en pantalles molt petites (320×640) o en apaïsat, cal
+    desplaçar dins de la fitxa per veure «Veure a la graella» i la nota del
+    preu. Es dona per bo: el desplaçament intern funciona i la × de tancar
+    queda sempre fixa a dalt.
+  - Els botons flotants poden tapar el + d'una carta de la columna dreta
+    quan passa per la franja de baix de la pantalla. N'hi ha prou de
+    desplaçar una mica la pàgina.
+  - En apaïsat, la pàgina de l'àlbum (unes 740 píxels d'alt) no cap en una
+    pantalla de 360-390: cal desplaçar per veure-la sencera. Fer-la cabre
+    deixaria les cartes de 30 píxels.
 - [ ] Les dades de les cartes ja pesen 26,5 MB. Si el repositori s'acosta
   al límit de GitHub Pages (1 GB), caldrà esborrar versions antigues.
 
